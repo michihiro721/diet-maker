@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:15
@@ -10,12 +12,11 @@ services:
     ports:
       - "5432:5432"
 
-  web:
-    build:
-      context: .
+  backend:
+    build: ./backend
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     volumes:
-      - .:/app  # Dockerfile の WORKDIR と一致させる
+      - ./backend:/app
     ports:
       - "3000:3000"
     depends_on:
@@ -25,6 +26,16 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: diet_maker_development
+
+  frontend:
+    build: ./frontend
+    command: npm start
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3003:3000"
+    depends_on:
+      - backend
 
 volumes:
   db-data:
