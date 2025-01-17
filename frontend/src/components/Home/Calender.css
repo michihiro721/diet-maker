@@ -1,0 +1,132 @@
+/* カレンダー全体のスタイル */
+.react-calendar {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 18px;
+  margin: 20px auto;
+  padding: 20px;
+  margin-top: 100px; /* ヘッダーと重ならないようにマージンを追加 */
+}
+
+/* ナビゲーションバーのスタイル */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 垂直方向に中央揃え */
+  padding: 16px;
+  background-color: #007BFF; /* 青色に変更 */
+  color: #fff;
+  border-radius: 8px 8px 0 0;
+}
+
+.react-calendar__navigation button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  outline: none; /* フォーカス時のアウトラインを消す */
+  padding: 0; /* パディングをリセット */
+  margin: 0; /* マージンをリセット */
+}
+
+.react-calendar__navigation button:disabled {
+  color: #000;
+  cursor: default;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* ホバー時の背景色を調整 */
+  border-radius: 50%; /* ボタンを丸くする */
+}
+
+/* ナビゲーションラベルのスタイル */
+.react-calendar__navigation__label {
+  display: block; /* ラベルを表示 */
+  font-size: 18px; /* フォントサイズを調整 */
+  font-weight: bold; /* フォントを太字に */
+  background-color: #007BFF; /* 背景色を青色に変更 */
+  color: #000; /* 文字色を黒に変更 */
+  padding: 8px 16px; /* パディングを追加 */
+  border-radius: 8px; /* 角を丸くする */
+  margin-top: -16px; /* 文字の位置を上に調整 */
+}
+
+/* 日付セルのスタイル */
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 16px;
+  background: none;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px; /* フォントサイズを16pxに統一 */
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e0f7fa; /* 選んでいる時の色 */
+  border-radius: 50%;
+  color: #000; /* ホバー時の文字色を黒に変更 */
+}
+
+.react-calendar__tile--now {
+  background: #e0f7fa; /* 今日の日付 */
+  color: white;
+  border-radius: 50%;
+}
+
+.react-calendar__tile--active {
+  background: #b3d7ff; /* 最終決定時の色 */
+  color: #000;
+  border-radius: 50%;
+}
+
+/* 曜日のスタイル */
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+  background-color: #f1f1f1; /* 少し濃い灰色に変更 */
+  border-bottom: 2px solid #ccc; /* 境界線を少し太く */
+  color: #333; /* 文字色を濃い灰色に変更 */
+  font-size: 16px; /* フォントサイズを16pxに統一 */
+  margin-top: -1px; /* ナビゲーションバーにギリギリくっつける */
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #d9534f;
+}
+
+/* 月ビューのスタイル */
+.react-calendar__month-view__days__day {
+  padding: 12px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  font-size: 16px; /* フォントサイズを16pxに統一 */
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #ccc;
+}
+
+/* 年ビューと十年ビューのスタイル */
+.react-calendar__year-view__months__month,
+.react-calendar__decade-view__years__year {
+  font-size: 16px; /* フォントサイズを16pxに統一 */
+  color: #000; /* 文字色を黒に変更 */
+}
+
+.react-calendar__year-view__months__month:enabled:hover,
+.react-calendar__year-view__months__month:enabled:focus,
+.react-calendar__decade-view__years__year:enabled:hover,
+.react-calendar__decade-view__years__year:enabled:focus {
+  background-color: #e0f7fa; /* ホバー時の背景色を調整 */
+  color: #000; /* ホバー時の文字色を黒に変更 */
+}
