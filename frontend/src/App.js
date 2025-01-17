@@ -1,12 +1,13 @@
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/Home/Header';
+import Footer from './components/Home/Footer';
+import Calender from './components/Home/Calender';
 
 function App() {
   return (
     <div>
       <Header />
-      {/* 他のコンテンツ */}
+      <Calender />
       <Footer />
     </div>
   );
