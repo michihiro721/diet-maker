@@ -2,26 +2,34 @@ import React, { useState } from "react";
 import './training record.css'; // CSSファイルをインポート
 
 const TrainingRecord = () => {
+  // トレーニングセットの状態を管理するためのuseStateフック
   const [sets, setSets] = useState([
-    { weight: 85, reps: 5, complete: false, timer: "2:00" },
-    { weight: 85, reps: 5, complete: false, timer: "2:00" },
-    { weight: 85, reps: 5, complete: false, timer: "2:00" },
+    { weight: 85, reps: 5, complete: false, timer: "02:00" },
+    { weight: 85, reps: 5, complete: false, timer: "02:00" },
+    { weight: 85, reps: 5, complete: false, timer: "02:00" },
   ]);
 
+  // モーダルウィンドウの表示状態を管理するためのuseStateフック
   const [modalVisible, setModalVisible] = useState(false);
+  // 現在編集中のセットのインデックスを管理するためのuseStateフック
   const [currentSet, setCurrentSet] = useState(null);
+  // 現在編集中のフィールドを管理するためのuseStateフック
   const [currentField, setCurrentField] = useState("");
+  // 現在編集中の値を管理するためのuseStateフック
   const [currentValue, setCurrentValue] = useState("");
 
+  // 新しいセットを追加する関数
   const handleAddSet = () => {
-    setSets([...sets, { weight: 85, reps: 5, complete: false, timer: "2:00" }]);
+    setSets([...sets, { weight: 85, reps: 5, complete: false, timer: "02:00" }]);
   };
 
+  // 指定したインデックスのセットを削除する関数
   const handleRemoveSet = (index) => {
     const updatedSets = sets.filter((_, i) => i !== index);
     setSets(updatedSets);
   };
 
+  // 指定したインデックスのセットのフィールドを更新する関数
   const handleUpdateSet = (index, field, value) => {
     const updatedSets = sets.map((set, i) =>
       i === index ? { ...set, [field]: value } : set
@@ -29,6 +37,7 @@ const TrainingRecord = () => {
     setSets(updatedSets);
   };
 
+  // モーダルウィンドウを開く関数
   const openModal = (index, field, value) => {
     setCurrentSet(index);
     setCurrentField(field);
@@ -36,35 +45,37 @@ const TrainingRecord = () => {
     setModalVisible(true);
   };
 
+  // モーダルウィンドウを閉じる関数
   const closeModal = () => {
     setModalVisible(false);
   };
 
+  // モーダルウィンドウの保存ボタンをクリックしたときの関数
   const handleModalSave = () => {
     handleUpdateSet(currentSet, currentField, currentValue);
     closeModal();
   };
 
+  // モーダルウィンドウの外側をクリックしたときにモーダルを閉じる関数
   const handleClickOutside = (event) => {
     if (event.target.className === "modal") {
       closeModal();
     }
   };
 
+  // 電卓ボタンをクリックしたときの関数
   const handleCalculatorClick = (value) => {
-    setCurrentValue((prev) => prev + value);
+    setCurrentValue((prev) => prev.toString() + value);
   };
 
+  // バックスペースボタンをクリックしたときの関数
   const handleBackspace = () => {
-    setCurrentValue((prev) => prev.slice(0, -1));
+    setCurrentValue((prev) => prev.toString().slice(0, -1));
   };
 
-  const handleIncrement = (increment) => {
-    setCurrentValue((prev) => (parseFloat(prev) + increment).toString());
-  };
-
-  const handleDecrement = (decrement) => {
-    setCurrentValue((prev) => (parseFloat(prev) - decrement).toString());
+  // タイマーボタンをクリックしたときの関数
+  const handleTimerSelect = (value) => {
+    setCurrentValue(value);
   };
 
   return (
@@ -150,33 +161,40 @@ const TrainingRecord = () => {
 
       {modalVisible && (
         <div className="modal" style={{ display: 'block' }} onClick={handleClickOutside}>
-          <div className="modal-content">
+          <div className={`modal-content ${currentField === "timer" ? "timer-modal-content" : ""}`}>
             <input
               type="text"
               className="keyboard-input"
               value={currentValue}
               readOnly
             />
-            <div className="calculator-grid">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "."].map((num) => (
-                <button
-                  key={num}
-                  className="calculator-button"
-                  onClick={() => handleCalculatorClick(num.toString())}
-                >
-                  {num}
-                </button>
-              ))}
-              <button className="calculator-button" onClick={handleBackspace}>&larr;</button>
-            </div>
-            <div className="calculator-grid-extended">
-              <button className="calculator-button" onClick={() => handleIncrement(1)}>+1</button>
-              <button className="calculator-button" onClick={() => handleDecrement(1)}>-1</button>
-              <button className="calculator-button" onClick={() => handleIncrement(2.5)}>+2.5</button>
-              <button className="calculator-button" onClick={() => handleDecrement(2.5)}>-2.5</button>
-              <button className="calculator-button" onClick={() => handleIncrement(5)}>+5</button>
-              <button className="calculator-button" onClick={() => handleDecrement(5)}>-5</button>
-            </div>
+            {currentField === "timer" ? (
+              <div className="timer-options">
+                {["00:30", "01:30", "02:00", "03:00", "04:00", "05:00"].map((time) => (
+                  <button
+                    key={time}
+                    className="timer-button"
+                    onClick={() => handleTimerSelect(time)}
+                  >
+                    {time}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="calculator-grid">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
+                  <button
+                    key={num}
+                    className="calculator-button"
+                    onClick={() => handleCalculatorClick(num.toString())}
+                  >
+                    {num}
+                  </button>
+                ))}
+                <button className="calculator-button" onClick={() => handleCalculatorClick(".")}>.</button>
+                <button className="calculator-button" onClick={handleBackspace}>&larr;</button>
+              </div>
+            )}
             <button className="modal-button" onClick={handleModalSave}>保存</button>
           </div>
         </div>

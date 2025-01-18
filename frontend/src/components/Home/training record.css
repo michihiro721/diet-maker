@@ -195,3 +195,26 @@
     justify-items: center;
     margin-top: 10px; /* 上下の隙間を無くす */
   }
+
+   /* タイマーのボタン配置 */
+.timer-options {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr); /* 3列に変更 */
+ gap: 10px; /* ボタンとボタンの間を広く */
+ justify-items: center;
+  }
+
+  .timer-options button {
+ background-color: rgba(135, 206, 250, 0.1); /* 薄い青色を透過50%に */
+ color: #000;
+ padding: 15px 15px; /* ボタンを大きく */
+ border: none;
+ border-radius: 10px; /* 角を丸く */
+ font-size: 18px; /* フォントを大きく */
+ cursor: pointer;
+ transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+  }
+
+  .timer-options button:hover {
+ background-color: #00BFFF; /* ホバー時の色 */
+  }
