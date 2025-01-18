@@ -1,7 +1,10 @@
-import React, { useState } from 'react'; // ReactとuseStateフックをインポート
-import Calendar from 'react-calendar'; // react-calendarコンポーネントをインポート
-import 'react-calendar/dist/Calendar.css'; // カレンダーのデフォルトCSSファイルをインポート
-import './Calender.css'; // カスタムCSSファイルをインポート
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './styles/CalenderCommon.css';
+import './styles/CalenderNavigation.css';
+import './styles/CalenderWeekdays.css';
+import './styles/CalenderDays.css';
 
 function Calender() {
   // 日付の状態を管理するためのuseStateフックを使用
@@ -31,6 +34,14 @@ function Calender() {
     return weekdays[date.getDay()];
   };
 
+  // 日付の表示をカスタマイズ
+  const tileContent = ({ date, view }) => {
+    if (view === 'month') {
+      return <span>{date.getDate()}</span>;
+    }
+    return null;
+  };
+
   return (
     <div>
       {/* カレンダーコンポーネントを表示し、onChangeとvalueプロパティを設定 */}
@@ -39,6 +50,7 @@ function Calender() {
         value={date}
         tileClassName={tileClassName}
         formatShortWeekday={formatShortWeekday}
+        tileContent={tileContent}
       />
     </div>
   );
