@@ -18,9 +18,7 @@ function Footer() {
         <a href="https://github.com/michihiro721/" className="iconLink" target="_blank" rel="noopener noreferrer">
           <FaGithub className="icon" />
         </a>
-      </div>
-      <div className="copy">
-        &copy; 2025 - ver.1.00
+        <span className="copy">© 2025 - ver.1.00</span>
       </div>
     </footer>
   );
