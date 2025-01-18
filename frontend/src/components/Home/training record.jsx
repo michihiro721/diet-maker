@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './training record.css'; // CSSファイルをインポート
 
 const TrainingRecord = () => {
   const [sets, setSets] = useState([
@@ -24,9 +25,9 @@ const TrainingRecord = () => {
   };
 
   return (
-    <div style={{ height: "100vh", overflowY: "auto", padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h2>トレーニング記録 : 12月15日（木）</h2>
-      <div style={{ backgroundColor: "#f0f8ff", padding: "10px", borderRadius: "5px" }}>
+    <div className="training-record-container">
+      <h2 className="training-record-title">トレーニング記録 : 12月15日（木）</h2>
+      <div className="training-info">
         <p>
           種目：<input type="text" defaultValue="ベンチプレス" readOnly />
         </p>
@@ -35,70 +36,56 @@ const TrainingRecord = () => {
         <p>消費カロリー：xxxkcal</p>
       </div>
 
-      <table style={{ width: "100%", marginTop: "20px", borderCollapse: "collapse" }}>
+      <table className="training-table">
         <thead>
           <tr>
-            <th style={{ width: "10%" }}>セット</th>
-            <th style={{ width: "20%" }}>kg</th>
-            <th style={{ width: "20%" }}>回</th>
-            <th style={{ width: "20%" }}>完了</th>
-            <th style={{ width: "20%" }}>タイマー</th>
-            <th style={{ width: "10%" }}>操作</th>
+            <th>セット</th>
+            <th>kg</th>
+            <th>回</th>
+            <th>タイマー</th>
+            <th>完了</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
           {sets.map((set, index) => (
             <tr key={index}>
-              <td style={{ textAlign: "center" }}>{index + 1}</td>
-              <td style={{ textAlign: "center" }}>
+              <td>{index + 1}</td>
+              <td>
                 <input
                   type="number"
                   value={set.weight}
                   onChange={(e) => handleUpdateSet(index, "weight", e.target.value)}
-                  style={{ width: "60px" }}
                 />
               </td>
-              <td style={{ textAlign: "center" }}>
+              <td>
                 <input
                   type="number"
                   value={set.reps}
                   onChange={(e) => handleUpdateSet(index, "reps", e.target.value)}
-                  style={{ width: "60px" }}
                 />
               </td>
-              <td style={{ textAlign: "center" }}>
-                <button
-                  onClick={() => handleUpdateSet(index, "complete", !set.complete)}
-                  style={{
-                    backgroundColor: set.complete ? "lightgreen" : "lightcoral",
-                    border: "none",
-                    borderRadius: "5px",
-                    padding: "5px 10px",
-                  }}
-                >
-                  {set.complete ? "完" : "レ"}
-                </button>
-              </td>
-              <td style={{ textAlign: "center" }}>
+              <td>
                 <input
                   type="text"
                   value={set.timer}
                   onChange={(e) => handleUpdateSet(index, "timer", e.target.value)}
-                  style={{ width: "60px" }}
                 />
               </td>
-              <td style={{ textAlign: "center" }}>
+              <td>
+                <button
+                  onClick={() => handleUpdateSet(index, "complete", !set.complete)}
+                  className={set.complete ? "complete-button" : "incomplete-button"}
+                >
+                  {set.complete ? "レ" : ""}
+                </button>
+              </td>
+              <td>
                 <button
                   onClick={() => handleRemoveSet(index)}
-                  style={{
-                    backgroundColor: "red",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    padding: "5px 10px",
-                  }}
+                  className="delete-button"
                 >
-                  セット削除
+                  削除
                 </button>
               </td>
             </tr>
@@ -106,19 +93,14 @@ const TrainingRecord = () => {
         </tbody>
       </table>
 
-      <button
-        onClick={handleAddSet}
-        style={{
-          marginTop: "20px",
-          backgroundColor: "lightblue",
-          border: "none",
-          borderRadius: "5px",
-          padding: "10px 20px",
-          cursor: "pointer",
-        }}
-      >
-        + セット追加
-      </button>
+      <div className="add-set-button-container">
+        <button
+          onClick={handleAddSet}
+          className="add-set-button"
+        >
+          + セット追加
+        </button>
+      </div>
     </div>
   );
 };

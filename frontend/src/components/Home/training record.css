@@ -1,0 +1,100 @@
+/* 全体のスタイル */
+.training-record-container {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* タイトルのスタイル */
+  .training-record-title {
+    text-align: center;
+  }
+  
+  /* トレーニング情報のスタイル */
+  .training-info {
+    background-color: #f0f8ff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  /* テーブルのスタイル */
+  .training-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .training-table th,
+  .training-table td {
+    text-align: center;
+    padding: 5px;
+  }
+  
+  .training-table th {
+    font-weight: bold;
+  }
+  
+  .training-table input[type="number"],
+  .training-table input[type="text"] {
+    width: 60px;
+    text-align: center; /* 中央寄せ */
+    -moz-appearance: textfield; /* Firefox用 */
+  }
+  
+  .training-table input[type="number"]::-webkit-outer-spin-button,
+  .training-table input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge用 */
+    margin: 0;
+  }
+  
+  .training-table button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 60px; /* ボタンの幅を統一 */
+    height: 30px; /* ボタンの高さを統一 */
+  }
+  
+  .training-table .complete-button {
+    background-color: rgba(162, 217, 255, 0.2);
+    color: black;
+  }
+  
+  .training-table .incomplete-button {
+    background-color: white;
+    color: white;
+    border: 2px solid rgba(162, 217, 255, 0.5);
+  }
+  
+  .training-table .delete-button {
+    background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
+    color: white;
+    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+  }
+  
+  .training-table .delete-button:hover {
+    background-color: red; /* ホバー時の背景色 */
+  }
+  
+  /* セット追加ボタンのスタイル */
+  .add-set-button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .add-set-button {
+    background-color: rgba(162, 217, 255, 0.5); /* ベースカラーを透過50%に */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold; /* 文字を太く */
+    color: black; /* 文字色を黒に */
+    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+  }
+  
+  .add-set-button:hover {
+    background-color: rgba(130, 192, 255, 0.5); /* ホバー時の背景色を透過50%に */
+  }
