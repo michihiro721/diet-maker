@@ -1,7 +1,66 @@
 /* トレーニング情報のスタイル */
 .training-info {
   background-color: #f0f8ff;
-  padding: 10px;
+  padding: 20px; /* 内側の余白を大きく */
   border-radius: 5px;
   text-align: center;
+  font-size: 18px; /* フォントサイズを大きく */
+  border: 2px solid #a2d9ff; /* 薄い水色の枠線 */
+  max-width: 600px; /* 最大幅を600pxに設定 */
+  margin: 0 auto; /* 中央揃え */
+}
+
+/* 見出しのスタイル */
+.training-info h1,
+.training-info h2,
+.training-info h3 {
+  font-size: 28px; /* 見出しのフォントサイズを大きく */
+  margin-bottom: 10px; /* 見出しの下に余白を追加 */
+  font-weight: bold; /* フォントを太字に */
+}
+
+/* 段落のスタイル */
+.training-info p {
+  font-size: 20px; /* 段落のフォントサイズを大きく */
+  margin-bottom: 10px; /* 段落の下に余白を追加 */
+  font-weight: bold; /* フォントを太字に */
+}
+
+/* リストのスタイル */
+.training-info ul,
+.training-info ol {
+  font-size: 20px; /* リストのフォントサイズを大きく */
+  margin-bottom: 10px; /* リストの下に余白を追加 */
+  font-weight: bold; /* フォントを太字に */
+}
+
+/* リストアイテムのスタイル */
+.training-info li {
+  margin-bottom: 5px; /* リストアイテムの下に余白を追加 */
+}
+
+/* ベンチプレスのスタイル */
+.training-info .bench-press {
+  display: inline-block; /* インラインブロックに設定 */
+  font-size: 24px; /* フォントサイズを大きく */
+  font-weight: bold; /* フォントを太字に */
+  text-align: center; /* テキストを中央揃え */
+  border: 2px solid #a2d9ff; /* 薄い水色の枠線 */
+  padding: 10px; /* 内側の余白を追加 */
+  border-radius: 5px; /* 角を丸く */
+  margin-left: 10px; /* 左側に余白を追加 */
+  margin: 20px 0; /* 上下に余白を追加 */
+}
+
+/* 種目入力フィールドのスタイル */
+.training-info .exercise-input {
+  font-size: 20px; /* フォントサイズを大きく */
+  font-weight: bold; /* フォントを太字に */
+  text-align: center; /* テキストを中央揃え */
+  border: 2px solid #a2d9ff; /* 薄い水色の枠線 */
+  padding: 10px; /* 内側の余白を追加 */
+  border-radius: 5px; /* 角を丸く */
+  background-color: #ffffff; /* 背景色を白に */
+  width: auto; /* 幅を自動に設定 */
+  box-sizing: border-box; /* ボックスのサイズを調整 */
 }

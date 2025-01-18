@@ -21,6 +21,7 @@
 .training-table th:nth-child(1),
 .training-table td:nth-child(1) {
     width: 70px; /* セット */
+    font-weight: bold; /* 太字 */
 }
 
 .training-table th:nth-child(2),
