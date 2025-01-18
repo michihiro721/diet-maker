@@ -1,0 +1,44 @@
+/* テーブルヘッダーとセルのスタイル */
+.training-table th,
+.training-table td {
+    text-align: center; /* テキストを中央揃え */
+    padding: 10px; /* パディングを大きく */
+}
+
+/* テーブルヘッダーのスタイル */
+.training-table th {
+    font-weight: bold; /* フォントを太字に */
+    font-size: 20px; /* ヘッダーのフォントサイズを大きく */
+}
+
+/* 各列の幅を指定 */
+.training-table th:nth-child(1),
+.training-table td:nth-child(1) {
+    width: 70px; /* セット列 */
+    font-weight: bold; /* 太字 */
+}
+
+.training-table th:nth-child(2),
+.training-table td:nth-child(2) {
+    width: 80px; /* kg列 */
+}
+
+.training-table th:nth-child(3),
+.training-table td:nth-child(3) {
+    width: 80px; /* 回列 */
+}
+
+.training-table th:nth-child(4),
+.training-table td:nth-child(4) {
+    width: 100px; /* タイマー列 */
+}
+
+.training-table th:nth-child(5),
+.training-table td:nth-child(5) {
+    width: 80px; /* 完了列 */
+}
+
+.training-table th:nth-child(6),
+.training-table td:nth-child(6) {
+    width: 80px; /* 操作列 */
+}
