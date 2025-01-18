@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './components/Home/Header.jsx';
-import Footer from './components/Home/Footer.jsx';
-import Calender from './components/Home/Calender.jsx';
-import TrainingRecord from './components/Home/training record.jsx';
+import Header from './components/Home/Header/Header.jsx';
+import Footer from './components/Home/Footer/Footer.jsx';
+import Calender from './components/Home/Body/Calender/Calender.jsx';
+import TrainingRecord from './components/Home/Body/TrainingRecord/TrainingRecord';
 
 function App() {
   return (
