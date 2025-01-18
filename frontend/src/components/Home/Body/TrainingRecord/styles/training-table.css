@@ -3,120 +3,125 @@
     width: auto; /* テーブルの幅を自動調整 */
     margin: 20px auto; /* 上下の余白を20px、左右の余白を自動調整 */
     border-collapse: collapse;
-  }
-  
-  .training-table th,
-  .training-table td {
+    font-size: 18px; /* フォントサイズを大きく */
+}
+
+.training-table th,
+.training-table td {
     text-align: center;
-    padding: 5px;
-  }
-  
-  .training-table th {
+    padding: 10px; /* パディングを大きく */
+}
+
+.training-table th {
     font-weight: bold;
-  }
-  
-  /* 各列の幅を指定 */
-  .training-table th:nth-child(1),
-  .training-table td:nth-child(1) {
-    width: 50px; /* セット */
-  }
-  
-  .training-table th:nth-child(2),
-  .training-table td:nth-child(2) {
-    width: 60px; /* kg */
-  }
-  
-  .training-table th:nth-child(3),
-  .training-table td:nth-child(3) {
-    width: 60px; /* 回 */
-  }
-  
-  .training-table th:nth-child(4),
-  .training-table td:nth-child(4) {
-    width: 80px; /* タイマー */
-  }
-  
-  .training-table th:nth-child(5),
-  .training-table td:nth-child(5) {
-    width: 60px; /* 完了 */
-  }
-  
-  .training-table th:nth-child(6),
-  .training-table td:nth-child(6) {
-    width: 60px; /* 操作 */
-  }
-  
-  /* 入力フィールドのスタイル */
-  .training-table input[type="number"],
-  .training-table input[type="text"] {
-    width: 50px; /* 横幅を狭く */
+    font-size: 20px; /* ヘッダーのフォントサイズを大きく */
+}
+
+/* 各列の幅を指定 */
+.training-table th:nth-child(1),
+.training-table td:nth-child(1) {
+    width: 70px; /* セット */
+}
+
+.training-table th:nth-child(2),
+.training-table td:nth-child(2) {
+    width: 80px; /* kg */
+}
+
+.training-table th:nth-child(3),
+.training-table td:nth-child(3) {
+    width: 80px; /* 回 */
+}
+
+.training-table th:nth-child(4),
+.training-table td:nth-child(4) {
+    width: 100px; /* タイマー */
+}
+
+.training-table th:nth-child(5),
+.training-table td:nth-child(5) {
+    width: 80px; /* 完了 */
+}
+
+.training-table th:nth-child(6),
+.training-table td:nth-child(6) {
+    width: 80px; /* 操作 */
+}
+
+/* 入力フィールドのスタイル */
+.training-table input[type="number"],
+.training-table input[type="text"] {
+    width: 70px; /* 横幅を広く */
     text-align: center; /* 中央寄せ */
     -moz-appearance: textfield; /* Firefox用 */
     border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
     border-radius: 10px; /* 角を丸く */
-    padding: 5px; /* 内側の余白 */
+    padding: 10px; /* 内側の余白を大きく */
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側の影 */
     transition: border-color 0.3s ease; /* 枠線の色の変化をスムーズに */
-  }
-  
-  .training-table input[type="number"]:focus,
-  .training-table input[type="text"]:focus {
+    font-size: 18px; /* フォントサイズを大きく */
+}
+
+.training-table input[type="number"]:focus,
+.training-table input[type="text"]:focus {
     border-color: #87CEFA; /* フォーカス時の枠線の色 */
-  }
-  
-  .training-table input[type="number"]::-webkit-outer-spin-button,
-  .training-table input[type="number"]::-webkit-inner-spin-button {
+}
+
+.training-table input[type="number"]::-webkit-outer-spin-button,
+.training-table input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none; /* Chrome, Safari, Edge用 */
     margin: 0;
-  }
-  
-  /* ボタンのスタイル */
-  .training-table button {
+}
+
+/* ボタンのスタイル */
+.training-table button {
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
-    width: 60px; /* ボタンの幅を統一 */
-    height: 30px; /* ボタンの高さを統一 */
-  }
-  
-  .training-table .complete-button {
+    padding: 10px 15px; /* パディングを大きく */
+    width: 80px; /* ボタンの幅を広く */
+    height: 40px; /* ボタンの高さを広く */
+    font-size: 16px; /* フォントサイズを大きく */
+}
+
+.training-table .complete-button {
     background-color: rgba(162, 217, 255, 0.2);
     color: black;
-  }
-  
-  .training-table .incomplete-button {
+}
+
+.training-table .incomplete-button {
     background-color: white;
     color: white;
     border: 2px solid rgba(162, 217, 255, 0.5);
-  }
-  
-  .training-table .delete-button {
+}
+
+.training-table .delete-button {
     background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
     color: white;
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
-  }
-  
-  .training-table .delete-button:hover {
+}
+
+.training-table .delete-button:hover {
     background-color: red; /* ホバー時の背景色 */
-  }
-  
-  /* セット追加ボタンのスタイル */
-  .add-set-button-container {
+}
+
+/* セット追加ボタンのスタイル */
+.add-set-button-container {
     text-align: center;
     margin-top: 20px;
-  }
-  
-  .add-set-button {
+}
+
+.add-set-button {
     background-color: rgba(162, 217, 255, 0.5); /* ベースカラーを透過50%に */
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 15px 30px; /* パディングを大きく */
     cursor: pointer;
     font-weight: bold; /* 文字を太く */
     color: black; /* 文字色を黒に */
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
-  }
-  
-  .add-set-button:hover {
+    font-size: 18px; /* フォントサイズを大きく */
+}
+
+.add-set-button:hover {
     background-color: rgba(130, 192, 255, 0.5); /* ホバー時の背景色を透過50%に */
-  }
+}
