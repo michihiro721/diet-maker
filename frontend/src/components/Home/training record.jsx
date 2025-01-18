@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import './training record.css'; // CSSファイルをインポート
+import './training-record-container.css';
+import './training-info.css';
+import './training-table.css';
+import './modal.css';
+import './calculator.css';
+import './timer.css';
 
 const TrainingRecord = () => {
   // トレーニングセットの状態を管理するためのuseStateフック
