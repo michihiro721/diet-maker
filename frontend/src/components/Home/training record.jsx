@@ -8,6 +8,11 @@ const TrainingRecord = () => {
     { weight: 85, reps: 5, complete: false, timer: "2:00" },
   ]);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentSet, setCurrentSet] = useState(null);
+  const [currentField, setCurrentField] = useState("");
+  const [currentValue, setCurrentValue] = useState("");
+
   const handleAddSet = () => {
     setSets([...sets, { weight: 85, reps: 5, complete: false, timer: "2:00" }]);
   };
@@ -22,6 +27,44 @@ const TrainingRecord = () => {
       i === index ? { ...set, [field]: value } : set
     );
     setSets(updatedSets);
+  };
+
+  const openModal = (index, field, value) => {
+    setCurrentSet(index);
+    setCurrentField(field);
+    setCurrentValue(value);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleModalSave = () => {
+    handleUpdateSet(currentSet, currentField, currentValue);
+    closeModal();
+  };
+
+  const handleClickOutside = (event) => {
+    if (event.target.className === "modal") {
+      closeModal();
+    }
+  };
+
+  const handleCalculatorClick = (value) => {
+    setCurrentValue((prev) => prev + value);
+  };
+
+  const handleBackspace = () => {
+    setCurrentValue((prev) => prev.slice(0, -1));
+  };
+
+  const handleIncrement = (increment) => {
+    setCurrentValue((prev) => (parseFloat(prev) + increment).toString());
+  };
+
+  const handleDecrement = (decrement) => {
+    setCurrentValue((prev) => (parseFloat(prev) - decrement).toString());
   };
 
   return (
@@ -55,21 +98,24 @@ const TrainingRecord = () => {
                 <input
                   type="number"
                   value={set.weight}
-                  onChange={(e) => handleUpdateSet(index, "weight", e.target.value)}
+                  onClick={() => openModal(index, "weight", set.weight)}
+                  readOnly
                 />
               </td>
               <td>
                 <input
                   type="number"
                   value={set.reps}
-                  onChange={(e) => handleUpdateSet(index, "reps", e.target.value)}
+                  onClick={() => openModal(index, "reps", set.reps)}
+                  readOnly
                 />
               </td>
               <td>
                 <input
                   type="text"
                   value={set.timer}
-                  onChange={(e) => handleUpdateSet(index, "timer", e.target.value)}
+                  onClick={() => openModal(index, "timer", set.timer)}
+                  readOnly
                 />
               </td>
               <td>
@@ -101,6 +147,40 @@ const TrainingRecord = () => {
           + セット追加
         </button>
       </div>
+
+      {modalVisible && (
+        <div className="modal" style={{ display: 'block' }} onClick={handleClickOutside}>
+          <div className="modal-content">
+            <input
+              type="text"
+              className="keyboard-input"
+              value={currentValue}
+              readOnly
+            />
+            <div className="calculator-grid">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "."].map((num) => (
+                <button
+                  key={num}
+                  className="calculator-button"
+                  onClick={() => handleCalculatorClick(num.toString())}
+                >
+                  {num}
+                </button>
+              ))}
+              <button className="calculator-button" onClick={handleBackspace}>&larr;</button>
+            </div>
+            <div className="calculator-grid-extended">
+              <button className="calculator-button" onClick={() => handleIncrement(1)}>+1</button>
+              <button className="calculator-button" onClick={() => handleDecrement(1)}>-1</button>
+              <button className="calculator-button" onClick={() => handleIncrement(2.5)}>+2.5</button>
+              <button className="calculator-button" onClick={() => handleDecrement(2.5)}>-2.5</button>
+              <button className="calculator-button" onClick={() => handleIncrement(5)}>+5</button>
+              <button className="calculator-button" onClick={() => handleDecrement(5)}>-5</button>
+            </div>
+            <button className="modal-button" onClick={handleModalSave}>保存</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

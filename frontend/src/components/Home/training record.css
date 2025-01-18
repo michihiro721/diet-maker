@@ -36,11 +36,22 @@
     font-weight: bold;
   }
   
+  /* 入力フィールドのスタイル */
   .training-table input[type="number"],
   .training-table input[type="text"] {
-    width: 60px;
+    width: 50px; /* 横幅を狭く */
     text-align: center; /* 中央寄せ */
     -moz-appearance: textfield; /* Firefox用 */
+    border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
+    border-radius: 10px; /* 角を丸く */
+    padding: 5px; /* 内側の余白 */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側の影 */
+    transition: border-color 0.3s ease; /* 枠線の色の変化をスムーズに */
+  }
+  
+  .training-table input[type="number"]:focus,
+  .training-table input[type="text"]:focus {
+    border-color: #87CEFA; /* フォーカス時の枠線の色 */
   }
   
   .training-table input[type="number"]::-webkit-outer-spin-button,
@@ -49,6 +60,7 @@
     margin: 0;
   }
   
+  /* ボタンのスタイル */
   .training-table button {
     border: none;
     border-radius: 5px;
@@ -97,4 +109,89 @@
   
   .add-set-button:hover {
     background-color: rgba(130, 192, 255, 0.5); /* ホバー時の背景色を透過50%に */
+  }
+  
+  /* モーダルウィンドウのスタイル */
+  .modal {
+    display: none; /* 初期状態では非表示 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* 背景の半透明 */
+  }
+  
+  /* モーダルウィンドウのコンテンツスタイル */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 250px; /* 固定幅に変更 */
+    max-width: 300px; /* 最大横幅をさらに狭く */
+    border-radius: 10px;
+    text-align: center; /* 中央寄せ */
+    position: relative;
+  }
+  
+  /* キーボード風の入力スタイル */
+  .keyboard-input {
+    font-size: 24px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin-bottom: 20px;
+    text-align: center; /* 中央寄せ */
+    border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
+    border-radius: 10px; /* 角を丸く */
+  }
+  
+  /* モーダル内の保存ボタンのスタイル */
+  .modal-button {
+    background-color: #87CEFA; /* 薄い青色 */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .modal-button:hover {
+    background-color: #00BFFF; /* ホバー時の色 */
+  }
+  
+  /* 電卓風のボタンスタイル */
+  .calculator-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px; /* ボタンを大きく */
+    font-size: 24px; /* 文字を大きく */
+    margin: 0; /* ボタンの左右のスペースを無くす */
+    cursor: pointer;
+    width: 80px; /* ボタンを大きく */
+  }
+  
+  .calculator-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* 電卓のボタン配置 */
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3列に変更 */
+    gap: 5px; /* ボタンとボタンの間を狭く */
+    justify-items: center;
+  }
+  
+  .calculator-grid-extended {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
+    gap: 5px; /* 文字と文字の間を狭く */
+    justify-items: center;
+    margin-top: 10px; /* 上下の隙間を無くす */
   }
