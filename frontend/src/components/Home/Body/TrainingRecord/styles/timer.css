@@ -15,6 +15,7 @@
     font-size: 18px; /* フォントを大きく */
     cursor: pointer;
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+    border: 2px solid rgba(162, 217, 255, 0.8); /* 薄い青色の枠線 */
   }
   
   .timer-options button:hover {

@@ -63,6 +63,7 @@
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側の影 */
     transition: border-color 0.3s ease; /* 枠線の色の変化をスムーズに */
     font-size: 18px; /* フォントサイズを大きく */
+    cursor: pointer; /* ホバー時にポインターを表示 */
 }
 
 /* 入力フィールドのフォーカス時のスタイル */
@@ -92,6 +93,7 @@
 .training-table .complete-button {
     background-color: rgba(162, 217, 255, 0.2); /* 背景色を透過 */
     color: black; /* 文字色を黒に */
+    cursor: pointer; /* ホバー時にポインターを表示 */
 }
 
 /* 未完了ボタンのスタイル */
@@ -99,6 +101,7 @@
     background-color: white; /* 背景色を白に */
     color: white; /* 文字色を白に */
     border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
+    cursor: pointer; /* ホバー時にポインターを表示 */
 }
 
 /* 削除ボタンのスタイル */
@@ -111,6 +114,7 @@
 /* 削除ボタンのホバー時のスタイル */
 .training-table .delete-button:hover {
     background-color: red; /* ホバー時の背景色 */
+    cursor: pointer; /* ホバー時にポインターを表示 */
 }
 
 /* セット追加ボタンのコンテナスタイル */
