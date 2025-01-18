@@ -38,18 +38,19 @@ const TrainingRecord = () => {
       <table style={{ width: "100%", marginTop: "20px", borderCollapse: "collapse" }}>
         <thead>
           <tr>
-            <th>セット</th>
-            <th>kg</th>
-            <th>回</th>
-            <th>完了</th>
-            <th>タイマー</th>
+            <th style={{ width: "10%" }}>セット</th>
+            <th style={{ width: "20%" }}>kg</th>
+            <th style={{ width: "20%" }}>回</th>
+            <th style={{ width: "20%" }}>完了</th>
+            <th style={{ width: "20%" }}>タイマー</th>
+            <th style={{ width: "10%" }}>操作</th>
           </tr>
         </thead>
         <tbody>
           {sets.map((set, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
-              <td>
+              <td style={{ textAlign: "center" }}>{index + 1}</td>
+              <td style={{ textAlign: "center" }}>
                 <input
                   type="number"
                   value={set.weight}
@@ -57,7 +58,7 @@ const TrainingRecord = () => {
                   style={{ width: "60px" }}
                 />
               </td>
-              <td>
+              <td style={{ textAlign: "center" }}>
                 <input
                   type="number"
                   value={set.reps}
@@ -65,7 +66,7 @@ const TrainingRecord = () => {
                   style={{ width: "60px" }}
                 />
               </td>
-              <td>
+              <td style={{ textAlign: "center" }}>
                 <button
                   onClick={() => handleUpdateSet(index, "complete", !set.complete)}
                   style={{
@@ -78,7 +79,7 @@ const TrainingRecord = () => {
                   {set.complete ? "完" : "レ"}
                 </button>
               </td>
-              <td>
+              <td style={{ textAlign: "center" }}>
                 <input
                   type="text"
                   value={set.timer}
@@ -86,7 +87,7 @@ const TrainingRecord = () => {
                   style={{ width: "60px" }}
                 />
               </td>
-              <td>
+              <td style={{ textAlign: "center" }}>
                 <button
                   onClick={() => handleRemoveSet(index)}
                   style={{
