@@ -1,52 +1,54 @@
-/* テーブルのスタイル */
+/* テーブル全体のスタイル */
 .training-table {
     width: auto; /* テーブルの幅を自動調整 */
     margin: 20px auto; /* 上下の余白を20px、左右の余白を自動調整 */
-    border-collapse: collapse;
+    border-collapse: collapse; /* 境界線を重ねて表示 */
     font-size: 18px; /* フォントサイズを大きく */
 }
 
+/* テーブルヘッダーとセルのスタイル */
 .training-table th,
 .training-table td {
-    text-align: center;
+    text-align: center; /* テキストを中央揃え */
     padding: 10px; /* パディングを大きく */
 }
 
+/* テーブルヘッダーのスタイル */
 .training-table th {
-    font-weight: bold;
+    font-weight: bold; /* フォントを太字に */
     font-size: 20px; /* ヘッダーのフォントサイズを大きく */
 }
 
 /* 各列の幅を指定 */
 .training-table th:nth-child(1),
 .training-table td:nth-child(1) {
-    width: 70px; /* セット */
+    width: 70px; /* セット列 */
     font-weight: bold; /* 太字 */
 }
 
 .training-table th:nth-child(2),
 .training-table td:nth-child(2) {
-    width: 80px; /* kg */
+    width: 80px; /* kg列 */
 }
 
 .training-table th:nth-child(3),
 .training-table td:nth-child(3) {
-    width: 80px; /* 回 */
+    width: 80px; /* 回列 */
 }
 
 .training-table th:nth-child(4),
 .training-table td:nth-child(4) {
-    width: 100px; /* タイマー */
+    width: 100px; /* タイマー列 */
 }
 
 .training-table th:nth-child(5),
 .training-table td:nth-child(5) {
-    width: 80px; /* 完了 */
+    width: 80px; /* 完了列 */
 }
 
 .training-table th:nth-child(6),
 .training-table td:nth-child(6) {
-    width: 80px; /* 操作 */
+    width: 80px; /* 操作列 */
 }
 
 /* 入力フィールドのスタイル */
@@ -63,11 +65,13 @@
     font-size: 18px; /* フォントサイズを大きく */
 }
 
+/* 入力フィールドのフォーカス時のスタイル */
 .training-table input[type="number"]:focus,
 .training-table input[type="text"]:focus {
-    border-color: #87CEFA; /* フォーカス時の枠線の色 */
+    border-color: #a2d9ff; /* フォーカス時の枠線の色 */
 }
 
+/* 入力フィールドのスピンボタンを非表示に */
 .training-table input[type="number"]::-webkit-outer-spin-button,
 .training-table input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none; /* Chrome, Safari, Edge用 */
@@ -76,53 +80,60 @@
 
 /* ボタンのスタイル */
 .training-table button {
-    border: none;
-    border-radius: 5px;
+    border: none; /* 境界線をなしに */
+    border-radius: 5px; /* 角を丸く */
     padding: 10px 15px; /* パディングを大きく */
     width: 80px; /* ボタンの幅を広く */
     height: 40px; /* ボタンの高さを広く */
     font-size: 16px; /* フォントサイズを大きく */
 }
 
+/* 完了ボタンのスタイル */
 .training-table .complete-button {
-    background-color: rgba(162, 217, 255, 0.2);
-    color: black;
+    background-color: rgba(162, 217, 255, 0.2); /* 背景色を透過 */
+    color: black; /* 文字色を黒に */
 }
 
+/* 未完了ボタンのスタイル */
 .training-table .incomplete-button {
-    background-color: white;
-    color: white;
-    border: 2px solid rgba(162, 217, 255, 0.5);
+    background-color: white; /* 背景色を白に */
+    color: white; /* 文字色を白に */
+    border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
 }
 
+/* 削除ボタンのスタイル */
 .training-table .delete-button {
     background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
-    color: white;
+    color: white; /* 文字色を白に */
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
 }
 
+/* 削除ボタンのホバー時のスタイル */
 .training-table .delete-button:hover {
     background-color: red; /* ホバー時の背景色 */
 }
 
-/* セット追加ボタンのスタイル */
+/* セット追加ボタンのコンテナスタイル */
 .add-set-button-container {
-    text-align: center;
-    margin-top: 20px;
+    text-align: center; /* テキストを中央揃え */
+    margin-top: 20px; /* 上に余白を追加 */
 }
 
+/* セット追加ボタンのスタイル */
 .add-set-button {
-    background-color: rgba(162, 217, 255, 0.5); /* ベースカラーを透過50%に */
-    border: none;
-    border-radius: 5px;
+    background-color: rgba(162, 217, 255, 0.2); /* ベースカラーを透過50%に */
+    border: 2px solid rgba(162, 217, 255, 0.2); /* 薄い青色の枠線を透過20%に */
+    border-radius: 5px; /* 角を丸く */
     padding: 15px 30px; /* パディングを大きく */
-    cursor: pointer;
+    cursor: pointer; /* カーソルをポインターに */
     font-weight: bold; /* 文字を太く */
     color: black; /* 文字色を黒に */
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
     font-size: 18px; /* フォントサイズを大きく */
+    border: 2px solid rgba(162, 217, 255, 0.8); /* 薄い青色の枠線 */
 }
 
+/* セット追加ボタンのホバー時のスタイル */
 .add-set-button:hover {
     background-color: rgba(130, 192, 255, 0.5); /* ホバー時の背景色を透過50%に */
 }

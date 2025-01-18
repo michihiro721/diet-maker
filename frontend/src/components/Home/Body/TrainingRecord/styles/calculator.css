@@ -1,7 +1,7 @@
 /* 電卓風のボタンスタイル */
 .calculator-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color: rgba(162, 217, 255, 0.1);
+    border: 1px solid #a2d9ff;
     border-radius: 5px;
     padding: 20px; /* ボタンを大きく */
     font-size: 24px; /* 文字を大きく */
@@ -11,7 +11,7 @@
   }
   
   .calculator-button:hover {
-    background-color: #e0e0e0;
+    background-color: #a2d9ff;
   }
   
   /* 電卓のボタン配置 */
