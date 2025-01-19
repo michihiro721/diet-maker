@@ -1,3 +1,6 @@
+// このコードは、カレンダーを表示し、ユーザーが日付を選択できるようにするためのコンポーネントです。
+// カレンダーの日付が変更されたときに状態を更新し、カスタムスタイルやカスタム表示を提供します。
+
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';

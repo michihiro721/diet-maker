@@ -1,4 +1,4 @@
-// TrainingTableRowコンポーネントは、トレーニング記録の各行を表示するためのものです。
+// このコードは、トレーニング記録の各行を表示するためのコンポーネントです。
 // 各行には、重量、回数、タイマー、完了ボタン、削除ボタンが含まれています。
 
 import React from "react";
@@ -10,6 +10,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
   return (
     <tr>
       <td>{index + 1}</td>
+      {/* 重量の入力フィールド */}
       <td>
         <input
           type="number"
@@ -18,6 +19,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
           readOnly
         />
       </td>
+      {/* 回数の入力フィールド */}
       <td>
         <input
           type="number"
@@ -26,6 +28,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
           readOnly
         />
       </td>
+      {/* タイマーの入力フィールド */}
       <td>
         <input
           type="text"
@@ -34,9 +37,11 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
           readOnly
         />
       </td>
+      {/* 完了ボタン */}
       <td>
         <TimerButton index={index} set={set} handleUpdateSet={handleUpdateSet} />
       </td>
+      {/* 削除ボタン */}
       <td>
         <button
           onClick={() => handleRemoveSet(index)}
