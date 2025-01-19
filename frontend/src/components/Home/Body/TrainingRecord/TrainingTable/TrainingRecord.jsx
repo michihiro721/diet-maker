@@ -26,7 +26,14 @@ const TrainingRecord = () => {
 
   // 新しいセットを追加する関数
   const handleAddSet = () => {
-    setSets([...sets, { weight: 85, reps: 5, complete: false, timer: "02:00" }]);
+    const lastSet = sets[sets.length - 1]; // 前回のセットを取得
+    const newSet = {
+      weight: lastSet ? lastSet.weight : 85,
+      reps: lastSet ? lastSet.reps : 5,
+      complete: false,
+      timer: lastSet ? lastSet.timer : "02:00"
+    };
+    setSets([...sets, newSet]);
   };
 
   // 指定されたインデックスのセットを削除する関数
