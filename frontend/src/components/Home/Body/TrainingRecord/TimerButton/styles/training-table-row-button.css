@@ -1,0 +1,37 @@
+/* ボタンのスタイル */
+.training-table button {
+    border: none; /* 境界線をなしに */
+    border-radius: 5px; /* 角を丸く */
+    padding: 10px 15px; /* パディングを大きく */
+    width: 80px; /* ボタンの幅を広く */
+    height: 40px; /* ボタンの高さを広く */
+    font-size: 16px; /* フォントサイズを大きく */
+}
+
+/* 完了ボタンのスタイル */
+.training-table .complete-button {
+    background-color: rgba(162, 217, 255, 0.2); /* 背景色を透過 */
+    color: black; /* 文字色を黒に */
+    cursor: pointer; /* ホバー時にポインターを表示 */
+}
+
+/* 未完了ボタンのスタイル */
+.training-table .incomplete-button {
+    background-color: white; /* 背景色を白に */
+    color: white; /* 文字色を白に */
+    border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
+    cursor: pointer; /* ホバー時にポインターを表示 */
+}
+
+/* 削除ボタンのスタイル */
+.training-table .delete-button {
+    background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
+    color: white; /* 文字色を白に */
+    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+}
+
+/* 削除ボタンのホバー時のスタイル */
+.training-table .delete-button:hover {
+    background-color: red; /* ホバー時の背景色 */
+    cursor: pointer; /* ホバー時にポインターを表示 */
+}
