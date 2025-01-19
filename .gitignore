@@ -31,3 +31,20 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Node.js/React関連ファイル
+frontend/node_modules/
+frontend/.cache/
+
+# OS関連ファイル
+.DS_Store
+Thumbs.db
+
+# IDE関連ファイル
+.vscode/
+.idea/
+*.iml
+
+# 念のためのキャッシュ関連
+*.log
+*.lock
