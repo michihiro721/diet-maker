@@ -53,7 +53,7 @@
 }
 
 /* 種目入力フィールドのスタイル */
-.training-info .exercise-input {
+.training-info .exercise-display {
   font-size: 20px; /* フォントサイズを大きく */
   font-weight: bold; /* フォントを太字に */
   text-align: center; /* テキストを中央揃え */
@@ -63,4 +63,5 @@
   background-color: #ffffff; /* 背景色を白に */
   width: auto; /* 幅を自動に設定 */
   box-sizing: border-box; /* ボックスのサイズを調整 */
+  cursor: pointer; /* ポインターを追加 */
 }
