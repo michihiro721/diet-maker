@@ -13,63 +13,92 @@
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
     flex: 1; /* 各日付の幅を均等にする */
     margin: 0; /* マージンをリセット */
+    border-radius: 50%; /* 角を丸くしてまん丸にする */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
 }
 
+/* 日付セルのホバーおよびフォーカス時のスタイル */
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-    background-color: #e0f7fa; /* 選んでいる時の色 */
-    border-radius: 50%; /* 角を丸くする */
+    background-color: #e0f7fa; /* ホバーおよびフォーカス時の背景色 */
+    border-radius: 50%; /* 角を丸くしてまん丸にする */
     color: #000; /* ホバー時の文字色を黒に変更 */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
+    border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
 }
 
+/* 現在の日付のスタイル */
 .react-calendar__tile--now {
     background: rgba(118, 186, 255, 0.15); /* 現在の日付の背景色 */
     color: white; /* 現在の日付の文字色を白に設定 */
-    border-radius: 50%; /* 角を丸くする */
+    border-radius: 50%; /* 角を丸くしてまん丸にする */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
+    border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
 }
 
+/* 現在の日付のホバーおよびフォーカス時のスタイル */
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-    background: #a9d4ff; /* 現在の日付のホバー時の背景色を設定 */
+    background: #a9d4ff; /* 現在の日付のホバー時の背景色 */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
+    border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
 }
 
+/* アクティブな日付のスタイル */
 .react-calendar__tile--hasActive {
-    background: #76baff; /* アクティブな日付の背景色を設定 */
+    background: #76baff; /* アクティブな日付の背景色 */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
 }
 
+/* アクティブな日付のホバーおよびフォーカス時のスタイル */
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-    background: #a9d4ff; /* アクティブな日付のホバー時の背景色を設定 */
+    background: #a9d4ff; /* アクティブな日付のホバー時の背景色 */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
 }
 
+/* 日曜日の日付のスタイル */
 .react-calendar__tile--sunday {
-    color: blue; /* 土曜日の日付の文字色を赤に設定 */
+    color: blue; /* 日曜日の日付の文字色を青に設定 */
 }
 
+/* 土曜日の日付のスタイル */
 .react-calendar__tile--saturday {
-    color: red; /* 日曜日の日付の文字色を青に設定 */
+    color: red; /* 土曜日の日付の文字色を赤に設定 */
 }
 
+/* 選択された日付のスタイル */
 .react-calendar__tile--active {
-    background: #b3d7ff; /* 最終決定時の色 */
+    background: rgba(169, 212, 255, 0.5); /* 選択された日付の背景色を透過50%に設定 */
     color: #000; /* 文字色を黒に設定 */
-    border-radius: 50%; /* 角を丸くする */
+    border-radius: 50%; /* 角を丸くしてまん丸にする */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
+    border: 2px solid #a9d4ff; /* 薄い青色の枠線 */
 }
 
-/* 月ビューのスタイル */
+/* 月ビューの日付セルのスタイル */
 .react-calendar__month-view__days__day {
     display: flex; /* フレックスボックスを使用 */
     justify-content: center; /* 子要素を中央揃え */
     align-items: center; /* 子要素を垂直方向に中央揃え */
     padding: 12px; /* 内側の余白を12pxに設定 */
-    border-radius: 50%; /* 角を丸くする */
+    border-radius: 50%; /* 角を丸くしてまん丸にする */
     transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
     font-size: 20px; /* フォントサイズを20pxに統一 */
     font-weight: bold; /* フォントを太字に */
     flex: 1; /* 各日付の幅を均等にする */
-    margin: 0; /* マージンをリセット */
+    width: 40px; /* 幅を固定 */
+    height: 40px; /* 高さを固定 */
 }
 
+/* 隣接する月の日付セルのスタイル */
 .react-calendar__month-view__days__day--neighboringMonth {
     color: #ccc; /* 隣接する月の日付の文字色を薄い灰色に設定 */
 }
@@ -81,11 +110,12 @@
     display: flex; /* フレックスボックスを使用 */
     justify-content: center; /* 子要素を中央揃え */
     align-items: center; /* 子要素を垂直方向に中央揃え */
-    font-size: 20px; /* フォントサイズを16pxに統一 */
+    font-size: 20px; /* フォントサイズを20pxに統一 */
     color: #000; /* 文字色を黒に変更 */
     font-weight: bold; /* フォントを太字に */
 }
 
+/* 年ビュー、十年ビュー、世紀ビューのホバーおよびフォーカス時のスタイル */
 .react-calendar__year-view__months__month:enabled:hover,
 .react-calendar__year-view__months__month:enabled:focus,
 .react-calendar__decade-view__years__year:enabled:hover,
