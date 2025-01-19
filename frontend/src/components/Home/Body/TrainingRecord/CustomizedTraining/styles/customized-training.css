@@ -23,10 +23,11 @@
   background: #fff; /* 背景色を白に設定 */
   padding: 20px; /* 内側の余白を設定 */
   border-radius: 10px; /* 角を丸くする */
-  width: 500px; /* 横幅を500pxに設定 */
+  width: 90%; /* 横幅を90%に設定 */
   max-width: 1000px; /* 最大幅を1000pxに設定 */
+  max-height: 80%; /* 最大高さを80%に設定 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
-  overflow: hidden; /* コンテンツがはみ出さないようにする */
+  overflow-y: auto; /* 縦スクロールを有効に */
   border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い水色の枠線 */
 }
 
@@ -75,7 +76,7 @@
 
 .exercise-list {
   /* 種目リストのコンテナスタイル */
-  max-height: 4500px; /* 高さを広く設定 */
+  max-height: 450px; /* 高さを450pxに設定 */
   overflow-y: auto; /* 縦スクロールを有効に */
   display: flex; /* フレックスボックスを使用 */
   flex-direction: column; /* 縦方向に配置 */
