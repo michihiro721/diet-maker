@@ -3,11 +3,6 @@
 
 import React, { useState } from "react";
 import './styles/training-record-container.css';
-import './styles/training-info.css';
-import './styles/training-table.css';
-import './styles/modal.css';
-import './styles/calculator.css';
-import './styles/timer.css';
 import TrainingInfo from './TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from './Modal';
