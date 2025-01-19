@@ -47,7 +47,9 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
 
   // 種目が選択されたときの処理
   const handleExerciseSelect = (exercise) => {
-    onExerciseChange(exercise); // 親コンポーネントの状態を更新
+    // 選択された種目がどの部位に属するかを判断
+    const part = Object.keys(exercises).find(part => exercises[part].includes(exercise));
+    onExerciseChange(exercise, part); // 親コンポーネントの状態を更新
     closeModal(); // モーダルを閉じる
   };
 
