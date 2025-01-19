@@ -58,7 +58,7 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
 
   return (
     <div className="modal-overlay" onClick={closeModal}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-contents" onClick={(e) => e.stopPropagation()}>
         {/* 部位選択ボタン */}
         <div className="part-selector">
           {Object.keys(exercises).map((part) => (
