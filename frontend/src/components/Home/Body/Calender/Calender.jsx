@@ -8,6 +8,9 @@ import './styles/CalenderCommon.css';
 import './styles/CalenderNavigation.css';
 import './styles/CalenderWeekdays.css';
 import './styles/CalenderDays.css';
+import CalenderTileClassName from './CalenderTileClassName';
+import CalenderFormatShortWeekday from './CalenderFormatShortWeekday';
+import CalenderTileContent from './CalenderTileContent';
 
 function Calender() {
   // 日付の状態を管理するためのuseStateフックを使用
@@ -18,42 +21,15 @@ function Calender() {
     setDate(newDate); // 状態を新しい日付に更新
   };
 
-  // カスタムレンダリング関数
-  const tileClassName = ({ date, view }) => {
-    if (view === 'month') {
-      const day = date.getDay();
-      if (day === 0) {
-        return 'react-calendar__tile--sunday';
-      } else if (day === 1) {
-        return 'react-calendar__tile--saturday';
-      }
-    }
-    return null;
-  };
-
-  // 曜日の表示をカスタマイズ
-  const formatShortWeekday = (locale, date) => {
-    const weekdays = ['土', '日', '月', '火', '水', '木', '金'];
-    return weekdays[date.getDay()];
-  };
-
-  // 日付の表示をカスタマイズ
-  const tileContent = ({ date, view }) => {
-    if (view === 'month') {
-      return <span>{date.getDate()}</span>;
-    }
-    return null;
-  };
-
   return (
     <div>
       {/* カレンダーコンポーネントを表示し、onChangeとvalueプロパティを設定 */}
       <Calendar
         onChange={onChange}
         value={date}
-        tileClassName={tileClassName}
-        formatShortWeekday={formatShortWeekday}
-        tileContent={tileContent}
+        tileClassName={CalenderTileClassName}
+        formatShortWeekday={CalenderFormatShortWeekday}
+        tileContent={CalenderTileContent}
       />
     </div>
   );
