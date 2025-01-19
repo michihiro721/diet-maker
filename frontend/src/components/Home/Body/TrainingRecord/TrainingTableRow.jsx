@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import AlertFunction from '../Common/AlertFunction';
-import './styles/training-table-row.css';
+import AlertFunction from './AlertFunction';
+import './styles/training-table-row-input.css';
+import './styles/training-table-row-button.css';
 
 const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemoveSet }) => {
   const [showAlert, setShowAlert] = useState(false);
