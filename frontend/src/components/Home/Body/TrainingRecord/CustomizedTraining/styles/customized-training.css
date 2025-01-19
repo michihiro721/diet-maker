@@ -1,62 +1,122 @@
+/* 
+  このファイルは、トレーニング種目選択モーダルウィンドウのスタイルを定義しています。
+  モーダルウィンドウは、トレーニング種目を選択するためのインターフェースを提供し、
+  部位ごとの種目リストを表示します。
+*/
+
 .modal-overlay {
+    /* モーダルのオーバーレイ部分のスタイル */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000; /* オーバーレイの重なり順を最前面に */
   }
   
-  .modal-content {
-    background: white;
+.modal-content {
+    /* モーダルのコンテンツ部分のスタイル */
+    background: #f9f9f9;
     padding: 20px;
-    border-radius: 8px;
-    max-width: 600px;
-    width: 100%;
-    position: relative;
-  }
-  
+    border-radius: 10px;
+    width: 200px; /* 横幅をさらに広く設定 */
+    max-width: 1200px; /* 最大幅を1200pxに設定 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+    overflow: hidden;
+}
   .part-selector {
+    /* 部位選択ボタンのコンテナスタイル */
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
   }
   
   .part-button {
-    padding: 10px 20px;
+    /* 部位選択ボタンのスタイル */
+    padding: 10px 15px;
     border: none;
-    background: #f0f0f0;
+    border-radius: 20px;
+    background: #e0f7fa;
+    color: #007bff;
+    font-size: 14px;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* 背景色と文字色の変化をスムーズに */
+  }
+  
+  .part-button:hover {
+    /* 部位選択ボタンのホバースタイル */
+    background: #b2ebf2;
+    color: #0056b3;
   }
   
   .part-button.active {
+    /* アクティブな部位選択ボタンのスタイル */
     background: #007bff;
     color: white;
+  }
+  
+  .search-input {
+    /* 検索入力フィールドのスタイル */
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+    font-size: 14px;
   }
   
   .exercise-list {
+    /* 種目リストのコンテナスタイル */
+    max-height: 4500px; /* 高さを広く設定 */
+    overflow-y: auto; /* 縦スクロールを有効に */
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
   }
   
-  .exercise-item {
-    width: 30%;
+.exercise-item {
+    /* 種目アイテムのスタイル */
+    width: 100%;
     text-align: center;
-    margin-bottom: 20px;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #b2ebf2;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 14px;
+    color: #000;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* 背景色と文字色の変化をスムーズに */
+}
+  
+  .exercise-item:hover {
+    /* 種目アイテムのホバースタイル */
+    background: #e0f7fa;
+    color: #007bff;
   }
   
   .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    /* モーダルを閉じるボタンのスタイル */
+    display: block;
+    margin: 10px auto 0;
+    padding: 8px 20px;
     background: #007bff;
     color: white;
     border: none;
-    padding: 10px;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
   }
+  
+  .close-button:hover {
+    /* モーダルを閉じるボタンのホバースタイル */
+    background: #0056b3;
+    transform: scale(1.05); /* ボタンを少し拡大 */
+  }
+
