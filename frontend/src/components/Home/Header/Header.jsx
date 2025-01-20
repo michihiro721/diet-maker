@@ -1,15 +1,22 @@
+// ReactとuseStateフックをインポート
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./styles/Header.css"; // Header用のCSSファイルをインポート
-import "./styles/MenuModal.css"; // MenuModal用のCSSファイルをインポート
+// メニューボタンとモーダルウィンドウのコンポーネントをインポート
+import MenuButton from "./MenuButton";
+import MenuModal from "./MenuModal";
+// Header用のCSSファイルをインポート
+import "./styles/Header.css";
 
+// Headerコンポーネントの定義
 const Header = () => {
+  // メニューの開閉状態を管理するための状態変数とその更新関数を定義
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // メニューの開閉を切り替える関数
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // メニューを閉じる関数
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
@@ -19,34 +26,15 @@ const Header = () => {
       {/* ヘッダー */}
       <header className="header">
         <div className="header-title">ダイエットメーカー</div>
-        <button className="menu-button" onClick={toggleMenu}>
-          <i className="fas fa-bars"></i>
-        </button>
+        {/* メニューボタン */}
+        <MenuButton toggleMenu={toggleMenu} />
       </header>
 
       {/* モーダルウィンドウ */}
-      {isMenuOpen && (
-        <div className="menu-overlay" onClick={closeMenu}>
-          <div className="menu-modal" onClick={(e) => e.stopPropagation()}>
-            <ul className="menu-list">
-              <li><Link to="/achievements" onClick={closeMenu}>成果</Link></li>
-              <li><Link to="/goal-setting" onClick={closeMenu}>目標設定</Link></li>
-              <li><Link to="/training-menu" onClick={closeMenu}>トレーニングメニュー提案</Link></li>
-              <li><Link to="/body-info" onClick={closeMenu}>身体情報</Link></li>
-              <li><Link to="/calorie-info" onClick={closeMenu}>カロリー関係</Link></li>
-              <li><Link to="/weight" onClick={closeMenu}>体重</Link></li>
-              <li><Link to="/diet-mindset" onClick={closeMenu}>ダイエット心構え</Link></li>
-              <li><Link to="/posts" onClick={closeMenu}>みんなの投稿一覧</Link></li>
-              <li><Link to="/app-usage" onClick={closeMenu}>アプリ使い方</Link></li>
-            </ul>
-            <button className="close-button" onClick={closeMenu}>
-              閉じる
-            </button>
-          </div>
-        </div>
-      )}
+      {isMenuOpen && <MenuModal closeMenu={closeMenu} />}
     </div>
   );
 };
 
+// Headerコンポーネントをエクスポート
 export default Header;

@@ -1,0 +1,28 @@
+/* メニューボタンのスタイル */
+.menu-button {
+    background: white; /* 背景色を白に設定 */
+    border: none; /* 枠線をなしに設定 */
+    border-radius: 50%; /* ボタンを円形にする */
+    width: 60px; /* ボタンの幅を設定 */
+    height: 60px; /* ボタンの高さを設定 */
+    cursor: pointer; /* カーソルをポインターに設定 */
+    display: flex; /* フレックスボックスレイアウトを使用 */
+    justify-content: center; /* 子要素を中央に配置 */
+    align-items: center; /* 子要素を中央に配置 */
+    transition: background-color 0.3s, transform 0.3s; /* 背景色と拡大の変化をスムーズに */
+    position: absolute; /* 絶対位置に配置 */
+    right: 70px; /* 右端からの距離を設定 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* スタイリッシュな影を追加 */
+  }
+  
+  /* メニューボタン内のアイコンのスタイル */
+  .menu-button i {
+    font-size: 1.5rem; /* アイコンのサイズを設定 */
+    color: #5d9cec; /* アイコンの色を設定 */
+  }
+  
+  /* メニューボタンのホバー時のスタイル */
+  .menu-button:hover {
+    background-color: #d3f2ff; /* ホバー時の背景色を設定 */
+    transform: scale(1.1); /* ホバー時にボタンを少し拡大 */
+  }
