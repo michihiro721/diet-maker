@@ -16,33 +16,33 @@
 .header-title {
   font-size: 40px;
   font-weight: bold;
-  margin: 0 auto; /* Center the title */
+  margin: 0 auto; /* タイトルを中央に配置 */
 }
 
 .menu-button {
   background: white;
   border: none;
   border-radius: 50%;
-  width: 60px; /* Increase the size */
-  height: 60px; /* Increase the size */
+  width: 60px; /* サイズを増加 */
+  height: 60px; /* サイズを増加 */
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem; /* Increase the font size */
   transition: background-color 0.3s, transform 0.3s;
   position: absolute;
-  right: 50px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for a more stylish look */
+  right: 70px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* スタイリッシュな影を追加 */
 }
 
-.menu-button:hover {
-  background-color: #d3f2ff; /* Hover color */
-  transform: scale(1.1); /* Slightly enlarge on hover */
+.menu-button i {
+  font-size: 1.5rem; /* アイコンのサイズを設定 */
+  color: #5d9cec; /* アイコンの色を設定 */
 }
 
 .menu-button:hover {
   background-color: #d3f2ff; /* ホバー時の色 */
+  transform: scale(1.1); /* ホバー時に少し拡大 */
 }
 
 /* モーダルのオーバーレイ */

@@ -22,7 +22,7 @@ const Header = () => {
       <header className="header">
         <div className="header-title">ダイエットメーカー</div>
         <button className="menu-button" onClick={toggleMenu}>
-          ≡
+        <i class="fas fa-bars"></i>
         </button>
       </header>
 
