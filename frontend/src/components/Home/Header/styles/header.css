@@ -61,12 +61,15 @@
 
 /* モーダルウィンドウ */
 .menu-modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  max-width: 90%;
+  background: #fff; /* 背景色を白に設定 */
+  padding: 20px; /* 内側の余白を設定 */
+  border-radius: 10px; /* 角を丸くする */
+  width: 500px; /* 横幅を設定 */
+  max-width: 1000px; /* 最大幅を設定 */
+  max-height: 80%; /* 最大高さを設定 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
+  border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い水色の枠線 */
+  text-align: center; /* 文字を中央揃え */
   animation: fadeIn 0.3s ease;
 }
 
@@ -89,29 +92,33 @@
 
 .menu-list li {
   padding: 10px 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #b2ebf2; /* 枠線を設定 */
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 25px; /* フォントサイズを大きく */
+  font-weight: bold; /* フォントを太く */
+  border-radius: 15px; /* 角を丸くする */
 }
 
 .menu-list li:hover {
-  background: #f0f0f0;
+  background: #e0f7fa; /* 背景色を変更 */
+  color: #007bff; /* 文字色を変更 */
 }
 
 .close-button {
   display: block;
   margin: 10px auto 0;
-  padding: 10px 20px;
-  background: #ff6b6b; /* 赤 */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.3s;
+  padding: 12px 30px;
+  background: #007bff; /* 背景色を青に設定 */
+  color: white; /* 文字色を白に設定 */
+  border: none; /* 枠線をなしに設定 */
+  border-radius: 20px; /* 角を丸くする */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  font-size: 16px; /* フォントサイズを設定 */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
 }
 
 .close-button:hover {
-  background: #ff4d4d;
-  transform: scale(1.05);
+  background: #0056b3; /* 背景色を変更 */
+  transform: scale(1.05); /* ボタンを少し拡大 */
 }
