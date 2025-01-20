@@ -50,7 +50,7 @@
 
 /* アクティブな日付のスタイル */
 .react-calendar__tile--hasActive {
-    background: #76baff;
+    background: #A2D9FF;
     width: 40px;
     height: 40px;
 }
@@ -75,7 +75,7 @@
 
 /* 選択された日付のスタイル */
 .react-calendar__tile--active {
-    background: rgba(169, 212, 255, 0.5);
+    background: rgba(173, 216, 230, 0.3);
     color: #000;
     border-radius: 50%;
     width: 40px;
