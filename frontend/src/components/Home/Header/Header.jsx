@@ -1,10 +1,7 @@
-// このコードは、ウェブサイトのヘッダーを表示するためのコンポーネントです。
-// ヘッダーには、サイトのタイトルが含まれています。
-
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./styles/header.css"; // CSSファイルをインポート
 
-// Headerコンポーネントを定義
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -22,7 +19,7 @@ const Header = () => {
       <header className="header">
         <div className="header-title">ダイエットメーカー</div>
         <button className="menu-button" onClick={toggleMenu}>
-        <i class="fas fa-bars"></i>
+          <i className="fas fa-bars"></i>
         </button>
       </header>
 
@@ -31,15 +28,15 @@ const Header = () => {
         <div className="menu-overlay" onClick={closeMenu}>
           <div className="menu-modal" onClick={(e) => e.stopPropagation()}>
             <ul className="menu-list">
-              <li>成果</li>
-              <li>目標設定</li>
-              <li>トレーニングメニュー提案</li>
-              <li>身体情報</li>
-              <li>カロリー関係</li>
-              <li>体重</li>
-              <li>ダイエット心構え</li>
-              <li>みんなの投稿一覧</li>
-              <li>アプリ使い方</li>
+              <li><Link to="/achievements" onClick={closeMenu}>成果</Link></li>
+              <li><Link to="/goal-setting" onClick={closeMenu}>目標設定</Link></li>
+              <li><Link to="/training-menu" onClick={closeMenu}>トレーニングメニュー提案</Link></li>
+              <li><Link to="/body-info" onClick={closeMenu}>身体情報</Link></li>
+              <li><Link to="/calorie-info" onClick={closeMenu}>カロリー関係</Link></li>
+              <li><Link to="/weight" onClick={closeMenu}>体重</Link></li>
+              <li><Link to="/diet-mindset" onClick={closeMenu}>ダイエット心構え</Link></li>
+              <li><Link to="/posts" onClick={closeMenu}>みんなの投稿一覧</Link></li>
+              <li><Link to="/app-usage" onClick={closeMenu}>アプリ使い方</Link></li>
             </ul>
             <button className="close-button" onClick={closeMenu}>
               閉じる
@@ -51,5 +48,4 @@ const Header = () => {
   );
 };
 
-// Headerコンポーネントをエクスポート
 export default Header;
