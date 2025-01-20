@@ -2,6 +2,7 @@
 // フッターには、リンクとソーシャルメディアのアイコンが含まれています。
 
 import React from 'react'; // Reactをインポート
+import { Link } from 'react-router-dom'; // React RouterのLinkコンポーネントをインポート
 import { FaTwitter, FaGithub } from 'react-icons/fa'; // react-iconsからFaTwitterとFaGithubをインポート
 import './Footer.css'; // CSSファイルをインポート
 
@@ -11,9 +12,9 @@ function Footer() {
     <footer className="footer">
       <div className="links">
         {/* お問い合わせ、利用規約、プライバシーポリシーのリンクを表示 */}
-        <a href="/contact" className="link" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
-        <a href="/terms" className="link" target="_blank" rel="noopener noreferrer">利用規約</a>
-        <a href="/privacy" className="link" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+        <Link to="/contact" className="link">お問い合わせ</Link>
+        <Link to="/terms" className="link">利用規約</Link>
+        <Link to="/privacy" className="link">プライバシーポリシー</Link>
       </div>
       <div className="icons">
         {/* TwitterとGitHubのアイコンを表示 */}
