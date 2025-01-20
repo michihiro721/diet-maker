@@ -18,6 +18,13 @@
     color: white; /* テキストの色を白に設定 */
     margin: 0 15px; /* 左右に15px */
     text-decoration: none; /* 下線を消す */
+    font-weight: bold; /* 文字を太くする */
+    font-size: 16px; /* フォントサイズを設定 */
+    transition: color 0.3s ease; /* 色の変化をスムーズに */
+}
+
+.link:hover {
+    color: #FFD700; /* ホバー時の色をゴールドに設定 */
 }
 
 .icons {
