@@ -122,3 +122,13 @@
   background: #0056b3; /* 背景色を変更 */
   transform: scale(1.05); /* ボタンを少し拡大 */
 }
+
+/* 新しいスタイルを追加 */
+.menu-list a {
+  text-decoration: none; /* 下線を削除 */
+  color: inherit; /* 親要素の色を継承 */
+}
+
+.menu-list a:visited {
+  color: inherit; /* 親要素の色を継承 */
+}
