@@ -1,67 +1,45 @@
-// このファイルは、トレーニング種目選択モーダルウィンドウのコンポーネントを定義しています。
-// モーダルウィンドウは、トレーニング種目を選択するためのインターフェースを提供し、
-// 部位ごとの種目リストを表示します。
-
+// Reactと必要なフック、コンポーネントをインポート
 import React, { useState, useEffect } from "react";
-import "./styles/customized-training.css";
+import PartSelector from "./PartSelector";
+import SearchInput from "./SearchInput";
+import ExerciseList from "./ExerciseList";
+import CloseButton from "./CloseButton";
+import './styles/ModalOverlay.css';
+import './styles/ModalContents.css';
 
+// CustomizedTrainingコンポーネントの定義
 const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) => {
-  // 選択された部位を管理する状態
+  // 部位選択の状態を管理するためのuseStateフック
   const [selectedPart, setSelectedPart] = useState("胸");
-  // 検索用の入力値を管理する状態
+  // 検索語の状態を管理するためのuseStateフック
   const [searchTerm, setSearchTerm] = useState("");
-  // フィルタリングされた種目リストを管理する状態
+  // フィルタリングされたトレーニング種目の状態を管理するためのuseStateフック
   const [filteredExercises, setFilteredExercises] = useState([]);
 
-  // 各部位ごとのトレーニング種目リスト
+  // トレーニング種目のデータ
   const exercises = {
-    胸: [
-      "ベンチプレス", "インクラインベンチプレス", "ダンベルプレス", "ダンベルフライ", "ケーブルクロスオーバー",
-      "ペックデックフライ", "プッシュアップ", "ディップス", "チェストプレス", "スミスマシンベンチプレス",
-      "ダンベルプルオーバー", "ケーブルフライ", "マシンフライ", "マシンチェストプレス", "ディクラインベンチプレス",
-      "ディクラインダンベルプレス", "ディクラインダンベルフライ", "ディクラインケーブルクロスオーバー", "ディクラインペックデックフライ",
-      "ディクラインプッシュアップ", "ディクラインディップス"
-    ],
-    背中: [
-      "ラットプルダウン", "デッドリフト", "懸垂", "ベントオーバーロウ", "シーテッドロウ",
-      "ワンハンドダンベルロウ", "Tバーロウ", "プルオーバー", "バックエクステンション", "リバースフライ",
-      "フェイスプル", "シュラッグ"
-    ],
-    肩: [
-      "ショルダープレス", "サイドレイズ", "フロントレイズ", "リアレイズ", "アップライトロウ",
-      "アーノルドプレス", "ダンベルショルダープレス", "ケーブルサイドレイズ", "ケーブルフロントレイズ", "ケーブルリアレイズ",
-      "マシンショルダープレス", "マシンサイドレイズ", "マシンフロントレイズ", "マシンリアレイズ"
-    ],
-    腕: [
-      "アームカール", "トライセプスエクステンション", "ダンベルカール", "ケーブルプレスダウン", "ケーブルカール",
-      "プリーチャーカール", "ハンマーカール", "フレンチプレス", "キックバック", "リストカール",
-      "リバースリストカール", "スカルクラッシャー", "コンセントレーションカール", "インクラインダンベルカール"
-    ],
-    脚: [
-      "スクワット", "レッグプレス", "カーフレイズ", "レッグエクステンション", "レッグカール",
-      "ランジ", "ブルガリアンスクワット", "シシースクワット", "ヒップスラスト", "グルートブリッジ"
-    ],
-    腹筋: [
-      "クランチ", "プランク", "レッグレイズ", "シットアップ", "バイシクルクランチ",
-      "ロシアンツイスト", "マウンテンクライマー", "ヒールタッチ", "トゥータッチ", "ハンギングレッグレイズ"
-    ]
+    胸: ["ベンチプレス", "インクラインベンチプレス", "ダンベルプレス", "ダンベルフライ", "ケーブルクロスオーバー", "ペックデックフライ", "プッシュアップ", "ディップス", "チェストプレス", "スミスマシンベンチプレス", "ダンベルプルオーバー", "ケーブルフライ", "マシンフライ", "マシンチェストプレス", "ディクラインベンチプレス", "ディクラインダンベルプレス", "ディクラインダンベルフライ", "ディクラインケーブルクロスオーバー", "ディクラインペックデックフライ", "ディクラインプッシュアップ", "ディクラインディップス"],
+    背中: ["ラットプルダウン", "デッドリフト", "懸垂", "ベントオーバーロウ", "シーテッドロウ", "ワンハンドダンベルロウ", "Tバーロウ", "プルオーバー", "バックエクステンション", "リバースフライ", "フェイスプル", "シュラッグ"],
+    肩: ["ショルダープレス", "サイドレイズ", "フロントレイズ", "リアレイズ", "アップライトロウ", "アーノルドプレス", "ダンベルショルダープレス", "ケーブルサイドレイズ", "ケーブルフロントレイズ", "ケーブルリアレイズ", "マシンショルダープレス", "マシンサイドレイズ", "マシンフロントレイズ", "マシンリアレイズ"],
+    腕: ["アームカール", "トライセプスエクステンション", "ダンベルカール", "ケーブルプレスダウン", "ケーブルカール", "プリーチャーカール", "ハンマーカール", "フレンチプレス", "キックバック", "リストカール", "リバースリストカール", "スカルクラッシャー", "コンセントレーションカール", "インクラインダンベルカール"],
+    脚: ["スクワット", "レッグプレス", "カーフレイズ", "レッグエクステンション", "レッグカール", "ランジ", "ブルガリアンスクワット", "シシースクワット", "ヒップスラスト", "グルートブリッジ"],
+    腹筋: ["クランチ", "プランク", "レッグレイズ", "シットアップ", "バイシクルクランチ", "ロシアンツイスト", "マウンテンクライマー", "ヒールタッチ", "トゥータッチ", "ハンギングレッグレイズ"]
   };
 
-  // 部位が変更されたときの処理
+  // 部位選択が変更されたときの処理
   const handlePartChange = (part) => {
     setSelectedPart(part);
     setSearchTerm("");
   };
 
-  // 種目が選択されたときの処理
+  // トレーニング種目が選択されたときの処理
   const handleExerciseSelect = (exercise) => {
-    // 選択された種目がどの部位に属するかを判断
     const part = Object.keys(exercises).find(part => exercises[part].includes(exercise));
-    onExerciseChange(exercise, part); // 親コンポーネントの状態を更新
-    closeModal(); // モーダルを閉じる
+    onExerciseChange(exercise, part);
+    closeModal();
   };
 
-  // selectedPart または searchTerm が変更されたときにフィルタリングを実行
+  // 部位選択や検索語が変更されたときにトレーニング種目をフィルタリング
   useEffect(() => {
     const filtered = exercises[selectedPart].filter((exercise) =>
       exercise.toLowerCase().includes(searchTerm.toLowerCase())
@@ -70,49 +48,22 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
   }, [selectedPart, searchTerm]);
 
   return (
+    // モーダルのオーバーレイ
     <div className="modal-overlay" onClick={closeModal}>
+      {/* モーダルのコンテンツ */}
       <div className="modal-contents" onClick={(e) => e.stopPropagation()}>
-        {/* 部位選択ボタン */}
-        <div className="part-selector">
-          {Object.keys(exercises).map((part) => (
-            <button
-              key={part}
-              className={`part-button ${part === selectedPart ? "active" : ""}`}
-              onClick={() => handlePartChange(part)}
-            >
-              {part}
-            </button>
-          ))}
-        </div>
-        {/* 種目検索入力フィールド */}
-        <input
-          type="text"
-          id="exercise-search"
-          name="exercise-search"
-          placeholder="種目を検索"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-        {/* 種目リスト */}
-        <div className="exercise-list">
-          {filteredExercises.map((exercise) => (
-            <p
-              key={exercise}
-              className="exercise-item"
-              onClick={() => handleExerciseSelect(exercise)}
-            >
-              {exercise}
-            </p>
-          ))}
-        </div>
-        {/* モーダルを閉じるボタン */}
-        <button className="close-button" onClick={closeModal}>
-          閉じる
-        </button>
+        {/* 部位選択コンポーネント */}
+        <PartSelector selectedPart={selectedPart} handlePartChange={handlePartChange} exercises={exercises} />
+        {/* 検索入力コンポーネント */}
+        <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        {/* トレーニング種目リストコンポーネント */}
+        <ExerciseList filteredExercises={filteredExercises} handleExerciseSelect={handleExerciseSelect} />
+        {/* 閉じるボタンコンポーネント */}
+        <CloseButton closeModal={closeModal} />
       </div>
     </div>
   );
 };
 
+// CustomizedTrainingコンポーネントをエクスポート
 export default CustomizedTraining;

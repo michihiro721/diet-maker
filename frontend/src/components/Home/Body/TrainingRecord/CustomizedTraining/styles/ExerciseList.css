@@ -1,0 +1,29 @@
+/* 種目リストのコンテナスタイル */
+.exercise-list {
+    max-height: 450px; /* 高さを450pxに設定 */
+    overflow-y: auto; /* 縦スクロールを有効に */
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 縦方向に配置 */
+    align-items: center; /* 中央揃え */
+  }
+  
+  /* 種目アイテムのスタイル */
+  .exercise-item {
+    width: 85%;
+    text-align: center; /* テキストを中央揃え */
+    padding: 10px; /* 内側の余白を設定 */
+    margin: 5px 0; /* 上下に余白を追加 */
+    border: 1px solid #b2ebf2; /* 枠線を設定 */
+    border-radius: 10px; /* 角を丸くする */
+    background: #fff; /* 背景色を白に設定 */
+    font-size: 14px; /* フォントサイズを設定 */
+    color: #000; /* 文字色を黒に設定 */
+    cursor: pointer; /* カーソルをポインターに設定 */
+    transition: background-color 0.3s ease, color 0.3s ease; /* 背景色と文字色の変化をスムーズに */
+  }
+  
+  /* 種目アイテムのホバースタイル */
+  .exercise-item:hover {
+    background: #e0f7fa; /* 背景色を変更 */
+    color: #007bff; /* 文字色を変更 */
+  }
