@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./styles/header.css"; // CSSファイルをインポート
+import "./styles/Header.css"; // Header用のCSSファイルをインポート
+import "./styles/MenuModal.css"; // MenuModal用のCSSファイルをインポート
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
