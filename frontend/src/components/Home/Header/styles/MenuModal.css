@@ -14,14 +14,14 @@
 
 /* モーダルウィンドウ */
 .menu-modal {
-  background: #fff; /* 背景色を白に設定 */
-  padding: 20px; /* 内側の余白を設定 */
-  border-radius: 10px; /* 角を丸くする */
+  background: #f0f8ff; /* 背景色を薄い青に設定 */
+  padding: 30px; /* 内側の余白を設定 */
+  border-radius: 15px; /* 角を丸くする */
   width: 500px; /* 横幅を設定 */
-  max-width: 1000px; /* 最大幅を設定 */
+  max-width: 90%; /* 最大幅を設定 */
   max-height: 80%; /* 最大高さを設定 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
-  border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い水色の枠線 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 軽い影を追加 */
+  border: 2px solid #b2ebf2; /* 薄い水色の枠線 */
   text-align: center; /* 文字を中央揃え */
   animation: fadeIn 0.3s ease; /* フェードインアニメーション */
 }
@@ -47,13 +47,14 @@
 
 /* リストアイテム */
 .menu-list li {
-  padding: 10px 0; /* 上下の余白を設定 */
+  padding: 15px 0; /* 上下の余白を設定 */
+  margin: 10px 0; /* 上下のマージンを追加 */
   border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
   cursor: pointer; /* カーソルをポインターに設定 */
-  transition: background-color 0.3s; /* 背景色の変化をスムーズに */
-  font-size: 25px; /* フォントサイズを大きく */
+  transition: background-color 0.3s, color 0.3s; /* 背景色と文字色の変化をスムーズに */
+  font-size: 25px; /* フォントサイズを設定 */
   font-weight: bold; /* フォントを太く */
-  border-radius: 15px; /* 角を丸くする */
+  border-radius: 10px; /* 角を丸くする */
 }
 
 /* リストアイテムのホバー時のスタイル */
@@ -65,7 +66,7 @@
 /* 閉じるボタン */
 .close-button {
   display: block;
-  margin: 10px auto 0; /* 上下の余白を設定し、中央に配置 */
+  margin: 20px auto 0; /* 上下の余白を設定し、中央に配置 */
   padding: 12px 30px; /* 内側の余白を設定 */
   background: #007bff; /* 背景色を青に設定 */
   color: white; /* 文字色を白に設定 */
