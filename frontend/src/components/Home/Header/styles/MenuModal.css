@@ -43,6 +43,8 @@
   list-style: none; /* リストマーカーを削除 */
   padding: 0;
   margin: 0;
+  transform: translateY(-35px); /* リストを上方向に移動 */
+  
 }
 
 /* リストアイテム */
@@ -52,7 +54,7 @@
   border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
   cursor: pointer; /* カーソルをポインターに設定 */
   transition: background-color 0.3s, color 0.3s; /* 背景色と文字色の変化をスムーズに */
-  font-size: 25px; /* フォントサイズを設定 */
+  font-size: 20px; /* フォントサイズを大きく設定 */
   font-weight: bold; /* フォントを太く */
   border-radius: 10px; /* 角を丸くする */
 }
@@ -73,8 +75,10 @@
   border: none; /* 枠線をなしに設定 */
   border-radius: 20px; /* 角を丸くする */
   cursor: pointer; /* カーソルをポインターに設定 */
-  font-size: 16px; /* フォントサイズを設定 */
+  font-size: 20px; /* フォントサイズを大きく設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
+  position: relative;
+  top: -40px; /* ボタンを少し上に移動 */
 }
 
 /* 閉じるボタンのホバー時のスタイル */
