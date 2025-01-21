@@ -10,13 +10,11 @@ import './Footer.css'; // CSSファイルをインポート
 function Footer() {
   return (
     <footer className="footer">
-      <div className="links">
+      <div className="footer-content">
         {/* お問い合わせ、利用規約、プライバシーポリシーのリンクを表示 */}
         <Link to="/contact" className="link">お問い合わせ</Link>
         <Link to="/terms" className="link">利用規約</Link>
         <Link to="/privacy" className="link">プライバシーポリシー</Link>
-      </div>
-      <div className="icons">
         {/* XとGitHubのアイコンを表示 */}
         <a href="https://x.com/michihiro721" className="iconLink" target="_blank" rel="noopener noreferrer">
           <FaSquareXTwitter className="icon" />

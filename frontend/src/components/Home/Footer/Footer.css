@@ -10,13 +10,15 @@
     transform: translateX(-50%); /* 中央に固定するためにX軸方向に50%移動 */
 }
 
-.links {
-    margin-bottom: 10px; /* 下に10pxのマージン */
+.footer-content {
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: center; /* 子要素を中央揃え */
+    align-items: center; /* 子要素を垂直方向に中央揃え */
+    gap: 20px; /* 子要素間の間隔を設定 */
 }
 
 .link {
     color: white; /* テキストの色を白に設定 */
-    margin: 0 15px; /* 左右に15px */
     text-decoration: none; /* 下線を消す */
     font-weight: bold; /* 文字を太くする */
     font-size: 16px; /* フォントサイズを設定 */
@@ -27,23 +29,16 @@
     color: #FFD700; /* ホバー時の色をゴールドに設定 */
 }
 
-.icons {
-    display: flex; /* フレックスボックスを使用 */
-    justify-content: center; /* 子要素を中央揃え */
-    align-items: center; /* 子要素を垂直方向に中央揃え */
-    margin-bottom: 10px; /* 下に10pxのマージン */
-}
-
 .iconLink {
-    margin: 0 10px; /* 左右に10px */
+    color: white; /* アイコンの色を白に設定 */
+    font-size: 24px; /* アイコンのサイズを設定 */
+    transition: color 0.3s ease; /* 色の変化をスムーズに */
 }
 
-.icon {
-    color: white;
-    font-size: 30px; /* アイコンのサイズ */
+.iconLink:hover {
+    color: #FFD700; /* ホバー時の色をゴールドに設定 */
 }
 
 .copy {
-    font-size: 14px;
-    margin-left: 10px; /* アイコンとの間にスペースを追加 */
+    font-size: 14px; /* フォントサイズを設定 */
 }
