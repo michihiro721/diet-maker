@@ -49,3 +49,6 @@ Thumbs.db
 # 念のためのキャッシュ関連
 *.log
 *.lock
+
+# その他のキャッシュファイル
+frontend/node_modules/.cache/
