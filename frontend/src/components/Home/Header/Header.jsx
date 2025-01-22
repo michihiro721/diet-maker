@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import MenuButton from "./MenuButton";
 import MenuModal from "./MenuModal";
 // Header用のCSSファイルをインポート
-import "./styles/Header.css";
+import "./styles/header.css";
 
 // Headerコンポーネントの定義
 const Header = () => {
