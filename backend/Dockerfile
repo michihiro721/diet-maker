@@ -5,7 +5,9 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt update -qq && apt install -y nodejs build-essential postgresql-client yarn \
-    curl dirmngr apt-transport-https lsb-release ca-certificates
+    curl dirmngr apt-transport-https lsb-release ca-certificates \
+    libxml2-dev libxslt1-dev zlib1g-dev libgmp-dev libffi-dev \
+    libsqlite3-dev
 
 ENV APP_ROOT /app
 RUN mkdir ${APP_ROOT}
@@ -13,6 +15,7 @@ WORKDIR ${APP_ROOT}
 ADD ./Gemfile ${APP_ROOT}/Gemfile
 ADD ./Gemfile.lock ${APP_ROOT}/Gemfile.lock
 
+RUN bundle config set force_ruby_platform true
 RUN bundle install
 
 ADD . ${APP_ROOT}
