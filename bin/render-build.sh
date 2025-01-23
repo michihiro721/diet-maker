@@ -56,4 +56,6 @@ echo "Assets precompile completed"
 bundle exec rake assets:clean
 echo "Assets clean completed"
 
-echo "Build script completed successfully"
+# Start the Rails server
+bundle exec rails server -b 0.0.0.0 -p 3000
+echo "Rails server started"
