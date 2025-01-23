@@ -31,3 +31,12 @@ RUN /root/.bun/bin/bun install
 
 # Build JavaScript assets
 RUN /root/.bun/bin/bun run build
+
+# Set working directory back to backend
+WORKDIR /app/backend
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start the Rails server
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
