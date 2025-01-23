@@ -38,6 +38,12 @@ echo "bun run build completed"
 cd ../backend
 echo "Changed directory back to backend"
 
+# Set environment variables for database connection
+export DATABASE_USER=backend
+export DATABASE_PASSWORD=password
+export DATABASE_HOST=db
+export DATABASE_PORT=5432
+
 bundle exec rake assets:precompile
 echo "Assets precompile completed"
 bundle exec rake assets:clean
