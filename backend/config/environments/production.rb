@@ -98,6 +98,8 @@ Rails.application.configure do
 
   # Add this line to enable asset compilation in production
   config.assets.compile = true
+  config.assets.digest = true
+  # config.assets.js_compressor = :uglifier # 必要に応じてコメントアウト
 
   # Ensure logger is available during assets precompile
   config.assets.initialize_on_precompile = false
