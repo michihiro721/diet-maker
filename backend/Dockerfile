@@ -18,3 +18,6 @@ RUN bundle config set force_ruby_platform true
 RUN bundle install
 
 ADD . ${APP_ROOT}
+
+# Install jsbundling-rails
+RUN bundle exec rails javascript:install:esbuild
