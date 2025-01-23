@@ -21,7 +21,7 @@ module DietMaker
 
     # Ensure the application is initialized
     config.after_initialize do
-      unless Rails.logger
+      if Rails.logger.nil?
         Rails.logger = ActiveSupport::Logger.new(STDOUT)
         Rails.logger.formatter = ::Logger::Formatter.new
       end
