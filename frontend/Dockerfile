@@ -7,6 +7,9 @@ COPY package-lock.json /app
 
 RUN npm install
 
+# Run npm audit fix to fix vulnerabilities
+RUN npm audit fix
+
 COPY . /app
 
 # Expose port 3000
