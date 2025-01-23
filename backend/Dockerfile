@@ -21,3 +21,7 @@ ADD . ${APP_ROOT}
 
 # Install jsbundling-rails
 RUN bundle exec rails javascript:install:esbuild
+
+# Install JavaScript dependencies
+ADD ./package.json ${APP_ROOT}/package.json
+RUN bun install
