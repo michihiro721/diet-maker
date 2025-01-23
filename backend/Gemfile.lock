@@ -257,6 +257,7 @@ DEPENDENCIES
   pg (~> 1.2.3)
   puma (>= 5.0)
   rails (~> 7.2.2, >= 7.2.2.1)
+  railties (~> 7.2.2)
   rubocop-rails-omakase
   sprockets-rails (>= 2.0.0)
   sqlite3 (~> 1.4)

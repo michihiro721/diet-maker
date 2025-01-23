@@ -48,3 +48,6 @@ end
 group :production do
   gem 'pg', '~> 1.2.3'
 end
+
+# Add railties gem
+gem 'railties', '~> 7.2.2'
