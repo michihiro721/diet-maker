@@ -31,5 +31,9 @@ module DietMaker
       end
       Rails.logger.warn "Application initialized"
     end
+
+    # Debugging: Ensure logger is set
+    Rails.logger = Logger.new(STDOUT)
+    Rails.logger.warn "Logger has been set in application.rb"
   end
 end
