@@ -31,6 +31,7 @@ module DietMaker
 
     # Ensure the application is initialized
     config.after_initialize do
+      Rails.logger = Logger.new(STDOUT) unless Rails.logger
       Rails.logger.warn "Application initialized"
     end
   end
