@@ -1,11 +1,12 @@
 {
-  "name": "diet-maker",
+  "name": "diet-maker-frontend",
   "version": "1.0.0",
   "description": "Frontend for Diet Maker App",
   "main": "index.js",
+  "private": "true",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "esbuild app/javascript/application.js --bundle --outdir=../backend/app/assets/builds",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -15,7 +16,8 @@
     "react-dom": "^18.0.0",
     "react-icons": "^4.2.0",
     "react-router-dom": "^6.28.2",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "esbuild": "^0.14.0"
   },
   "author": "",
   "license": "ISC",

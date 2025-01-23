@@ -1,8 +1,8 @@
 {
-  "name": "diet-maker",
+  "name": "diet-maker-frontend",
   "private": "true",
   "scripts": {
-    "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds"
+    "build": "esbuild app/javascript/application.js --bundle --outdir=../backend/app/assets/builds"
   },
   "dependencies": {
     "esbuild": "^0.14.0"
