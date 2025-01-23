@@ -1,24 +1,31 @@
 default: &default
-  adapter: postgresql
-  encoding: unicode
-  host: db
-  username: postgres
-  password: password
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: diet_maker_development
+  adapter: mysql2
+  encoding: utf8
+  username: root
+  password:
+  host: localhost
+  database: backend_development
+  socket: /tmp/mysql.sock
 
 test:
   <<: *default
-  database: diet_maker_test
+  adapter: mysql2
+  encoding: utf8
+  username: root
+  password:
+  host: localhost
+  database: backend_test
+  socket: /tmp/mysql.sock
 
 production:
   <<: *default
-  database: diet_maker_production
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
   adapter: postgresql
   encoding: unicode
+  database: postgresql
   url: <%= ENV['DATABASE_URL'] %>
+  username: backend
+  password: <%= ENV["BACKEND_DATABASE_PASSWORD"] %>
