@@ -44,13 +44,16 @@ export DATABASE_PASSWORD=password
 export DATABASE_HOST=db
 export DATABASE_PORT=5432
 
+# Create and migrate the database
+bundle exec rails db:create
+echo "Database creation completed"
+bundle exec rails db:migrate
+echo "Database migration completed"
+
+# Precompile and clean assets
 bundle exec rake assets:precompile
 echo "Assets precompile completed"
 bundle exec rake assets:clean
 echo "Assets clean completed"
-bundle exec rails db:create
-echo "Database creation completed"
-bundle exec rake db:migrate
-echo "Database migration completed"
 
 echo "Build script completed successfully"
