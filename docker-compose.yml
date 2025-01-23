@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p 3000"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
     volumes:
       - .:/app
     ports:
@@ -28,12 +28,13 @@ services:
       BACKEND_DATABASE_PASSWORD: password
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     command: npm start
     volumes:
       - ./frontend:/app
     ports:
-      - "3003:3000"
+      - "3001:3000"
     depends_on:
       - backend
 

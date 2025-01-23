@@ -38,5 +38,5 @@ WORKDIR /app/backend
 # Expose port 3000
 EXPOSE 3000
 
-# Start the Rails server
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+# Start the Puma server
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
