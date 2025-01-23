@@ -34,6 +34,8 @@ echo "Changed directory to frontend"
 export NODE_OPTIONS=--openssl-legacy-provider
 npm install
 echo "npm install completed"
+npm audit fix --force
+echo "npm audit fix --force completed"
 npm run build
 echo "npm run build completed"
 cd ../backend
