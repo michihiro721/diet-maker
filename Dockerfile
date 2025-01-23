@@ -19,5 +19,15 @@ RUN bundle install
 
 ADD . ${APP_ROOT}
 
-# Install webpacker
-RUN bundle exec rails webpacker:install
+# Install jsbundling-rails
+RUN bundle exec rails javascript:install:esbuild
+
+# Install JavaScript dependencies
+WORKDIR /app/frontend
+ADD ./frontend/package.json /app/frontend/package.json
+ADD ./frontend/package-lock.json /app/frontend/package-lock.json
+ADD ./frontend/app/javascript /app/frontend/app/javascript
+RUN bun install
+
+# Build JavaScript assets
+RUN bun run build

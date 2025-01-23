@@ -6,6 +6,9 @@ cd backend
 
 bundle install
 
+# Install jsbundling-rails
+bundle exec rails javascript:install:esbuild
+
 # Build JavaScript assets
 cd ../frontend
 bun install

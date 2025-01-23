@@ -11,21 +11,19 @@ RUN apt update -qq && apt install -y nodejs build-essential postgresql-client ya
 ENV APP_ROOT /app
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
-ADD ./Gemfile ${APP_ROOT}/Gemfile
-ADD ./Gemfile.lock ${APP_ROOT}/Gemfile.lock
+ADD backend/Gemfile ${APP_ROOT}/Gemfile
+ADD backend/Gemfile.lock ${APP_ROOT}/Gemfile.lock
 
 RUN bundle config set force_ruby_platform true
 RUN bundle install
 
 ADD . ${APP_ROOT}
 
-# Install jsbundling-rails
-RUN bundle exec rails javascript:install:esbuild
-
 # Install JavaScript dependencies
 WORKDIR /app/frontend
-ADD ../frontend/package.json /app/frontend/package.json
-ADD ../frontend/app/javascript /app/frontend/app/javascript
+ADD frontend/package.json /app/frontend/package.json
+ADD frontend/package-lock.json /app/frontend/package-lock.json
+ADD frontend/app/javascript /app/frontend/app/javascript
 RUN bun install
 
 # Build JavaScript assets
