@@ -31,6 +31,7 @@ echo "jsbundling-rails installation completed"
 # Build JavaScript assets
 cd ../frontend
 echo "Changed directory to frontend"
+export NODE_OPTIONS=--openssl-legacy-provider
 bun install
 echo "bun install completed"
 bun run build
