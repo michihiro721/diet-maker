@@ -23,5 +23,10 @@ ADD . ${APP_ROOT}
 RUN bundle exec rails javascript:install:esbuild
 
 # Install JavaScript dependencies
-ADD ./package.json ${APP_ROOT}/package.json
+WORKDIR /app/frontend
+ADD ../frontend/package.json /app/frontend/package.json
+ADD ../frontend/app/javascript /app/frontend/app/javascript
 RUN bun install
+
+# Build JavaScript assets
+RUN bun run build
