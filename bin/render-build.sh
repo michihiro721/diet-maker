@@ -17,6 +17,12 @@ if [ ! -f "config/boot.rb" ]; then
   echo "require 'bundler/setup' # Set up gems listed in the Gemfile." >> config/boot.rb
 fi
 
+# Re-generate bin directory
+echo "Re-generating bin directory..."
+rm -rf bin
+bundle exec rails app:update:bin
+echo "Bin directory re-generated"
+
 # Install jsbundling-rails
 echo "Installing jsbundling-rails..."
 bundle exec rails javascript:install:esbuild

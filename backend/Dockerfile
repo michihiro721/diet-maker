@@ -8,6 +8,9 @@ RUN apt update -qq && apt install -y nodejs build-essential postgresql-client ya
     curl dirmngr apt-transport-https lsb-release ca-certificates \
     libxml2-dev libxslt1-dev zlib1g-dev libgmp-dev libffi-dev libsqlite3-dev
 
+# Install bun
+RUN curl -fsSL https://bun.sh/install | bash
+
 ENV APP_ROOT /app
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
@@ -24,7 +27,7 @@ WORKDIR /app/frontend
 ADD frontend/package.json /app/frontend/package.json
 ADD frontend/package-lock.json /app/frontend/package-lock.json
 ADD frontend/app/javascript /app/frontend/app/javascript
-RUN bun install
+RUN /root/.bun/bin/bun install
 
 # Build JavaScript assets
-RUN bun run build
+RUN /root/.bun/bin/bun run build
