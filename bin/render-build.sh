@@ -32,10 +32,10 @@ echo "jsbundling-rails installation completed"
 cd ../frontend
 echo "Changed directory to frontend"
 export NODE_OPTIONS=--openssl-legacy-provider
-bun install
-echo "bun install completed"
-bun run build
-echo "bun run build completed"
+npm install
+echo "npm install completed"
+npm run build
+echo "npm run build completed"
 cd ../backend
 echo "Changed directory back to backend"
 
