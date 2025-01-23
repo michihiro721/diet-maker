@@ -98,4 +98,7 @@ Rails.application.configure do
 
   # Add this line to enable asset compilation in production
   config.assets.compile = true
+
+  # Ensure logger is available during assets precompile
+  config.assets.initialize_on_precompile = false
 end
