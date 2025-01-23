@@ -19,6 +19,10 @@ module DietMaker
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Enable the asset pipeline
+    config.assets.enabled = true
+    config.assets.version = '1.0'
+
     # Ensure the application is initialized
     config.after_initialize do
       if Rails.logger.nil?
