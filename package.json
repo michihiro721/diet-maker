@@ -10,12 +10,13 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+    "postcss": "^8.4.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "5.0.1",
-    "postcss": "^8.4.14"
+    "react-refresh": "^0.16.0",
+    "react-scripts": "5.0.1"
   },
-  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",

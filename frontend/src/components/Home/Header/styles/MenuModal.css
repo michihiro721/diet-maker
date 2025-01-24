@@ -78,7 +78,7 @@
   font-size: 20px; /* フォントサイズを大きく設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
   position: relative;
-  top: -40px; /* ボタンを少し上に移動 */
+  top: -14vh; /* ボタンを少し上に移動 */
 }
 
 /* 閉じるボタンのホバー時のスタイル */
