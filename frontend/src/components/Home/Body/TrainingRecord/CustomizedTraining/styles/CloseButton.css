@@ -10,7 +10,7 @@
     cursor: pointer; /* カーソルをポインターに設定 */
     font-size: 16px; /* フォントサイズを設定 */
     transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
-    margin-top: 10vh; /* 上に余白を追加してボタンを下に移動 */
+    margin-top: 5vh; /* 上に余白を追加してボタンを下に移動 */
   }
   
   /* モーダルを閉じるボタンのホバースタイル */

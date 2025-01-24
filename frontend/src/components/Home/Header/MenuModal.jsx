@@ -24,7 +24,7 @@ const MenuModal = ({ closeMenu }) => {
           <li><Link to="/app-usage" onClick={closeMenu}>アプリ使い方</Link></li>
         </ul>
         {/* 閉じるボタン */}
-        <button className="close-button" onClick={closeMenu}>
+        <button className="close-buttn" onClick={closeMenu}>
           閉じる
         </button>
       </div>

@@ -66,7 +66,7 @@
 }
 
 /* 閉じるボタン */
-.close-button {
+.close-buttn {
   display: block;
   margin: 20px auto 0; /* 上下の余白を設定し、中央に配置 */
   padding: 12px 30px; /* 内側の余白を設定 */
@@ -78,7 +78,7 @@
   font-size: 20px; /* フォントサイズを大きく設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
   position: relative;
-  top: -14vh; /* ボタンを少し上に移動 */
+  top: -6.5vh; /* ボタンを少し上に移動 */
 }
 
 /* 閉じるボタンのホバー時のスタイル */
