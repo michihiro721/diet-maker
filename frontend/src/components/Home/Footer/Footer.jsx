@@ -3,7 +3,7 @@
 
 import React from 'react'; // Reactをインポート
 import { Link } from 'react-router-dom'; // React RouterのLinkコンポーネントをインポート
-import { FaSquareXTwitter, FaGithub } from 'react-icons/fa6'; // react-iconsからFaSquareXTwitterとFaGithubをインポート
+import { FaTwitterSquare, FaGithub } from 'react-icons/fa'; // react-iconsからFaTwitterSquareとFaGithubをインポート
 import './Footer.css'; // CSSファイルをインポート
 
 // Footerコンポーネントを定義
@@ -17,7 +17,7 @@ function Footer() {
         <Link to="/privacy" className="link">プライバシーポリシー</Link>
         {/* XとGitHubのアイコンを表示 */}
         <a href="https://x.com/michihiro721" className="iconLink" target="_blank" rel="noopener noreferrer">
-          <FaSquareXTwitter className="icon" />
+          <FaTwitterSquare className="icon" />
         </a>
         <a href="https://github.com/michihiro721/" className="iconLink" target="_blank" rel="noopener noreferrer">
           <FaGithub className="icon" />
