@@ -21,7 +21,7 @@ Rails.application.configure do
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.cache_store = :memory_store
-    config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{2.days.to_i}" }
+    config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present? || ENV['RENDER'].present?
   else
     config.action_controller.perform_caching = false
 
@@ -33,6 +33,8 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+
+  config.assets.compile = true
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
