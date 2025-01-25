@@ -1,19 +1,12 @@
-FROM node:16
+FROM node:14
 
 WORKDIR /app
 
-COPY package.json /app
-COPY package-lock.json /app
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
 RUN npm install
 
-
 COPY . /app
-
-# Expose port 3000
-EXPOSE 3000
-
-# Set environment variable to fix OpenSSL error
-ENV NODE_OPTIONS=--openssl-legacy-provider
 
 CMD ["npm", "start"]

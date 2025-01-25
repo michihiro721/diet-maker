@@ -1,15 +1,19 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module DietMaker
+module Backend
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1 # ここを修正
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -19,21 +23,9 @@ module DietMaker
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # Enable the asset pipeline
-    config.assets.enabled = true
-    config.assets.version = '1.0'
-
-    # Ensure the application is initialized
-    config.after_initialize do
-      if Rails.logger.nil?
-        Rails.logger = ActiveSupport::Logger.new(STDOUT)
-        Rails.logger.formatter = ::Logger::Formatter.new
-      end
-      Rails.logger.warn "Application initialized"
-    end
-
-    # Debugging: Ensure logger is set
-    Rails.logger = Logger.new(STDOUT)
-    Rails.logger.warn "Logger has been set in application.rb"
+    # Only loads a smaller set of middleware suitable for API only apps.
+    # Middleware like session, flash, cookies can be added back manually.
+    # Skip views, helpers and assets when generating a new resource.
+    config.api_only = true
   end
 end

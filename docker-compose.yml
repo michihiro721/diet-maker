@@ -1,42 +1,27 @@
-version: '3.8'
-
+# filepath: docker-compose.yml
 services:
-  db:
-    image: postgres:14
-    environment:
-      POSTGRES_USER: backend
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: backend_production
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
-
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+      context: ./backend
     volumes:
-      - .:/app
+      - ./backend:/app
     ports:
-      - "3000:3000"
+      - "3001:3000"  # ポート3001をホスト側で使用
     depends_on:
       - db
-    environment:
-      DATABASE_URL: postgres://backend:password@db:5432/backend_production
-      BACKEND_DATABASE_PASSWORD: password
-
   frontend:
     build:
       context: ./frontend
-    command: npm start
     volumes:
       - ./frontend:/app
     ports:
-      - "3001:3000"
-    depends_on:
-      - backend
-
+      - "3002:3000"  # ポート3002をホスト側で使用
+  db:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
 volumes:
-  postgres_data:
+  pgdata:
