@@ -5,6 +5,14 @@ set -o errexit
 # Change to the backend directory
 cd backend
 
+bundle _2.6.2_ install
+
+# Check if assets:precompile task exists
+if bundle exec rake -T | grep -q "assets:precompile"; then
+  bundle exec rake assets:precompile
+  bundle exec rake assets:clean
+fi
+
 bundle install
 bundle exec rake assets:precompile
 bundle exec rake assets:clean
