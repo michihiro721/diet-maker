@@ -3,7 +3,7 @@
 set -o errexit
 
 # Change to the backend directory
-cd ./backend/bin/render-build.sh
+cd /app
 
 bundle install
 bundle exec rake assets:precompile
