@@ -17,4 +17,7 @@ if bundle exec rake -T | grep -q "assets:precompile"; then
   bundle exec rake assets:clean
 fi
 
+bundle install
+bundle exec rake assets:precompile
+bundle exec rake assets:clean
 bundle exec rake db:migrate
