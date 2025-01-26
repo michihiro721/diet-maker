@@ -21,5 +21,3 @@ fi
 if bundle exec rake -T | grep -q "db:migrate"; then
   bundle exec rake db:migrate
 fi
-
-bundle exec rake db:migrate
