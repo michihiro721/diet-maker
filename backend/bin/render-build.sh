@@ -17,4 +17,9 @@ if bundle exec rake -T | grep -q "assets:precompile"; then
   bundle exec rake assets:clean
 fi
 
+# Check if db:migrate task exists
+if bundle exec rake -T | grep -q "db:migrate"; then
+  bundle exec rake db:migrate
+fi
+
 bundle exec rake db:migrate
