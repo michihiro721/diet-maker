@@ -40,3 +40,6 @@ preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Set the working directory for Puma
+directory '/opt/render/project/src/backend'

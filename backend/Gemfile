@@ -9,11 +9,10 @@ gem "bcrypt", "~> 3.1.7"
 gem "tzinfo-data", platforms: %i[ mswin jruby ]
 gem "bootsnap", require: false
 
-
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "web-console", ">= 4.1.0"
-  gem 'dotenv-rails', groups: [:development, :test]
+  gem 'dotenv-rails'
 end
 
 group :development do
