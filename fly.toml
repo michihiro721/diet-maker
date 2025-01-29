@@ -1,0 +1,10 @@
+app = "your-app-name"
+
+[build]
+  dockerfile = "./Dockerfile"
+
+[env]
+  PORT = "3000"
+
+[deploy]
+  release_command = "bundle exec rails db:migrate"
