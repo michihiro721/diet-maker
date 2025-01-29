@@ -6,9 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-if Rails.env.development? || Rails.env.test?
-  require 'dotenv/rails-now'
-end
+Dotenv::Rails.load
 
 module YourAppName
   class Application < Rails::Application
