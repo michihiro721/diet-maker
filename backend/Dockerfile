@@ -12,4 +12,4 @@ RUN bundle _2.6.2_ install
 
 COPY backend /myapp
 
-CMD ["sh", "-c", "rm -f /myapp/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]
+CMD ["sh", "-c", "rm -f /myapp/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0 -p 3000"]

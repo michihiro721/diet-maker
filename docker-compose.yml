@@ -1,8 +1,8 @@
-# filepath: docker-compose.yml
 services:
   backend:
     build:
-      context: ./backend
+      context: .
+      dockerfile: backend/Dockerfile
     volumes:
       - ./backend:/app
     ports:
