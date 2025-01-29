@@ -1,4 +1,4 @@
-app = "your-app-name"
+app = "diet-maker"
 
 [build]
   dockerfile = "./Dockerfile"
