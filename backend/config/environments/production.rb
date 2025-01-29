@@ -95,4 +95,7 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Allow requests to diet-maker.fly.dev
+  config.hosts << "diet-maker.fly.dev"
 end

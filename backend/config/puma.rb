@@ -42,4 +42,4 @@ preload_app!
 plugin :tmp_restart
 
 # Set the working directory for Puma
-directory '/opt/render/project/src/backend'
+directory '/myapp'
