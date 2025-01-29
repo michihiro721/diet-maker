@@ -4,12 +4,12 @@ RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
 WORKDIR /app
 
-COPY Gemfile /app/Gemfile
-COPY Gemfile.lock /app/Gemfile.lock
+COPY backend/Gemfile /app/Gemfile
+COPY backend/Gemfile.lock /app/Gemfile.lock
 
 RUN gem install bundler -v 2.6.2
 RUN bundle _2.6.2_ install
 
-COPY . /app
+COPY backend /app
 
-CMD ["sh", "-c", "rm -f /myapp/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]
+CMD ["sh", "-c", "rm -f /app/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"]
