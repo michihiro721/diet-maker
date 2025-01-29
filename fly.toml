@@ -1,10 +1,10 @@
 app = "diet-maker"
 
 [build]
-  dockerfile = "./Dockerfile"
-
-[env]
-  PORT = "3000"
+dockerfile = "./Dockerfile"
 
 [deploy]
-  release_command = "bundle exec rails db:migrate"
+release_command = "bundle exec rails db:migrate"
+
+[env]
+PORT = "3000"
