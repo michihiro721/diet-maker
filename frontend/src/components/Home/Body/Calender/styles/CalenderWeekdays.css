@@ -1,0 +1,34 @@
+/* 曜日のスタイル */
+.react-calendar__month-view__weekdays {
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: space-between; /* 子要素を左右に配置 */
+    padding: 0; /* パディングをリセット */
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: center; /* 子要素を中央揃え */
+    align-items: center; /* 子要素を垂直方向に中央揃え */
+    font-weight: bold; /* フォントを太字に設定 */
+    color: #000; /* 文字色を黒に設定 */
+    font-size: 22px; /* フォントサイズを大きく設定 */
+    height: 40px; /* 高さを設定して位置を調整 */
+    flex: 1; /* 各曜日の幅を均等にする */
+    margin: 0; /* マージンをリセット */
+}
+
+/* 土曜日のスタイル */
+.react-calendar__month-view__weekdays__weekday:nth-child(7) {
+    color: blue; /* 文字色を青に設定 */
+}
+
+/* 日曜日のスタイル */
+.react-calendar__month-view__weekdays__weekday:nth-child(1) {
+    color: red; /* 文字色を赤に設定 */
+}
+
+/* 曜日の下の点線を非表示にする */
+.react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none; /* 下線を削除 */
+    border-bottom: none; /* 点線を削除 */
+}

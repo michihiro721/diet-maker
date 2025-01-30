@@ -1,0 +1,7 @@
+/* テーブル全体のスタイル */
+.training-table {
+    width: auto; /* テーブルの幅を自動調整 */
+    margin: 20px auto; /* 上下の余白を20px、左右の余白を自動調整 */
+    border-collapse: collapse; /* 境界線を重ねて表示 */
+    font-size: 18px; /* フォントサイズを大きく */
+}

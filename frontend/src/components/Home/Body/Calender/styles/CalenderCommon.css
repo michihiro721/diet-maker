@@ -1,0 +1,14 @@
+/* カレンダー全体のスタイル */
+.react-calendar {
+    width: 100%; /* 幅を100%に設定 */
+    max-width: 600px; /* 最大幅を600pxに設定 */
+    background-color: rgba(173, 216, 230, 0.001); /* 背景色を薄いオーバーライドされた青に設定 */
+    border: 1px solid #ddd; /* 薄い灰色の境界線を設定 */
+    border-radius: 8px; /* 角を丸くする */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* フォントを設定 */
+    line-height: 18px; /* 行の高さを設定 */
+    margin: 20px auto; /* 上下に20pxのマージンを追加し、中央揃え */
+    padding: 20px; /* 内側の余白を20pxに設定 */
+    margin-top: 100px; /* ヘッダーと重ならないようにマージンを追加 */
+}

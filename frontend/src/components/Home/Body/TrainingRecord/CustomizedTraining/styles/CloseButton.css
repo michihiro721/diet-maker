@@ -1,0 +1,20 @@
+/* モーダルを閉じるボタンのスタイル */
+.close-button {
+    display: block; /* ブロック要素に設定 */
+    margin: 20px auto 0; /* 上に余白を追加し、中央揃え */
+    padding: 12px 30px; /* 内側の余白を設定 */
+    background: #007bff; /* 背景色を青に設定 */
+    color: white; /* 文字色を白に設定 */
+    border: none; /* 枠線をなしに設定 */
+    border-radius: 20px; /* 角を丸くする */
+    cursor: pointer; /* カーソルをポインターに設定 */
+    font-size: 16px; /* フォントサイズを設定 */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
+    margin-top: 5vh; /* 上に余白を追加してボタンを下に移動 */
+  }
+  
+  /* モーダルを閉じるボタンのホバースタイル */
+  .close-button:hover {
+    background: #0056b3; /* 背景色を変更 */
+    transform: scale(1.05); /* ボタンを少し拡大 */
+  }

@@ -1,0 +1,5 @@
+/* テーブルセルのスタイル */
+.training-table td {
+    text-align: center; /* テキストを中央揃え */
+    padding: 10px; /* パディングを大きく */
+}

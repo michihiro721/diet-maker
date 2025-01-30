@@ -1,0 +1,45 @@
+/* ナビゲーションバーのスタイル */
+.react-calendar__navigation {
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: space-between; /* 子要素を左右に配置 */
+    align-items: center; /* 垂直方向に中央揃え */
+    padding: 16px; /* 内側の余白を16pxに設定 */
+    background-color: rgba(0, 123, 255, 0.9); /* 背景色を青色に設定し、透過度を追加 */
+    color: #fff; /* 文字色を白に設定 */
+    border-radius: 8px 8px 0 0; /* 上部の角を丸くする */
+    opacity: 0.7; /* 透過度を設定 */
+}
+
+.react-calendar__navigation button {
+    background: none; /* 背景をなしに設定 */
+    border: none; /* 境界線をなしに設定 */
+    color: #fff; /* 文字色を白に設定 */
+    font-size: 25px; /* フォントサイズを18pxに設定 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+    outline: none; /* フォーカス時のアウトラインを消す */
+    padding: 0; /* パディングをリセット */
+    margin: 0; /* マージンをリセット */
+    font-weight: bold; /* フォントを太字に */
+    border-radius: 18px; /* 角を丸くする */
+}
+
+.react-calendar__navigation button:disabled {
+    color: #ccc; /* 無効化されたボタンの文字色を薄い灰色に設定 */
+    cursor: default; /* カーソルをデフォルトに設定 */
+}
+
+.react-calendar__navigation button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* ホバー時の背景色を調整 */
+}
+
+/* ナビゲーションラベルのスタイル */
+.react-calendar__navigation__label {
+    display: block; /* ラベルを表示 */
+    font-size: 18px; /* フォントサイズを調整 */
+    font-weight: bold; /* フォントを太字に */
+    background-color: #007BFF; /* 背景色を青色に変更 */
+    color: #000; /* 文字色を黒に変更 */
+    padding: 8px 16px; /* パディングを追加 */
+    border-radius: 18px; /* 角を丸くする */
+    margin-top: -16px; /* 文字の位置を上に調整 */
+}

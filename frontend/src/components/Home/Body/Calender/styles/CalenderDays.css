@@ -1,0 +1,137 @@
+/* 日付セルのスタイル */
+.react-calendar__tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    flex: 1;
+    margin: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+/* 日付セルのホバーおよびフォーカス時のスタイル */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background-color: #e0f7fa;
+    border-radius: 50%;
+    color: #000;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(162, 217, 255, 0.5);
+}
+
+/* 現在の日付のスタイル */
+.react-calendar__tile--now {
+    background: rgba(118, 186, 255, 0.15);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(162, 217, 255, 0.5);
+}
+
+/* 現在の日付のホバーおよびフォーカス時のスタイル */
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: #a9d4ff;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(162, 217, 255, 0.5);
+}
+
+/* アクティブな日付のスタイル */
+.react-calendar__tile--hasActive {
+    background: #A2D9FF;
+    width: 40px;
+    height: 40px;
+}
+
+/* アクティブな日付のホバーおよびフォーカス時のスタイル */
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+    background: #a9d4ff;
+    width: 40px;
+    height: 40px;
+}
+
+/* 日曜日の日付のスタイル */
+.react-calendar__tile--sunday {
+    color: blue;
+}
+
+/* 土曜日の日付のスタイル */
+.react-calendar__tile--saturday {
+    color: red;
+}
+
+/* 選択された日付のスタイル */
+.react-calendar__tile--active {
+    background: rgba(173, 216, 230, 0.3);
+    color: #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #a9d4ff;
+}
+
+/* 月ビューの日付セルのスタイル */
+.react-calendar__month-view__days__day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    font-size: 20px;
+    font-weight: bold;
+    flex: 1;
+    width: 40px;
+    height: 40px;
+}
+
+/* 隣接する月の日付セルのスタイル */
+.react-calendar__month-view__days__day--neighboringMonth {
+    color: #ccc;
+}
+
+/* 年ビューと十年ビューのスタイル */
+.react-calendar__year-view__months__month,
+.react-calendar__decade-view__years__year,
+.react-calendar__century-view__decades__decade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    color: #000;
+    font-weight: bold;
+    padding: 10px;
+    width: 80px; /* 幅を固定 */
+    height: 80px; /* 高さを固定 */
+}
+
+/* 年ビュー、十年ビュー、世紀ビューのホバーおよびフォーカス時のスタイル */
+.react-calendar__year-view__months__month:enabled:hover,
+.react-calendar__year-view__months__month:enabled:focus,
+.react-calendar__decade-view__years__year:enabled:hover,
+.react-calendar__decade-view__years__year:enabled:focus,
+.react-calendar__century-view__decades__decade:enabled:hover,
+.react-calendar__century-view__decades__decade:enabled:focus {
+    background-color: #e0f7fa;
+    color: #000;
+    width: 80px; /* 幅を固定 */
+    height: 80px; /* 高さを固定 */
+}
+
+/* 日付の「日」を非表示にする */
+.react-calendar__tile abbr[aria-label$="日"] {
+    display: none;
+}
