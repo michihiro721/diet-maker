@@ -1,0 +1,52 @@
+.goal-setting-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .goal-setting-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .goal-setting-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .goal-setting-input:focus {
+    border-color: #5d9cec;
+    outline: none;
+  }
+  
+  .goal-setting-button {
+    padding: 12px;
+    background-color: #5d9cec;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .goal-setting-button:hover {
+    background-color: #4a8ad4;
+    transform: translateY(-2px);
+  }
+  
+  .goal-setting-button:active {
+    background-color: #3a7ac4;
+    transform: translateY(0);
+  }
