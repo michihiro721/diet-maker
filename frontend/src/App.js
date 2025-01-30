@@ -5,7 +5,7 @@ import Footer from './components/Home/Footer/Footer';
 import Calender from './components/Home/Body/Calender/Calender';
 import TrainingRecord from './components/Home/Body/TrainingRecord/TrainingTable/TrainingRecord';
 import Achievements from './components/Achievements/Achievements';
-import GoalSetting from './components/GoalSetting/GoalSetting';
+import GoalSetting from './components/GoalSetting/Body/GoalSetting';
 import TrainingMenu from './components/TrainingMenu/TrainingMenu';
 import BodyInfo from './components/BodyInfo/BodyInfo';
 import CalorieInfo from './components/CalorieInfo/CalorieInfo';
