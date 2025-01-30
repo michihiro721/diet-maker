@@ -1,5 +1,12 @@
 version: '3'
 services:
+  db:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
   backend:
     build:
       context: ./backend
@@ -16,12 +23,5 @@ services:
       - ./frontend:/app
     ports:
       - "3001:3000"
-  db:
-    image: postgres
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
 volumes:
   pgdata:
