@@ -1,12 +1,12 @@
+version: '3'
 services:
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
     volumes:
       - ./backend:/app
     ports:
-      - "3001:3000"  # ポート3001をホスト側で使用
+      - "3000:3000"
     depends_on:
       - db
   frontend:
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "3002:3000"  # ポート3002をホスト側で使用
+      - "3001:3000"
   db:
     image: postgres
     volumes:
