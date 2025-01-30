@@ -97,6 +97,5 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # Allow requests to diet-maker.fly.dev
-  config.hosts << ENV.fetch("RAILS_HOSTS", "diet-maker.fly.dev")
   config.hosts << "diet-maker.fly.dev"
 end
