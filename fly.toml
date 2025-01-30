@@ -2,6 +2,7 @@ app = "diet-maker"
 
 [build]
 dockerfile = "./backend/Dockerfile"
+context = "./backend"
 
 [deploy]
 release_command = "bundle exec rails db:migrate"
