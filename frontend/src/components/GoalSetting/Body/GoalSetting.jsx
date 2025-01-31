@@ -57,23 +57,27 @@ const GoalSetting = () => {
       <form className="goal-setting-form" onSubmit={handleSubmit}>
         <div className="goal-setting-field">
           <label className="goal-setting-label">現在の体重</label>
-          <input
-            type="number"
-            className="goal-setting-input"
-            value={currentWeight}
-            onClick={() => openModal("currentWeight")}
-            readOnly
-          />
+          <div className="goal-setting-input-wrapper">
+            <input
+              type="text"
+              className="goal-setting-input"
+              value={currentWeight ? `${currentWeight} kg` : ""}
+              onClick={() => openModal("currentWeight")}
+              readOnly
+            />
+          </div>
         </div>
         <div className="goal-setting-field">
           <label className="goal-setting-label">目標体重</label>
-          <input
-            type="number"
-            className="goal-setting-input"
-            value={targetWeight}
-            onClick={() => openModal("targetWeight")}
-            readOnly
-          />
+          <div className="goal-setting-input-wrapper">
+            <input
+              type="text"
+              className="goal-setting-input"
+              value={targetWeight ? `${targetWeight} kg` : ""}
+              onClick={() => openModal("targetWeight")}
+              readOnly
+            />
+          </div>
         </div>
         <div className="goal-setting-field">
           <label className="goal-setting-label">目標達成予定日</label>
