@@ -6,6 +6,9 @@ const GoalSetting = () => {
   const [currentWeight, setCurrentWeight] = useState("");
   const [targetWeight, setTargetWeight] = useState("");
   const [targetDate, setTargetDate] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const [modalValue, setModalValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +16,39 @@ const GoalSetting = () => {
     console.log("現在の体重:", currentWeight);
     console.log("目標体重:", targetWeight);
     console.log("目標達成予定日:", targetDate);
+  };
+
+  const openModal = (type) => {
+    setModalType(type);
+    setModalValue(type === "currentWeight" ? currentWeight : targetWeight);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    if (modalType === "currentWeight") {
+      setCurrentWeight(modalValue);
+    } else {
+      setTargetWeight(modalValue);
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleCalculatorClick = (value) => {
+    setModalValue((prev) => prev.toString() + value);
+  };
+
+  const handleBackspace = () => {
+    setModalValue((prev) => prev.toString().slice(0, -1));
+  };
+
+  const handleModalSave = () => {
+    closeModal();
+  };
+
+  const handleClickOutside = (e) => {
+    if (e.target.className === "modal") {
+      closeModal();
+    }
   };
 
   return (
@@ -26,7 +62,8 @@ const GoalSetting = () => {
             type="number"
             className="goal-setting-input"
             value={currentWeight}
-            onChange={(e) => setCurrentWeight(e.target.value)}
+            onClick={() => openModal("currentWeight")}
+            readOnly
           />
         </div>
         <div>
@@ -35,7 +72,8 @@ const GoalSetting = () => {
             type="number"
             className="goal-setting-input"
             value={targetWeight}
-            onChange={(e) => setTargetWeight(e.target.value)}
+            onClick={() => openModal("targetWeight")}
+            readOnly
           />
         </div>
         <div>
@@ -49,6 +87,26 @@ const GoalSetting = () => {
         </div>
         <button type="submit" className="goal-setting-button">設定</button>
       </form>
+
+      {isModalOpen && (
+        <div className="modal" style={{ display: 'block' }} onClick={handleClickOutside}>
+          <div className="modal-content">
+            <input
+              type="text"
+              className="keyboard-input"
+              value={modalValue}
+              readOnly
+            />
+            <div className="calculator-grid">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
+                <button key={num} onClick={() => handleCalculatorClick(num)}>{num}</button>
+              ))}
+              <button onClick={handleBackspace}>←</button>
+            </div>
+            <button className="modal-button" onClick={handleModalSave}>保存</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
