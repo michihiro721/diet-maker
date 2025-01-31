@@ -98,7 +98,7 @@ const GoalSetting = () => {
               readOnly
             />
             <div className="calculator-grid">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "."].map((num) => (
                 <button key={num} onClick={() => handleCalculatorClick(num)}>{num}</button>
               ))}
               <button onClick={handleBackspace}>←</button>
