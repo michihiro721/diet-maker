@@ -52,12 +52,11 @@ const GoalSetting = () => {
   };
 
   return (
-    <div>
+    <div className="goal-setting-container">
       <Header title="目標設定" />
-      <h1>目標設定</h1>
       <form className="goal-setting-form" onSubmit={handleSubmit}>
-        <div>
-          <label className="goal-setting-label">現在の体重:</label>
+        <div className="goal-setting-field">
+          <label className="goal-setting-label">現在の体重</label>
           <input
             type="number"
             className="goal-setting-input"
@@ -66,8 +65,8 @@ const GoalSetting = () => {
             readOnly
           />
         </div>
-        <div>
-          <label className="goal-setting-label">目標体重:</label>
+        <div className="goal-setting-field">
+          <label className="goal-setting-label">目標体重</label>
           <input
             type="number"
             className="goal-setting-input"
@@ -76,8 +75,8 @@ const GoalSetting = () => {
             readOnly
           />
         </div>
-        <div>
-          <label className="goal-setting-label">目標達成予定日:</label>
+        <div className="goal-setting-field">
+          <label className="goal-setting-label">目標達成予定日</label>
           <input
             type="date"
             className="goal-setting-input"
@@ -98,7 +97,7 @@ const GoalSetting = () => {
               readOnly
             />
             <div className="calculator-grid">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "."].map((num) => (
                 <button key={num} onClick={() => handleCalculatorClick(num)}>{num}</button>
               ))}
               <button onClick={handleBackspace}>←</button>
