@@ -1,15 +1,13 @@
-// ReactとuseStateフックをインポート
 import React, { useState } from "react";
-// メニューボタンとモーダルウィンドウのコンポーネントをインポート
+import { useLocation, useNavigate } from "react-router-dom"; // useLocationとuseNavigateフックをインポート
 import MenuButton from "./MenuButton";
 import MenuModal from "./MenuModal";
-// Header用のCSSファイルをインポート
 import "./styles/header.css";
 
-// Headerコンポーネントの定義
 const Header = () => {
-  // メニューの開閉状態を管理するための状態変数とその更新関数を定義
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation(); // 現在のURLパスを取得
+  const navigate = useNavigate(); // 画面遷移用のフック
 
   // メニューの開閉を切り替える関数
   const toggleMenu = () => {
@@ -21,20 +19,57 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  // ホーム画面に戻る関数
+  const goToHome = () => {
+    navigate("/"); // ルートページに遷移
+  };
+
+  // URLパスに応じてタイトルを設定
+  const getTitle = () => {
+    switch (location.pathname) {
+      case "/":
+        return "ダイエットメーカー";
+      case "/achievements":
+        return "成果";
+      case "/goal-setting":
+        return "目標設定";
+      case "/training-menu":
+        return "トレーニングメニュー提案";
+      case "/body-info":
+        return "身体情報";
+      case "/calorie-info":
+        return "カロリー関係";
+      case "/weight":
+        return "体重";
+      case "/diet-mindset":
+        return "ダイエット心構え";
+      case "/posts":
+        return "みんなの投稿一覧";
+      case "/app-usage":
+        return "アプリ使い方";
+
+      // 他のパスに応じてタイトルを追加
+      default:
+        return "ダイエットメーカー";
+    }
+  };
+
   return (
     <div>
-      {/* ヘッダー */}
       <header className="header">
-        <div className="header-title">ダイエットメーカー</div>
-        {/* メニューボタン */}
+        {/* ホーム画面以外で戻るボタンを表示 */}
+        {location.pathname !== "/" && (
+          <button className="back-button" onClick={goToHome}>
+            <i className="fa-solid fa-circle-left"></i>
+          </button>
+        )}
+        <div className="header-title">{getTitle()}</div>
         <MenuButton toggleMenu={toggleMenu} />
       </header>
 
-      {/* モーダルウィンドウ */}
       {isMenuOpen && <MenuModal closeMenu={closeMenu} />}
     </div>
   );
 };
 
-// Headerコンポーネントをエクスポート
 export default Header;

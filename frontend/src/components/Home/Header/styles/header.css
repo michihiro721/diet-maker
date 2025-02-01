@@ -21,3 +21,32 @@
   font-weight: bold; /* フォントを太く設定 */
   margin: 0 auto; /* タイトルを中央に配置 */
 }
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 56px; /* フォントサイズを大きく設定 */
+  cursor: pointer;
+  margin-right: 10px;
+  transition: transform 0.2s ease, color 0.2s ease; /* スムーズな変化を追加 */
+}
+
+.back-button i {
+  color: #fff; /* アイコンの色を白に設定 */
+  transition: transform 0.2s ease; /* スムーズな変化を追加 */
+}
+
+.back-button:hover i {
+  transform: scale(1.1); /* アイコンを少し大きくする */
+  color: #fff; /* ホバー時のアイコンの色を白に設定 */
+}
+
+/* ヘッダーのタイトルのスタイルを中央に配置 */
+.header-title {
+  font-size: 40px; /* フォントサイズを設定 */
+  font-weight: bold; /* フォントを太く設定 */
+  margin: 0 auto; /* タイトルを中央に配置 */
+  position: absolute; /* 絶対配置に変更 */
+  left: 50%; /* 左端から50%の位置に配置 */
+  transform: translateX(-50%); /* 中央に配置するために左に50%移動 */
+}
