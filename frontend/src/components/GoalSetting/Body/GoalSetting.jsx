@@ -21,9 +21,17 @@ const GoalSetting = () => {
   const [submittedData, setSubmittedData] = useState(null); // 提出されたデータを保存する状態
   const [submissionDate, setSubmissionDate] = useState(""); // 目標設定がされた日を保存する状態
   const [warningModalOpen, setWarningModalOpen] = useState(false); // 警告モーダルの状態
+  const [inputWarning, setInputWarning] = useState(""); // 入力警告メッセージの状態
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // 入力チェック
+    if (!currentWeight || !targetWeight || !targetDate) {
+      setInputWarning("全ての項目を入力してください。");
+      return;
+    }
+
     const today = new Date().toISOString().split('T')[0];
     setSubmissionDate(today);
 
@@ -48,6 +56,7 @@ const GoalSetting = () => {
       targetWeight,
       targetDate,
     });
+    setInputWarning(""); // 入力警告メッセージをクリア
   };
 
   const openModal = (type) => {
@@ -102,6 +111,12 @@ const GoalSetting = () => {
   return (
     <div className="goal-setting-container">
       <Header title="目標設定" />
+
+      {inputWarning && (
+        <div className="input-warning">
+          {inputWarning}
+        </div>
+      )}
 
       <form className="goal-setting-form" onSubmit={handleSubmit}>
         <div className="goal-setting-field">

@@ -16,6 +16,15 @@
   font-size: 24px;
 }
 
+/* 入力警告メッセージのスタイル */
+.input-warning {
+  color: #d9534f; /* 赤色 */
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
 /* フォーム全体のスタイル */
 .goal-setting-form {
   display: flex;
@@ -122,7 +131,9 @@
 
 /* モーダルウィンドウのスタイル */
 .goal-setting-modal, .goal-setting-modal-calendar {
-  display: none; /* 初期状態では非表示 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -207,7 +218,6 @@
 .goal-setting-modal-button:hover {
   background-color: #00BFFF; /* ホバー時の色 */
 }
-
 
 /* 警告モーダルのスタイル */
 .goal-setting-warning-modal {
