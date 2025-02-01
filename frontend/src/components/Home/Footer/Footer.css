@@ -2,7 +2,7 @@
     background-color: #5D9CEC;
     color: white; /* テキストの色を白に設定 */
     text-align: center; /* テキストを中央揃え */
-    padding: 20px 0; /* 上下に20px */
+    padding: 8px 0; /* 上下に20px */
     position: fixed; /* 固定位置に設定 */
     bottom: 0; /* 下端に固定 */
     width: 100%; /* 幅を100%に設定 */
