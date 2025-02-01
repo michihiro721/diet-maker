@@ -18,13 +18,16 @@ const GoalSetting = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
   const [modalValue, setModalValue] = useState(new Date());
+  const [submittedData, setSubmittedData] = useState(null); // 提出されたデータを保存する状態
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 設定ボタンがクリックされたときの処理をここに追加
-    console.log("現在の体重:", currentWeight);
-    console.log("目標体重:", targetWeight);
-    console.log("目標達成予定日:", targetDate);
+    // 設定ボタンがクリックされたときの処理
+    setSubmittedData({
+      currentWeight,
+      targetWeight,
+      targetDate,
+    });
   };
 
   const openModal = (type) => {
@@ -115,6 +118,15 @@ const GoalSetting = () => {
         </div>
         <button type="submit" className="goal-setting-button">設定</button>
       </form>
+
+      {submittedData && (
+        <div className="submitted-data">
+          <h2>設定目標</h2>
+          <p>現在の体重: {submittedData.currentWeight} kg</p>
+          <p>目標体重: {submittedData.targetWeight} kg</p>
+          <p>目標達成予定日: {submittedData.targetDate}</p>
+        </div>
+      )}
 
       {isModalOpen && modalType === "targetDate" && (
         <div className="goal-setting-modal-calendar" style={{ display: 'block' }} onClick={handleClickOutside}>
