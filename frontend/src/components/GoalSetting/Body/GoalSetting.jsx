@@ -19,15 +19,44 @@ const GoalSetting = () => {
   const [modalType, setModalType] = useState("");
   const [modalValue, setModalValue] = useState(new Date());
   const [submittedData, setSubmittedData] = useState(null); // 提出されたデータを保存する状態
+  const [submissionDate, setSubmissionDate] = useState(""); // 目標設定がされた日を保存する状態
+  const [warningModalOpen, setWarningModalOpen] = useState(false); // 警告モーダルの状態
+  const [inputWarning, setInputWarning] = useState(""); // 入力警告メッセージの状態
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 設定ボタンがクリックされたときの処理
+
+    // 入力チェック
+    if (!currentWeight || !targetWeight || !targetDate) {
+      setInputWarning("全ての項目を入力してください。");
+      return;
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+    setSubmissionDate(today);
+
+    // 減量幅のチェック
+    const currentWeightNum = parseFloat(currentWeight);
+    const targetWeightNum = parseFloat(targetWeight);
+    const targetDateObj = new Date(targetDate);
+    const todayObj = new Date(today);
+    const daysDiff = (targetDateObj - todayObj) / (1000 * 60 * 60 * 24);
+    const monthsDiff = daysDiff / 30;
+
+    // 許容減量幅の計算
+    const maxWeightLoss = currentWeightNum * 0.05 * monthsDiff;
+
+    if (daysDiff > 0 && (currentWeightNum - targetWeightNum) > maxWeightLoss) {
+      setWarningModalOpen(true);
+      return;
+    }
+
     setSubmittedData({
       currentWeight,
       targetWeight,
       targetDate,
     });
+    setInputWarning(""); // 入力警告メッセージをクリア
   };
 
   const openModal = (type) => {
@@ -75,9 +104,19 @@ const GoalSetting = () => {
     }
   };
 
+  const closeWarningModal = () => {
+    setWarningModalOpen(false);
+  };
+
   return (
     <div className="goal-setting-container">
       <Header title="目標設定" />
+
+      {inputWarning && (
+        <div className="input-warning">
+          {inputWarning}
+        </div>
+      )}
 
       <form className="goal-setting-form" onSubmit={handleSubmit}>
         <div className="goal-setting-field">
@@ -122,9 +161,10 @@ const GoalSetting = () => {
       {submittedData && (
         <div className="submitted-data">
           <h2>設定目標</h2>
-          <p>現在の体重: {submittedData.currentWeight} kg</p>
+          <p>目標設定時の体重: {submittedData.currentWeight} kg</p>
           <p>目標体重: {submittedData.targetWeight} kg</p>
           <p>目標達成予定日: {submittedData.targetDate}</p>
+          <p>目標設定日: {submissionDate}</p>
         </div>
       )}
 
@@ -160,6 +200,16 @@ const GoalSetting = () => {
               <button onClick={handleBackspace}>←</button>
             </div>
             <button className="goal-setting-modal-button" onClick={handleModalSave}>保存</button>
+          </div>
+        </div>
+      )}
+
+      {warningModalOpen && (
+        <div className="goal-setting-warning-modal">
+          <div className="goal-setting-warning-modal-content">
+            <p>1ヶ月の減量幅が体重の5%を超えていて危険です！！</p>
+            <p>「目標体重」もしくは「目標達成予定日」を変更してください。</p>
+            <button className="goal-setting-modal-button" onClick={closeWarningModal}>閉じる</button>
           </div>
         </div>
       )}
