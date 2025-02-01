@@ -1,15 +1,12 @@
-// ReactとuseStateフックをインポート
 import React, { useState } from "react";
-// メニューボタンとモーダルウィンドウのコンポーネントをインポート
+import { useNavigate } from "react-router-dom"; // ルーティングのために追加
 import MenuButton from "./MenuButton";
 import MenuModal from "./MenuModal";
-// Header用のCSSファイルをインポート
-import "./styles/header.css";
+import "./styles/goalSettingHeader.css"; // クラス名を一意にするためにCSSファイル名を変更
 
-// Headerコンポーネントの定義
-const Header = () => {
-  // メニューの開閉状態を管理するための状態変数とその更新関数を定義
+const GoalSettingHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); // 画面遷移用のフック
 
   // メニューの開閉を切り替える関数
   const toggleMenu = () => {
@@ -21,11 +18,21 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  // ホーム画面に戻る関数
+  const goToHome = () => {
+    navigate("/"); // ルートページに遷移
+  };
+
   return (
     <div>
-      {/* ヘッダー */}
-      <header className="header">
-        <div className="header-title">目標設定</div>
+      <header className="goal-setting-header">
+        {/* ホームに戻るボタン */}
+        <button className="goal-setting-back-button" onClick={goToHome}>
+          <i className="fa-solid fa-circle-left"></i>
+        </button>
+
+        <div className="goal-setting-header-title">目標設定</div>
+
         {/* メニューボタン */}
         <MenuButton toggleMenu={toggleMenu} />
       </header>
@@ -36,5 +43,4 @@ const Header = () => {
   );
 };
 
-// Headerコンポーネントをエクスポート
-export default Header;
+export default GoalSettingHeader;
