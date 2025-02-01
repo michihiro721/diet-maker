@@ -20,7 +20,7 @@
 .goal-setting-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   max-width: 400px;
   width: 100%;
   padding: 20px;
@@ -34,7 +34,7 @@
 .goal-setting-field {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
 }
 
@@ -52,11 +52,11 @@
 }
 
 .goal-setting-input {
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-color: #a2d9ff;
   border-radius: 4px;
-  font-size: 30px;
+  font-size: 24px;
   transition: border-color 0.3s;
   width: 100%;
   text-align: center;
@@ -95,7 +95,7 @@
 
 /* 提出されたデータのスタイル */
 .submitted-data {
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 0px 20px;
   border: 2px solid rgba(162, 217, 255, 0.8);
   border-radius: 8px;
@@ -109,7 +109,7 @@
 .submitted-data h2 {
   font-size: 28px;
   color: #333;
-  margin-bottom: 15px;
+  margin: 10px 0; /* 上下の幅を設定 */
   font-weight: bold;
 }
 
