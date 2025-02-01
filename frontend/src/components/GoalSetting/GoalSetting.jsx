@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Header from "../Header/Header";
+import Header from "../Home/Header/Header"; // 代わりに共通のHeaderコンポーネントをインポート
 import "./styles/GoalSetting.css";
-import "../../Home/Body/Calender/styles/CalenderWeekdays.css"; // カレンダーのスタイルをインポート
-import "../../Home/Body/Calender/styles/CalenderNavigation.css"; // カレンダーのスタイルをインポート
-import "../../Home/Body/Calender/styles/CalenderDays.css"; // カレンダーのスタイルをインポート
-import "../../Home/Body/Calender/styles/CalenderCommon.css"; // カレンダーのスタイルをインポート
-import CalenderFormatShortWeekday from "../../Home/Body/Calender/CalenderFormatShortWeekday";
-import CalenderTileClassName from "../../Home/Body/Calender/CalenderTileClassName";
-import CalenderTileContent from "../../Home/Body/Calender/CalenderTileContent";
+import "../Home/Body/Calender/styles/CalenderWeekdays.css"; // カレンダーのスタイルをインポート
+import "../Home/Body/Calender/styles/CalenderNavigation.css"; // カレンダーのスタイルをインポート
+import "../Home/Body/Calender/styles/CalenderDays.css"; // カレンダーのスタイルをインポート
+import "../Home/Body/Calender/styles/CalenderCommon.css"; // カレンダーのスタイルをインポート
+import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
+import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
+import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 
 const GoalSetting = () => {
   const [currentWeight, setCurrentWeight] = useState("");
