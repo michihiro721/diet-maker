@@ -96,7 +96,7 @@
 /* 提出されたデータのスタイル */
 .submitted-data {
   margin-top: 20px;
-  padding: 20px;
+  padding: 0px 20px;
   border: 2px solid rgba(162, 217, 255, 0.8);
   border-radius: 8px;
   background-color: rgba(162, 217, 255, 0.05);

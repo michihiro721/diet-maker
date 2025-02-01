@@ -19,10 +19,13 @@ const GoalSetting = () => {
   const [modalType, setModalType] = useState("");
   const [modalValue, setModalValue] = useState(new Date());
   const [submittedData, setSubmittedData] = useState(null); // 提出されたデータを保存する状態
+  const [submissionDate, setSubmissionDate] = useState(""); // 目標設定がされた日を保存する状態
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // 設定ボタンがクリックされたときの処理
+    const today = new Date().toISOString().split('T')[0];
+    setSubmissionDate(today);
     setSubmittedData({
       currentWeight,
       targetWeight,
@@ -122,9 +125,10 @@ const GoalSetting = () => {
       {submittedData && (
         <div className="submitted-data">
           <h2>設定目標</h2>
-          <p>現在の体重: {submittedData.currentWeight} kg</p>
+          <p>目標設定時の体重: {submittedData.currentWeight} kg</p>
           <p>目標体重: {submittedData.targetWeight} kg</p>
           <p>目標達成予定日: {submittedData.targetDate}</p>
+          <p>目標設定日: {submissionDate}</p>
         </div>
       )}
 
