@@ -47,8 +47,13 @@ const Header = () => {
         return "みんなの投稿一覧";
       case "/app-usage":
         return "アプリ使い方";
+      case "/contact":
+        return "お問い合わせ";
+      case "/terms":
+        return "利用規約";
+      case "/privacy":
+        return "プライバシーポリシー";
 
-      // 他のパスに応じてタイトルを追加
       default:
         return "ダイエットメーカー";
     }
