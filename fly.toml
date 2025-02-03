@@ -1,14 +1,14 @@
 app = "diet-maker"
 
 [build]
-dockerfile = "./backend/Dockerfile"
-context = "./backend"
+  dockerfile = "./backend/Dockerfile"
+
+[env]
+  PORT = "3000"
+  DATABASE_URL = "postgres://postgres:password@db/training_db_production"
 
 [deploy]
 release_command = "bundle exec rails db:migrate"
-
-[env]
-PORT = "3000"
 
 [[services]]
   internal_port = 3000
