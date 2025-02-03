@@ -43,9 +43,9 @@ const TrainingInfo = () => {
       {/* 対象部位の情報を表示します */}
       <p className="target-part">対象部位：{currentPart}</p>
       {/* MAX重量の情報を表示します */}
-      <p>MAX重量：95kg</p>
+      <p>MAX重量：本リリース時に実装予定</p>
       {/* 消費カロリーの情報を表示します */}
-      <p>消費カロリー：xxxkcal</p>
+      <p>消費カロリー：本リリース時に実装予定</p>
       {/* CustomizedTraining コンポーネントを表示 */}
       {modalVisible && (
         <CustomizedTraining
