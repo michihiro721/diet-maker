@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Home/Header/Header';
 import Footer from './components/Home/Footer/Footer';
@@ -18,6 +18,12 @@ import Terms from './components/Terms/Terms';
 import Privacy from './components/Privacy/Privacy';
 
 function App() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <Router>
       <Header />
@@ -36,8 +42,8 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/" element={
           <>
-            <Calender />
-            <TrainingRecord />
+            <Calender onDateSelect={handleDateSelect} />
+            <TrainingRecord selectedDate={selectedDate} />
           </>
         } />
       </Routes>
