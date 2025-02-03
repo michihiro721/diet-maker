@@ -64,12 +64,12 @@ const TrainingRecord = ({ selectedDate }) => {
     }
   };
 
-  const formattedDate = selectedDate.toLocaleDateString('ja-JP', {
+  const formattedDate = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
     weekday: 'short'
-  });
+  }) : '日付が選択されていません';
 
   return (
     <div className="training-record-container">
