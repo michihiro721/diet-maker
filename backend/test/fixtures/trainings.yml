@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  goal: one
+  workout: one
+  date: 2025-02-03
+  sets: 1
+  reps: 1
+  weight: 1.5
+
+two:
+  user: two
+  goal: two
+  workout: two
+  date: 2025-02-03
+  sets: 1
+  reps: 1
+  weight: 1.5
