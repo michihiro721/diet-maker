@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { getTrainingMenu } from "./GetTrainingMenu";
+import { getTrainingMenu1 } from "./GetTrainingMenu1";
+import { getTrainingMenu2 } from "./GetTrainingMenu2";
+import { getTrainingMenu3 } from "./GetTrainingMenu3";
+import { getTrainingMenu4 } from "./GetTrainingMenu4";
+import { getTrainingMenu5 } from "./GetTrainingMenu5";
+import { getTrainingMenu6 } from "./GetTrainingMenu6";
 
 const TrainingMenu = () => {
   const [gender, setGender] = useState("");
@@ -9,9 +14,23 @@ const TrainingMenu = () => {
   const [menu, setMenu] = useState(null);
 
   const handleSubmit = () => {
-    const generatedMenu = getTrainingMenu(gender, gymType, frequency, volume);
+    let generatedMenu;
+    if (gymType === "ジムに通っている") {
+      generatedMenu = getTrainingMenu1(gender, gymType, frequency, volume);
+    } else if (gymType === "ホームジム1") {
+      generatedMenu = getTrainingMenu2(gender, gymType, frequency, volume);
+    } else if (gymType === "ホームジム2") {
+      generatedMenu = getTrainingMenu3(gender, gymType, frequency, volume);
+    } else if (gymType === "ホームジム3") {
+      generatedMenu = getTrainingMenu4(gender, gymType, frequency, volume);
+    } else if (gymType === "ホームジム4") {
+      generatedMenu = getTrainingMenu5(gender, gymType, frequency, volume);
+    } else if (gymType === "自重のみ") {
+      generatedMenu = getTrainingMenu6(gender, gymType, frequency, volume);
+    }
     setMenu(generatedMenu);
   };
+
 
   return (
     <div>

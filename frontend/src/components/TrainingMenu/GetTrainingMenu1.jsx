@@ -1,11 +1,12 @@
-export const getTrainingMenu = (gender, gymType, frequency, volume) => {
-    let suggestedMenu = `提案されたトレーニングメニュー:\n\n`;
-    suggestedMenu += `性別: ${gender}\n`;
-    suggestedMenu += `ジムタイプ: ${gymType}\n`;
-    suggestedMenu += `トレーニング頻度: ${frequency}\n`;
-    suggestedMenu += `トレーニングボリューム: ${volume}\n\n`;
-  
-    // **条件ごとに適切なメニューを決定**
+export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
+  let suggestedMenu = `提案されたトレーニングメニュー:\n\n`;
+  suggestedMenu += `性別: ${gender}\n`;
+  suggestedMenu += `ジムタイプ: ${gymType}\n`;
+  suggestedMenu += `トレーニング頻度: ${frequency}\n`;
+  suggestedMenu += `トレーニングボリューム: ${volume}\n\n`;
+
+  // **条件ごとに適切なメニューを決定**
+  if (gender === "男性") {
     if (gymType === "ジムに通っている") {
       if (frequency === "6回/週") {
         if (volume === "多いのがいい！") {
@@ -107,6 +108,9 @@ export const getTrainingMenu = (gender, gymType, frequency, volume) => {
         }
       }
     }
-  
-    return suggestedMenu;
-  };
+  } else {
+    suggestedMenu = "";
+  }
+
+  return suggestedMenu;
+};
