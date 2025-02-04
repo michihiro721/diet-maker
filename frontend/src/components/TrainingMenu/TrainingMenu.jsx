@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { getTrainingMenu1 } from "./GetTrainingMenu1";
-import { getTrainingMenu2 } from "./GetTrainingMenu2";
-import { getTrainingMenu3 } from "./GetTrainingMenu3";
-import { getTrainingMenu4 } from "./GetTrainingMenu4";
-import { getTrainingMenu5 } from "./GetTrainingMenu5";
-import { getTrainingMenu6 } from "./GetTrainingMenu6";
+import { getTrainingMenu1 } from "./GetTrainingMenuMen1";
+import { getTrainingMenu2 } from "./GetTrainingMenuMen2";
+import { getTrainingMenu3 } from "./GetTrainingMenuMen3";
+import { getTrainingMenu4 } from "./GetTrainingMenuMen4";
+import { getTrainingMenu5 } from "./GetTrainingMenuMen5";
+import { getTrainingMenu6 } from "./GetTrainingMenuMen6";
 
 const TrainingMenu = () => {
   const [gender, setGender] = useState("");

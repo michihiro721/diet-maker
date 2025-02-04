@@ -1,5 +1,5 @@
-export const getTrainingMenu6 = (gender, gymType, frequency, volume) => {
-    let suggestedMenu = `提案されたトレーニングメニュー:\n\n`;
+export const getTrainingMenu5 = (gender, gymType, frequency, volume) => {
+    let suggestedMenu = ``;
     suggestedMenu += `性別: ${gender}\n`;
     suggestedMenu += `ジムタイプ: ${gymType}\n`;
     suggestedMenu += `トレーニング頻度: ${frequency}\n`;
@@ -7,7 +7,7 @@ export const getTrainingMenu6 = (gender, gymType, frequency, volume) => {
   
     // **条件ごとに適切なメニューを決定**
     if (gender === "男性") {
-      if (gymType === "自重のみ") {
+      if (gymType === "ホームジム4") {
         if (frequency === "6回/週") {
           if (volume === "多いのがいい！") {
             suggestedMenu += "\n**ジム通い6回/週のハードメニュー**\n";

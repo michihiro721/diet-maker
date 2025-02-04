@@ -1,5 +1,5 @@
 export const getTrainingMenu2 = (gender, gymType, frequency, volume) => {
-  let suggestedMenu = `提案されたトレーニングメニュー:\n\n`;
+  let suggestedMenu = ``;
   suggestedMenu += `性別: ${gender}\n`;
   suggestedMenu += `ジムタイプ: ${gymType}\n`;
   suggestedMenu += `トレーニング頻度: ${frequency}\n`;
