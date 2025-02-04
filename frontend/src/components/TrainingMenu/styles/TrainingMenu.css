@@ -1,0 +1,81 @@
+/* トレーニングメニューコンテナ */
+.training-menu-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  text-align: center; /* 中央寄せ */
+}
+
+/* フォームグループ */
+.form-group {
+  margin-bottom: 15px;
+  text-align: center; /* 中央寄せ */
+}
+
+/* フォームラベル */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* フォームセレクト */
+.form-group select {
+  width: 60%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  outline: 1px solid #87CEFA;
+  outline-offset: 2px;
+}
+
+/* サブミットボタン */
+.submit-button {
+  width: 20%;
+  padding: 10px;
+  background-color: #87CEFA;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  border: 2px solid rgba(162, 217, 255, 1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #4a8ad4;
+  transform: translateY(-2px);
+}
+
+/* メニュー結果 */
+.menu-result {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e6f7ff;
+  border-radius: 4px;
+  border: 1px solid #b3e0ff;
+  text-align: center;
+}
+
+.menu-result h2 {
+  color: #007acc;
+  margin-top: 0;
+}
+
+.menu-result pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: center;
+  font-size: 16px;
+}

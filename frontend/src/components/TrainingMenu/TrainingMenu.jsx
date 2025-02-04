@@ -11,6 +11,7 @@ import { getTrainingMenu3Woman } from "./GetTrainingMenuWoman3";
 import { getTrainingMenu4Woman } from "./GetTrainingMenuWoman4";
 import { getTrainingMenu5Woman } from "./GetTrainingMenuWoman5";
 import { getTrainingMenu6Woman } from "./GetTrainingMenuWoman6";
+import "./styles/TrainingMenu.css";
 
 const TrainingMenu = () => {
   const [gender, setGender] = useState("");
@@ -54,18 +55,18 @@ const TrainingMenu = () => {
   };
 
   return (
-    <div>
-      <h1>トレーニングメニュー提案</h1>
-      <div>
-        <label>性別:</label>
+    <div className="training-menu-container">
+
+      <div className="form-group">
+        <label>性別</label>
         <select value={gender} onChange={(e) => setGender(e.target.value)}>
           <option value="">選択してください</option>
           <option value="男性">男性</option>
           <option value="女性">女性</option>
         </select>
       </div>
-      <div>
-        <label>ジムタイプ:</label>
+      <div className="form-group">
+        <label>ジムタイプ</label>
         <select value={gymType} onChange={(e) => setGymType(e.target.value)}>
           <option value="">選択してください</option>
           <option value="ジムに通っている">ジムに通っている</option>
@@ -76,8 +77,8 @@ const TrainingMenu = () => {
           <option value="自重のみ">自重のみでやりたい！</option>
         </select>
       </div>
-      <div>
-        <label>トレーニング頻度:</label>
+      <div className="form-group">
+        <label>トレーニング頻度</label>
         <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
           <option value="">選択してください</option>
           <option value="6回/週">6回/週</option>
@@ -86,8 +87,8 @@ const TrainingMenu = () => {
           <option value="3回/週">3回/週</option>
         </select>
       </div>
-      <div>
-        <label>トレーニングボリューム:</label>
+      <div className="form-group">
+        <label>トレーニングボリューム</label>
         <select value={volume} onChange={(e) => setVolume(e.target.value)}>
           <option value="">選択してください</option>
           <option value="多いのがいい！">多いのがいい！</option>
@@ -95,9 +96,9 @@ const TrainingMenu = () => {
           <option value="継続が目的なので、少なめで">継続が目的なので、少なめで</option>
         </select>
       </div>
-      <button onClick={handleSubmit}>作成</button>
+      <button className="submit-button" onClick={handleSubmit}>作成</button>
       {menu && (
-        <div>
+        <div className="menu-result">
           <h2>トレーニングメニュー</h2>
           <pre>{menu}</pre>
         </div>
