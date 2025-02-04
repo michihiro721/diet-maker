@@ -5,6 +5,12 @@ import { getTrainingMenu3 } from "./GetTrainingMenuMen3";
 import { getTrainingMenu4 } from "./GetTrainingMenuMen4";
 import { getTrainingMenu5 } from "./GetTrainingMenuMen5";
 import { getTrainingMenu6 } from "./GetTrainingMenuMen6";
+import { getTrainingMenu1Woman } from "./GetTrainingMenuWoman1";
+import { getTrainingMenu2Woman } from "./GetTrainingMenuWoman2";
+import { getTrainingMenu3Woman } from "./GetTrainingMenuWoman3";
+import { getTrainingMenu4Woman } from "./GetTrainingMenuWoman4";
+import { getTrainingMenu5Woman } from "./GetTrainingMenuWoman5";
+import { getTrainingMenu6Woman } from "./GetTrainingMenuWoman6";
 
 const TrainingMenu = () => {
   const [gender, setGender] = useState("");
@@ -15,22 +21,37 @@ const TrainingMenu = () => {
 
   const handleSubmit = () => {
     let generatedMenu;
-    if (gymType === "ジムに通っている") {
-      generatedMenu = getTrainingMenu1(gender, gymType, frequency, volume);
-    } else if (gymType === "ホームジム1") {
-      generatedMenu = getTrainingMenu2(gender, gymType, frequency, volume);
-    } else if (gymType === "ホームジム2") {
-      generatedMenu = getTrainingMenu3(gender, gymType, frequency, volume);
-    } else if (gymType === "ホームジム3") {
-      generatedMenu = getTrainingMenu4(gender, gymType, frequency, volume);
-    } else if (gymType === "ホームジム4") {
-      generatedMenu = getTrainingMenu5(gender, gymType, frequency, volume);
-    } else if (gymType === "自重のみ") {
-      generatedMenu = getTrainingMenu6(gender, gymType, frequency, volume);
+    if (gender === "男性") {
+      if (gymType === "ジムに通っている") {
+        generatedMenu = getTrainingMenu1(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム1") {
+        generatedMenu = getTrainingMenu2(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム2") {
+        generatedMenu = getTrainingMenu3(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム3") {
+        generatedMenu = getTrainingMenu4(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム4") {
+        generatedMenu = getTrainingMenu5(gender, gymType, frequency, volume);
+      } else if (gymType === "自重のみ") {
+        generatedMenu = getTrainingMenu6(gender, gymType, frequency, volume);
+      }
+    } else if (gender === "女性") {
+      if (gymType === "ジムに通っている") {
+        generatedMenu = getTrainingMenu1Woman(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム1") {
+        generatedMenu = getTrainingMenu2Woman(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム2") {
+        generatedMenu = getTrainingMenu3Woman(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム3") {
+        generatedMenu = getTrainingMenu4Woman(gender, gymType, frequency, volume);
+      } else if (gymType === "ホームジム4") {
+        generatedMenu = getTrainingMenu5Woman(gender, gymType, frequency, volume);
+      } else if (gymType === "自重のみ") {
+        generatedMenu = getTrainingMenu6Woman(gender, gymType, frequency, volume);
+      }
     }
     setMenu(generatedMenu);
   };
-
 
   return (
     <div>
