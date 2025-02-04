@@ -3,7 +3,7 @@
 # about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
 
 # Puma can serve each request in a thread from an internal thread pool.
-# The `threads` method setting takes two numbers: a minimum and maximum.
+# The `threads` method setting takes two numbers a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
@@ -41,5 +41,5 @@ preload_app!
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
-# Set the working directory for Puma
-directory '/myapp'
+# Bind to all interfaces
+bind "tcp://0.0.0.0:3000"
