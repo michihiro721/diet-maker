@@ -36,6 +36,7 @@
   cursor: pointer;
   outline: 1px solid #87CEFA;
   outline-offset: 2px;
+  font-weight: bold;
 }
 
 /* サブミットボタン */
@@ -62,20 +63,55 @@
 .menu-result {
   margin-top: 20px;
   padding: 15px;
-  background-color: #e6f7ff;
+
   border-radius: 4px;
-  border: 1px solid #b3e0ff;
+
   text-align: center;
 }
 
 .menu-result h2 {
   color: #007acc;
+  font-size: 24px;
   margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .menu-result pre {
   white-space: pre-wrap;
   word-wrap: break-word;
-  text-align: center;
+  text-align: left;
   font-size: 16px;
+}
+
+/* メニュータイトル */
+.menu-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+/* メニューリスト */
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* メニューリストアイテム */
+.menu-list li {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: left;
+}
+
+/* メニュー曜日 */
+.menu-day {
+  font-weight: bold;
+  color: #007acc;
+  display: block;
+  margin-bottom: 5px;
 }

@@ -100,7 +100,7 @@ const TrainingMenu = () => {
       {menu && (
         <div className="menu-result">
           <h2>トレーニングメニュー</h2>
-          <pre>{menu}</pre>
+          {menu}
         </div>
       )}
     </div>
