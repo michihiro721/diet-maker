@@ -10,7 +10,7 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
     if (gymType === "ジムに通っている") {
       if (frequency === "6回/週") {
         if (volume === "多いのがいい！") {
-          suggestedMenu += "\n**ジム通い6回/週のハードメニュー**\n";
+          suggestedMenu += "\n**6回/週のハードメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×5セット, インクラインダンベルフライ 10回×5セット, ペックフライ 10回×5セット\n";
           suggestedMenu += "火: デッドリフト 10回×5セット, ダンベルローイング 10回×5セット, ラットプルダウン 10回×5セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×5セット, レッグプレス 10回×5セット, レッグカール 10回×5セット\n";
@@ -19,7 +19,7 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
           suggestedMenu += "土: クランチ 20回×5セット, レッグレイズ 20回×5セット\n";
           suggestedMenu += "日: 休み\n";
         } else if (volume === "普通がいいかな〜") {
-          suggestedMenu += "\n**ジム通い6回/週の標準メニュー**\n";
+          suggestedMenu += "\n**6回/週の標準メニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×3セット, インクラインダンベルフライ 10回×3セット, ペックフライ 10回×3セット\n";
           suggestedMenu += "火: デッドリフト 10回×3セット, ダンベルローイング 10回×3セット, ラットプルダウン 10回×3セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×3セット, レッグプレス 10回×3セット, レッグカール  10回×3セット\n";
@@ -28,7 +28,7 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
           suggestedMenu += "土: クランチ 20回×3セット, レッグレイズ 20回×3セット\n";
           suggestedMenu += "日: 休み\n";
         } else {
-          suggestedMenu += "\n**ジム通い6回/週の軽めメニュー**\n";
+          suggestedMenu += "\n**6回/週の軽めメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×2セット, インクラインダンベルフライ 10回×2セット, ペックフライ 10回×2セット\n";
           suggestedMenu += "火: デッドリフト 10回×2セット, ダンベルローイング 10回×2セット, ラットプルダウン 10回×2セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×2セット, レッグプレス 10回×2セット, レッグカール  10回×2セット\n";
@@ -39,7 +39,7 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
         }
       } else if (frequency === "5回/週") {
         if (volume === "多いのがいい！") {
-          suggestedMenu += "\n**ジム通い5回/週のハードメニュー**\n";
+          suggestedMenu += "\n**5回/週のハードメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×5セット, インクラインダンベルフライ 10回×5セット, ペックフライ 10回×5セット\n";
           suggestedMenu += "火: デッドリフト 10回×5セット, ダンベルローイング 10回×5セット, ラットプルダウン 10回×5セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×5セット, レッグプレス 10回×5セット, レッグカール  10回×5セット\n";
@@ -47,7 +47,7 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
           suggestedMenu += "金: バーベルカール 10回×5セット, インクラインダンベルカール 10回×5セット, ケーブルプルオーバー 15回×5セット\n";
           suggestedMenu += "土日: 休み\n";
         } else if (volume === "普通がいいかな〜") {
-          suggestedMenu += "\n**ジム通い5回/週の標準メニュー**\n";
+          suggestedMenu += "\n**5回/週の標準メニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×3セット, インクラインダンベルフライ 10回×3セット, ペックフライ 10回×3セット\n";
           suggestedMenu += "火: デッドリフト 10回×3セット, ダンベルローイング 10回×3セット, ラットプルダウン 10回×3セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×3セット, レッグプレス 10回×3セット, レッグカール  10回×3セット\n";
@@ -55,7 +55,7 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
           suggestedMenu += "金: バーベルカール 10回×3セット, インクラインダンベルカール 10回×3セット, ケーブルプルオーバー 15回×3セット\n";
           suggestedMenu += "土日: 休み\n";
         } else {
-          suggestedMenu += "\n**ジム通い5回/週の軽めメニュー**\n";
+          suggestedMenu += "\n**5回/週の軽めメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×2セット, インクラインダンベルフライ 10回×2セット, ペックフライ 10回×2セット\n";
           suggestedMenu += "火: デッドリフト 10回×2セット, ダンベルローイング 10回×2セット, ラットプルダウン 10回×2セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×2セット, レッグプレス 10回×2セット, レッグカール  10回×2セット\n";
@@ -65,21 +65,21 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
         }
       } else if (frequency === "4回/週") {
         if (volume === "多いのがいい！") {
-          suggestedMenu += "\n**ジム通い4回/週のハードメニュー**\n";
+          suggestedMenu += "\n**4回/週のハードメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×5セット, インクラインダンベルフライ 10回×5セット, ペックフライ 10回×5セット\n";
           suggestedMenu += "火: バーベルスクワット 10回×5セット, レッグプレス 10回×5セット, レッグカール  10回×5セット\n";
           suggestedMenu += "木: デッドリフト 10回×5セット, ダンベルローイング 10回×5セット, ラットプルダウン 10回×5セット\n";
           suggestedMenu += "金: ミリタリープレス 10回×5セット, ダンベルショルダープレス 10回×5セット, サイドレイズ 15回×5セット\n";
           suggestedMenu += "水土日: 休み\n";
         } else if (volume === "普通がいいかな〜") {
-          suggestedMenu += "\n**ジム通い4回/週の標準メニュー**\n";
+          suggestedMenu += "\n**4回/週の標準メニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×3セット, インクラインダンベルフライ 10回×3セット, ペックフライ 10回×3セット\n";
           suggestedMenu += "火: バーベルスクワット 10回×3セット, レッグプレス 10回×3セット, レッグカール  10回×3セット\n";
           suggestedMenu += "木: デッドリフト 10回×3セット, ダンベルローイング 10回×3セット, ラットプルダウン 10回×3セット\n";
           suggestedMenu += "金: ミリタリープレス 10回×3セット, ダンベルショルダープレス 10回×3セット, サイドレイズ 15回×3セット\n";
           suggestedMenu += "水土日: 休み\n";
         } else {
-          suggestedMenu += "\n**ジム通い4回/週の軽めメニュー**\n";
+          suggestedMenu += "\n**4回/週の軽めメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×2セット, インクラインダンベルフライ 10回×2セット, ペックフライ 10回×2セット\n";
           suggestedMenu += "火: バーベルスクワット 10回×2セット, レッグプレス 10回×2セット, レッグカール  10回×2セット\n";
           suggestedMenu += "木: デッドリフト 10回×2セット, ダンベルローイング 10回×2セット, ラットプルダウン 10回×2セット\n";
@@ -88,19 +88,19 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
         }
       } else if (frequency === "3回/週") {
         if (volume === "多いのがいい！") {
-          suggestedMenu += "\n**ジム通い3回/週のハードメニュー**\n";
+          suggestedMenu += "\n**3回/週のハードメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×5セット, インクラインダンベルフライ 10回×5セット, ペックフライ 10回×5セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×5セット, レッグプレス 10回×5セット, レッグカール  10回×5セット\n";
           suggestedMenu += "金: デッドリフト 10回×5セット, ダンベルローイング 10回×5セット, ラットプルダウン 10回×5セット\n";
           suggestedMenu += "火木土日: 休み\n";
         } else if (volume === "普通がいいかな〜") {
-          suggestedMenu += "\n**ジム通い3回/週の標準メニュー**\n";
+          suggestedMenu += "\n**3回/週の標準メニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×3セット, インクラインダンベルフライ 10回×3セット, ペックフライ 10回×3セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×3セット, レッグプレス 10回×3セット, レッグカール  10回×3セット\n";
           suggestedMenu += "金: デッドリフト 10回×3セット, ダンベルローイング 10回×3セット, ラットプルダウン 10回×3セット\n";
           suggestedMenu += "火木土日: 休み\n";
         } else {
-          suggestedMenu += "\n**ジム通い3回/週の軽めメニュー**\n";
+          suggestedMenu += "\n**3回/週の軽めメニュー**\n";
           suggestedMenu += "月: ベンチプレス 10回×2セット, インクラインダンベルフライ 10回×2セット, ペックフライ 10回×2セット\n";
           suggestedMenu += "水: バーベルスクワット 10回×2セット, レッグプレス 10回×2セット, レッグカール  10回×2セット\n";
           suggestedMenu += "金: デッドリフト 10回×2セット, ダンベルローイング 10回×2セット, ラットプルダウン 10回×2セット\n";
