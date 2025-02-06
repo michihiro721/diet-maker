@@ -2,11 +2,11 @@ export const getTrainingMenu5 = (gender, gymType, frequency, volume) => {
   let suggestedMenu = [];
 
   const createMenu = (title, menuItems) => {
-    suggestedMenu.push(<div className='menu-title'>{title}</div>);
+    suggestedMenu.push(<div className='training-menu-title'>{title}</div>);
     suggestedMenu.push(
-      <ul className='menu-list'>
+      <ul className='training-menu-list'>
         {menuItems.map((item, index) => (
-          <li key={index}><span className='menu-day'>{item.day}:</span> {item.exercises.map((exercise, i) => <div key={i}>{exercise}</div>)}</li>
+          <li key={index}><span className='training-menu-day'>{item.day}:</span> {item.exercises.map((exercise, i) => <div key={i}>{exercise}</div>)}</li>
         ))}
       </ul>
     );
