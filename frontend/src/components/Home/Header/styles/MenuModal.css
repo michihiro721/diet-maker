@@ -39,7 +39,7 @@
 }
 
 /* ナビゲーションリンクのリスト */
-.menu-list {
+.header-menu-list {
   list-style: none; /* リストマーカーを削除 */
   padding: 0;
   margin: 0;
@@ -48,7 +48,7 @@
 }
 
 /* リストアイテム */
-.menu-list li {
+.header-menu-list li {
   padding: 15px 0; /* 上下の余白を設定 */
   margin: 10px 0; /* 上下のマージンを追加 */
   border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
@@ -60,7 +60,7 @@
 }
 
 /* リストアイテムのホバー時のスタイル */
-.menu-list li:hover {
+.header-menu-list li:hover {
   background: #e0f7fa; /* 背景色を変更 */
   color: #007bff; /* 文字色を変更 */
 }
@@ -88,12 +88,12 @@
 }
 
 /* リンクのスタイル */
-.menu-list a {
+.header-menu-list a {
   text-decoration: none; /* 下線を削除 */
   color: inherit; /* 親要素の色を継承 */
 }
 
 /* 訪問済みリンクのスタイル */
-.menu-list a:visited {
+.header-menu-list a:visited {
   color: inherit; /* 親要素の色を継承 */
 }

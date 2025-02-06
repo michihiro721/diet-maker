@@ -12,7 +12,7 @@ const MenuModal = ({ closeMenu }) => {
       {/* モーダルウィンドウ */}
       <div className="menu-modal" onClick={(e) => e.stopPropagation()}>
         {/* ナビゲーションリンクのリスト */}
-        <ul className="menu-list">
+        <ul className="header-menu-list">
           <li><Link to="/achievements" onClick={closeMenu}>成果</Link></li>
           <li><Link to="/goal-setting" onClick={closeMenu}>目標設定</Link></li>
           <li><Link to="/training-menu" onClick={closeMenu}>トレーニングメニュー提案</Link></li>
