@@ -1,58 +1,65 @@
+.body-info-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 画面全体の高さに設定 */
+}
+
 /* コンテナのスタイル */
 .body-info-container {
-    background-color: #f0f8ff; /* 薄い青色の背景 */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* フォームのスタイル */
 .body-info-form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 /* フォームグループのスタイル */
 .body-info-form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 /* セレクトボックスと入力フィールドのスタイル */
 .body-info-select,
 .body-info-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-    font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 /* ボタンのスタイル */
 .body-info-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 /* ボタンのホバースタイル */
 .body-info-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* BMR結果のスタイル */
 .body-info-bmr-result {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 /* BMR結果の見出しのスタイル */
 .body-info-bmr-result h2 {
-    color: #007bff;
+  color: #007bff;
 }
