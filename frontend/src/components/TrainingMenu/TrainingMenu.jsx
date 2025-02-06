@@ -19,8 +19,16 @@ const TrainingMenu = () => {
   const [frequency, setFrequency] = useState("");
   const [volume, setVolume] = useState("");
   const [menu, setMenu] = useState(null);
+  const [error, setError] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!gender || !gymType || !frequency || !volume) {
+      setError("全ての項目を入力してください");
+      return;
+    }
+    setError("");
+
     let generatedMenu;
     if (gender === "男性") {
       if (gymType === "ジムに通っている") {
@@ -56,47 +64,49 @@ const TrainingMenu = () => {
 
   return (
     <div className="training-menu-container">
-
-      <div className="form-group">
-        <label>性別</label>
-        <select value={gender} onChange={(e) => setGender(e.target.value)}>
-          <option value="">選択してください</option>
-          <option value="男性">男性</option>
-          <option value="女性">女性</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label>ジムタイプ</label>
-        <select value={gymType} onChange={(e) => setGymType(e.target.value)}>
-          <option value="">選択してください</option>
-          <option value="ジムに通っている">ジムに通っている</option>
-          <option value="ホームジム1">ホームジム1（バーベル、ダンベル、ベンチ、チンニング）</option>
-          <option value="ホームジム2">ホームジム2（ダンベルとベンチ）</option>
-          <option value="ホームジム3">ホームジム3（チンニング）</option>
-          <option value="ホームジム4">ホームジム4（ダンベル、ベンチ、チンニング）</option>
-          <option value="自重のみ">自重のみでやりたい！</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label>トレーニング頻度</label>
-        <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
-          <option value="">選択してください</option>
-          <option value="6回/週">6回/週</option>
-          <option value="5回/週">5回/週</option>
-          <option value="4回/週">4回/週</option>
-          <option value="3回/週">3回/週</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label>トレーニングボリューム</label>
-        <select value={volume} onChange={(e) => setVolume(e.target.value)}>
-          <option value="">選択してください</option>
-          <option value="多いのがいい！">多いのがいい！</option>
-          <option value="普通がいいかな〜">普通がいいかな〜</option>
-          <option value="継続が目的なので、少なめで">継続が目的なので、少なめで</option>
-        </select>
-      </div>
-      <button className="submit-button" onClick={handleSubmit}>作成</button>
+      {error && <div className="error-message">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>性別</label>
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="">選択してください</option>
+            <option value="男性">男性</option>
+            <option value="女性">女性</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label>ジムタイプ</label>
+          <select value={gymType} onChange={(e) => setGymType(e.target.value)}>
+            <option value="">選択してください</option>
+            <option value="ジムに通っている">ジムに通っている</option>
+            <option value="ホームジム1">ホームジム1（バーベル、ダンベル、ベンチ、チンニング）</option>
+            <option value="ホームジム2">ホームジム2（ダンベルとベンチ）</option>
+            <option value="ホームジム3">ホームジム3（チンニング）</option>
+            <option value="ホームジム4">ホームジム4（ダンベル、ベンチ、チンニング）</option>
+            <option value="自重のみ">自重のみでやりたい！</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label>トレーニング頻度</label>
+          <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
+            <option value="">選択してください</option>
+            <option value="6回/週">6回/週</option>
+            <option value="5回/週">5回/週</option>
+            <option value="4回/週">4回/週</option>
+            <option value="3回/週">3回/週</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label>トレーニングボリューム</label>
+          <select value={volume} onChange={(e) => setVolume(e.target.value)}>
+            <option value="">選択してください</option>
+            <option value="多いのがいい！">多いのがいい！</option>
+            <option value="普通がいいかな〜">普通がいいかな〜</option>
+            <option value="継続が目的なので、少なめで">継続が目的なので、少なめで</option>
+          </select>
+        </div>
+        <button type="submit" className="submit-button">作成</button>
+      </form>
       {menu && (
         <div className="menu-result">
           <h2>トレーニングメニュー</h2>
