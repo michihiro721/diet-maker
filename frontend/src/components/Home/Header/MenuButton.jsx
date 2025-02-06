@@ -10,7 +10,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const MenuButton = ({ toggleMenu }) => {
   return (
     // ボタン要素をレンダリングし、クリック時にtoggleMenu関数を呼び出す
-    <button className="menu-button" onClick={toggleMenu}>
+    <button className="header-menu-button" onClick={toggleMenu}>
       {/* アイコンを表示 */}
       <FontAwesomeIcon icon={faBars} />
     </button>

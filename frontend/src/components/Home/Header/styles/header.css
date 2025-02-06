@@ -22,7 +22,7 @@
   margin: 0 auto; /* タイトルを中央に配置 */
 }
 
-.back-button {
+.header-back-button {
   background: none;
   border: none;
   font-size: 56px; /* フォントサイズを大きく設定 */
@@ -31,12 +31,12 @@
   transition: transform 0.2s ease, color 0.2s ease; /* スムーズな変化を追加 */
 }
 
-.back-button i {
+.header-back-button i {
   color: #fff; /* アイコンの色を白に設定 */
   transition: transform 0.2s ease; /* スムーズな変化を追加 */
 }
 
-.back-button:hover i {
+.header-back-button:hover i {
   transform: scale(1.1); /* アイコンを少し大きくする */
   color: #fff; /* ホバー時のアイコンの色を白に設定 */
 }

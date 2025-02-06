@@ -8,9 +8,9 @@ import "./styles/MenuModal.css";
 const MenuModal = ({ closeMenu }) => {
   return (
     // モーダルのオーバーレイをクリックするとメニューを閉じる
-    <div className="menu-overlay" onClick={closeMenu}>
+    <div className="header-menu-overlay" onClick={closeMenu}>
       {/* モーダルウィンドウ */}
-      <div className="menu-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="header-menu-modal" onClick={(e) => e.stopPropagation()}>
         {/* ナビゲーションリンクのリスト */}
         <ul className="header-menu-list">
           <li><Link to="/achievements" onClick={closeMenu}>成果</Link></li>
@@ -24,7 +24,7 @@ const MenuModal = ({ closeMenu }) => {
           <li><Link to="/app-usage" onClick={closeMenu}>アプリ使い方</Link></li>
         </ul>
         {/* 閉じるボタン */}
-        <button className="close-buttn" onClick={closeMenu}>
+        <button className="header-close-buttn" onClick={closeMenu}>
           閉じる
         </button>
       </div>

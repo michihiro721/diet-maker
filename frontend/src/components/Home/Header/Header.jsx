@@ -64,7 +64,7 @@ const Header = () => {
       <header className="header">
         {/* ホーム画面以外で戻るボタンを表示 */}
         {location.pathname !== "/" && (
-          <button className="back-button" onClick={goToHome}>
+          <button className="header-back-button" onClick={goToHome}>
             <i className="fa-solid fa-circle-left"></i>
           </button>
         )}
