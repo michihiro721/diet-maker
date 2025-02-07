@@ -10,6 +10,7 @@ const BodyInfo = () => {
   const [bmr, setBmr] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentField, setCurrentField] = useState("");
+  const [error, setError] = useState("");
 
   const calculateBMR = () => {
     const heightValue = parseFloat(height);
@@ -27,6 +28,11 @@ const BodyInfo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!gender || !height || !weight || !age) {
+      setError("全ての項目を入力してください");
+      return;
+    }
+    setError("");
     calculateBMR();
   };
 
@@ -50,6 +56,7 @@ const BodyInfo = () => {
     <div className="body-info-wrapper">
       <div className="body-info-container">
         <form onSubmit={handleSubmit} className="body-info-form">
+          {error && <p className="body-info-error-message">{error}</p>}
           <div className="body-info-form-group">
             <label>性別</label>
             <select value={gender} onChange={(e) => setGender(e.target.value)} className="body-info-select">

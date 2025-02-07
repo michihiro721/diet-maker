@@ -63,3 +63,9 @@
 .body-info-bmr-result h2 {
   color: #007bff;
 }
+
+/* 未入力時のエラーメッセージ */
+.body-info-error-message {
+    color: red;
+    font-weight: bold;
+  }

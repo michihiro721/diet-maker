@@ -64,9 +64,9 @@ const TrainingMenu = () => {
 
   return (
     <div className="training-menu-container">
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className="training-menu-error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="training-menu-form-group">
           <label>性別</label>
           <select value={gender} onChange={(e) => setGender(e.target.value)}>
             <option value="">選択してください</option>
@@ -74,7 +74,7 @@ const TrainingMenu = () => {
             <option value="女性">女性</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="training-menu-form-group">
           <label>ジムタイプ</label>
           <select value={gymType} onChange={(e) => setGymType(e.target.value)}>
             <option value="">選択してください</option>
@@ -86,7 +86,7 @@ const TrainingMenu = () => {
             <option value="自重のみ">自重のみでやりたい！</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="training-menu-form-group">
           <label>トレーニング頻度</label>
           <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
             <option value="">選択してください</option>
@@ -96,7 +96,7 @@ const TrainingMenu = () => {
             <option value="3回/週">3回/週</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="training-menu-form-group">
           <label>トレーニングボリューム</label>
           <select value={volume} onChange={(e) => setVolume(e.target.value)}>
             <option value="">選択してください</option>
@@ -105,10 +105,10 @@ const TrainingMenu = () => {
             <option value="継続が目的なので、少なめで">継続が目的なので、少なめで</option>
           </select>
         </div>
-        <button type="submit" className="submit-button">作成</button>
+        <button type="submit" className="training-menu-submit-button">作成</button>
       </form>
       {menu && (
-        <div className="menu-result">
+        <div className="training-menu-menu-result">
           <h2>トレーニングメニュー</h2>
           {menu}
         </div>
