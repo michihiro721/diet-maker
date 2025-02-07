@@ -10,7 +10,7 @@
   background-color: #f0f8ff;
   padding: 20px;
   border-radius: 10px;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #87CEFA;
@@ -28,7 +28,9 @@
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column; /* ラベルと入力フィールドを縦に並べる */
 }
 
 /* セレクトボックスと入力フィールドのスタイル */
@@ -41,40 +43,56 @@
   outline-offset: 2px;
   font-weight: bold;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
+  cursor: pointer;
+  width: 60%;
+  margin: 0 auto;
 }
 
 /* ボタンのスタイル */
 .body-info-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+    width: 20%;
+    padding: 10px;
+    background-color: #87CEFA;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    border: 2px solid rgba(162, 217, 255, 1);
+    transition: background-color 0.3s, transform 0.3s;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
 /* ボタンのホバースタイル */
 .body-info-button:hover {
-  background-color: #0056b3;
+    background-color: #4a8ad4;
+    transform: translateY(-2px);
 }
 
 /* BMR結果のスタイル */
 .body-info-bmr-result {
-  margin-top: 20px;
-  text-align: center;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
 }
 
 /* BMR結果の見出しのスタイル */
 .body-info-bmr-result h2 {
-  color: #007bff;
+    color: #007bff;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
 /* 未入力時のエラーメッセージ */
 .body-info-error-message {
     color: red;
     font-weight: bold;
+    text-align: center;
   }
