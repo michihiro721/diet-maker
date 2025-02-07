@@ -13,15 +13,15 @@ const BodyInfo = () => {
   const [error, setError] = useState("");
 
   const calculateBMR = () => {
-    const heightValue = parseFloat(height);
-    const weightValue = parseFloat(weight);
-    const ageValue = parseFloat(age);
+    const heightValue = parseFloat(height.replace(" cm", ""));
+    const weightValue = parseFloat(weight.replace(" kg", ""));
+    const ageValue = parseFloat(age.replace(" 歳", ""));
 
     let bmrValue;
     if (gender === "男性") {
-      bmrValue = 88.36 + 13.4 * weightValue + 4.8 * heightValue - 5.7 * ageValue;
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
     } else if (gender === "女性") {
-      bmrValue = 447.6 + 9.2 * weightValue + 3.1 * heightValue - 4.3 * ageValue;
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
     }
     setBmr(bmrValue);
   };
