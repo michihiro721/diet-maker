@@ -1,0 +1,23 @@
+{
+    "name": "diet-maker",
+    "scripts": {
+      "postdeploy": "cd backend && bundle exec rake db:migrate"
+    },
+    "env": {
+      "RAILS_ENV": "production"
+    },
+    "formation": {
+      "web": {
+        "quantity": 1,
+        "size": "free"
+      }
+    },
+    "addons": [
+      "heroku-postgresql"
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/ruby"
+      }
+    ]
+  }
