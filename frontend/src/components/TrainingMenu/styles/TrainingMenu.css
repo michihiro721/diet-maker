@@ -8,6 +8,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   text-align: center; /* 中央寄せ */
+  border: 2px solid #87CEFA;
 }
 
 /* フォームグループ */
