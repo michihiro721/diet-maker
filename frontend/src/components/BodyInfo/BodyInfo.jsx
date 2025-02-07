@@ -10,23 +10,29 @@ const BodyInfo = () => {
   const [bmr, setBmr] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentField, setCurrentField] = useState("");
+  const [error, setError] = useState("");
 
   const calculateBMR = () => {
-    const heightValue = parseFloat(height);
-    const weightValue = parseFloat(weight);
-    const ageValue = parseFloat(age);
+    const heightValue = parseFloat(height.replace(" cm", ""));
+    const weightValue = parseFloat(weight.replace(" kg", ""));
+    const ageValue = parseFloat(age.replace(" 歳", ""));
 
     let bmrValue;
     if (gender === "男性") {
-      bmrValue = 88.36 + 13.4 * weightValue + 4.8 * heightValue - 5.7 * ageValue;
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
     } else if (gender === "女性") {
-      bmrValue = 447.6 + 9.2 * weightValue + 3.1 * heightValue - 4.3 * ageValue;
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
     }
     setBmr(bmrValue);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!gender || !height || !weight || !age) {
+      setError("全ての項目を入力してください");
+      return;
+    }
+    setError("");
     calculateBMR();
   };
 
@@ -50,6 +56,7 @@ const BodyInfo = () => {
     <div className="body-info-wrapper">
       <div className="body-info-container">
         <form onSubmit={handleSubmit} className="body-info-form">
+          {error && <p className="body-info-error-message">{error}</p>}
           <div className="body-info-form-group">
             <label>性別</label>
             <select value={gender} onChange={(e) => setGender(e.target.value)} className="body-info-select">
