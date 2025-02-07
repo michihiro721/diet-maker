@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./styles/BodyInfo.css";
+import CalculatorModal from "./CalculatorModal"; // CalculatorModalコンポーネントをインポート
 
 const BodyInfo = () => {
   const [gender, setGender] = useState("");
@@ -7,13 +8,19 @@ const BodyInfo = () => {
   const [weight, setWeight] = useState("");
   const [age, setAge] = useState("");
   const [bmr, setBmr] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentField, setCurrentField] = useState("");
 
   const calculateBMR = () => {
+    const heightValue = parseFloat(height);
+    const weightValue = parseFloat(weight);
+    const ageValue = parseFloat(age);
+
     let bmrValue;
     if (gender === "男性") {
-      bmrValue = 88.36 + 13.4 * weight + 4.8 * height - 5.7 * age;
+      bmrValue = 88.36 + 13.4 * weightValue + 4.8 * heightValue - 5.7 * ageValue;
     } else if (gender === "女性") {
-      bmrValue = 447.6 + 9.2 * weight + 3.1 * height - 4.3 * age;
+      bmrValue = 447.6 + 9.2 * weightValue + 3.1 * heightValue - 4.3 * ageValue;
     }
     setBmr(bmrValue);
   };
@@ -21,6 +28,22 @@ const BodyInfo = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     calculateBMR();
+  };
+
+  const handleInputClick = (field) => {
+    setCurrentField(field);
+    setModalOpen(true);
+  };
+
+  const handleSave = (value) => {
+    if (currentField === "height") {
+      setHeight(value + " cm");
+    } else if (currentField === "weight") {
+      setWeight(value + " kg");
+    } else if (currentField === "age") {
+      setAge(value + " 歳");
+    }
+    setModalOpen(false);
   };
 
   return (
@@ -36,29 +59,32 @@ const BodyInfo = () => {
             </select>
           </div>
           <div className="body-info-form-group">
-            <label>身長 (cm)</label>
+            <label>身長</label>
             <input
-              type="number"
+              type="text"
               value={height}
-              onChange={(e) => setHeight(e.target.value)}
+              onClick={() => handleInputClick("height")}
+              readOnly
               className="body-info-input"
             />
           </div>
           <div className="body-info-form-group">
-            <label>体重 (kg)</label>
+            <label>体重</label>
             <input
-              type="number"
+              type="text"
               value={weight}
-              onChange={(e) => setWeight(e.target.value)}
+              onClick={() => handleInputClick("weight")}
+              readOnly
               className="body-info-input"
             />
           </div>
           <div className="body-info-form-group">
-            <label>年齢 (歳)</label>
+            <label>年齢</label>
             <input
-              type="number"
+              type="text"
               value={age}
-              onChange={(e) => setAge(e.target.value)}
+              onClick={() => handleInputClick("age")}
+              readOnly
               className="body-info-input"
             />
           </div>
@@ -71,6 +97,11 @@ const BodyInfo = () => {
           </div>
         )}
       </div>
+      <CalculatorModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSave={handleSave}
+      />
     </div>
   );
 };
