@@ -1,5 +1,3 @@
-class IntakeCalory < ApplicationRecord
+class IntakeCalorie < ApplicationRecord
   belongs_to :user
-
-  validates :date, presence: true
 end
