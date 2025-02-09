@@ -1,16 +1,9 @@
-FROM node:14
-
+FROM --platform=linux/amd64 node:21.5.0
 WORKDIR /app
-
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
-
-RUN npm install
-
-COPY . /app
-
-RUN npm run build
-
+COPY package.json yarn.lock ./
+RUN yarn install
+COPY . .
+RUN yarn build
+RUN yarn global add serve
 EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD sh -c 'serve -s build -l tcp://0.0.0.0:$PORT'

@@ -1,34 +1,37 @@
 services:
   db:
-    image: postgres:13
-    container_name: diet-maker-db
+    image: mysql:8.0
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: training_db_development
+      MYSQL_ROOT_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "3306:3306"
     volumes:
-      - db_data:/var/lib/postgresql/data
-
-  backend:
+      - mysql_data:/var/lib/mysql
+  back:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
+    # env_file:
+    #   - ./backend/.env.local
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     volumes:
-      - ./backend:/myapp
+      - ./backend:/app
     ports:
       - "3000:3000"
     depends_on:
       - db
-
-  frontend:
+    tty: true
+    stdin_open: true
+  front:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
+    # env_file:
+    #   - ./frontend/.env.local
+    command: yarn start
     ports:
-      - "3001:3000"
-
+      - "8000:3000"
 volumes:
-  db_data:
+  mysql_data:

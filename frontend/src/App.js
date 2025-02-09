@@ -16,6 +16,7 @@ import AppUsage from './components/AppUsage/AppUsage';
 import Contact from './components/Contact/Contact';
 import Terms from './components/Terms/Terms';
 import Privacy from './components/Privacy/Privacy';
+import Resources from './components/Resources'; // 新しいコンポーネントをインポート
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -40,6 +41,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/resources" element={<Resources />} /> {/* 新しいルートを追加 */}
         <Route path="/" element={
           <>
             <Calender onDateSelect={handleDateSelect} />

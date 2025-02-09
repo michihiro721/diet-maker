@@ -5,6 +5,17 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  get "/favicon.ico", to: redirect("/path/to/your/favicon.ico")
+
+  root "home#index"
+  
+  # フロントエンドの静的ファイルを提供
+  get '*path', to: 'home#index', constraints: ->(request) { !request.xhr? && request.format.html? }
+
+  # APIエンドポイント
+  namespace :api do
+    namespace :v1 do
+      resources :your_resources
+    end
+  end
 end
