@@ -13,6 +13,7 @@ import './styles/Weight.css';
 const Weight = () => {
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
+  const [weight, setWeight] = useState("");
 
   const onChange = (newDate) => {
     setDate(newDate);
@@ -20,6 +21,16 @@ const Weight = () => {
 
   const handleClick = () => {
     setSelectedDate(date);
+  };
+
+  const handleWeightChange = (e) => {
+    setWeight(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // ここで体重を保存する処理を実装
+    console.log(`Date: ${selectedDate}, Weight: ${weight}`);
   };
 
   const formatDate = (date) => {
@@ -43,7 +54,21 @@ const Weight = () => {
       </div>
       {selectedDate && (
         <div className="weight-selected-date">
-          <h2>{formatDate(selectedDate)}</h2>
+          <h2>日付: {formatDate(selectedDate)}</h2>
+        </div>
+      )}
+      {selectedDate && (
+        <div className="weight-input-container">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="number"
+              className="weight-input"
+              placeholder="体重を入力"
+              value={weight}
+              onChange={handleWeightChange}
+            />
+            <button type="submit" className="weight-submit-button">保存</button>
+          </form>
         </div>
       )}
     </div>
