@@ -50,4 +50,7 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['JAWSDB_URL'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: <%= ENV['DATABASE_URL'] %>
