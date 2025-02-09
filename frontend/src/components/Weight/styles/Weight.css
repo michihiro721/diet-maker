@@ -1,0 +1,31 @@
+.weight-date-select-button {
+  background-color: #007bff;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: rgba(162, 217, 255, 0.3);
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  font-weight: bold;
+  box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
+}
+
+.weight-date-select-button:hover {
+  background-color: rgba(162, 217, 255, 0.8);
+}
+
+.weight-date-select-button:active {
+  transform: scale(0.95);
+}
+
+.weight-selected-date {
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
+}

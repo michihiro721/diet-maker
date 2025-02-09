@@ -8,6 +8,7 @@ import '../Home/Body/Calender/styles/CalenderDays.css';
 import CalenderTileClassName from '../Home/Body/Calender/CalenderTileClassName';
 import CalenderFormatShortWeekday from '../Home/Body/Calender/CalenderFormatShortWeekday';
 import CalenderTileContent from '../Home/Body/Calender/CalenderTileContent';
+import './styles/Weight.css';
 
 const Weight = () => {
   const [date, setDate] = useState(new Date());
@@ -21,10 +22,14 @@ const Weight = () => {
     setSelectedDate(date);
   };
 
+  const formatDate = (date) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'short' };
+    return date.toLocaleDateString('ja-JP', options);
+  };
+
   return (
     <div>
       <div>
-{/* カレンダーの「日」を削除して数字だけを表示 */}
         <Calendar
           onChange={onChange}
           value={date}
@@ -34,11 +39,11 @@ const Weight = () => {
         />
       </div>
       <div>
-        <button onClick={handleClick}>日付を選択</button>
+        <button className="weight-date-select-button" onClick={handleClick}>日付を選択</button>
       </div>
       {selectedDate && (
-        <div>
-          <h2>選択した日付: {selectedDate.toDateString()}</h2>
+        <div className="weight-selected-date">
+          <h2>{formatDate(selectedDate)}</h2>
         </div>
       )}
     </div>
