@@ -9,11 +9,13 @@ import CalenderTileClassName from '../Home/Body/Calender/CalenderTileClassName';
 import CalenderFormatShortWeekday from '../Home/Body/Calender/CalenderFormatShortWeekday';
 import CalenderTileContent from '../Home/Body/Calender/CalenderTileContent';
 import './styles/Weight.css';
+import WeightModal from './WeightModal';
 
 const Weight = () => {
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [weight, setWeight] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onChange = (newDate) => {
     setDate(newDate);
@@ -23,14 +25,13 @@ const Weight = () => {
     setSelectedDate(date);
   };
 
-  const handleWeightChange = (e) => {
-    setWeight(e.target.value);
+  const handleWeightChange = (value) => {
+    setWeight(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // ここで体重を保存する処理を実装
-    console.log(`Date: ${selectedDate}, Weight: ${weight}`);
+  const handleSave = (value) => {
+    setWeight(value);
+    setIsModalOpen(false);
   };
 
   const formatDate = (date) => {
@@ -59,18 +60,19 @@ const Weight = () => {
       )}
       {selectedDate && (
         <div className="weight-input-container">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="number"
-              className="weight-input"
-              placeholder="体重を入力"
-              value={weight}
-              onChange={handleWeightChange}
-            />
-            <button type="submit" className="weight-submit-button">保存</button>
-          </form>
+          <button className="weight-input-button" onClick={() => setIsModalOpen(true)}>体重を入力</button>
         </div>
       )}
+      {weight && (
+        <div className="weight-display">
+          <h2>現在の体重: {weight} kg</h2>
+        </div>
+      )}
+      <WeightModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleSave}
+      />
     </div>
   );
 };
