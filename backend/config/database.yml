@@ -50,7 +50,7 @@ test:
 #
 production:
   <<: *default
-  adapter: postgresql
+  adapter: mysql2
   encoding: unicode
   pool: 5
   database: <%= ENV['DATABASE_URL'] %>
