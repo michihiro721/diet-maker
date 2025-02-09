@@ -29,6 +29,7 @@
     transition: background-color 0.3s ease;
     font-weight: bold;
     box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .date-select-button:hover {
@@ -36,5 +37,5 @@
 }
 
 .date-select-button:active {
-    background-color: #004085;
+    transform: scale(0.95);
 }
