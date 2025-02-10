@@ -18,4 +18,7 @@ Rails.application.routes.draw do
       resources :your_resources
     end
   end
+
+  # 目標設定APIエンドポイント
+  resources :goals, only: [:create]
 end

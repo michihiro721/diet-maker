@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Header from "../Home/Header/Header"; // 代わりに共通のHeaderコンポーネントをインポート
@@ -23,7 +24,7 @@ const GoalSetting = () => {
   const [warningModalOpen, setWarningModalOpen] = useState(false); // 警告モーダルの状態
   const [inputWarning, setInputWarning] = useState(""); // 入力警告メッセージの状態
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // 入力チェック
@@ -57,6 +58,33 @@ const GoalSetting = () => {
       targetDate,
     });
     setInputWarning(""); // 入力警告メッセージをクリア
+
+    // 目標設定データを保存するAPIを呼び出す
+    try {
+      console.log('Sending request to /goals with data:', {
+        user_id: 1,
+        goal_type: 'weight_loss',
+        target_weight: targetWeightNum,
+        start_date: today,
+        end_date: targetDate,
+      });
+
+      const response = await axios.post('http://localhost:3000/goals', {
+        user_id: 1, // ユーザーIDを適切に設定
+        goal_type: 'weight_loss', // 目標タイプを適切に設定
+        target_weight: targetWeightNum,
+        start_date: today,
+        end_date: targetDate,
+      });
+
+      if (response.status !== 201) {
+        console.error('Error saving goal:', response.data);
+      } else {
+        console.log('Goal saved successfully');
+      }
+    } catch (error) {
+      console.error('Error during fetch:', error);
+    }
   };
 
   const openModal = (type) => {
