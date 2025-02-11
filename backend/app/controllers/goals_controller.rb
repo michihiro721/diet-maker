@@ -1,4 +1,9 @@
 class GoalsController < ApplicationController
+  def show
+    goal = Goal.find(params[:id])
+    render json: goal
+  end
+
   def create
     Rails.logger.info "Received request to create goal with params: #{goal_params.inspect}"
     
@@ -16,6 +21,15 @@ class GoalsController < ApplicationController
     else
       Rails.logger.error "Error saving goal: #{goal.errors.full_messages.join(", ")}"
       render json: { errors: goal.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def latest
+    goal = Goal.order(created_at: :desc).first
+    if goal
+      render json: goal
+    else
+      render json: { error: 'No goal found' }, status: :not_found
     end
   end
 

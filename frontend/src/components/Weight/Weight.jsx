@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import '../Home/Body/Calender/styles/CalenderCommon.css';
@@ -16,6 +17,23 @@ const Weight = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [weight, setWeight] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [goalData, setGoalData] = useState(null);
+
+  useEffect(() => {
+    // 最新の目標データを取得する
+    const fetchGoalData = async () => {
+      try {
+        console.log('Fetching latest goal data...');
+        const response = await axios.get('http://localhost:3000/goals/latest'); // 最新の目標データを取得するエンドポイント
+        console.log('Goal data fetched:', response.data);
+        setGoalData(response.data);
+      } catch (error) {
+        console.error('Error fetching goal data:', error);
+      }
+    };
+
+    fetchGoalData();
+  }, []);
 
   const onChange = (newDate) => {
     setDate(newDate);
@@ -29,14 +47,32 @@ const Weight = () => {
     setWeight(value);
   };
 
-  const handleSave = (value) => {
+  const handleSave = async (value) => {
     setWeight(value);
     setIsModalOpen(false);
+
+    // 最新の目標データを再取得する
+    try {
+      console.log('Fetching latest goal data after save...');
+      const response = await axios.get('http://localhost:3000/goals/latest'); // 最新の目標データを取得するエンドポイント
+      console.log('Goal data fetched after save:', response.data);
+      setGoalData(response.data);
+    } catch (error) {
+      console.error('Error fetching goal data after save:', error);
+    }
   };
 
   const formatDate = (date) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'short' };
     return date.toLocaleDateString('ja-JP', options);
+  };
+
+  const calculateRemainingDays = (endDate) => {
+    const today = new Date();
+    const targetDate = new Date(endDate);
+    const timeDiff = targetDate - today;
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    return daysDiff;
   };
 
   return (
@@ -66,6 +102,12 @@ const Weight = () => {
       {weight && (
         <div className="weight-display">
           <h2>現在の体重: {weight} kg</h2>
+        </div>
+      )}
+      {goalData && (
+        <div className="goal-data-display">
+          <h2>目標体重: {goalData.target_weight} kg</h2>
+          <h2>目標達成予定日までの残り日数: {calculateRemainingDays(goalData.end_date)} 日</h2>
         </div>
       )}
       <WeightModal
