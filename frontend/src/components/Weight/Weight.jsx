@@ -24,7 +24,7 @@ const Weight = () => {
     const fetchGoalData = async () => {
       try {
         console.log('Fetching latest goal data...');
-        const response = await axios.get('http://localhost:3000/goals/latest'); // 最新の目標データを取得するエンドポイント
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/goals/latest`); // 最新の目標データを取得するエンドポイント
         console.log('Goal data fetched:', response.data);
         setGoalData(response.data);
       } catch (error) {
@@ -54,7 +54,7 @@ const Weight = () => {
     // 最新の目標データを再取得する
     try {
       console.log('Fetching latest goal data after save...');
-      const response = await axios.get('http://localhost:3000/goals/latest'); // 最新の目標データを取得するエンドポイント
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/goals/latest`); // 最新の目標データを取得するエンドポイント
       console.log('Goal data fetched after save:', response.data);
       setGoalData(response.data);
     } catch (error) {
