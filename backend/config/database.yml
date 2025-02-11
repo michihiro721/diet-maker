@@ -12,25 +12,21 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
-  collation: utf8mb4_unicode_ci
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
-development:
-  <<: *default
-  database: myapp_development
   username: root
   password: password
   host: db
+
+development:
+  <<: *default
+  database: app_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: myapp_test
-  username: root
-  password: password
-  host: db
+  database: app_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -54,12 +50,12 @@ test:
 #
 production:
   <<: *default
-  adapter: mysql2
-  encoding: utf8mb4
-  collation: utf8mb4_unicode_ci
-  pool: 5
-  host: <%= ENV['DATABASE_HOST'] %>
+  adapter: mysql2  # ここを `mysql2` に変更
+  encoding: utf8mb4  # `unicode` を `utf8mb4` に変更
+  collation: utf8mb4_0900_ai_ci
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: <%= ENV['DATABASE_NAME'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  port: <%= ENV['DATABASE_PORT'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  port: 3306  # MySQLのデフォルトポート
