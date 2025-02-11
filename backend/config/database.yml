@@ -60,3 +60,4 @@ production:
   host: <%= ENV['DATABASE_HOST'] %>
   port: 3306  # MySQLのデフォルトポート
   charset: utf8mb4
+  reconnect: true
