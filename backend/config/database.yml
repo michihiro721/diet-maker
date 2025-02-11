@@ -50,12 +50,12 @@ test:
 #
 production:
   <<: *default
-  adapter: mysql2  # ここを `mysql2` に変更
-  encoding: utf8mb4  # `unicode` を `utf8mb4` に変更
+  adapter: mysql2
+  encoding: utf8mb4
   collation: utf8mb4_unicode_ci
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: 5
+  host: <%= ENV['DATABASE_HOST'] %>
   database: <%= ENV['DATABASE_NAME'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: <%= ENV['DATABASE_HOST'] %>
-  port: 3306  # MySQLのデフォルトポート
+  port: <%= ENV['DATABASE_PORT'] %>
