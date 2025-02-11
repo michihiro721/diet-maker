@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Favicon設定
   get "/favicon.ico", to: redirect("/path/to/your/favicon.ico")
 
-  root "home#index"
-  
-  # フロントエンドの静的ファイルを提供
-  get '*path', to: 'home#index', constraints: ->(request) { !request.xhr? && request.format.html? }
+  # WebSocket用のルートを設定
+  mount ActionCable.server => '/cable'
 
   # APIエンドポイント
   namespace :api do
@@ -20,5 +16,17 @@ Rails.application.routes.draw do
   end
 
   # 目標設定APIエンドポイント
-  resources :goals, only: [:create]
+  resources :goals, only: [:show, :create, :update, :destroy] do
+    collection do
+      get 'latest'  # /goals/latest でアクセスできるようにする
+    end
+  end
+
+  # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
+  get '*path', to: 'home#index', constraints: ->(request) {
+    !request.xhr? && request.format.html? && !request.path.start_with?('/cable', '/api')
+  }
+
+  # ルートパスを設定
+  root "home#index"
 end
