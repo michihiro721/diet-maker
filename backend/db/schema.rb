@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_09_075247) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_12_111810) do
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.bigint "user_id", null: false
@@ -104,6 +104,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_09_075247) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "weights", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "date", null: false
+    t.float "weight", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "date"], name: "index_weights_on_user_id_and_date", unique: true
+    t.index ["user_id"], name: "index_weights_on_user_id"
+  end
+
   create_table "workouts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "category"
@@ -124,4 +134,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_09_075247) do
   add_foreign_key "trainings", "goals", on_delete: :cascade
   add_foreign_key "trainings", "users", on_delete: :cascade
   add_foreign_key "trainings", "workouts", on_delete: :cascade
+  add_foreign_key "weights", "users"
 end
