@@ -5,9 +5,9 @@ class GoalsController < ApplicationController
   end
 
   def create
-    goal = Goal.new(goal_params)
-    if goal.save
-      render json: goal, status: :created
+    # 既存の目標を検索し、存在する場合は更新、存在しない場合は新規作成
+    goal = Goal.first_or_initialize(user_id: goal_params[:user_id], goal_type: goal_params[:goal_type])
+    if goal.update(goal_params)
     else
       render json: goal.errors, status: :unprocessable_entity
     end
