@@ -1,4 +1,9 @@
 class WeightsController < ApplicationController
+  def index
+    weights = Weight.all
+    render json: weights
+  end
+
   def create
     weight = Weight.new(weight_params)
     if weight.save

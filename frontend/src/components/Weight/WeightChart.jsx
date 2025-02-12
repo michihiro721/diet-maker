@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import './styles/WeightChart.css';
 
 ChartJS.register(
   CategoryScale,
@@ -29,8 +30,8 @@ const WeightChart = () => {
       {
         label: "体重",
         data: [],
-        borderColor: "rgba(75, 192, 192, 1)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
         fill: true,
       },
     ],
@@ -54,8 +55,8 @@ const WeightChart = () => {
               {
                 label: "体重",
                 data: weightValues,
-                borderColor: "rgba(75, 192, 192, 1)",
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
                 fill: true,
               },
             ],
@@ -71,10 +72,31 @@ const WeightChart = () => {
     fetchData();
   }, []);
 
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: '日付',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: '体重 (kg)',
+        },
+      },
+    },
+  };
+
   return (
-    <div>
+    <div className="chart-container">
       <h2>体重推移</h2>
-      <Line data={chartData} />
+      <div className="chart-wrapper">
+        <Line data={chartData} options={options} />
+      </div>
     </div>
   );
 };

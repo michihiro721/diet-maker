@@ -12,18 +12,14 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :your_resources
+      resources :weights, only: [:index, :create] # 🔥 weightsのエンドポイントをAPI v1に追加
+      resources :goals, only: [:show, :create, :update, :destroy] do
+        collection do
+          get 'latest'  # /api/v1/goals/latest でアクセスできるようにする
+        end
+      end
     end
   end
-
-  # 目標設定APIエンドポイント
-  resources :goals, only: [:show, :create, :update, :destroy] do
-    collection do
-      get 'latest'  # /goals/latest でアクセスできるようにする
-    end
-  end
-
-  # 体重記録APIエンドポイント
-  resources :weights, only: [:create]
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {
