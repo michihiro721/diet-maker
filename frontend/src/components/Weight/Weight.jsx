@@ -122,7 +122,7 @@ const Weight = () => {
         onSave={handleSave}
       />
       <div className="weight-submit-container">
-        <button className="weight-submit-button" onClick={handleSubmit}>保存</button>
+        <button className="weight-save-button" onClick={handleSubmit}>保存</button>
       </div>
     </div>
   );
