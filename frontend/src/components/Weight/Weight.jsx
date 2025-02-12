@@ -11,6 +11,7 @@ import CalenderFormatShortWeekday from '../Home/Body/Calender/CalenderFormatShor
 import CalenderTileContent from '../Home/Body/Calender/CalenderTileContent';
 import './styles/Weight.css';
 import WeightModal from './WeightModal';
+import WeightChart from './WeightChart';
 
 const Weight = () => {
   const [date, setDate] = useState(new Date());
@@ -36,9 +37,11 @@ const Weight = () => {
     // 体重データを保存する
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        user_id: 1, // ユーザーIDを適切に設定する
-        date: selectedDate,
-        weight: value,
+        weight: {
+          user_id: 1, // ユーザーIDを適切に設定する
+          date: selectedDate,
+          weight: value,
+        }
       });
       console.log('Weight data saved:', response.data);
     } catch (error) {
@@ -60,9 +63,11 @@ const Weight = () => {
     // 体重データを保存する
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        user_id: 1, // ユーザーIDを適切に設定する
-        date: selectedDate,
-        weight: weight,
+        weight: {
+          user_id: 1, // ユーザーIDを適切に設定する
+          date: selectedDate,
+          weight: weight,
+        }
       });
       console.log('Weight data saved:', response.data);
     } catch (error) {
@@ -128,6 +133,7 @@ const Weight = () => {
           <button className="weight-save-button" onClick={handleSubmit}>保存</button>
         </div>
       )}
+      <WeightChart />
     </div>
   );
 };
