@@ -34,9 +34,11 @@ const Weight = () => {
     // 体重データを保存する
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        user_id: 1, // ユーザーIDを適切に設定する
-        date: selectedDate,
-        weight: value,
+        weight: {
+          user_id: 1, // ユーザーIDを適切に設定する
+          date: selectedDate,
+          weight: value,
+        }
       });
       console.log('Weight data saved:', response.data);
     } catch (error) {
@@ -58,9 +60,11 @@ const Weight = () => {
     // 体重データを保存する
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        user_id: 1, // ユーザーIDを適切に設定する
-        date: selectedDate,
-        weight: weight,
+        weight: {
+          user_id: 1, // ユーザーIDを適切に設定する
+          date: selectedDate,
+          weight: weight,
+        }
       });
       console.log('Weight data saved:', response.data);
     } catch (error) {
