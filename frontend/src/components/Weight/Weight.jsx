@@ -43,10 +43,6 @@ const Weight = () => {
     setSelectedDate(date);
   };
 
-  const handleWeightChange = (value) => {
-    setWeight(value);
-  };
-
   const handleSave = async (value) => {
     setWeight(value);
     setIsModalOpen(false);

@@ -1,5 +1,5 @@
 // Reactと必要なフック、コンポーネントをインポート
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import PartSelector from "./PartSelector";
 import SearchInput from "./SearchInput";
 import ExerciseList from "./ExerciseList";
@@ -17,14 +17,14 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
   const [filteredExercises, setFilteredExercises] = useState([]);
 
   // トレーニング種目のデータ
-  const exercises = {
+  const exercises = useMemo(() => ({
     胸: ["ベンチプレス", "インクラインベンチプレス", "ダンベルプレス", "ダンベルフライ", "ケーブルクロスオーバー", "ペックデックフライ", "プッシュアップ", "ディップス", "チェストプレス", "スミスマシンベンチプレス", "ダンベルプルオーバー", "ケーブルフライ", "マシンフライ", "マシンチェストプレス", "ディクラインベンチプレス", "ディクラインダンベルプレス", "ディクラインダンベルフライ", "ディクラインケーブルクロスオーバー", "ディクラインペックデックフライ", "ディクラインプッシュアップ", "ディクラインディップス"],
     背中: ["ラットプルダウン", "デッドリフト", "懸垂", "ベントオーバーロウ", "シーテッドロウ", "ワンハンドダンベルロウ", "Tバーロウ", "プルオーバー", "バックエクステンション", "リバースフライ", "フェイスプル", "シュラッグ"],
     肩: ["ショルダープレス", "サイドレイズ", "フロントレイズ", "リアレイズ", "アップライトロウ", "アーノルドプレス", "ダンベルショルダープレス", "ケーブルサイドレイズ", "ケーブルフロントレイズ", "ケーブルリアレイズ", "マシンショルダープレス", "マシンサイドレイズ", "マシンフロントレイズ", "マシンリアレイズ"],
     腕: ["アームカール", "トライセプスエクステンション", "ダンベルカール", "ケーブルプレスダウン", "ケーブルカール", "プリーチャーカール", "ハンマーカール", "フレンチプレス", "キックバック", "リストカール", "リバースリストカール", "スカルクラッシャー", "コンセントレーションカール", "インクラインダンベルカール"],
     脚: ["スクワット", "レッグプレス", "カーフレイズ", "レッグエクステンション", "レッグカール", "ランジ", "ブルガリアンスクワット", "シシースクワット", "ヒップスラスト", "グルートブリッジ"],
     腹筋: ["クランチ", "プランク", "レッグレイズ", "シットアップ", "バイシクルクランチ", "ロシアンツイスト", "マウンテンクライマー", "ヒールタッチ", "トゥータッチ", "ハンギングレッグレイズ"]
-  };
+  }), []);
 
   // 部位選択が変更されたときの処理
   const handlePartChange = (part) => {
@@ -45,7 +45,7 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
       exercise.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredExercises(filtered);
-  }, [selectedPart, searchTerm]);
+  }, [selectedPart, searchTerm, exercises]);
 
   return (
     // モーダルのオーバーレイ
