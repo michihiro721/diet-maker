@@ -31,6 +31,18 @@ const Weight = () => {
     setWeight(value);
     setIsModalOpen(false);
 
+    // 体重データを保存する
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
+        user_id: 1, // ユーザーIDを適切に設定する
+        date: selectedDate,
+        weight: value,
+      });
+      console.log('Weight data saved:', response.data);
+    } catch (error) {
+      console.error('Error saving weight data:', error);
+    }
+
     // 最新の目標データを再取得する
     try {
       console.log('Fetching latest goal data after save...');
@@ -39,6 +51,20 @@ const Weight = () => {
       setGoalData(response.data);
     } catch (error) {
       console.error('Error fetching goal data after save:', error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // 体重データを保存する
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
+        user_id: 1, // ユーザーIDを適切に設定する
+        date: selectedDate,
+        weight: weight,
+      });
+      console.log('Weight data saved:', response.data);
+    } catch (error) {
+      console.error('Error saving weight data:', error);
     }
   };
 
@@ -95,6 +121,9 @@ const Weight = () => {
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
       />
+      <div className="weight-submit-container">
+        <button className="weight-submit-button" onClick={handleSubmit}>保存</button>
+      </div>
     </div>
   );
 };
