@@ -2,7 +2,7 @@
 // タイマーがカウントダウンし、0になったときに音声を再生し、タイマーが完了したことを通知します。
 // CSSはfrontend/src/components/Home/Body/TrainingRecord/TrainingTable/styles/training-table-row-input.cssファイルを参照されて、frontend/src/components/Home/Body/TrainingRecord/TrainingTable/TrainingTableRow.jsxファイルと一緒
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const AlertFunction = ({ timer, onComplete, updateTimer, reset }) => {
   const [timeLeft, setTimeLeft] = useState(timer); // タイマーの残り時間を管理する状態

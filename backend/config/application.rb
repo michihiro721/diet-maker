@@ -38,5 +38,7 @@ module Backend
           methods: [:get, :post, :put, :patch, :delete, :options, :head]
       end
     end
+
+    config.public_file_server.enabled = true
   end
 end

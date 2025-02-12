@@ -18,10 +18,6 @@ const WeightModal = ({ isOpen, onClose, onSave }) => {
     setValue(value.slice(0, -1));
   };
 
-  const handleClear = () => {
-    setValue("");
-  };
-
   const handleSave = () => {
     onSave(value);
     onClose();
