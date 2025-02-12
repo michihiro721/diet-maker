@@ -69,7 +69,7 @@ const GoalSetting = () => {
         end_date: targetDate,
       });
 
-      const response = await axios.post('http://localhost:3000/goals', {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/goals`, {
         user_id: 1, // ユーザーIDを適切に設定
         goal_type: 'weight_loss', // 目標タイプを適切に設定
         target_weight: targetWeightNum,
