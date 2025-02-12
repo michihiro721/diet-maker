@@ -5,22 +5,11 @@ class GoalsController < ApplicationController
   end
 
   def create
-    Rails.logger.info "Received request to create goal with params: #{goal_params.inspect}"
-    
-    user = User.find_by(id: goal_params[:user_id])
-    unless user
-      Rails.logger.error "User not found with id: #{goal_params[:user_id]}"
-      render json: { errors: ["User not found"] }, status: :unprocessable_entity
-      return
-    end
-
-    goal = Goal.find_or_initialize_by(user_id: goal_params[:user_id])
-    if goal.update(goal_params)
-      Rails.logger.info "Goal saved successfully"
-      render json: { message: 'Goal saved successfully' }, status: :created
+    goal = Goal.new(goal_params)
+    if goal.save
+      render json: goal, status: :created
     else
-      Rails.logger.error "Error saving goal: #{goal.errors.full_messages.join(", ")}"
-      render json: { errors: goal.errors.full_messages }, status: :unprocessable_entity
+      render json: goal.errors, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +18,7 @@ class GoalsController < ApplicationController
     if goal
       render json: goal
     else
-      render json: { error: 'No goal found' }, status: :not_found
+      render json: { error: 'No goals found' }, status: :not_found
     end
   end
 
