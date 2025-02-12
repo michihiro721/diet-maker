@@ -18,6 +18,7 @@ const Weight = () => {
   const [weight, setWeight] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [goalData, setGoalData] = useState(null);
+  const [showSubmitButton, setShowSubmitButton] = useState(false);
 
   const onChange = (newDate) => {
     setDate(newDate);
@@ -30,15 +31,14 @@ const Weight = () => {
   const handleSave = async (value) => {
     setWeight(value);
     setIsModalOpen(false);
+    setShowSubmitButton(true); // 保存ボタンを表示する
 
     // 体重データを保存する
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        weight: {
-          user_id: 1, // ユーザーIDを適切に設定する
-          date: selectedDate,
-          weight: value,
-        }
+        user_id: 1, // ユーザーIDを適切に設定する
+        date: selectedDate,
+        weight: value,
       });
       console.log('Weight data saved:', response.data);
     } catch (error) {
@@ -60,11 +60,9 @@ const Weight = () => {
     // 体重データを保存する
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        weight: {
-          user_id: 1, // ユーザーIDを適切に設定する
-          date: selectedDate,
-          weight: weight,
-        }
+        user_id: 1, // ユーザーIDを適切に設定する
+        date: selectedDate,
+        weight: weight,
       });
       console.log('Weight data saved:', response.data);
     } catch (error) {
@@ -125,9 +123,11 @@ const Weight = () => {
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
       />
-      <div className="weight-submit-container">
-        <button className="weight-save-button" onClick={handleSubmit}>保存</button>
-      </div>
+      {showSubmitButton && (
+        <div className="weight-save-container">
+          <button className="weight-save-button" onClick={handleSubmit}>保存</button>
+        </div>
+      )}
     </div>
   );
 };
