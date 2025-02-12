@@ -1,3 +1,4 @@
+/* 日付選択ボタンのスタイル */
 .weight-date-select-button {
   background-color: #007bff;
   display: block;
@@ -24,17 +25,20 @@
   transform: scale(0.95);
 }
 
+/* 選択された日付の表示スタイル */
 .weight-selected-date {
   font-size: 18px;
   margin-top: 10px;
   text-align: center;
 }
 
+/* 体重入力ボタンのコンテナスタイル */
 .weight-input-container {
   text-align: center;
   margin-top: 20px;
 }
 
+/* 体重入力ボタンのスタイル */
 .weight-input-button {
   background-color: #007bff;
   display: block;
@@ -61,6 +65,7 @@
   transform: scale(0.95);
 }
 
+/* 現在の体重表示のスタイル */
 .weight-display {
   font-size: 18px;
   margin-top: 10px;
@@ -68,6 +73,28 @@
   font-weight: bold;
 }
 
+/* 目標体重の表示スタイル */
+.weight-goal-weight {
+  font-size: 1.5em;
+  color: rgba(255, 0, 0, 0.9);
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 目標達成予定日までの残り日数の表示スタイル */
+.weight-remaining-days {
+  font-size: 1.5em;
+  color: rgba(0, 0, 255, 0.7);
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 目標データ表示のコンテナスタイル */
+.goal-data-display {
+  margin-top: 20px;
+}
+
+/* 体重送信ボタンのスタイル */
 .weight-submit-button {
   background-color: #007bff;
   display: block;

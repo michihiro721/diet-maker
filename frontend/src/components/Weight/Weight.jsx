@@ -86,8 +86,8 @@ const Weight = () => {
       )}
       {goalData && (
         <div className="goal-data-display">
-          <h2>目標体重: {goalData.target_weight} kg</h2>
-          <h2>目標達成予定日までの残り日数: {calculateRemainingDays(goalData.end_date)} 日</h2>
+          <h2 className="weight-goal-weight">目標体重: {goalData.target_weight} kg</h2>
+          <h2 className="weight-remaining-days">目標達成予定日までの残り日数: {calculateRemainingDays(goalData.end_date)} 日</h2>
         </div>
       )}
       <WeightModal
