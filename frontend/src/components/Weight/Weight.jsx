@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
@@ -18,22 +18,6 @@ const Weight = () => {
   const [weight, setWeight] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [goalData, setGoalData] = useState(null);
-
-  useEffect(() => {
-    // 最新の目標データを取得する
-    const fetchGoalData = async () => {
-      try {
-        console.log('Fetching latest goal data...');
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/goals/latest`); // 最新の目標データを取得するエンドポイント
-        console.log('Goal data fetched:', response.data);
-        setGoalData(response.data);
-      } catch (error) {
-        console.error('Error fetching goal data:', error);
-      }
-    };
-
-    fetchGoalData();
-  }, []);
 
   const onChange = (newDate) => {
     setDate(newDate);
