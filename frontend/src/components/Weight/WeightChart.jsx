@@ -80,21 +80,60 @@ const WeightChart = () => {
         title: {
           display: true,
           text: '日付',
+          font: {
+            size: 20, // フォントサイズを調整
+          },
+          className: 'weight-x-axis-title', // クラス名を追加
+        },
+        ticks: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-x-axis-ticks', // クラス名を追加
         },
       },
       y: {
         title: {
           display: true,
           text: '体重 (kg)',
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-y-axis-title', // クラス名を追加
         },
+        ticks: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-y-axis-ticks', // クラス名を追加
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-legend-labels', // クラス名を追加
+        },
+      },
+      tooltip: {
+        titleFont: {
+          size: 16, // フォントサイズを調整
+        },
+        bodyFont: {
+          size: 12, // フォントサイズを調整
+        },
+        className: 'weight-tooltip', // クラス名を追加
       },
     },
   };
 
   return (
-    <div className="chart-container">
-      <h2>体重推移</h2>
-      <div className="chart-wrapper">
+    <div className="weight-chart-container">
+      <h2 className="weight-chart-title">体重推移</h2>
+      <div className="weight-chart-wrapper">
         <Line data={chartData} options={options} />
       </div>
     </div>

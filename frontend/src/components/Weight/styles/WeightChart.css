@@ -1,4 +1,4 @@
-.chart-container {
+.weight-chart-container {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
@@ -8,13 +8,35 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .chart-container h2 {
+  .weight-chart-container h2 {
     text-align: center;
     color: #0366d6;
     margin-bottom: 20px;
   }
   
-  .chart-wrapper {
+  .weight-chart-wrapper {
     position: relative;
     height: 400px;
   }
+
+.weight-chart-title {
+  font-size: 24px; /* タイトルのフォントサイズを調整 */
+}
+
+.weight-x-axis-title,
+.weight-y-axis-title {
+  font-size: 14px; /* 軸タイトルのフォントサイズを調整 */
+}
+
+.weight-x-axis-ticks,
+.weight-y-axis-ticks {
+  font-size: 12px; /* 軸目盛りのフォントサイズを調整 */
+}
+
+.weight-legend-labels {
+  font-size: 14px; /* 凡例ラベルのフォントサイズを調整 */
+}
+
+.weight-tooltip {
+  font-size: 12px; /* ツールチップのフォントサイズを調整 */
+}
