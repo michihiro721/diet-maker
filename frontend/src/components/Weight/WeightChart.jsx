@@ -28,11 +28,6 @@ const WeightChart = () => {
     labels: [],
     datasets: [
       {
-        label: "体重",
-        data: [],
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        fill: true,
       },
     ],
   });
@@ -85,18 +80,22 @@ const WeightChart = () => {
           });
           const weightValues = filteredWeights.map(weight => weight.weight);
 
-          setChartData({
+            setChartData({
             labels: dates,
             datasets: [
               {
-                label: "体重",
-                data: weightValues,
-                borderColor: "rgba(54, 162, 235, 1)",
-                backgroundColor: "rgba(54, 162, 235, 0.2)",
-                fill: true,
+              label: "体重",
+              data: weightValues,
+              borderColor: "rgba(0, 123, 255, 0.5)",
+              backgroundColor: "rgba(0, 123, 255, 0.2)",
+              pointBackgroundColor: "rgba(0, 123, 255, 1)",
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: "rgba(0, 123, 255, 1)",
+              fill: true,
               },
             ],
-          });
+            });
         } else {
           console.warn("No weight data available");
         }
