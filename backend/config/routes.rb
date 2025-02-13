@@ -9,15 +9,10 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   # APIエンドポイント
-  namespace :api do
-    namespace :v1 do
-      resources :your_resources
-      resources :weights, only: [:index, :create] # 🔥 weightsのエンドポイントをAPI v1に追加
-      resources :goals, only: [:show, :create, :update, :destroy] do
-        collection do
-          get 'latest'  # /api/v1/goals/latest でアクセスできるようにする
-        end
-      end
+  resources :weights, only: [:index, :create]
+  resources :goals, only: [:show, :create, :update, :destroy] do
+    collection do
+      get 'latest'
     end
   end
 
