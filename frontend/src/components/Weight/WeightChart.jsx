@@ -131,7 +131,7 @@ const WeightChart = () => {
       y: {
         title: {
           display: true,
-          text: '（kg）',
+          text: '(kg)',
           font: {
             size: 16, // フォントサイズを調整
           },
@@ -147,12 +147,7 @@ const WeightChart = () => {
     },
     plugins: {
       legend: {
-        labels: {
-          font: {
-            size: 16, // フォントサイズを調整
-          },
-          className: 'weight-legend-labels', // クラス名を追加
-        },
+        display: false, // 凡例を非表示にする
       },
       tooltip: {
         titleFont: {
