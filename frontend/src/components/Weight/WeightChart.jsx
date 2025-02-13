@@ -28,14 +28,10 @@ const WeightChart = () => {
     labels: [],
     datasets: [
       {
-        label: "体重",
-        data: [],
-        borderColor: "rgba(54, 162, 235, 1)",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        fill: true,
       },
     ],
   });
+  const [period, setPeriod] = useState('7days'); // デフォルトの期間を7日間に設定
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,21 +42,60 @@ const WeightChart = () => {
         console.log("Fetched weights data:", weights); // デバッグ用
 
         if (weights && weights.length > 0) {
-          const dates = weights.map(weight => weight.date);
-          const weightValues = weights.map(weight => weight.weight);
+          let filteredWeights;
+          const now = new Date();
 
-          setChartData({
+          switch (period) {
+            case '7days':
+              filteredWeights = weights.slice(-7);
+              break;
+            case '1month':
+              filteredWeights = weights.filter(weight => {
+                const date = new Date(weight.date);
+                return (now - date) / (1000 * 60 * 60 * 24) <= 30;
+              });
+              break;
+            case '2months':
+              filteredWeights = weights.filter(weight => {
+                const date = new Date(weight.date);
+                return (now - date) / (1000 * 60 * 60 * 24) <= 60;
+              });
+              break;
+            case '3months':
+              filteredWeights = weights.filter(weight => {
+                const date = new Date(weight.date);
+                return (now - date) / (1000 * 60 * 60 * 24) <= 90;
+              });
+              break;
+            case 'all':
+              filteredWeights = weights;
+              break;
+            default:
+              filteredWeights = weights.slice(-7);
+          }
+
+          const dates = filteredWeights.map(weight => {
+            const date = new Date(weight.date);
+            return `${date.getMonth() + 1}/${date.getDate()}`;
+          });
+          const weightValues = filteredWeights.map(weight => weight.weight);
+
+            setChartData({
             labels: dates,
             datasets: [
               {
-                label: "体重",
-                data: weightValues,
-                borderColor: "rgba(54, 162, 235, 1)",
-                backgroundColor: "rgba(54, 162, 235, 0.2)",
-                fill: true,
+              label: "体重",
+              data: weightValues,
+              borderColor: "rgba(0, 123, 255, 0.5)",
+              backgroundColor: "rgba(0, 123, 255, 0.2)",
+              pointBackgroundColor: "rgba(0, 123, 255, 1)",
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: "rgba(0, 123, 255, 1)",
+              fill: true,
               },
             ],
-          });
+            });
         } else {
           console.warn("No weight data available");
         }
@@ -70,7 +105,7 @@ const WeightChart = () => {
     };
 
     fetchData();
-  }, []);
+  }, [period]);
 
   const options = {
     responsive: true,
@@ -79,22 +114,70 @@ const WeightChart = () => {
       x: {
         title: {
           display: true,
-          text: '日付',
+          text: '（日付）',
+          font: {
+            size: 20, // フォントサイズを調整
+          },
+          className: 'weight-x-axis-title', // クラス名を追加
+        },
+        ticks: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-x-axis-ticks', // クラス名を追加
         },
       },
       y: {
         title: {
           display: true,
-          text: '体重 (kg)',
+          text: '(kg)',
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-y-axis-title', // クラス名を追加
         },
+        ticks: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'weight-y-axis-ticks', // クラス名を追加
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false, // 凡例を非表示にする
+      },
+      tooltip: {
+        titleFont: {
+          size: 16, // フォントサイズを調整
+        },
+        bodyFont: {
+          size: 12, // フォントサイズを調整
+        },
+        className: 'weight-tooltip', // クラス名を追加
       },
     },
   };
 
   return (
-    <div className="chart-container">
-      <h2>体重推移</h2>
-      <div className="chart-wrapper">
+    <div className="weight-chart-container">
+      <h2 className="weight-chart-title">体重推移</h2>
+      <div className="weight-chart-controls">
+        <label htmlFor="period-select">表示期間:</label>
+        <select
+          id="period-select"
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+        >
+          <option value="7days">直近7日</option>
+          <option value="1month">直近1ヶ月</option>
+          <option value="2months">直近2ヶ月</option>
+          <option value="3months">直近3ヶ月</option>
+          <option value="all">すべて</option>
+        </select>
+      </div>
+      <div className="weight-chart-wrapper">
         <Line data={chartData} options={options} />
       </div>
     </div>
