@@ -23,6 +23,26 @@
   font-size: 24px; /* タイトルのフォントサイズを調整 */
 }
 
+.weight-chart-controls {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.weight-chart-controls label {
+  margin-right: 10px;
+  font-size: 18px; /* ラベルのフォントサイズを調整 */
+}
+
+.weight-chart-controls select {
+  font-size: 15px; /* 選択欄のフォントサイズを調整 */
+  padding: 5px;
+  background-color: #fff; /* 薄い青の背景色 */
+  border: 1px solid #b3d7ff; /* 薄い青の境界線 */
+  border-radius: 5px; /* 角を丸くする */
+  color: #0366d6; /* テキストの色 */
+}
+
 .weight-x-axis-title,
 .weight-y-axis-title {
   font-size: 14px; /* 軸タイトルのフォントサイズを調整 */
