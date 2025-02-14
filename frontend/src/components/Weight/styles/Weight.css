@@ -66,6 +66,7 @@
 .weight-save-controls label {
   margin-right: 10px;
   font-size: 18px; /* ラベルのフォントサイズを調整 */
+  font-weight: bold;
 }
 
 .weight-save-controls input {
@@ -104,21 +105,29 @@
 }
 
 .goal-info {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  text-align: center;
   font-weight: bold;
 }
 
 .goal-info-target-weight {
   font-size: 18px;
   color: red;
+  background-color: #fff;
+  border: 1px solid red;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .goal-info-target {
   font-size: 18px;
-  color: blue;
+  color: #0366d6;
+  background-color: #fff;
+  border: 1px solid #0366d6;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .weight-save-button {
