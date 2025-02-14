@@ -195,7 +195,7 @@ const Weight = () => {
       y: {
         title: {
           display: true,
-          text: '体重 (kg)',
+          text: '(kg)',
           font: {
             size: 16, // フォントサイズを調整
           },
