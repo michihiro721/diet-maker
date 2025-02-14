@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import 'react-calendar/dist/Calendar.css';
 import './styles/Weight.css';
+import WeightModal from './WeightModal';
 
 ChartJS.register(
   CategoryScale,
@@ -29,6 +30,15 @@ const Weight = () => {
     labels: [],
     datasets: [
       {
+        label: "体重",
+        data: [],
+        borderColor: "rgba(0, 123, 255, 0.5)",
+        backgroundColor: "rgba(0, 123, 255, 0.2)",
+        pointBackgroundColor: "rgba(0, 123, 255, 1)",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "rgba(0, 123, 255, 1)",
+        fill: true,
       },
     ],
   });
@@ -37,6 +47,7 @@ const Weight = () => {
   const [goalDate, setGoalDate] = useState(new Date()); // 目標達成予定日を設定
   const [selectedDate, setSelectedDate] = useState(''); // 選択された日付を管理する状態を追加
   const [weight, setWeight] = useState(''); // 体重データを管理する状態を追加
+  const [isModalOpen, setIsModalOpen] = useState(false); // モーダルの表示状態を管理
 
   const fetchData = async () => {
     try {
@@ -175,7 +186,7 @@ const Weight = () => {
       y: {
         title: {
           display: true,
-          text: '(kg)',
+          text: '体重 (kg)',
           font: {
             size: 16, // フォントサイズを調整
           },
@@ -241,13 +252,22 @@ const Weight = () => {
         />
         <label htmlFor="weight-input">体重を入力:</label>
         <input
-          type="number"
+          type="text"
           id="weight-input"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
+          value={weight ? `${weight} kg` : ''}
+          onClick={() => setIsModalOpen(true)}
+          readOnly
         />
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
+      <WeightModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={(value) => {
+          setWeight(value);
+          setIsModalOpen(false);
+        }}
+      />
     </div>
   );
 };
