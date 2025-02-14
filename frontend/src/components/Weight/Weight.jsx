@@ -227,6 +227,12 @@ const Weight = () => {
 
   const remainingDays = Math.ceil((goalDate - new Date()) / (1000 * 60 * 60 * 24));
 
+  const handleDateChange = (date) => {
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setIsCalendarModalOpen(false);
+  };
+
   return (
     <div className="weight-chart-container">
       <h2 className="weight-chart-title">体重推移</h2>
@@ -284,10 +290,7 @@ const Weight = () => {
         <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
           <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
             <Calendar
-              onChange={(date) => {
-                setSelectedDate(date.toISOString().split('T')[0]);
-                setIsCalendarModalOpen(false);
-              }}
+              onChange={handleDateChange}
               formatShortWeekday={CalenderFormatShortWeekday}
               tileClassName={CalenderTileClassName}
               tileContent={CalenderTileContent}
