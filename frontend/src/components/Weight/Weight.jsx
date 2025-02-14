@@ -245,7 +245,9 @@ const Weight = () => {
         </select>
       </div>
       <div className="weight-chart-wrapper">
-        <Line data={chartData} options={options} />
+        <div className="weight-chart">
+          <Line data={chartData} options={options} />
+        </div>
       </div>
       <div className="goal-info">
         <p className="goal-info-target-weight">目標体重: {goalWeight} kg</p>
