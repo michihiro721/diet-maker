@@ -57,6 +57,7 @@ const Weight = () => {
   const [weight, setWeight] = useState(''); // 体重データを管理する状態を追加
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false); // 体重モーダルの表示状態を管理
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false); // カレンダーモーダルの表示状態を管理
+  const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージを管理
 
   const fetchData = async () => {
     try {
@@ -154,6 +155,11 @@ const Weight = () => {
   }, []);
 
   const handleSave = async () => {
+    if (!selectedDate || !weight) {
+      setErrorMessage('全ての項目を入力してください');
+      return;
+    }
+
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
         date: selectedDate, // 選択された日付を送信
@@ -164,6 +170,7 @@ const Weight = () => {
         console.log("Data saved successfully");
         // データを再取得してグラフを更新
         fetchData();
+        setErrorMessage(''); // エラーメッセージをクリア
       } else {
         console.error("Error saving data:", response.data);
       }
@@ -179,7 +186,7 @@ const Weight = () => {
       x: {
         title: {
           display: true,
-          text: '日付',
+          text: '（日付）',
           font: {
             size: 20, // フォントサイズを調整
           },
@@ -278,6 +285,7 @@ const Weight = () => {
         />
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
+      {errorMessage && <p className="weight-error-message">{errorMessage}</p>}
       <WeightModal
         isOpen={isWeightModalOpen}
         onClose={() => setIsWeightModalOpen(false)}
