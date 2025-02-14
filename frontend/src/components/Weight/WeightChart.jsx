@@ -42,6 +42,9 @@ const WeightChart = () => {
         console.log("Fetched weights data:", weights); // デバッグ用
 
         if (weights && weights.length > 0) {
+          // 日付でソート
+          weights.sort((a, b) => new Date(a.date) - new Date(b.date));
+
           let filteredWeights;
           const now = new Date();
 
