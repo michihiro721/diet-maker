@@ -1,146 +1,115 @@
-/* 日付選択ボタンのスタイル */
-.weight-date-select-button {
-  background-color: #007bff;
-  display: block;
+.weight-chart-container {
   width: 100%;
-  max-width: 200px;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: rgba(162, 217, 255, 0.3);
-  color: #000;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(162, 217, 255, 0.1);;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.weight-chart-container h2 {
+  text-align: center;
+  color: #0366d6;
+  margin-bottom: 20px;
+}
+
+.weight-chart-wrapper {
+  position: relative;
+  height: 400px;
+  width: 80%;
+  max-width: 800px;
+}
+
+.weight-chart-title {
+  font-size: 24px; /* タイトルのフォントサイズを調整 */
+  margin-bottom: 20px;
+}
+
+.weight-chart-controls {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.weight-chart-controls label {
+  margin-right: 10px;
+  font-size: 18px; /* ラベルのフォントサイズを調整 */
+}
+
+.weight-chart-controls select {
+  font-size: 18px; /* 選択欄のフォントサイズを調整 */
+  padding: 5px;
+  background-color: #fff; /* 薄い青の背景色 */
+  border: 1px solid #b3d7ff; /* 薄い青の境界線 */
+  border-radius: 5px; /* 角を丸くする */
+  display: flex;
+  align-items: center;
+}
+
+.weight-save-controls label {
+margin-right: 10px;
+font-size: 18px; /* ラベルのフォントサイズを調整 */
+}
+
+.weight-save-controls input {
+font-size: 18px; /* 入力欄のフォントサイズを調整 */
+padding: 5px;
+margin-right: 10px;
+outline: 1px solid #87CEFA;
+outline-offset: 2px;
+border-radius: 4px;
+border: 1px solid #ccc;
+}
+
+.weight-save-controls button {
+font-size: 18px; /* ボタンのフォントサイズを調整 */
+padding: 5px 10px;
+}
+
+
+
+.goal-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px; /* 二つの間をいい感じにあける */
   font-weight: bold;
-  box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
 }
 
-.weight-date-select-button:hover {
-  background-color: rgba(162, 217, 255, 0.8);
-}
-
-.weight-date-select-button:active {
-  transform: scale(0.95);
-}
-
-/* 選択された日付の表示スタイル */
-.weight-selected-date {
+.goal-info-target-weight{
   font-size: 18px;
-  margin-top: 10px;
-  text-align: center;
+  color: red;
 }
 
-/* 体重入力ボタンのコンテナスタイル */
-.weight-input-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* 体重入力ボタンのスタイル */
-.weight-input-button {
-  background-color: #007bff;
-  display: block;
-  width: 100%;
-  max-width: 120px;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: rgba(162, 217, 255, 0.3);
-  color: #000;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  font-weight: bold;
-  box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
-}
-
-.weight-input-button:hover {
-  background-color: rgba(162, 217, 255, 0.8);
-}
-
-.weight-input-button:active {
-  transform: scale(0.95);
-}
-
-/* 現在の体重表示のスタイル */
-.weight-display {
+.goal-info-target{
   font-size: 18px;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
+  color: blue;
 }
 
-/* 目標体重の表示スタイル */
-.weight-goal-weight {
-  font-size: 1.5em;
-  color: rgba(255, 0, 0, 0.9);
-  margin-top: 10px;
-  text-align: center;
-}
-
-/* 目標達成予定日までの残り日数の表示スタイル */
-.weight-remaining-days {
-  font-size: 1.5em;
-  color: rgba(0, 0, 255, 0.7);
-  margin-top: 10px;
-  text-align: center;
-}
-
-/* 目標データ表示のコンテナスタイル */
-.goal-data-display {
-  margin-top: 20px;
-}
-
-/* 体重送信ボタンのスタイル */
-.weight-submit-button {
-  background-color: #007bff;
-  display: block;
-  width: 100%;
-  max-width: 200px;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: rgba(162, 217, 255, 0.3);
-  color: #000;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  font-weight: bold;
-  box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
-}
-
-.weight-submit-button:hover {
-  background-color: rgba(162, 217, 255, 0.8);
-}
-
-.weight-submit-button:active {
-  transform: scale(0.95);
+.weight-save-controls {
+  display: flex;
+  align-items: center;
 }
 
 .weight-save-button {
-  background-color: #007bff;
-  display: block;
-  width: 100%;
-  max-width: 120px;
-  margin: 20px auto;
+  font-size: 18px;
   padding: 10px 20px;
-  background-color: rgba(162, 217, 255, 0.3);
-  color: #000;
+  background-color: #0366d6;
+  color: #fff;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  font-weight: bold;
-  box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
+  transition: background-color 0.3s ease;
 }
 
 .weight-save-button:hover {
-  background-color: rgba(162, 217, 255, 0.8);
+  background-color: #024a9b;;
 }
 
 .weight-save-button:active {
