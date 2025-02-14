@@ -11,8 +11,16 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './styles/Weight.css';
+import '../Home/Body/Calender/styles/CalenderWeekdays.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderNavigation.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderDays.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderCommon.css'; // カレンダーのスタイルをインポート
+import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
+import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
+import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 import WeightModal from './WeightModal';
 
 ChartJS.register(
@@ -47,7 +55,8 @@ const Weight = () => {
   const [goalDate, setGoalDate] = useState(new Date()); // 目標達成予定日を設定
   const [selectedDate, setSelectedDate] = useState(''); // 選択された日付を管理する状態を追加
   const [weight, setWeight] = useState(''); // 体重データを管理する状態を追加
-  const [isModalOpen, setIsModalOpen] = useState(false); // モーダルの表示状態を管理
+  const [isWeightModalOpen, setIsWeightModalOpen] = useState(false); // 体重モーダルの表示状態を管理
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false); // カレンダーモーダルの表示状態を管理
 
   const fetchData = async () => {
     try {
@@ -186,7 +195,7 @@ const Weight = () => {
       y: {
         title: {
           display: true,
-          text: '体重 (kg)',
+          text: '(kg)',
           font: {
             size: 16, // フォントサイズを調整
           },
@@ -218,6 +227,12 @@ const Weight = () => {
 
   const remainingDays = Math.ceil((goalDate - new Date()) / (1000 * 60 * 60 * 24));
 
+  const handleDateChange = (date) => {
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setIsCalendarModalOpen(false);
+  };
+
   return (
     <div className="weight-chart-container">
       <h2 className="weight-chart-title">体重推移</h2>
@@ -236,7 +251,9 @@ const Weight = () => {
         </select>
       </div>
       <div className="weight-chart-wrapper">
-        <Line data={chartData} options={options} />
+        <div className="weight-chart">
+          <Line data={chartData} options={options} />
+        </div>
       </div>
       <div className="goal-info">
         <p className="goal-info-target-weight">目標体重: {goalWeight} kg</p>
@@ -245,29 +262,42 @@ const Weight = () => {
       <div className="weight-save-controls">
         <label htmlFor="date-select">日付を選択:</label>
         <input
-          type="date"
+          type="text"
           id="date-select"
           value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          onClick={() => setIsCalendarModalOpen(true)}
+          readOnly
         />
         <label htmlFor="weight-input">体重を入力:</label>
         <input
           type="text"
           id="weight-input"
           value={weight ? `${weight} kg` : ''}
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsWeightModalOpen(true)}
           readOnly
         />
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
       <WeightModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isWeightModalOpen}
+        onClose={() => setIsWeightModalOpen(false)}
         onSave={(value) => {
           setWeight(value);
-          setIsModalOpen(false);
+          setIsWeightModalOpen(false);
         }}
       />
+      {isCalendarModalOpen && (
+        <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
+          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+            <Calendar
+              onChange={handleDateChange}
+              formatShortWeekday={CalenderFormatShortWeekday}
+              tileClassName={CalenderTileClassName}
+              tileContent={CalenderTileContent}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

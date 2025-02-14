@@ -2,10 +2,7 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: rgba(162, 217, 255, 0.1);;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,9 +18,16 @@
 
 .weight-chart-wrapper {
   position: relative;
-  height: 400px;
-  width: 80%;
-  max-width: 800px;
+  width: 100%;
+  height: 40%;
+}
+
+.weight-chart {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(179, 215, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .weight-chart-title {
@@ -50,52 +54,80 @@
   border-radius: 5px; /* 角を丸くする */
   display: flex;
   align-items: center;
-}
-
-.weight-save-controls label {
-margin-right: 10px;
-font-size: 18px; /* ラベルのフォントサイズを調整 */
-}
-
-.weight-save-controls input {
-font-size: 18px; /* 入力欄のフォントサイズを調整 */
-padding: 5px;
-margin-right: 10px;
-outline: 1px solid #87CEFA;
-outline-offset: 2px;
-border-radius: 4px;
-border: 1px solid #ccc;
-text-align: center;
-}
-
-.weight-save-controls button {
-font-size: 18px; /* ボタンのフォントサイズを調整 */
-padding: 5px 10px;
-}
-
-
-
-.goal-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px; /* 二つの間をいい感じにあける */
-  font-weight: bold;
-}
-
-.goal-info-target-weight{
-  font-size: 18px;
-  color: red;
-}
-
-.goal-info-target{
-  font-size: 18px;
-  color: blue;
+  cursor: pointer;
 }
 
 .weight-save-controls {
+  margin-top: 20px;
   display: flex;
   align-items: center;
+}
+
+.weight-save-controls label {
+  margin-right: 10px;
+  font-size: 18px; /* ラベルのフォントサイズを調整 */
+  font-weight: bold;
+}
+
+.weight-save-controls input {
+  font-size: 18px; /* 入力欄のフォントサイズを調整 */
+  padding: 5px;
+  margin-right: 10px;
+  outline: 1px solid #87CEFA;
+  outline-offset: 2px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+}
+
+.weight-save-controls button {
+  font-size: 18px; /* ボタンのフォントサイズを調整 */
+  padding: 5px 10px;
+}
+
+.weight-x-axis-title,
+.weight-y-axis-title {
+  font-size: 14px; /* 軸タイトルのフォントサイズを調整 */
+}
+
+.weight-x-axis-ticks,
+.weight-y-axis-ticks {
+  font-size: 12px; /* 軸目盛りのフォントサイズを調整 */
+}
+
+.weight-legend-labels {
+  font-size: 14px; /* 凡例ラベルのフォントサイズを調整 */
+}
+
+.weight-tooltip {
+  font-size: 12px; /* ツールチップのフォントサイズを調整 */
+}
+
+.goal-info {
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.goal-info-target-weight {
+  font-size: 18px;
+  color: red;
+  background-color: #fff;
+  border: 1px solid red;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.goal-info-target {
+  font-size: 18px;
+  color: #0366d6;
+  background-color: #fff;
+  border: 1px solid #0366d6;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .weight-save-button {
@@ -110,9 +142,27 @@ padding: 5px 10px;
 }
 
 .weight-save-button:hover {
-  background-color: #024a9b;;
+  background-color: #024a9b;
 }
 
 .weight-save-button:active {
   transform: scale(0.95);
+}
+
+.calendar-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
 }
