@@ -1,5 +1,11 @@
+.training-adder {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .add-training-button {
-    background-color: #ffffff;
+    background-color: rgba(0, 123, 255, 0.1);
     border: 2px solid #007BFF;
     border-radius: 8px;
     padding: 15px 30px;
@@ -14,11 +20,94 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 0px;
+    margin-bottom:100px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .add-training-button:hover {
     background-color: #007BFF;
     color: #ffffff;
     transform: translateY(-2px);
+}
+
+.delete-training-button {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 2px solid rgba(255, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 15px 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(255, 0, 0, 0.5);
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-bottom:10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-training-button:hover {
+    background-color: red;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.delete-modal-content p {
+  margin-bottom: 20px;
+}
+
+.delete-modal-content button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.delete-modal-content .confirm-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.delete-modal-content .confirm-button:hover {
+  background-color: #c82333;
+}
+
+.delete-modal-content .cancel-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.delete-modal-content .cancel-button:hover {
+  background-color: #5a6268;
 }
