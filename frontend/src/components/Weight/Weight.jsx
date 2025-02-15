@@ -58,6 +58,7 @@ const Weight = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false); // 体重モーダルの表示状態を管理
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false); // カレンダーモーダルの表示状態を管理
   const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージを管理
+  const [successMessage, setSuccessMessage] = useState(''); // 成功メッセージを管理
 
   const fetchData = async () => {
     try {
@@ -157,6 +158,7 @@ const Weight = () => {
   const handleSave = async () => {
     if (!selectedDate || !weight) {
       setErrorMessage('全ての項目を入力してください');
+      setSuccessMessage(''); // 成功メッセージをクリア
       return;
     }
 
@@ -174,12 +176,16 @@ const Weight = () => {
         // データを再取得してグラフを更新
         fetchData();
         setErrorMessage(''); // エラーメッセージをクリア
+        setSuccessMessage('データの保存に成功しました'); // 成功メッセージを設定
       } else {
         console.error("Error saving data:", response.data);
+        setErrorMessage('データの保存に失敗しました');
+        setSuccessMessage(''); // 成功メッセージをクリア
       }
     } catch (error) {
       console.error("Error saving data:", error);
       setErrorMessage('データの保存に失敗しました');
+      setSuccessMessage(''); // 成功メッセージをクリア
     }
   };
 
@@ -290,6 +296,7 @@ const Weight = () => {
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
       {errorMessage && <p className="weight-error-message">{errorMessage}</p>}
+      {successMessage && <p className="weight-success-message">{successMessage}</p>}
       <WeightModal
         isOpen={isWeightModalOpen}
         onClose={() => setIsWeightModalOpen(false)}
