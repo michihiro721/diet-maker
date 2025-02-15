@@ -162,8 +162,11 @@ const Weight = () => {
 
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
-        date: selectedDate, // 選択された日付を送信
-        weight: weight, // 体重データを送信
+        weight: {
+          user_id: 1, // ユーザーIDを追加
+          date: selectedDate, // 選択された日付を送信
+          weight: weight, // 体重データを送信
+        }
       });
 
       if (response.status === 201) {
@@ -176,6 +179,7 @@ const Weight = () => {
       }
     } catch (error) {
       console.error("Error saving data:", error);
+      setErrorMessage('データの保存に失敗しました');
     }
   };
 
