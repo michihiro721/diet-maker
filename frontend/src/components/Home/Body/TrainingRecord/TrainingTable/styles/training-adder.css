@@ -81,20 +81,25 @@
 
 .delete-modal-content p {
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .delete-modal-content button {
   padding: 10px 20px;
   font-size: 16px;
   margin: 0 10px;
+  font-weight: bold;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .delete-modal-content .confirm-button {
-  background-color: #dc3545;
+  background-color: rgba(255, 0, 0, 0.7);
   color: white;
-  border: none;
-  border-radius: 5px;
+  width: 100px;
+  margin-right: 20px; /* Add margin to the right */
 }
 
 .delete-modal-content .confirm-button:hover {
@@ -102,12 +107,12 @@
 }
 
 .delete-modal-content .cancel-button {
-  background-color: #6c757d;
+  background-color: #007BFF;
   color: white;
-  border: none;
-  border-radius: 5px;
+  width: 100px;
+  margin-left: 20px; /* Add margin to the left */
 }
 
 .delete-modal-content .cancel-button:hover {
-  background-color: #5a6268;
+  background-color: #0056b3;
 }
