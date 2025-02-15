@@ -11,6 +11,10 @@ import TrainingAdder from './TrainingAdder';
 const TrainingRecord = ({ selectedDate }) => {
   const [trainings, setTrainings] = useState([
     {
+      exercise: "ベンチプレス",
+      targetArea: "胸",
+      maxWeight: 100,
+      calories: 200,
       sets: [
         { weight: 85, reps: 5, complete: false, timer: "02:00" },
         { weight: 85, reps: 5, complete: false, timer: "02:00" },
@@ -86,10 +90,14 @@ const TrainingRecord = ({ selectedDate }) => {
 
   const addTraining = () => {
     const newTraining = {
+      exercise: "",
+      targetArea: "",
+      maxWeight: 0,
+      calories: 0,
       sets: [
-        { weight: 85, reps: 5, complete: false, timer: "02:00" },
-        { weight: 85, reps: 5, complete: false, timer: "02:00" },
-        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+        { weight: 0, reps: 0, complete: false, timer: "00:00" },
+        { weight: 0, reps: 0, complete: false, timer: "00:00" },
+        { weight: 0, reps: 0, complete: false, timer: "00:00" },
       ],
     };
     setTrainings([...trainings, newTraining]);
@@ -105,16 +113,17 @@ const TrainingRecord = ({ selectedDate }) => {
   return (
     <div className="training-record-container">
       <h2 className="training-record-title">トレーニング記録 : {formattedDate}</h2>
-      <TrainingInfo />
       {trainings.map((training, trainingIndex) => (
-        <TrainingTable
-          key={trainingIndex}
-          sets={training.sets}
-          openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
-          handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
-          handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
-          handleAddSet={() => handleAddSet(trainingIndex)}
-        />
+        <div key={trainingIndex} className="training-section">
+          <TrainingInfo />
+          <TrainingTable
+            sets={training.sets}
+            openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
+            handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
+            handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
+            handleAddSet={() => handleAddSet(trainingIndex)}
+          />
+        </div>
       ))}
       <TrainingAdder addTraining={addTraining} />
       {modalVisible && (
