@@ -22,9 +22,7 @@ const TrainingAdder = ({ addTraining, deleteTraining }) => {
       maxWeight: 0,
       calories: 0,
       sets: [
-        { weight: 0, reps: 0, complete: false, timer: "02:00" },
-        { weight: 0, reps: 0, complete: false, timer: "02:00" },
-        { weight: 0, reps: 0, complete: false, timer: "02:00" },
+        { weight: "", reps: "", complete: false, timer: "02:00" },
       ],
     };
     addTraining(newTraining);
