@@ -6,12 +6,17 @@ import './styles/training-record-container.css';
 import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
+import TrainingAdder from './TrainingAdder';
 
 const TrainingRecord = ({ selectedDate }) => {
-  const [sets, setSets] = useState([
-    { weight: 85, reps: 5, complete: false, timer: "02:00" },
-    { weight: 85, reps: 5, complete: false, timer: "02:00" },
-    { weight: 85, reps: 5, complete: false, timer: "02:00" },
+  const [trainings, setTrainings] = useState([
+    {
+      sets: [
+        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+      ],
+    },
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,31 +24,46 @@ const TrainingRecord = ({ selectedDate }) => {
   const [currentField, setCurrentField] = useState("");
   const [currentValue, setCurrentValue] = useState("");
 
-  const handleAddSet = () => {
-    const lastSet = sets[sets.length - 1];
+  const handleAddSet = (trainingIndex) => {
+    const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
     const newSet = {
       weight: lastSet ? lastSet.weight : 85,
       reps: lastSet ? lastSet.reps : 5,
       complete: false,
       timer: lastSet ? lastSet.timer : "02:00"
     };
-    setSets([...sets, newSet]);
-  };
-
-  const handleRemoveSet = (index) => {
-    const updatedSets = sets.filter((_, i) => i !== index);
-    setSets(updatedSets);
-  };
-
-  const handleUpdateSet = (index, field, value) => {
-    const updatedSets = sets.map((set, i) =>
-      i === index ? { ...set, [field]: value } : set
+    const updatedTrainings = trainings.map((training, index) =>
+      index === trainingIndex
+        ? { ...training, sets: [...training.sets, newSet] }
+        : training
     );
-    setSets(updatedSets);
+    setTrainings(updatedTrainings);
   };
 
-  const openModal = (index, field, value) => {
-    setCurrentSet(index);
+  const handleRemoveSet = (trainingIndex, setIndex) => {
+    const updatedSets = trainings[trainingIndex].sets.filter((_, i) => i !== setIndex);
+    const updatedTrainings = trainings.map((training, index) =>
+      index === trainingIndex
+        ? { ...training, sets: updatedSets }
+        : training
+    );
+    setTrainings(updatedTrainings);
+  };
+
+  const handleUpdateSet = (trainingIndex, setIndex, field, value) => {
+    const updatedSets = trainings[trainingIndex].sets.map((set, i) =>
+      i === setIndex ? { ...set, [field]: value } : set
+    );
+    const updatedTrainings = trainings.map((training, index) =>
+      index === trainingIndex
+        ? { ...training, sets: updatedSets }
+        : training
+    );
+    setTrainings(updatedTrainings);
+  };
+
+  const openModal = (trainingIndex, setIndex, field, value) => {
+    setCurrentSet({ trainingIndex, setIndex });
     setCurrentField(field);
     setCurrentValue(value);
     setModalVisible(true);
@@ -54,7 +74,7 @@ const TrainingRecord = ({ selectedDate }) => {
   };
 
   const handleModalSave = () => {
-    handleUpdateSet(currentSet, currentField, currentValue);
+    handleUpdateSet(currentSet.trainingIndex, currentSet.setIndex, currentField, currentValue);
     closeModal();
   };
 
@@ -62,6 +82,17 @@ const TrainingRecord = ({ selectedDate }) => {
     if (event.target.className === "modal") {
       closeModal();
     }
+  };
+
+  const addTraining = () => {
+    const newTraining = {
+      sets: [
+        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+        { weight: 85, reps: 5, complete: false, timer: "02:00" },
+      ],
+    };
+    setTrainings([...trainings, newTraining]);
   };
 
   const formattedDate = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
@@ -75,13 +106,17 @@ const TrainingRecord = ({ selectedDate }) => {
     <div className="training-record-container">
       <h2 className="training-record-title">トレーニング記録 : {formattedDate}</h2>
       <TrainingInfo />
-      <TrainingTable
-        sets={sets}
-        openModal={openModal}
-        handleUpdateSet={handleUpdateSet}
-        handleRemoveSet={handleRemoveSet}
-        handleAddSet={handleAddSet}
-      />
+      {trainings.map((training, trainingIndex) => (
+        <TrainingTable
+          key={trainingIndex}
+          sets={training.sets}
+          openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
+          handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
+          handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
+          handleAddSet={() => handleAddSet(trainingIndex)}
+        />
+      ))}
+      <TrainingAdder addTraining={addTraining} />
       {modalVisible && (
         <Modal
           currentField={currentField}
