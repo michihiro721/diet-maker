@@ -163,6 +163,7 @@ const Weight = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
         weight: {
+          user_id: 1, // ユーザーIDを追加
           date: selectedDate, // 選択された日付を送信
           weight: weight, // 体重データを送信
         }
