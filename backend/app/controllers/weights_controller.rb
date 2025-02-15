@@ -5,7 +5,9 @@ class WeightsController < ApplicationController
   end
 
   def create
-    weight = Weight.new(weight_params)
+    weight = Weight.find_or_initialize_by(user_id: weight_params[:user_id], date: weight_params[:date])
+    weight.assign_attributes(weight_params)
+
     if weight.save
       render json: weight, status: :created
     else
