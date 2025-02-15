@@ -90,18 +90,7 @@ const TrainingRecord = ({ selectedDate }) => {
     }
   };
 
-  const addTraining = () => {
-    const newTraining = {
-      exercise: "",
-      targetArea: "",
-      maxWeight: 0,
-      calories: 0,
-      sets: [
-        { weight: 0, reps: 0, complete: false, timer: "00:00" },
-        { weight: 0, reps: 0, complete: false, timer: "00:00" },
-        { weight: 0, reps: 0, complete: false, timer: "00:00" },
-      ],
-    };
+  const addTraining = (newTraining) => {
     setTrainings([...trainings, newTraining]);
   };
 

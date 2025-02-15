@@ -15,9 +15,22 @@ const TrainingAdder = ({ addTraining, deleteTraining }) => {
     setDeleteModalVisible(false);
   };
 
+  const handleAddTraining = () => {
+    const newTraining = {
+      exercise: "",
+      targetArea: "",
+      maxWeight: 0,
+      calories: 0,
+      sets: [
+        { weight: "", reps: "", complete: false, timer: "02:00" },
+      ],
+    };
+    addTraining(newTraining);
+  };
+
   return (
     <div className="training-adder">
-      <button className="add-training-button" onClick={addTraining}>トレーニング追加</button>
+      <button className="add-training-button" onClick={handleAddTraining}>トレーニング追加</button>
       {deleteModalVisible && (
         <div className="delete-modal">
           <div className="delete-modal-content">
