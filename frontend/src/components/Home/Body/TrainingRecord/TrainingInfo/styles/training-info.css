@@ -8,6 +8,7 @@
   border: 2px solid #a2d9ff; /* 薄い水色の枠線 */
   max-width: 600px; /* 最大幅を600pxに設定 */
   margin: 0 auto; /* 中央揃え */
+  margin-top: 40px;
 }
 
 /* 見出しのスタイル */
