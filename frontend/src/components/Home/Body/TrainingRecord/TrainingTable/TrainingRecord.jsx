@@ -24,9 +24,11 @@ const TrainingRecord = ({ selectedDate }) => {
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [currentSet, setCurrentSet] = useState(null);
   const [currentField, setCurrentField] = useState("");
   const [currentValue, setCurrentValue] = useState("");
+  const [trainingToDelete, setTrainingToDelete] = useState(null);
 
   const handleAddSet = (trainingIndex) => {
     const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
@@ -103,6 +105,17 @@ const TrainingRecord = ({ selectedDate }) => {
     setTrainings([...trainings, newTraining]);
   };
 
+  const confirmDeleteTraining = (trainingIndex) => {
+    setTrainingToDelete(trainingIndex);
+    setDeleteModalVisible(true);
+  };
+
+  const deleteTraining = () => {
+    const updatedTrainings = trainings.filter((_, index) => index !== trainingToDelete);
+    setTrainings(updatedTrainings);
+    setDeleteModalVisible(false);
+  };
+
   const formattedDate = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
     year: 'numeric',
     month: 'numeric',
@@ -123,9 +136,10 @@ const TrainingRecord = ({ selectedDate }) => {
             handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
             handleAddSet={() => handleAddSet(trainingIndex)}
           />
+          <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
         </div>
       ))}
-      <TrainingAdder addTraining={addTraining} />
+      <TrainingAdder addTraining={addTraining} deleteTraining={deleteTraining} />
       {modalVisible && (
         <Modal
           currentField={currentField}
@@ -134,6 +148,15 @@ const TrainingRecord = ({ selectedDate }) => {
           handleModalSave={handleModalSave}
           handleClickOutside={handleClickOutside}
         />
+      )}
+      {deleteModalVisible && (
+        <div className="delete-modal">
+          <div className="delete-modal-content">
+            <p>本当に削除してもよろしいですか？</p>
+            <button className="confirm-button" onClick={deleteTraining}>はい</button>
+            <button className="cancel-button" onClick={() => setDeleteModalVisible(false)}>いいえ</button>
+          </div>
+        </div>
       )}
     </div>
   );
