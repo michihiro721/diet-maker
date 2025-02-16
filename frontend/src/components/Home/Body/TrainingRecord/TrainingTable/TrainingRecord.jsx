@@ -14,7 +14,6 @@ const TrainingRecord = ({ selectedDate }) => {
       exercise: "ベンチプレス",
       targetArea: "胸",
       maxWeight: 100,
-      calories: 200,
       sets: [
         { weight: 85, reps: 5, complete: false, timer: "02:00" },
         { weight: 85, reps: 5, complete: false, timer: "02:00" },
@@ -105,6 +104,27 @@ const TrainingRecord = ({ selectedDate }) => {
     setDeleteModalVisible(false);
   };
 
+  const saveTrainingRecord = () => {
+    fetch('/trainings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ date: selectedDate, trainings }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Training record saved:', data);
+      // 必要に応じて追加の処理を行う
+    })
+    .catch(error => console.error('Error saving training record:', error));
+  };
+
   const formattedDate = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
     year: 'numeric',
     month: 'numeric',
@@ -117,7 +137,7 @@ const TrainingRecord = ({ selectedDate }) => {
       <h2 className="training-record-title">トレーニング記録 : {formattedDate}</h2>
       {trainings.map((training, trainingIndex) => (
         <div key={trainingIndex} className="training-section">
-          <TrainingInfo />
+          <TrainingInfo sets={training.sets} />
           <TrainingTable
             sets={training.sets}
             openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
@@ -129,6 +149,7 @@ const TrainingRecord = ({ selectedDate }) => {
         </div>
       ))}
       <TrainingAdder addTraining={addTraining} deleteTraining={deleteTraining} />
+      <button className="save-training-button" onClick={saveTrainingRecord}>トレーニング終了</button>
       {modalVisible && (
         <Modal
           currentField={currentField}
