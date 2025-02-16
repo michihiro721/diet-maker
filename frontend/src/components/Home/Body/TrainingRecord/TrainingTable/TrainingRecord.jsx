@@ -119,7 +119,7 @@ const TrainingRecord = ({ selectedDate, userId }) => {
 
     const saveToAPI = async () => {
       try {
-        const response = await fetch('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
+        const response = await fetch('https://diet-maker-d07eb3099e56.herokuapp.com', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
