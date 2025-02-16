@@ -109,32 +109,35 @@ const TrainingRecord = ({ selectedDate, userId }) => {
       return training.sets.map(set => ({
         date: selectedDate,
         user_id: userId,
-        goal_id: null, // 必要に応じて設定
-        workout_id: null, // 必要に応じて設定
-        sets: set.reps,
-        reps: set.reps,
-        weight: set.weight
+        goal_id: training.goal_id || null,      // trainingオブジェクトからgoal_idを取得
+        workout_id: training.workout_id || null, // trainingオブジェクトからworkout_idを取得
+        sets: training.sets.length,             // セット数は配列の長さ
+        reps: set.reps,                         // 繰り返し回数
+        weight: set.weight                      // 重量
       }));
     }).flat();
 
-    fetch('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(trainingData),
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+    const saveToAPI = async () => {
+      try {
+        const response = await fetch('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ trainings: trainingData })
+        });
+
+        if (!response.ok) {
+          throw new Error('Training data could not be saved');
+        }
+
+        console.log('Training data saved successfully');
+      } catch (error) {
+        console.error('Error saving training data:', error);
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Training record saved:', data);
-      // 必要に応じて追加の処理を行う
-    })
-    .catch(error => console.error('Error saving training record:', error));
+    };
+
+    saveToAPI();
   };
 
   const formattedDate = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
