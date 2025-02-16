@@ -109,11 +109,11 @@ const TrainingRecord = ({ selectedDate, userId }) => {
       return training.sets.map(set => ({
         date: selectedDate,
         user_id: userId,
-        goal_id: training.goal_id || null,      // trainingオブジェクトからgoal_idを取得
-        workout_id: training.workout_id || null, // trainingオブジェクトからworkout_idを取得
-        sets: training.sets.length,             // セット数は配列の長さ
-        reps: set.reps,                         // 繰り返し回数
-        weight: set.weight                      // 重量
+        goal_id: null, // 必要に応じて設定
+        workout_id: null, // 必要に応じて設定
+        sets: training.sets.length, // セット数
+        reps: set.reps,
+        weight: set.weight
       }));
     }).flat();
 
