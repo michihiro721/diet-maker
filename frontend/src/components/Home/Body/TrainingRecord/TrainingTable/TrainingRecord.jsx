@@ -2,6 +2,7 @@
 // トレーニングの基本情報、セットの詳細、モーダルを使用した入力補助機能を提供します。
 
 import React, { useState } from "react";
+import axios from "axios";
 import './styles/training-record-container.css';
 import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
@@ -119,15 +120,11 @@ const TrainingRecord = ({ selectedDate, userId }) => {
 
     const saveToAPI = async () => {
       try {
-        const response = await fetch('https://diet-maker-d07eb3099e56.herokuapp.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ trainings: trainingData })
+        const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
+          trainings: trainingData
         });
 
-        if (!response.ok) {
+        if (response.status !== 201) {
           throw new Error('Training data could not be saved');
         }
 
