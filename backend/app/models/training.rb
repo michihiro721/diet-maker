@@ -1,5 +1,5 @@
 class Training < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :goal, optional: true
   belongs_to :workout, optional: true
 
