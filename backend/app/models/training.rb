@@ -4,4 +4,5 @@ class Training < ApplicationRecord
   belongs_to :workout, optional: true
 
   validates :date, presence: true
+  validates :sets, presence: true
 end
