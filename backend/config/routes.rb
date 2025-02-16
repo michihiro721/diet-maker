@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'latest'
     end
   end
+  resources :trainings, only: [:create]
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {
