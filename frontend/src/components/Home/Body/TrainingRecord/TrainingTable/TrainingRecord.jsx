@@ -9,7 +9,7 @@ import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
 
-const TrainingRecord = ({ selectedDate, userId }) => {
+const TrainingRecord = ({ selectedDate }) => {
   const [trainings, setTrainings] = useState([
     {
       exercise: "ベンチプレス",
@@ -29,6 +29,7 @@ const TrainingRecord = ({ selectedDate, userId }) => {
   const [currentField, setCurrentField] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [trainingToDelete, setTrainingToDelete] = useState(null);
+  const [message, setMessage] = useState("");
 
   const handleAddSet = (trainingIndex) => {
     const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
@@ -109,7 +110,7 @@ const TrainingRecord = ({ selectedDate, userId }) => {
     const trainingData = trainings.map(training => {
       return training.sets.map(set => ({
         date: selectedDate,
-        user_id: userId,
+        user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
         goal_id: null, // 必要に応じて設定
         workout_id: null, // 必要に応じて設定
         sets: training.sets.length, // セット数
@@ -128,8 +129,10 @@ const TrainingRecord = ({ selectedDate, userId }) => {
           throw new Error('Training data could not be saved');
         }
 
+        setMessage('Training data saved successfully');
         console.log('Training data saved successfully');
       } catch (error) {
+        setMessage('Error saving training data');
         console.error('Error saving training data:', error);
       }
     };
@@ -162,6 +165,7 @@ const TrainingRecord = ({ selectedDate, userId }) => {
       ))}
       <TrainingAdder addTraining={addTraining} deleteTraining={deleteTraining} />
       <button className="save-training-button" onClick={saveTrainingRecord}>トレーニング終了</button>
+      {message && <p>{message}</p>}
       {modalVisible && (
         <Modal
           currentField={currentField}
