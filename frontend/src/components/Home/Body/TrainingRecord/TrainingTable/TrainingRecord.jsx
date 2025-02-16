@@ -8,7 +8,7 @@ import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
 
-const TrainingRecord = ({ selectedDate }) => {
+const TrainingRecord = ({ selectedDate, userId }) => {
   const [trainings, setTrainings] = useState([
     {
       exercise: "ベンチプレス",
@@ -110,7 +110,7 @@ const TrainingRecord = ({ selectedDate }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ date: selectedDate, trainings }),
+      body: JSON.stringify({ date: selectedDate, user_id: userId, sets: trainings }),
     })
     .then(response => {
       if (!response.ok) {

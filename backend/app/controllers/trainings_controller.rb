@@ -12,6 +12,6 @@ class TrainingsController < ApplicationController
   private
 
   def training_params
-    params.require(:training).permit(:date, trainings: [:exercise, :targetArea, :maxWeight, sets: [:weight, :reps, :complete, :timer]])
+    params.require(:training).permit(:date, :user_id, sets: [:weight, :reps, :complete, :timer])
   end
 end
