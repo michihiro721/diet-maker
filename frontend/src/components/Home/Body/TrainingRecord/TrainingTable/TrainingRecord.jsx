@@ -117,7 +117,7 @@ const TrainingRecord = ({ selectedDate, userId }) => {
       }));
     }).flat();
 
-    fetch('https://your-heroku-app.herokuapp.com/trainings', {
+    fetch('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
