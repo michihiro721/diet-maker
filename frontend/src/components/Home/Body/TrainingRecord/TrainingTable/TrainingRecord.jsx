@@ -105,12 +105,24 @@ const TrainingRecord = ({ selectedDate, userId }) => {
   };
 
   const saveTrainingRecord = () => {
-    fetch('/trainings', {
+    const trainingData = trainings.map(training => {
+      return training.sets.map(set => ({
+        date: selectedDate,
+        user_id: userId,
+        goal_id: null, // 必要に応じて設定
+        workout_id: null, // 必要に応じて設定
+        sets: set.reps,
+        reps: set.reps,
+        weight: set.weight
+      }));
+    }).flat();
+
+    fetch('https://your-heroku-app.herokuapp.com/trainings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ date: selectedDate, user_id: userId, sets: trainings }),
+      body: JSON.stringify(trainingData),
     })
     .then(response => {
       if (!response.ok) {
