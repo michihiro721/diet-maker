@@ -12,6 +12,7 @@ class TrainingsController < ApplicationController
       )
 
       unless new_training.save
+        Rails.logger.error new_training.errors.full_messages
         render json: new_training.errors, status: :unprocessable_entity
         return
       end
