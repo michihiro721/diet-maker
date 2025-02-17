@@ -86,7 +86,5 @@ workouts = [
 ]
 
 workouts.each do |workout|
-  Workout.find_or_create_by(name: workout[:name]) do |w|
-    w.category = workout[:category]
-  end
+  Workout.find_or_create_by(name: workout[:name], category: workout[:category])
 end
