@@ -106,14 +106,16 @@ const TrainingRecord = ({ selectedDate }) => {
     setDeleteModalVisible(false);
   };
 
-  const saveTrainingRecord = () => {
+  const saveTrainingRecord = async () => {
+    const formattedDate = selectedDate.toLocaleDateString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).replace(/\//g, '-'); // 日付を正しくフォーマット
+
     const trainingData = trainings.map(training => {
       return training.sets.map(set => ({
-        date: selectedDate.toLocaleDateString('ja-JP', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        }).replace(/\//g, '-'), // 日付を正しくフォーマット
+        date: formattedDate,
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
         goal_id: null, // 必要に応じて設定
         workout_id: null, // 必要に応じて設定
@@ -123,28 +125,25 @@ const TrainingRecord = ({ selectedDate }) => {
       }));
     }).flat();
 
-    const saveToAPI = async () => {
-      try {
-        const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
-          trainings: trainingData
-        });
+    try {
+      // 新しいデータを保存
+      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
+        trainings: trainingData
+      });
 
-        if (response.status !== 201) {
-          throw new Error('Training data could not be saved');
-        }
-
-        setMessage('Training data saved successfully');
-        console.log('Training data saved successfully');
-      } catch (error) {
-        setMessage('Error saving training data');
-        console.error('Error saving training data:', error);
+      if (response.status !== 201) {
+        throw new Error('Training data could not be saved');
       }
-    };
 
-    saveToAPI();
+      setMessage('Training data saved successfully');
+      console.log('Training data saved successfully');
+    } catch (error) {
+      setMessage('Error saving training data');
+      console.error('Error saving training data:', error);
+    }
   };
 
-  const formattedDate = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
+  const formattedDateDisplay = selectedDate ? selectedDate.toLocaleDateString('ja-JP', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
@@ -153,7 +152,7 @@ const TrainingRecord = ({ selectedDate }) => {
 
   return (
     <div className="training-record-container">
-      <h2 className="training-record-title">トレーニング記録 : {formattedDate}</h2>
+      <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
       {trainings.map((training, trainingIndex) => (
         <div key={trainingIndex} className="training-section">
           <TrainingInfo sets={training.sets} />
