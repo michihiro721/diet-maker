@@ -109,7 +109,11 @@ const TrainingRecord = ({ selectedDate }) => {
   const saveTrainingRecord = () => {
     const trainingData = trainings.map(training => {
       return training.sets.map(set => ({
-        date: new Date(selectedDate).toISOString().split('T')[0], // 日付を正しくフォーマット
+        date: selectedDate.toLocaleDateString('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).replace(/\//g, '-'), // 日付を正しくフォーマット
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
         goal_id: null, // 必要に応じて設定
         workout_id: null, // 必要に応じて設定
