@@ -122,12 +122,12 @@ const TrainingRecord = ({ selectedDate }) => {
     setDeleteModalVisible(false);
   };
 
-  const handleExerciseChange = (exercise, part) => {
-    const updatedTrainings = trainings.map(training => ({
-      ...training,
-      exercise,
-      targetArea: part
-    }));
+  const handleExerciseChange = (trainingIndex, exercise, part) => {
+    const updatedTrainings = trainings.map((training, index) =>
+      index === trainingIndex
+        ? { ...training, exercise, targetArea: part }
+        : training
+    );
     setTrainings(updatedTrainings);
   };
 
@@ -185,7 +185,7 @@ const TrainingRecord = ({ selectedDate }) => {
           <TrainingInfo
             currentExercise={training.exercise}
             currentPart={training.targetArea}
-            onExerciseChange={(exercise, part) => handleExerciseChange(exercise, part)}
+            onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
           />
           <TrainingTable
             sets={training.sets}
