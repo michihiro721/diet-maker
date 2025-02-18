@@ -211,8 +211,8 @@ const TrainingRecord = ({ selectedDate }) => {
         </div>
       ))}
       <TrainingAdder addTraining={addTraining} />
-      <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
       {message && <p className={messageClass}>{message}</p>} {/* 追加 */}
+      <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
       {modalVisible && (
         <Modal
           currentField={currentField}
