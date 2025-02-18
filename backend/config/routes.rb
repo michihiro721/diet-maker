@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
   end
   resources :trainings, only: [:create]
+  resources :workouts, only: [:index]
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {

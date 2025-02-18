@@ -1,7 +1,7 @@
 // このコードは、トレーニング記録全体を管理および表示するためのコンポーネントです。
 // トレーニングの基本情報、セットの詳細、モーダルを使用した入力補助機能を提供します。
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './styles/training-record-container.css';
 import TrainingInfo from '../TrainingInfo/TrainingInfo';
@@ -30,6 +30,22 @@ const TrainingRecord = ({ selectedDate }) => {
   const [currentValue, setCurrentValue] = useState("");
   const [trainingToDelete, setTrainingToDelete] = useState(null);
   const [message, setMessage] = useState("");
+  const [workouts, setWorkouts] = useState([]);
+
+  useEffect(() => {
+    // ワークアウトデータを取得
+    const fetchWorkouts = async () => {
+      try {
+        const response = await axios.get('https://diet-maker-d07eb3099e56.herokuapp.com/workouts');
+        console.log('Fetched workouts:', response.data); // 追加
+        setWorkouts(response.data);
+      } catch (error) {
+        console.error('Error fetching workouts:', error);
+      }
+    };
+
+    fetchWorkouts();
+  }, []);
 
   const handleAddSet = (trainingIndex) => {
     const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
@@ -114,11 +130,12 @@ const TrainingRecord = ({ selectedDate }) => {
     }).replace(/\//g, '-'); // 日付を正しくフォーマット
 
     const trainingData = trainings.map(training => {
+      const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
       return training.sets.map(set => ({
         date: formattedDate,
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
         goal_id: null, // 必要に応じて設定
-        workout_id: null, // 必要に応じて設定
+        workout_id: workout ? workout.id : null, // workout_idを追加
         sets: training.sets.length, // セット数
         reps: set.reps,
         weight: set.weight
@@ -166,7 +183,7 @@ const TrainingRecord = ({ selectedDate }) => {
           <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
         </div>
       ))}
-      <TrainingAdder addTraining={addTraining} deleteTraining={deleteTraining} />
+      <TrainingAdder addTraining={addTraining} />
       <button className="save-training-button" onClick={saveTrainingRecord}>トレーニング終了</button>
       {message && <p>{message}</p>}
       {modalVisible && (
