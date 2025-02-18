@@ -31,6 +31,7 @@ const TrainingRecord = ({ selectedDate }) => {
   const [currentValue, setCurrentValue] = useState("");
   const [trainingToDelete, setTrainingToDelete] = useState(null);
   const [message, setMessage] = useState("");
+  const [messageClass, setMessageClass] = useState(""); // 追加
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
@@ -172,10 +173,12 @@ const TrainingRecord = ({ selectedDate }) => {
         throw new Error('Training data could not be saved');
       }
 
-      setMessage('Training data saved successfully');
+      setMessage('トレーニングデータの保存に成功しました');
+      setMessageClass('save-success-message');
       console.log('Training data saved successfully');
     } catch (error) {
-      setMessage('Error saving training data');
+      setMessage('トレーニングデータの保存に失敗しました');
+      setMessageClass('save-error-message');
       console.error('Error saving training data:', error);
     }
   };
@@ -209,7 +212,7 @@ const TrainingRecord = ({ selectedDate }) => {
       ))}
       <TrainingAdder addTraining={addTraining} />
       <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
-      {message && <p>{message}</p>}
+      {message && <p className={messageClass}>{message}</p>} {/* 追加 */}
       {modalVisible && (
         <Modal
           currentField={currentField}
