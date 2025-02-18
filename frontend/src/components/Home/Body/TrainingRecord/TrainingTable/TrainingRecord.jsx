@@ -25,6 +25,7 @@ const TrainingRecord = ({ selectedDate }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [confirmEndModalVisible, setConfirmEndModalVisible] = useState(false); // 追加
   const [currentSet, setCurrentSet] = useState(null);
   const [currentField, setCurrentField] = useState("");
   const [currentValue, setCurrentValue] = useState("");
@@ -131,6 +132,15 @@ const TrainingRecord = ({ selectedDate }) => {
     setTrainings(updatedTrainings);
   };
 
+  const confirmEndTraining = () => {
+    setConfirmEndModalVisible(true);
+  };
+
+  const endTraining = () => {
+    setConfirmEndModalVisible(false);
+    saveTrainingRecord();
+  };
+
   const saveTrainingRecord = async () => {
     const formattedDate = selectedDate.toLocaleDateString('ja-JP', {
       year: 'numeric',
@@ -198,7 +208,7 @@ const TrainingRecord = ({ selectedDate }) => {
         </div>
       ))}
       <TrainingAdder addTraining={addTraining} />
-      <button className="save-training-button" onClick={saveTrainingRecord}>トレーニング終了</button>
+      <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
       {message && <p>{message}</p>}
       {modalVisible && (
         <Modal
@@ -215,6 +225,15 @@ const TrainingRecord = ({ selectedDate }) => {
             <p>本当に削除してもよろしいですか？</p>
             <button className="confirm-button" onClick={deleteTraining}>はい</button>
             <button className="cancel-button" onClick={() => setDeleteModalVisible(false)}>いいえ</button>
+          </div>
+        </div>
+      )}
+      {confirmEndModalVisible && (
+        <div className="delete-modal">
+          <div className="delete-modal-content">
+            <p>トレーニングデータが保存されます<br />本当にトレーニングを終了してもよろしいですか？</p>
+            <button className="confirm-button" onClick={endTraining}>はい</button>
+            <button className="cancel-button" onClick={() => setConfirmEndModalVisible(false)}>いいえ</button>
           </div>
         </div>
       )}
