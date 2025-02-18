@@ -25,11 +25,13 @@ const TrainingRecord = ({ selectedDate }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [confirmEndModalVisible, setConfirmEndModalVisible] = useState(false); // 追加
   const [currentSet, setCurrentSet] = useState(null);
   const [currentField, setCurrentField] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [trainingToDelete, setTrainingToDelete] = useState(null);
   const [message, setMessage] = useState("");
+  const [messageClass, setMessageClass] = useState(""); // 追加
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
@@ -131,6 +133,15 @@ const TrainingRecord = ({ selectedDate }) => {
     setTrainings(updatedTrainings);
   };
 
+  const confirmEndTraining = () => {
+    setConfirmEndModalVisible(true);
+  };
+
+  const endTraining = () => {
+    setConfirmEndModalVisible(false);
+    saveTrainingRecord();
+  };
+
   const saveTrainingRecord = async () => {
     const formattedDate = selectedDate.toLocaleDateString('ja-JP', {
       year: 'numeric',
@@ -162,10 +173,12 @@ const TrainingRecord = ({ selectedDate }) => {
         throw new Error('Training data could not be saved');
       }
 
-      setMessage('Training data saved successfully');
+      setMessage('トレーニングデータの保存に成功しました');
+      setMessageClass('save-success-message');
       console.log('Training data saved successfully');
     } catch (error) {
-      setMessage('Error saving training data');
+      setMessage('トレーニングデータの保存に失敗しました');
+      setMessageClass('save-error-message');
       console.error('Error saving training data:', error);
     }
   };
@@ -198,8 +211,8 @@ const TrainingRecord = ({ selectedDate }) => {
         </div>
       ))}
       <TrainingAdder addTraining={addTraining} />
-      <button className="save-training-button" onClick={saveTrainingRecord}>トレーニング終了</button>
-      {message && <p>{message}</p>}
+      {message && <p className={messageClass}>{message}</p>} {/* 追加 */}
+      <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
       {modalVisible && (
         <Modal
           currentField={currentField}
@@ -215,6 +228,15 @@ const TrainingRecord = ({ selectedDate }) => {
             <p>本当に削除してもよろしいですか？</p>
             <button className="confirm-button" onClick={deleteTraining}>はい</button>
             <button className="cancel-button" onClick={() => setDeleteModalVisible(false)}>いいえ</button>
+          </div>
+        </div>
+      )}
+      {confirmEndModalVisible && (
+        <div className="delete-modal">
+          <div className="delete-modal-content">
+            <p>トレーニングデータが保存されます<br />本当にトレーニングを終了してもよろしいですか？</p>
+            <button className="confirm-button" onClick={endTraining}>はい</button>
+            <button className="cancel-button" onClick={() => setConfirmEndModalVisible(false)}>いいえ</button>
           </div>
         </div>
       )}
