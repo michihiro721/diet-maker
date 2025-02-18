@@ -122,6 +122,15 @@ const TrainingRecord = ({ selectedDate }) => {
     setDeleteModalVisible(false);
   };
 
+  const handleExerciseChange = (exercise, part) => {
+    const updatedTrainings = trainings.map(training => ({
+      ...training,
+      exercise,
+      targetArea: part
+    }));
+    setTrainings(updatedTrainings);
+  };
+
   const saveTrainingRecord = async () => {
     const formattedDate = selectedDate.toLocaleDateString('ja-JP', {
       year: 'numeric',
@@ -131,6 +140,7 @@ const TrainingRecord = ({ selectedDate }) => {
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
+      console.log('Training:', training.exercise, 'Workout:', workout); // 追加
       return training.sets.map(set => ({
         date: formattedDate,
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
@@ -172,7 +182,11 @@ const TrainingRecord = ({ selectedDate }) => {
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
       {trainings.map((training, trainingIndex) => (
         <div key={trainingIndex} className="training-section">
-          <TrainingInfo sets={training.sets} />
+          <TrainingInfo
+            currentExercise={training.exercise}
+            currentPart={training.targetArea}
+            onExerciseChange={(exercise, part) => handleExerciseChange(exercise, part)}
+          />
           <TrainingTable
             sets={training.sets}
             openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
