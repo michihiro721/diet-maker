@@ -176,9 +176,7 @@ const TrainingRecord = () => {
 
     try {
       // 新しいデータを保存
-      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', {
-        trainings: trainingData
-      });
+      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', trainingData);
 
       if (response.status !== 201) {
         throw new Error('Training data could not be saved');
