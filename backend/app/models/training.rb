@@ -5,4 +5,6 @@ class Training < ApplicationRecord
 
   validates :date, presence: true
   validates :sets, numericality: { greater_than_or_equal_to: 0 }
+  validates :reps, presence: true
+  validates :weight, presence: true
 end

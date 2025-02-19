@@ -154,11 +154,7 @@ const TrainingRecord = () => {
   };
 
   const saveTrainingRecord = async () => {
-    const formattedDate = selectedDate.toLocaleDateString('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    }).replace(/\//g, '-'); // 日付を正しくフォーマット
+    const formattedDate = selectedDate.toISOString().split('T')[0]; // 日付を正しくフォーマット
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
