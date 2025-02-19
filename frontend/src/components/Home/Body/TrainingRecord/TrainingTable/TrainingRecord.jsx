@@ -61,7 +61,7 @@ const TrainingRecord = () => {
   }, [selectedDate]);
 
   const handleAddSet = (trainingIndex) => {
-    const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
+    const lastSet = trainings[trainingIndex].sets && trainings[trainingIndex].sets.length > 0 ? trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1] : null;
     const newSet = {
       weight: lastSet ? lastSet.weight : 85,
       reps: lastSet ? lastSet.reps : 5,
