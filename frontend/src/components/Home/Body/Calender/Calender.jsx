@@ -14,11 +14,8 @@ function Calender({ onDateSelect }) {
 
   const onChange = (newDate) => {
     setDate(newDate);
-  };
-
-  const handleDateSelect = () => {
     if (onDateSelect) {
-      onDateSelect(date);
+      onDateSelect(newDate);
     }
   };
 
@@ -31,7 +28,6 @@ function Calender({ onDateSelect }) {
         formatShortWeekday={CalenderFormatShortWeekday}
         tileContent={CalenderTileContent}
       />
-      <button className="date-select-button" onClick={handleDateSelect}>日付を選択</button>
     </div>
   );
 }
