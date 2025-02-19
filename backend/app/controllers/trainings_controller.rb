@@ -1,4 +1,12 @@
 class TrainingsController < ApplicationController
+  def index
+    date = params[:date]
+    user_id = params[:user_id] || 1 # ユーザーIDを固定値に設定（ログイン機能実装後に変更）
+
+    trainings = Training.where(date: date, user_id: user_id)
+    render json: trainings
+  end
+
   def create
     # 受け取ったトレーニングデータの日付とユーザーIDを取得
     date = training_params[:trainings].first[:date]
@@ -35,6 +43,6 @@ class TrainingsController < ApplicationController
   private
 
   def training_params
-    params.permit(trainings: [:date, :user_id, :goal_id, :workout_id, :sets, :reps, :weight])
+    params.require(:training).permit(trainings: [:date, :user_id, :goal_id, :workout_id, :sets, :reps, :weight])
   end
 end
