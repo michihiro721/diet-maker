@@ -14,26 +14,13 @@ function Calender({ onDateSelect }) {
 
   const onChange = (newDate) => {
     setDate(newDate);
-  };
-
-  const handleDateSelect = () => {
     if (onDateSelect) {
-      onDateSelect(date);
+      onDateSelect(newDate);
     }
   };
 
-  return (
-    <div>
-      <Calendar
-        onChange={onChange}
-        value={date}
-        tileClassName={CalenderTileClassName}
-        formatShortWeekday={CalenderFormatShortWeekday}
-        tileContent={CalenderTileContent}
-      />
-      <button className="date-select-button" onClick={handleDateSelect}>日付を選択</button>
-    </div>
-  );
+  // カレンダーを非表示にするためにnullを返す
+  return null;
 }
 
 export default Calender;

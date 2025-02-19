@@ -13,29 +13,3 @@
     margin-top: 100px; /* ヘッダーと重ならないようにマージンを追加 */
 }
 
-/* 日付を選択ボタンのスタイル */
-.date-select-button {
-    display: block;
-    width: 100%;
-    max-width: 200px;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: rgba(162, 217, 255, 0.3);
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-    box-shadow: 0 0 0 2px rgba(162, 217, 255, 0.8);
-    transition: background-color 0.3s ease, transform 0.1s ease;
-}
-
-.date-select-button:hover {
-    background-color: rgba(162, 217, 255, 0.8)
-}
-
-.date-select-button:active {
-    transform: scale(0.95);
-}

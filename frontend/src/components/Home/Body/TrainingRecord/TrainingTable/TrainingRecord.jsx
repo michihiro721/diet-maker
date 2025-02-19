@@ -3,35 +3,29 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Calendar from 'react-calendar'; // カレンダーコンポーネントを直接インポート
+import 'react-calendar/dist/Calendar.css'; // カレンダーのスタイルをインポート
 import './styles/training-record-container.css';
 import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
+import CalenderTileClassName from '../../Calender/CalenderTileClassName'; // CalenderTileClassNameをインポート
+import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday'; // CalenderFormatShortWeekdayをインポート
+import CalenderTileContent from '../../Calender/CalenderTileContent'; // CalenderTileContentをインポート
 
-const TrainingRecord = ({ selectedDate }) => {
-  const [trainings, setTrainings] = useState([
-    {
-      exercise: "ベンチプレス",
-      targetArea: "胸",
-      maxWeight: 100,
-      sets: [
-        { weight: 85, reps: 5, complete: false, timer: "02:00" },
-        { weight: 85, reps: 5, complete: false, timer: "02:00" },
-        { weight: 85, reps: 5, complete: false, timer: "02:00" },
-      ],
-    },
-  ]);
-
+const TrainingRecord = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [trainings, setTrainings] = useState([]); // 初期値を空の配列に設定
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [confirmEndModalVisible, setConfirmEndModalVisible] = useState(false); // 追加
+  const [confirmEndModalVisible, setConfirmEndModalVisible] = useState(false);
   const [currentSet, setCurrentSet] = useState(null);
   const [currentField, setCurrentField] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [trainingToDelete, setTrainingToDelete] = useState(null);
   const [message, setMessage] = useState("");
-  const [messageClass, setMessageClass] = useState(""); // 追加
+  const [messageClass, setMessageClass] = useState("");
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
@@ -39,7 +33,7 @@ const TrainingRecord = ({ selectedDate }) => {
     const fetchWorkouts = async () => {
       try {
         const response = await axios.get('https://diet-maker-d07eb3099e56.herokuapp.com/workouts');
-        console.log('Fetched workouts:', response.data); // 追加
+        console.log('Fetched workouts:', response.data);
         setWorkouts(response.data);
       } catch (error) {
         console.error('Error fetching workouts:', error);
@@ -48,6 +42,23 @@ const TrainingRecord = ({ selectedDate }) => {
 
     fetchWorkouts();
   }, []);
+
+  useEffect(() => {
+    // 選択された日付に基づいてトレーニングデータを取得
+    const fetchTrainings = async () => {
+      try {
+        const formattedDate = selectedDate.toISOString().split('T')[0];
+        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}`);
+        console.log('Fetched trainings:', response.data);
+        setTrainings(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        console.error('Error fetching trainings:', error);
+        setTrainings([]); // エラーが発生した場合は空の配列を設定
+      }
+    };
+
+    fetchTrainings();
+  }, [selectedDate]);
 
   const handleAddSet = (trainingIndex) => {
     const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
@@ -151,7 +162,7 @@ const TrainingRecord = ({ selectedDate }) => {
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
-      console.log('Training:', training.exercise, 'Workout:', workout); // 追加
+      console.log('Training:', training.exercise, 'Workout:', workout);
       return training.sets.map(set => ({
         date: formattedDate,
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
@@ -192,8 +203,15 @@ const TrainingRecord = ({ selectedDate }) => {
 
   return (
     <div className="training-record-container">
+      <Calendar
+        onChange={setSelectedDate}
+        value={selectedDate}
+        tileClassName={CalenderTileClassName}
+        formatShortWeekday={CalenderFormatShortWeekday}
+        tileContent={CalenderTileContent}
+      />
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
-      {trainings.map((training, trainingIndex) => (
+      {Array.isArray(trainings) && trainings.map((training, trainingIndex) => (
         <div key={trainingIndex} className="training-section">
           <TrainingInfo
             currentExercise={training.exercise}
@@ -201,7 +219,7 @@ const TrainingRecord = ({ selectedDate }) => {
             onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
           />
           <TrainingTable
-            sets={training.sets}
+            sets={Array.isArray(training.sets) ? training.sets : []} // setsが配列であることを確認
             openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
             handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
             handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
@@ -211,7 +229,7 @@ const TrainingRecord = ({ selectedDate }) => {
         </div>
       ))}
       <TrainingAdder addTraining={addTraining} />
-      {message && <p className={messageClass}>{message}</p>} {/* 追加 */}
+      {message && <p className={messageClass}>{message}</p>}
       <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
       {modalVisible && (
         <Modal
