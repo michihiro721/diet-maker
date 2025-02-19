@@ -19,17 +19,8 @@ function Calender({ onDateSelect }) {
     }
   };
 
-  return (
-    <div>
-      <Calendar
-        onChange={onChange}
-        value={date}
-        tileClassName={CalenderTileClassName}
-        formatShortWeekday={CalenderFormatShortWeekday}
-        tileContent={CalenderTileContent}
-      />
-    </div>
-  );
+  // カレンダーを非表示にするためにnullを返す
+  return null;
 }
 
 export default Calender;

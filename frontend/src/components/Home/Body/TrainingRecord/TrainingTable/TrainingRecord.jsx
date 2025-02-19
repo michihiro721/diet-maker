@@ -3,12 +3,16 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Calender from '../../Calender/Calender'; // 正しいパスに修正
+import Calendar from 'react-calendar'; // カレンダーコンポーネントを直接インポート
+import 'react-calendar/dist/Calendar.css'; // カレンダーのスタイルをインポート
 import './styles/training-record-container.css';
 import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
+import CalenderTileClassName from '../../Calender/CalenderTileClassName'; // CalenderTileClassNameをインポート
+import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday'; // CalenderFormatShortWeekdayをインポート
+import CalenderTileContent from '../../Calender/CalenderTileContent'; // CalenderTileContentをインポート
 
 const TrainingRecord = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -199,8 +203,14 @@ const TrainingRecord = () => {
 
   return (
     <div className="training-record-container">
+      <Calendar
+        onChange={setSelectedDate}
+        value={selectedDate}
+        tileClassName={CalenderTileClassName}
+        formatShortWeekday={CalenderFormatShortWeekday}
+        tileContent={CalenderTileContent}
+      />
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
-      <Calender onDateSelect={setSelectedDate} />
       {Array.isArray(trainings) && trainings.map((training, trainingIndex) => (
         <div key={trainingIndex} className="training-section">
           <TrainingInfo
