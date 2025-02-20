@@ -1,7 +1,10 @@
 class TrainingsController < ApplicationController
   def index
-    trainings = Training.includes(:workout).all
-    render json: trainings.to_json(include: :workout)
+    date = params[:date]
+    user_id = params[:user_id] || 1 # ユーザーIDを固定値に設定（ログイン機能実装後に変更）
+
+    trainings = Training.where(date: date, user_id: user_id)
+    render json: trainings
   end
 
   def create

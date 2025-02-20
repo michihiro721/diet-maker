@@ -33,6 +33,7 @@ const TrainingRecord = () => {
     const fetchWorkouts = async () => {
       try {
         const response = await axios.get('https://diet-maker-d07eb3099e56.herokuapp.com/workouts');
+        console.log('Fetched workouts:', response.data);
         setWorkouts(response.data);
       } catch (error) {
         console.error('Error fetching workouts:', error);
@@ -48,6 +49,7 @@ const TrainingRecord = () => {
       try {
         const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
         const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}`);
+        console.log('Fetched trainings:', response.data);
         setTrainings(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error('Error fetching trainings:', error);
@@ -59,7 +61,7 @@ const TrainingRecord = () => {
   }, [selectedDate]);
 
   const handleAddSet = (trainingIndex) => {
-    const lastSet = trainings[trainingIndex].sets && trainings[trainingIndex].sets.length > 0 ? trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1] : null;
+    const lastSet = trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1];
     const newSet = {
       weight: lastSet ? lastSet.weight : 85,
       reps: lastSet ? lastSet.reps : 5,
@@ -156,6 +158,7 @@ const TrainingRecord = () => {
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
+      console.log('Training:', training.exercise, 'Workout:', workout);
       return training.sets.map(set => ({
         date: formattedDate,
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
@@ -177,9 +180,11 @@ const TrainingRecord = () => {
 
       setMessage('トレーニングデータの保存に成功しました');
       setMessageClass('save-success-message');
+      console.log('Training data saved successfully');
     } catch (error) {
       setMessage('トレーニングデータの保存に失敗しました');
       setMessageClass('save-error-message');
+      console.error('Error saving training data:', error);
     }
   };
 
@@ -200,27 +205,23 @@ const TrainingRecord = () => {
         tileContent={CalenderTileContent}
       />
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
-      {Array.isArray(trainings) && trainings.length > 0 ? (
-        trainings.map((training, trainingIndex) => (
-          <div key={trainingIndex} className="training-section">
-            <TrainingInfo
-              currentExercise={training.exercise}
-              currentPart={training.targetArea}
-              onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
-            />
-            <TrainingTable
-              sets={Array.isArray(training.sets) ? training.sets : []} // setsが配列であることを確認
-              openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
-              handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
-              handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
-              handleAddSet={() => handleAddSet(trainingIndex)}
-            />
-            <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
-          </div>
-        ))
-      ) : (
-        <p>この日にトレーニングデータはありません。</p>
-      )}
+      {Array.isArray(trainings) && trainings.map((training, trainingIndex) => (
+        <div key={trainingIndex} className="training-section">
+          <TrainingInfo
+            currentExercise={training.exercise}
+            currentPart={training.targetArea}
+            onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
+          />
+          <TrainingTable
+            sets={Array.isArray(training.sets) ? training.sets : []} // setsが配列であることを確認
+            openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
+            handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
+            handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
+            handleAddSet={() => handleAddSet(trainingIndex)}
+          />
+          <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
+        </div>
+      ))}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
       <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
