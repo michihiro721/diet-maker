@@ -164,7 +164,7 @@ const TrainingRecord = () => {
     const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
 
     const trainingData = trainings.map(training => {
-      const workout = Array.isArray(workouts) ? workouts.find(w => w.id === training.workout_id) : null;
+      const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
       return training.sets.map(set => ({
         date: formattedDate,
         user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
@@ -178,7 +178,7 @@ const TrainingRecord = () => {
 
     try {
       // 新しいデータを保存
-      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', { training: { trainings: trainingData } });
+      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', { training: trainingData });
 
       if (response.status !== 201) {
         throw new Error('Training data could not be saved');

@@ -9,8 +9,8 @@ class TrainingsController < ApplicationController
 
   def create
     # 受け取ったトレーニングデータの日付とユーザーIDを取得
-    date = training_params[:trainings].first[:date]
-    user_id = training_params[:trainings].first[:user_id]
+    date = training_params.first[:date]
+    user_id = training_params.first[:user_id]
 
     # 該当の日付とユーザーIDの既存データを取得
     existing_trainings = Training.where(date: date, user_id: user_id)
@@ -19,7 +19,7 @@ class TrainingsController < ApplicationController
     existing_trainings.destroy_all
 
     # 新しいデータを保存
-    training_params[:trainings].each do |training|
+    training_params.each do |training|
       new_training = Training.new(
         user_id: training[:user_id],
         goal_id: training[:goal_id],
@@ -43,6 +43,8 @@ class TrainingsController < ApplicationController
   private
 
   def training_params
-    params.require(:training).permit(trainings: [:date, :user_id, :goal_id, :workout_id, :sets, :reps, :weight])
+    params.require(:training).map do |training|
+      training.permit(:date, :user_id, :goal_id, :workout_id, :sets, :reps, :weight)
+    end
   end
 end
