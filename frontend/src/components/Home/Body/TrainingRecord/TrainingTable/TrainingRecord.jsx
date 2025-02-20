@@ -49,19 +49,31 @@ const TrainingRecord = () => {
         const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
         const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}`);
         const data = Array.isArray(response.data) ? response.data : [];
-        const formattedTrainings = data.map(training => {
+        
+        // トレーニングデータを種目ごとにまとめる
+        const trainingMap = new Map();
+        data.forEach(training => {
           const workout = workouts.find(w => w.id === training.workout_id);
-          return {
-            ...training,
-            exercise: workout ? workout.name : "不明な種目",
-            targetArea: workout ? workout.category : "不明な部位",
-            sets: [{
-              weight: training.weight,
-              reps: training.reps,
-              timer: "02:00" // タイマーのデフォルト値を設定
-            }]
+          const exercise = workout ? workout.name : "不明な種目";
+          const targetArea = workout ? workout.category : "不明な部位";
+          const set = {
+            weight: training.weight,
+            reps: training.reps,
+            timer: "02:00" // タイマーのデフォルト値を設定
           };
+
+          if (trainingMap.has(exercise)) {
+            trainingMap.get(exercise).sets.push(set);
+          } else {
+            trainingMap.set(exercise, {
+              exercise,
+              targetArea,
+              sets: [set]
+            });
+          }
         });
+
+        const formattedTrainings = Array.from(trainingMap.values());
         setTrainings(formattedTrainings);
       } catch (error) {
         console.error('Error fetching trainings:', error);
