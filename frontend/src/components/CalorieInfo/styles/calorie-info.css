@@ -1,0 +1,38 @@
+.calorie-info-container {
+    margin-top: 80px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calorie-input-group {
+    margin-bottom: 15px;
+}
+
+.calorie-input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.calorie-input-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.calorie-summary {
+    margin-top: 20px;
+    color: #333333;
+}
+
+.calorie-summary p {
+    margin: 5px 0;
+}
+
+  .calorie-chart {
+    margin-top: 20px;
+  }
