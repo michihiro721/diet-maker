@@ -5,7 +5,6 @@ import React from "react";
 import TimerButton from '../TimerButton/TimerButton';
 import './styles/training-table-row-input.css';
 
-
 const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemoveSet }) => {
   return (
     <tr>
