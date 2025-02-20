@@ -1,14 +1,9 @@
 .calorie-info-container {
+    margin-top: 80px;
     padding: 20px;
-    background-color: #ffffff; /* 白を基調とした背景色 */
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.calorie-title {
-    color: #333333; /* ダークグレー */
-    text-align: center;
-    margin-bottom: 20px;
 }
 
 .calorie-input-group {
@@ -18,40 +13,26 @@
 .calorie-input-group label {
     display: block;
     margin-bottom: 5px;
-    color: #333333; /* ダークグレー */
+    color: #333333;
 }
 
 .calorie-input-group input {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
-    border: 1px solid #cccccc; /* ライトグレーのボーダー */
+    border: 1px solid #cccccc;
     border-radius: 5px;
 }
 
 .calorie-summary {
     margin-top: 20px;
-    color: #333333; /* ダークグレー */
+    color: #333333;
 }
 
 .calorie-summary p {
     margin: 5px 0;
 }
 
-.calorie-date-button {
-    background-color: #007acc; /* 青色 */
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  .calorie-date-button:hover {
-    background-color: #005f99; /* 濃い青色 */
-  }
-  
   .calorie-chart {
     margin-top: 20px;
   }

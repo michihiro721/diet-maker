@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './styles/calorie-info.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import CalendarModal from '../Home/Body/Calender/Calender';
 import WeightModal from '../Weight/WeightModal';
 import { Line } from 'react-chartjs-2';
@@ -111,12 +113,22 @@ const CalorieInfo = () => {
     }
   };
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setIsCalendarOpen(false);
+  };
+
   return (
     <div className="calorie-info-container">
-      <button className="calorie-date-button" onClick={openCalendarModal}>
-        日付を選択
-      </button>
-      <h1 className="calorie-title">カロリー関係</h1>
+      <div className="calorie-input-group">
+        <label>日付を選択:</label>
+        <input
+          type="text"
+          value={selectedDate.toLocaleDateString()}
+          readOnly
+          onClick={openCalendarModal}
+        />
+      </div>
       <div className="calorie-input-group">
         <label>歩数:</label>
         <input type="text" value={steps} readOnly onClick={() => openWeightModal("steps")} />
@@ -147,11 +159,14 @@ const CalorieInfo = () => {
         )}
       </div>
       {isCalendarOpen && (
-        <CalendarModal
-          isOpen={isCalendarOpen}
-          onClose={closeCalendarModal}
-          onSave={setSelectedDate}
-        />
+        <div className="calendar-modal-overlay" onClick={closeCalendarModal}>
+          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+            <Calendar
+              onChange={handleDateChange}
+              value={selectedDate}
+            />
+          </div>
+        </div>
       )}
       {isWeightModalOpen && (
         <WeightModal
