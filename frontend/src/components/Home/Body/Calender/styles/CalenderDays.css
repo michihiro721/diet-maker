@@ -31,12 +31,12 @@
 
 /* 現在の日付のスタイル */
 .react-calendar__tile--now {
-    background: rgba(118, 186, 255, 0.15);
-    color: white;
+    background: #ffff00;
+    color: #000;
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    border: 2px solid rgba(162, 217, 255, 0.5);
+    border: 2px solid #ffff00;
 }
 
 /* 現在の日付のホバーおよびフォーカス時のスタイル */
