@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import './styles/calorie-info.css';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import CalendarModal from '../Home/Body/Calender/Calender';
+import '../Home/Body/Calender/styles/CalenderWeekdays.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderNavigation.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderDays.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderCommon.css'; // カレンダーのスタイルをインポート
+import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
+import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
+import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 import WeightModal from '../Weight/WeightModal';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
@@ -113,8 +119,14 @@ const CalorieInfo = () => {
     }
   };
 
+  useEffect(() => {
+    const offsetDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
+    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+  }, []);
+
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    setSelectedDate(offsetDate.toISOString().split('T')[0]);
     setIsCalendarOpen(false);
   };
 
@@ -124,7 +136,7 @@ const CalorieInfo = () => {
         <label>日付を選択:</label>
         <input
           type="text"
-          value={selectedDate.toLocaleDateString()}
+          value={selectedDate}
           readOnly
           onClick={openCalendarModal}
         />
@@ -163,7 +175,9 @@ const CalorieInfo = () => {
           <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
             <Calendar
               onChange={handleDateChange}
-              value={selectedDate}
+              formatShortWeekday={CalenderFormatShortWeekday}
+              tileClassName={CalenderTileClassName}
+              tileContent={CalenderTileContent}
             />
           </div>
         </div>
