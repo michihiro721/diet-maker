@@ -14,7 +14,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
       <td>
         <input
           type="number"
-          value={set.weight}
+          value={set.weight || ""}
           onClick={() => openModal(index, "weight", set.weight)}
           readOnly
         />
@@ -23,7 +23,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
       <td>
         <input
           type="number"
-          value={set.reps}
+          value={set.reps || ""}
           onClick={() => openModal(index, "reps", set.reps)}
           readOnly
         />
@@ -32,7 +32,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
       <td>
         <input
           type="text"
-          value={set.timer}
+          value={set.timer || ""}
           onClick={() => openModal(index, "timer", set.timer)}
           readOnly
         />
