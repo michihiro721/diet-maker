@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
   resources :trainings, only: [:index, :create]
   resources :workouts, only: [:index]
-  resources :daily_calories, only: [:create]
+  resources :daily_calories, only: [:index, :create]
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {
