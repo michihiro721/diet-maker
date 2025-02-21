@@ -209,10 +209,10 @@ const CalorieInfo = () => {
         <input type="text" value={intakeCalories ? `${intakeCalories} kcal` : ''} readOnly onClick={() => openWeightModal("intakeCalories")} className="calorie-input" />
       </div>
       <div className="calorie-summary">
-        <p>歩数から計算した消費カロリー: {calculateStepCalories().toFixed(2)} kcal</p>
-        <p>合計消費カロリー: {totalCaloriesBurned().toFixed(2)} kcal</p>
+        <p>歩数から計算した消費カロリー: {Math.round(calculateStepCalories() * 10) / 10} kcal</p>
+        <p>合計消費カロリー: {Math.round(totalCaloriesBurned() * 10) / 10} kcal</p>
         <p>1日の摂取カロリー: {intakeCalories} kcal</p>
-        <p>カロリー差分: {calorieDifference().toFixed(2)} kcal</p>
+        <p>カロリー差分: {Math.round(calorieDifference() * 10) / 10} kcal</p>
       </div>
       <button className="calorie-save-button" onClick={handleSave}>保存</button>
       {isCalendarOpen && (
