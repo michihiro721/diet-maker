@@ -144,10 +144,12 @@ const CalorieInfo = () => {
     try {
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
       const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/daily_calories', {
-        date: formattedDate,
-        steps: steps,
-        total_calories: totalCaloriesBurned(),
-        intake_calories: intakeCalories,
+        daily_calorie: {
+          date: formattedDate,
+          steps: steps,
+          total_calories: totalCaloriesBurned(),
+          intake_calories: intakeCalories,
+        }
       });
       console.log("Save response:", response);
       alert("データが保存されました");
