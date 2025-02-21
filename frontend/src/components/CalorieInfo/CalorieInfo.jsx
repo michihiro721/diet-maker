@@ -194,19 +194,19 @@ const CalorieInfo = () => {
       </div>
       <div className="calorie-input-group">
         <label className="calorie-label">歩数:</label>
-        <input type="text" value={steps} readOnly onClick={() => openWeightModal("steps")} className="calorie-input" />
+        <input type="text" value={steps ? `${steps} 歩` : ''} readOnly onClick={() => openWeightModal("steps")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
         <label className="calorie-label">トレーニングの消費カロリー:</label>
-        <input type="text" value={trainingCalories} readOnly onClick={() => openWeightModal("trainingCalories")} className="calorie-input" />
+        <input type="text" value={trainingCalories ? `${trainingCalories} kcal` : ''} readOnly onClick={() => openWeightModal("trainingCalories")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
         <label className="calorie-label">基礎代謝:</label>
-        <input type="text" value={basalMetabolism} readOnly onClick={() => openWeightModal("basalMetabolism")} className="calorie-input" />
+        <input type="text" value={basalMetabolism ? `${basalMetabolism} kcal` : ''} readOnly onClick={() => openWeightModal("basalMetabolism")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
         <label className="calorie-label">1日の摂取カロリー:</label>
-        <input type="text" value={intakeCalories} readOnly onClick={() => openWeightModal("intakeCalories")} className="calorie-input" />
+        <input type="text" value={intakeCalories ? `${intakeCalories} kcal` : ''} readOnly onClick={() => openWeightModal("intakeCalories")} className="calorie-input" />
       </div>
       <div className="calorie-summary">
         <p>歩数から計算した消費カロリー: {calculateStepCalories().toFixed(2)} kcal</p>
