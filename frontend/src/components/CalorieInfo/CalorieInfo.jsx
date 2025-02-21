@@ -140,6 +140,23 @@ const CalorieInfo = () => {
     setIsCalendarOpen(false);
   };
 
+  const handleSave = async () => {
+    try {
+      const formattedDate = selectedDate.toLocaleDateString('en-CA');
+      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/save', {
+        date: formattedDate,
+        steps: steps,
+        total_calories: totalCaloriesBurned(),
+        intake_calories: intakeCalories,
+      });
+      console.log("Save response:", response);
+      alert("データが保存されました");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("データの保存に失敗しました");
+    }
+  };
+
   return (
     <div className="calorie-info-container">
       <div className="calorie-input-group">
@@ -180,6 +197,7 @@ const CalorieInfo = () => {
           <p>データがありません</p>
         )}
       </div>
+      <button className="calorie-save-button" onClick={handleSave}>保存</button>
       {isCalendarOpen && (
         <div className="calendar-modal-overlay" onClick={closeCalendarModal}>
           <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
