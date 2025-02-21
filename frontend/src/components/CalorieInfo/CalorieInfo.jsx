@@ -1,7 +1,18 @@
-import React, { useState, useEffect } from "react";
-import './styles/calorie-info.css';
+import React, { useState } from "react";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import './styles/calorie-info.css';
 import '../Home/Body/Calender/styles/CalenderWeekdays.css'; // カレンダーのスタイルをインポート
 import '../Home/Body/Calender/styles/CalenderNavigation.css'; // カレンダーのスタイルをインポート
 import '../Home/Body/Calender/styles/CalenderDays.css'; // カレンダーのスタイルをインポート
@@ -10,8 +21,16 @@ import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShor
 import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
 import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 import WeightModal from '../Weight/WeightModal';
-import { Line } from 'react-chartjs-2';
-import axios from 'axios';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const CalorieInfo = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -23,79 +42,37 @@ const CalorieInfo = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
   const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [],
+    labels: ["2025-02-15", "2025-02-16", "2025-02-17", "2025-02-18", "2025-02-19", "2025-02-20", "2025-02-21"],
+    datasets: [
+      {
+        label: '合計消費カロリー',
+        data: [2000, 2100, 2200, 2300, 2400, 2500, 2600],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        fill: true,
+        pointStyle: 'rectRounded', // ポイントのスタイルを変更
+        pointRadius: 6, // ポイントの半径を変更
+      },
+      {
+        label: '摂取カロリー',
+        data: [1800, 1900, 2000, 2100, 2200, 2300, 2400],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        fill: true,
+        pointStyle: 'triangle', // ポイントのスタイルを変更
+        pointRadius: 6, // ポイントの半径を変更
+      },
+      {
+        label: '歩数',
+        data: [320, 400, 350, 380, 300, 280, 410],
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        fill: true,
+        pointStyle: 'star', // ポイントのスタイルを変更
+        pointRadius: 6, // ポイントの半径を変更
+      },
+    ],
   });
-
-  useEffect(() => {
-    fetchChartData();
-  }, [selectedDate]);
-
-  const fetchChartData = async () => {
-    try {
-      const formattedDate = selectedDate.toLocaleDateString('en-CA');
-      const url = `https://diet-maker-d07eb3099e56.herokuapp.com/calories?date=${formattedDate}`;
-      
-      console.log("Fetching from URL:", url);
-      const response = await axios.get(url);
-      
-      console.log("Full API Response:", response);
-      console.log("Response Status:", response.status);
-      console.log("Response Data Type:", typeof response.data);
-      console.log("Response Data:", JSON.stringify(response.data, null, 2));
-      
-      const data = response.data;
-      
-      // 空のレスポンスチェック（空文字列や空白文字のみの場合も含む）
-      if (!data || (typeof data === 'string' && data.trim() === '')) {
-        console.log("Empty or whitespace-only response received");
-        setChartData({ labels: [], datasets: [] });
-        return;
-      }
-
-      // データが配列でない場合のチェック
-      if (!Array.isArray(data)) {
-        throw new Error("Invalid API response format");
-      }
-      
-      // 以下は既存の処理...
-      const chartLabels = data.map(entry => entry.date);
-      const totalCaloriesData = data.map(entry => entry.total_calories);
-      const intakeCaloriesData = data.map(entry => entry.calories);
-      const stepsData = data.map(entry => entry.steps);
-      
-      setChartData({
-        labels: chartLabels,
-        datasets: [
-          {
-            label: '合計消費カロリー',
-            data: totalCaloriesData,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            fill: true,
-          },
-          {
-            label: '摂取カロリー',
-            data: intakeCaloriesData,
-            borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            fill: true,
-          },
-          {
-            label: '歩数',
-            data: stepsData,
-            borderColor: 'rgba(54, 162, 235, 1)',
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            fill: true,
-          },
-        ],
-      });
-    } catch (error) {
-      console.error("Error fetching chart data:", error);
-      console.error("Error details:", error.response || error.message);
-      setChartData({ labels: [], datasets: [] });
-    }
-  };
 
   const handleStepsChange = (value) => setSteps(value);
   const handleTrainingCaloriesChange = (value) => setTrainingCalories(value);
@@ -141,50 +118,92 @@ const CalorieInfo = () => {
   };
 
   const handleSave = async () => {
-    try {
-      const formattedDate = selectedDate.toLocaleDateString('en-CA');
-      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/daily_calories', {
-        daily_calorie: {
-          date: formattedDate,
-          steps: steps,
-          total_calories: totalCaloriesBurned(),
-          intake_calories: intakeCalories,
-        }
-      });
-      console.log("Save response:", response);
-      alert("データが保存されました");
-    } catch (error) {
-      console.error("Error saving data:", error);
-      alert("データの保存に失敗しました");
-    }
+    alert("データが保存されました");
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: '（日付）',
+          font: {
+            size: 20, // フォントサイズを調整
+          },
+          className: 'calorie-x-axis-title', // クラス名を追加
+        },
+        ticks: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'calorie-x-axis-ticks', // クラス名を追加
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: '(kcal)',
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'calorie-y-axis-title', // クラス名を追加
+        },
+        ticks: {
+          font: {
+            size: 16, // フォントサイズを調整
+          },
+          className: 'calorie-y-axis-ticks', // クラス名を追加
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true, // 凡例を表示
+      },
+      tooltip: {
+        titleFont: {
+          size: 16, // フォントサイズを調整
+        },
+        bodyFont: {
+          size: 12, // フォントサイズを調整
+        },
+        className: 'calorie-tooltip', // クラス名を追加
+      },
+    },
   };
 
   return (
     <div className="calorie-info-container">
+      <div className="calorie-chart">
+        <Line data={chartData} options={options} />
+      </div>
       <div className="calorie-input-group">
-        <label>日付を選択:</label>
+        <label className="calorie-label">日付を選択:</label>
         <input
           type="text"
           value={selectedDate.toLocaleDateString()}
           readOnly
           onClick={openCalendarModal}
+          className="calorie-input"
         />
       </div>
       <div className="calorie-input-group">
-        <label>歩数:</label>
-        <input type="text" value={steps} readOnly onClick={() => openWeightModal("steps")} />
+        <label className="calorie-label">歩数:</label>
+        <input type="text" value={steps} readOnly onClick={() => openWeightModal("steps")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
-        <label>トレーニングの消費カロリー:</label>
-        <input type="text" value={trainingCalories} readOnly onClick={() => openWeightModal("trainingCalories")} />
+        <label className="calorie-label">トレーニングの消費カロリー:</label>
+        <input type="text" value={trainingCalories} readOnly onClick={() => openWeightModal("trainingCalories")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
-        <label>基礎代謝:</label>
-        <input type="text" value={basalMetabolism} readOnly onClick={() => openWeightModal("basalMetabolism")} />
+        <label className="calorie-label">基礎代謝:</label>
+        <input type="text" value={basalMetabolism} readOnly onClick={() => openWeightModal("basalMetabolism")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
-        <label>1日の摂取カロリー:</label>
-        <input type="text" value={intakeCalories} readOnly onClick={() => openWeightModal("intakeCalories")} />
+        <label className="calorie-label">1日の摂取カロリー:</label>
+        <input type="text" value={intakeCalories} readOnly onClick={() => openWeightModal("intakeCalories")} className="calorie-input" />
       </div>
       <div className="calorie-summary">
         <p>歩数からの消費カロリー: {calculateStepCalories().toFixed(2)} kcal</p>
@@ -192,17 +211,10 @@ const CalorieInfo = () => {
         <p>1日の摂取カロリー: {intakeCalories} kcal</p>
         <p>カロリー差分: {calorieDifference().toFixed(2)} kcal</p>
       </div>
-      <div className="calorie-chart">
-        {chartData.labels.length > 0 ? (
-          <Line data={chartData} />
-        ) : (
-          <p>データがありません</p>
-        )}
-      </div>
       <button className="calorie-save-button" onClick={handleSave}>保存</button>
       {isCalendarOpen && (
-        <div className="calendar-modal-overlay" onClick={closeCalendarModal}>
-          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="calorie-calendar-modal-overlay" onClick={closeCalendarModal}>
+          <div className="calorie-calendar-modal" onClick={(e) => e.stopPropagation()}>
             <Calendar
               onChange={handleDateChange}
               formatShortWeekday={CalenderFormatShortWeekday}

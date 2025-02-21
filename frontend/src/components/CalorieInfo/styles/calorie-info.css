@@ -1,21 +1,35 @@
+/* カロリー情報セクションのコンテナ */
 .calorie-info-container {
-    margin-top: 80px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* カロリー入力フィールドのグループ */
 .calorie-input-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 400px;
 }
 
+/* カロリー入力グループ内のラベル */
 .calorie-input-group label {
     display: block;
     margin-bottom: 5px;
     color: #333333;
 }
 
+/* カロリー入力グループ内の入力フィールド */
 .calorie-input-group input {
     width: 100%;
     padding: 8px;
@@ -24,15 +38,135 @@
     border-radius: 5px;
 }
 
+/* カロリー情報を表示するサマリーセクション */
 .calorie-summary {
     margin-top: 20px;
     color: #333333;
+    font-size: 16px;
 }
 
+/* カロリーサマリーセクション内の段落 */
 .calorie-summary p {
     margin: 5px 0;
 }
 
-  .calorie-chart {
+/* カロリーチャートセクションのコンテナ */
+.calorie-chart-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* カロリーチャートセクションのヘッダー */
+.calorie-chart-container h2 {
+    text-align: center;
+    color: #0366d6;
+    margin-bottom: 20px;
+}
+
+/* カロリーチャートのラッパー */
+.calorie-chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 40%;
+}
+
+/* カロリーチャート自体 */
+.calorie-chart {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(179, 215, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+/* カロリーチャートのタイトル */
+.calorie-chart-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* カロリーチャートのコントロール（例：ドロップダウン、ボタン） */
+.calorie-chart-controls {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* カロリーチャートコントロール内のラベル */
+.calorie-chart-controls label {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* カロリーチャートコントロール内のドロップダウンセレクト */
+.calorie-chart-controls select {
+    font-size: 18px;
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid #b3d7ff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* カロリー入力フィールドのラベル */
+.calorie-label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* カロリー値の入力フィールド */
+.calorie-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 保存ボタン */
+.calorie-save-button {
     margin-top: 20px;
-  }
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 100px;
+}
+
+/* 保存ボタンのホバー効果 */
+.calorie-save-button:hover {
+    background-color: #0056b3;
+}
+
+/* カロリーカレンダーモーダルのオーバーレイ */
+.calorie-calendar-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* カロリーカレンダーモーダル自体 */
+.calorie-calendar-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+}
