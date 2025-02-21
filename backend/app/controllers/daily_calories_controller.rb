@@ -1,4 +1,9 @@
 class DailyCaloriesController < ApplicationController
+  def index
+    daily_calories = DailyCalorie.where(user_id: 1) # デフォルトで user_id を 1 に設定
+    render json: daily_calories
+  end
+
   def create
     Rails.logger.info("Received params: #{params.inspect}") # デバッグコード
     daily_calorie = DailyCalorie.new(daily_calorie_params)
