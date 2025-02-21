@@ -85,17 +85,17 @@ const CalorieInfo = () => {
       const intakeCaloriesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/intake_calories`);
 
       const stepsData = stepsResponse.data.map(item => ({
-        date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付 表示方法：x/x
         value: item.calories_burned,
       }));
 
       const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
-        date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付
         value: item.total_calories,
       }));
 
       const intakeCaloriesData = intakeCaloriesResponse.data.map(item => ({
-        date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付
         value: item.calories,
       }));
 
