@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
+import axios from 'axios';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -42,11 +43,11 @@ const CalorieInfo = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
   const [chartData, setChartData] = useState({
-    labels: ["2-15", "2-16", "2-17", "2-18", "2-19", "2-20", "2-21"],
+    labels: [],
     datasets: [
       {
         label: '合計消費カロリー',
-        data: [2000, 2400, 2200, 2300, 2100, 2500, 2600],
+        data: [],
         borderColor: 'rgba(255, 99, 132, 1)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         pointBackgroundColor: "rgba(255, 20, 147, 1)",
@@ -56,7 +57,7 @@ const CalorieInfo = () => {
       },
       {
         label: '摂取カロリー',
-        data: [1800, 1900, 2000, 3000, 2500, 2300, 2400],
+        data: [],
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         pointBackgroundColor: "rgba(50, 150, 150, 1)",
@@ -66,7 +67,7 @@ const CalorieInfo = () => {
       },
       {
         label: '消費カロリー（歩き）',
-        data: [320, 400, 350, 380, 300, 280, 410],
+        data: [],
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         pointBackgroundColor: "rgba(0, 123, 255, 1)",
@@ -76,6 +77,53 @@ const CalorieInfo = () => {
       },
     ],
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const stepsResponse = await axios.get('/api/steps');
+        const dailyCaloriesResponse = await axios.get('/api/daily_calories');
+        const intakeCaloriesResponse = await axios.get('/api/intake_calories');
+
+        const stepsData = stepsResponse.data.map(item => ({
+          date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+          value: item.calories_burned,
+        }));
+
+        const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
+          date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+          value: item.total_calories,
+        }));
+
+        const intakeCaloriesData = intakeCaloriesResponse.data.map(item => ({
+          date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+          value: item.calories,
+        }));
+
+        setChartData({
+          labels: stepsData.map(item => item.date),
+          datasets: [
+            {
+              ...chartData.datasets[0],
+              data: dailyCaloriesData.map(item => item.value),
+            },
+            {
+              ...chartData.datasets[1],
+              data: intakeCaloriesData.map(item => item.value),
+            },
+            {
+              ...chartData.datasets[2],
+              data: stepsData.map(item => item.value),
+            },
+          ],
+        });
+      } catch (error) {
+        console.error('データの取得に失敗しました:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleStepsChange = (value) => setSteps(value);
   const handleTrainingCaloriesChange = (value) => setTrainingCalories(value);
