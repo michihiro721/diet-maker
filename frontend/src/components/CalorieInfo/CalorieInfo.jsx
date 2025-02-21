@@ -34,41 +34,56 @@ const CalorieInfo = () => {
   const fetchChartData = async () => {
     try {
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
-      const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/calories?date=${formattedDate}`);
+      const url = `https://diet-maker-d07eb3099e56.herokuapp.com/calories?date=${formattedDate}`;
+      
+      console.log("Fetching from URL:", url);
+      const response = await axios.get(url);
+      
+      console.log("Full API Response:", response);
+      console.log("Response Status:", response.status);
+      console.log("Response Data Type:", typeof response.data);
+      console.log("Response Data:", JSON.stringify(response.data, null, 2));
+      
       const data = response.data;
+      
+      // 空のレスポンスチェック（空文字列や空白文字のみの場合も含む）
+      if (!data || (typeof data === 'string' && data.trim() === '')) {
+        console.log("Empty or whitespace-only response received");
+        setChartData({ labels: [], datasets: [] });
+        return;
+      }
 
-      console.log("API Response:", data); // デバッグ用
-
-      // データが undefined, null, 配列でない場合のチェック
+      // データが配列でない場合のチェック
       if (!Array.isArray(data)) {
         throw new Error("Invalid API response format");
       }
-
-      const labels = data.map(entry => entry.date);
-      const totalCalories = data.map(entry => entry.total_calories);
-      const intakeCalories = data.map(entry => entry.calories);
-      const steps = data.map(entry => entry.steps);
-
+      
+      // 以下は既存の処理...
+      const chartLabels = data.map(entry => entry.date);
+      const totalCaloriesData = data.map(entry => entry.total_calories);
+      const intakeCaloriesData = data.map(entry => entry.calories);
+      const stepsData = data.map(entry => entry.steps);
+      
       setChartData({
-        labels,
+        labels: chartLabels,
         datasets: [
           {
             label: '合計消費カロリー',
-            data: totalCalories,
+            data: totalCaloriesData,
             borderColor: 'rgba(75, 192, 192, 1)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             fill: true,
           },
           {
             label: '摂取カロリー',
-            data: intakeCalories,
+            data: intakeCaloriesData,
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             fill: true,
           },
           {
             label: '歩数',
-            data: steps,
+            data: stepsData,
             borderColor: 'rgba(54, 162, 235, 1)',
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             fill: true,
@@ -77,7 +92,8 @@ const CalorieInfo = () => {
       });
     } catch (error) {
       console.error("Error fetching chart data:", error);
-      setChartData({ labels: [], datasets: [] }); // エラー時のデフォルトデータ
+      console.error("Error details:", error.response || error.message);
+      setChartData({ labels: [], datasets: [] });
     }
   };
 
@@ -119,15 +135,28 @@ const CalorieInfo = () => {
     }
   };
 
-  useEffect(() => {
-    const offsetDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
-    setSelectedDate(offsetDate.toISOString().split('T')[0]);
-  }, []);
-
   const handleDateChange = (date) => {
-    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setSelectedDate(date);
     setIsCalendarOpen(false);
+  };
+
+  const handleSave = async () => {
+    try {
+      const formattedDate = selectedDate.toLocaleDateString('en-CA');
+      const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/daily_calories', {
+        daily_calorie: {
+          date: formattedDate,
+          steps: steps,
+          total_calories: totalCaloriesBurned(),
+          intake_calories: intakeCalories,
+        }
+      });
+      console.log("Save response:", response);
+      alert("データが保存されました");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("データの保存に失敗しました");
+    }
   };
 
   return (
@@ -136,7 +165,7 @@ const CalorieInfo = () => {
         <label>日付を選択:</label>
         <input
           type="text"
-          value={selectedDate}
+          value={selectedDate.toLocaleDateString()}
           readOnly
           onClick={openCalendarModal}
         />
@@ -170,6 +199,7 @@ const CalorieInfo = () => {
           <p>データがありません</p>
         )}
       </div>
+      <button className="calorie-save-button" onClick={handleSave}>保存</button>
       {isCalendarOpen && (
         <div className="calendar-modal-overlay" onClick={closeCalendarModal}>
           <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
@@ -178,6 +208,7 @@ const CalorieInfo = () => {
               formatShortWeekday={CalenderFormatShortWeekday}
               tileClassName={CalenderTileClassName}
               tileContent={CalenderTileContent}
+              value={selectedDate}
             />
           </div>
         </div>

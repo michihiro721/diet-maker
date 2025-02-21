@@ -82,9 +82,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_12_111810) do
     t.bigint "goal_id"
     t.bigint "workout_id"
     t.date "date", null: false
-    t.integer "sets"
+    t.integer "sets", default: 0, null: false
     t.integer "reps"
     t.float "weight"
+    t.string "event"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goal_id"], name: "index_trainings_on_goal_id"
@@ -94,14 +95,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_12_111810) do
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.string "email"
-    t.string "password_digest"
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.float "weight"
     t.float "height"
     t.integer "age"
     t.string "gender"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   create_table "weights", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
