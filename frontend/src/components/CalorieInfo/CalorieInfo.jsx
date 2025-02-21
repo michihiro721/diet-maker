@@ -46,30 +46,33 @@ const CalorieInfo = () => {
     datasets: [
       {
         label: '合計消費カロリー',
-        data: [2000, 2100, 2200, 2300, 2400, 2500, 2600],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true,
-        pointStyle: 'rectRounded', // ポイントのスタイルを変更
-        pointRadius: 6, // ポイントの半径を変更
+        data: [2000, 2400, 2200, 2300, 2100, 2500, 2600],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        pointBackgroundColor: "rgba(255, 20, 147, 1)",
+        fill: false,
+        pointStyle: 'circle',
+        pointRadius: 3,
       },
       {
         label: '摂取カロリー',
-        data: [1800, 1900, 2000, 2100, 2200, 2300, 2400],
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        fill: true,
-        pointStyle: 'triangle', // ポイントのスタイルを変更
-        pointRadius: 6, // ポイントの半径を変更
+        data: [1800, 1900, 2000, 3000, 2500, 2300, 2400],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        pointBackgroundColor: "rgba(50, 150, 150, 1)",
+        fill: false,
+        pointStyle: 'circle',
+        pointRadius: 3,
       },
       {
-        label: '歩数',
+        label: '消費カロリー（歩き）',
         data: [320, 400, 350, 380, 300, 280, 410],
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        fill: true,
-        pointStyle: 'star', // ポイントのスタイルを変更
-        pointRadius: 6, // ポイントの半径を変更
+        pointBackgroundColor: "rgba(0, 123, 255, 1)",
+        fill: false,
+        pointStyle: 'circle',
+        pointRadius: 3,
       },
     ],
   });
