@@ -78,50 +78,50 @@ const CalorieInfo = () => {
     ],
   });
 
+  const fetchData = async () => {
+    try {
+      const stepsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/steps`);
+      const dailyCaloriesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/daily_calories`);
+      const intakeCaloriesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/intake_calories`);
+
+      const stepsData = stepsResponse.data.map(item => ({
+        date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+        value: item.calories_burned,
+      }));
+
+      const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
+        date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+        value: item.total_calories,
+      }));
+
+      const intakeCaloriesData = intakeCaloriesResponse.data.map(item => ({
+        date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
+        value: item.calories,
+      }));
+
+      setChartData({
+        labels: stepsData.map(item => item.date),
+        datasets: [
+          {
+            ...chartData.datasets[0],
+            data: dailyCaloriesData.map(item => item.value),
+          },
+          {
+            ...chartData.datasets[1],
+            data: intakeCaloriesData.map(item => item.value),
+          },
+          {
+            ...chartData.datasets[2],
+            data: stepsData.map(item => item.value),
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('データの取得に失敗しました:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const stepsResponse = await axios.get('/steps');
-        const dailyCaloriesResponse = await axios.get('/daily_calories');
-        const intakeCaloriesResponse = await axios.get('/intake_calories');
-
-        const stepsData = stepsResponse.data.map(item => ({
-          date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
-          value: item.calories_burned,
-        }));
-
-        const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
-          date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
-          value: item.total_calories,
-        }));
-
-        const intakeCaloriesData = intakeCaloriesResponse.data.map(item => ({
-          date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"
-          value: item.calories,
-        }));
-
-        setChartData({
-          labels: stepsData.map(item => item.date),
-          datasets: [
-            {
-              ...chartData.datasets[0],
-              data: dailyCaloriesData.map(item => item.value),
-            },
-            {
-              ...chartData.datasets[1],
-              data: intakeCaloriesData.map(item => item.value),
-            },
-            {
-              ...chartData.datasets[2],
-              data: stepsData.map(item => item.value),
-            },
-          ],
-        });
-      } catch (error) {
-        console.error('データの取得に失敗しました:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
