@@ -42,7 +42,7 @@ const CalorieInfo = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
   const [chartData, setChartData] = useState({
-    labels: ["2025-02-15", "2025-02-16", "2025-02-17", "2025-02-18", "2025-02-19", "2025-02-20", "2025-02-21"],
+    labels: ["2-15", "2-16", "2-17", "2-18", "2-19", "2-20", "2-21"],
     datasets: [
       {
         label: '合計消費カロリー',
