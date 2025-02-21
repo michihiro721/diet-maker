@@ -81,9 +81,9 @@ const CalorieInfo = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const stepsResponse = await axios.get('/api/steps');
-        const dailyCaloriesResponse = await axios.get('/api/daily_calories');
-        const intakeCaloriesResponse = await axios.get('/api/intake_calories');
+        const stepsResponse = await axios.get('/steps');
+        const dailyCaloriesResponse = await axios.get('/daily_calories');
+        const intakeCaloriesResponse = await axios.get('/intake_calories');
 
         const stepsData = stepsResponse.data.map(item => ({
           date: item.date.slice(5), // "YYYY-MM-DD" -> "MM-DD"

@@ -19,6 +19,6 @@ class DailyCaloriesController < ApplicationController
   private
 
   def daily_calorie_params
-    params.require(:daily_calorie).permit(:date, :total_calories)
+    params.require(:daily_calorie).permit(:date, :steps, :total_calories, :intake_calories)
   end
 end
