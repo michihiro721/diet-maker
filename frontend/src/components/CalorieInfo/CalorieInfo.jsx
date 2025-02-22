@@ -161,15 +161,62 @@ const CalorieInfo = () => {
       default:
         break;
     }
+    setIsWeightModalOpen(false);
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    setSelectedDate(offsetDate.toISOString().split('T')[0]);
     setIsCalendarOpen(false);
   };
 
   const handleSave = async () => {
-    alert("データが保存されました");
+    if (!selectedDate || !steps || !trainingCalories || !basalMetabolism || !intakeCalories) {
+      alert('全ての項目を入力してください');
+      return;
+    }
+
+    const totalCalories = parseFloat(trainingCalories) + parseFloat(basalMetabolism) + (parseFloat(steps) * 0.04);
+
+    try {
+      const stepsResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/steps`, {
+        step: {
+          user_id: 1, // ユーザーIDを追加
+          date: selectedDate, // 選択された日付を送信
+          steps: steps, // 歩数データを送信
+          calories_burned: parseFloat(steps) * 0.04, // 歩数から計算した消費カロリーを送信
+        }
+      });
+
+      const dailyCaloriesResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/daily_calories`, {
+        daily_calorie: {
+          user_id: 1, // ユーザーIDを追加
+          date: selectedDate, // 選択された日付を送信
+          total_calories: totalCalories, // 合計消費カロリーを送信
+        }
+      });
+
+      const intakeCaloriesResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/intake_calories`, {
+        intake_calorie: {
+          user_id: 1, // ユーザーIDを追加
+          date: selectedDate, // 選択された日付を送信
+          calories: intakeCalories, // 1日の摂取カロリーを送信
+        }
+      });
+
+      if (stepsResponse.status === 201 && dailyCaloriesResponse.status === 201 && intakeCaloriesResponse.status === 201) {
+        console.log("Data saved successfully");
+        // データを再取得してグラフを更新
+        fetchData();
+        alert('データの保存に成功しました');
+      } else {
+        console.error("Error saving data:", stepsResponse.data, dailyCaloriesResponse.data, intakeCaloriesResponse.data);
+        alert('データの保存に失敗しました');
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert('データの保存に失敗しました');
+    }
   };
 
   const options = {
@@ -234,7 +281,7 @@ const CalorieInfo = () => {
         <label className="calorie-label">日付を選択:</label>
         <input
           type="text"
-          value={selectedDate.toLocaleDateString()}
+          value={selectedDate ? new Date(selectedDate).toLocaleDateString() : ''}
           readOnly
           onClick={openCalendarModal}
           className="calorie-input"
@@ -271,7 +318,7 @@ const CalorieInfo = () => {
               formatShortWeekday={CalenderFormatShortWeekday}
               tileClassName={CalenderTileClassName}
               tileContent={CalenderTileContent}
-              value={selectedDate}
+              value={selectedDate ? new Date(selectedDate) : new Date()}
             />
           </div>
         </div>
