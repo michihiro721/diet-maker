@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   BarElement
+  BarController,
 } from "chart.js";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -33,6 +34,7 @@ ChartJS.register(
   Tooltip,
   Legend,
   BarElement
+  BarController,
 );
 
 const CalorieInfo = () => {
