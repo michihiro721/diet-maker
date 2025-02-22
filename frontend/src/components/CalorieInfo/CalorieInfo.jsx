@@ -10,7 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  BarElement
+  BarElement,
   BarController,
 } from "chart.js";
 import Calendar from 'react-calendar';
@@ -33,7 +33,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  BarElement
+  BarElement,
   BarController,
 );
 
