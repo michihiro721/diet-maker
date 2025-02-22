@@ -43,6 +43,7 @@ const CalorieInfo = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
   const [error, setError] = useState("");
+  const [period, setPeriod] = useState('7days'); // デフォルトの期間を7日間に設定
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -67,7 +68,7 @@ const CalorieInfo = () => {
         pointRadius: 3,
       },
       {
-        label: '消費カロリー（歩き）',
+        label: '歩数',
         data: [],
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -97,7 +98,7 @@ const CalorieInfo = () => {
 
       const stepsData = stepsResponse.data.map(item => ({
         date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付 表示方法：x/x
-        value: item.calories_burned,
+        value: item.steps,
       }));
 
       const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
@@ -115,35 +116,83 @@ const CalorieInfo = () => {
         value: intakeCaloriesData[index] ? intakeCaloriesData[index].value - item.value : 0,
       }));
 
+      let filteredStepsData = stepsData;
+      let filteredDailyCaloriesData = dailyCaloriesData;
+      let filteredIntakeCaloriesData = intakeCaloriesData;
+      let filteredCalorieDifferenceData = calorieDifferenceData;
+
+      const now = new Date();
+
+      const filterDataByDays = (data, days) => data.slice(-days);
+      const filterDataByMonths = (data, months) => data.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= months * 30);
+
+      switch (period) {
+        case '7days':
+          filteredStepsData = filterDataByDays(stepsData, 7);
+          filteredDailyCaloriesData = filterDataByDays(dailyCaloriesData, 7);
+          filteredIntakeCaloriesData = filterDataByDays(intakeCaloriesData, 7);
+          filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
+          break;
+        case '1month':
+          filteredStepsData = filterDataByMonths(stepsData, 1);
+          filteredDailyCaloriesData = filterDataByMonths(dailyCaloriesData, 1);
+          filteredIntakeCaloriesData = filterDataByMonths(intakeCaloriesData, 1);
+          filteredCalorieDifferenceData = filterDataByMonths(calorieDifferenceData, 1);
+          break;
+        case '2months':
+          filteredStepsData = filterDataByMonths(stepsData, 2);
+          filteredDailyCaloriesData = filterDataByMonths(dailyCaloriesData, 2);
+          filteredIntakeCaloriesData = filterDataByMonths(intakeCaloriesData, 2);
+          filteredCalorieDifferenceData = filterDataByMonths(calorieDifferenceData, 2);
+          break;
+        case '3months':
+          filteredStepsData = filterDataByMonths(stepsData, 3);
+          filteredDailyCaloriesData = filterDataByMonths(dailyCaloriesData, 3);
+          filteredIntakeCaloriesData = filterDataByMonths(intakeCaloriesData, 3);
+          filteredCalorieDifferenceData = filterDataByMonths(calorieDifferenceData, 3);
+          break;
+        case 'all':
+          filteredStepsData = stepsData;
+          filteredDailyCaloriesData = dailyCaloriesData;
+          filteredIntakeCaloriesData = intakeCaloriesData;
+          filteredCalorieDifferenceData = calorieDifferenceData;
+          break;
+        default:
+          filteredStepsData = filterDataByDays(stepsData, 7);
+          filteredDailyCaloriesData = filterDataByDays(dailyCaloriesData, 7);
+          filteredIntakeCaloriesData = filterDataByDays(intakeCaloriesData, 7);
+          filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
+      }
+
       setChartData({
-        labels: stepsData.map(item => item.date),
+        labels: filteredStepsData.map(item => item.date),
         datasets: [
           {
-            ...chartData.datasets[0],
-            data: dailyCaloriesData.map(item => item.value),
+        ...chartData.datasets[0],
+        data: filteredDailyCaloriesData.map(item => item.value),
           },
           {
-            ...chartData.datasets[1],
-            data: intakeCaloriesData.map(item => item.value),
+        ...chartData.datasets[1],
+        data: filteredIntakeCaloriesData.map(item => item.value),
           },
           {
-            ...chartData.datasets[2],
-            data: stepsData.map(item => item.value),
+        ...chartData.datasets[2],
+        data: filteredStepsData.map(item => item.value),
           },
           {
-            ...chartData.datasets[3],
-            data: calorieDifferenceData.map(item => item.value),
+        ...chartData.datasets[3],
+        data: filteredCalorieDifferenceData.map(item => item.value),
           },
         ],
       });
-    } catch (error) {
+        } catch (error) {
       console.error('データの取得に失敗しました:', error);
-    }
-  };
+        }
+      };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+      useEffect(() => {
+        fetchData();
+      }, [period]);
 
   const handleStepsChange = (value) => setSteps(value);
   const handleTrainingCaloriesChange = (value) => setTrainingCalories(value);
@@ -281,6 +330,22 @@ const CalorieInfo = () => {
     plugins: {
       legend: {
         display: true, // 凡例を表示
+        labels: {
+          font: {
+            size: 14, // フォントサイズを調整
+          },
+          usePointStyle: true, // ポイントスタイルを使用
+          padding: 20, // パディングを追加
+        },
+        onClick: (e, legendItem, legend) => {
+          const index = legendItem.datasetIndex;
+          const ci = legend.chart;
+          const meta = ci.getDatasetMeta(index);
+
+          // 凡例のクリックでデータセットの表示/非表示を切り替え
+          meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+          ci.update();
+        },
       },
       tooltip: {
         titleFont: {
@@ -296,9 +361,24 @@ const CalorieInfo = () => {
 
   return (
     <div className="calorie-info-container">
+      <div className="calorie-chart-controls">
+        <label htmlFor="period-select">表示期間:</label>
+        <select
+          id="period-select"
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+        >
+          <option value="7days">直近7日</option>
+          <option value="1month">直近1ヶ月</option>
+          <option value="2months">直近2ヶ月</option>
+          <option value="3months">直近3ヶ月</option>
+          <option value="all">すべて</option>
+        </select>
+      </div>
       <div className="calorie-chart">
         <Line data={chartData} options={options} />
       </div>
+      <p className="legend-instruction">凡例をクリックすると、グラフからデータセットを非表示にできます。</p>
       <div className="calorie-input-group">
         <label className="calorie-label">日付を選択:</label>
         <input
