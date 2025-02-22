@@ -67,7 +67,7 @@ const CalorieInfo = () => {
         pointRadius: 3,
       },
       {
-        label: '消費カロリー（歩き）',
+        label: '歩数',
         data: [],
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -97,7 +97,7 @@ const CalorieInfo = () => {
 
       const stepsData = stepsResponse.data.map(item => ({
         date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付 表示方法：x/x
-        value: item.calories_burned,
+        value: item.steps,
       }));
 
       const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
