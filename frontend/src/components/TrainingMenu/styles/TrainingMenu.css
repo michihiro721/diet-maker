@@ -38,6 +38,12 @@
   outline: 1px solid #87CEFA;
   outline-offset: 2px;
   font-weight: bold;
+  height: 45px;
+}
+
+.training-menu-form-group select:hover {
+  border: 1px solid #87CEFA;
+  background-color: #f8fcff;
 }
 
 /* サブミットボタン */
