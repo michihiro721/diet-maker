@@ -10,6 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  BarElement
 } from "chart.js";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -30,7 +31,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  BarElement
 );
 
 const CalorieInfo = () => {
@@ -80,9 +82,11 @@ const CalorieInfo = () => {
       {
         label: 'カロリー差分',
         data: [],
-        borderColor: 'rgba(255, 206, 86, 1)',
-        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-        pointBackgroundColor: "rgba(255, 206, 86, 1)",
+        type: 'bar',
+        backgroundColor: (context) => {
+          const value = context.raw;
+          return value < 0 ? 'rgba(54, 162, 235, 0.6)' : 'rgba(255, 206, 86, 0.6)';
+        },
         fill: false,
         pointStyle: 'circle',
         pointRadius: 3,
