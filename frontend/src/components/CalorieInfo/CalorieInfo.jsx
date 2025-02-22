@@ -123,30 +123,33 @@ const CalorieInfo = () => {
 
       const now = new Date();
 
+      const filterDataByDays = (data, days) => data.slice(-days);
+      const filterDataByMonths = (data, months) => data.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= months * 30);
+
       switch (period) {
         case '7days':
-          filteredStepsData = stepsData.slice(-7);
-          filteredDailyCaloriesData = dailyCaloriesData.slice(-7);
-          filteredIntakeCaloriesData = intakeCaloriesData.slice(-7);
-          filteredCalorieDifferenceData = calorieDifferenceData.slice(-7);
+          filteredStepsData = filterDataByDays(stepsData, 7);
+          filteredDailyCaloriesData = filterDataByDays(dailyCaloriesData, 7);
+          filteredIntakeCaloriesData = filterDataByDays(intakeCaloriesData, 7);
+          filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
           break;
         case '1month':
-          filteredStepsData = stepsData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
-          filteredDailyCaloriesData = dailyCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
-          filteredIntakeCaloriesData = intakeCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
-          filteredCalorieDifferenceData = calorieDifferenceData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
+          filteredStepsData = filterDataByMonths(stepsData, 1);
+          filteredDailyCaloriesData = filterDataByMonths(dailyCaloriesData, 1);
+          filteredIntakeCaloriesData = filterDataByMonths(intakeCaloriesData, 1);
+          filteredCalorieDifferenceData = filterDataByMonths(calorieDifferenceData, 1);
           break;
         case '2months':
-          filteredStepsData = stepsData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
-          filteredDailyCaloriesData = dailyCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
-          filteredIntakeCaloriesData = intakeCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
-          filteredCalorieDifferenceData = calorieDifferenceData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
+          filteredStepsData = filterDataByMonths(stepsData, 2);
+          filteredDailyCaloriesData = filterDataByMonths(dailyCaloriesData, 2);
+          filteredIntakeCaloriesData = filterDataByMonths(intakeCaloriesData, 2);
+          filteredCalorieDifferenceData = filterDataByMonths(calorieDifferenceData, 2);
           break;
         case '3months':
-          filteredStepsData = stepsData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
-          filteredDailyCaloriesData = dailyCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
-          filteredIntakeCaloriesData = intakeCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
-          filteredCalorieDifferenceData = calorieDifferenceData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
+          filteredStepsData = filterDataByMonths(stepsData, 3);
+          filteredDailyCaloriesData = filterDataByMonths(dailyCaloriesData, 3);
+          filteredIntakeCaloriesData = filterDataByMonths(intakeCaloriesData, 3);
+          filteredCalorieDifferenceData = filterDataByMonths(calorieDifferenceData, 3);
           break;
         case 'all':
           filteredStepsData = stepsData;
@@ -155,10 +158,10 @@ const CalorieInfo = () => {
           filteredCalorieDifferenceData = calorieDifferenceData;
           break;
         default:
-          filteredStepsData = stepsData.slice(-7);
-          filteredDailyCaloriesData = dailyCaloriesData.slice(-7);
-          filteredIntakeCaloriesData = intakeCaloriesData.slice(-7);
-          filteredCalorieDifferenceData = calorieDifferenceData.slice(-7);
+          filteredStepsData = filterDataByDays(stepsData, 7);
+          filteredDailyCaloriesData = filterDataByDays(dailyCaloriesData, 7);
+          filteredIntakeCaloriesData = filterDataByDays(intakeCaloriesData, 7);
+          filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
       }
 
       setChartData({
