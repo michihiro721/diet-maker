@@ -76,6 +76,16 @@ const CalorieInfo = () => {
         pointStyle: 'circle',
         pointRadius: 3,
       },
+      {
+        label: 'カロリー差分',
+        data: [],
+        borderColor: 'rgba(255, 206, 86, 1)',
+        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        pointBackgroundColor: "rgba(255, 206, 86, 1)",
+        fill: false,
+        pointStyle: 'circle',
+        pointRadius: 3,
+      },
     ],
   });
 
@@ -100,6 +110,11 @@ const CalorieInfo = () => {
         value: item.calories,
       }));
 
+      const calorieDifferenceData = dailyCaloriesData.map((item, index) => ({
+        date: item.date,
+        value: intakeCaloriesData[index] ? intakeCaloriesData[index].value - item.value : 0,
+      }));
+
       setChartData({
         labels: stepsData.map(item => item.date),
         datasets: [
@@ -114,6 +129,10 @@ const CalorieInfo = () => {
           {
             ...chartData.datasets[2],
             data: stepsData.map(item => item.value),
+          },
+          {
+            ...chartData.datasets[3],
+            data: calorieDifferenceData.map(item => item.value),
           },
         ],
       });
