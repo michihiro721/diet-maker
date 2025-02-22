@@ -281,6 +281,22 @@ const CalorieInfo = () => {
     plugins: {
       legend: {
         display: true, // 凡例を表示
+        labels: {
+          font: {
+            size: 14, // フォントサイズを調整
+          },
+          usePointStyle: true, // ポイントスタイルを使用
+          padding: 20, // パディングを追加
+        },
+        onClick: (e, legendItem, legend) => {
+          const index = legendItem.datasetIndex;
+          const ci = legend.chart;
+          const meta = ci.getDatasetMeta(index);
+
+          // 凡例のクリックでデータセットの表示/非表示を切り替え
+          meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+          ci.update();
+        },
       },
       tooltip: {
         titleFont: {
@@ -299,6 +315,7 @@ const CalorieInfo = () => {
       <div className="calorie-chart">
         <Line data={chartData} options={options} />
       </div>
+      <p className="legend-instruction">凡例をクリックすると、グラフからデータを非表示にできます。</p>
       <div className="calorie-input-group">
         <label className="calorie-label">日付を選択:</label>
         <input
