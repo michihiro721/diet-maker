@@ -6,8 +6,8 @@ class DailyCaloriesController < ApplicationController
 
   def create
     Rails.logger.info("Received params: #{params.inspect}") # デバッグコード
-    daily_calorie = DailyCalorie.new(daily_calorie_params)
-    daily_calorie.user_id = 1  # デフォルトで user_id を 1 に設定
+    daily_calorie = DailyCalorie.find_or_initialize_by(user_id: daily_calorie_params[:user_id], date: daily_calorie_params[:date])
+    daily_calorie.assign_attributes(daily_calorie_params)
 
     if daily_calorie.save
       render json: daily_calorie, status: :created
@@ -19,6 +19,6 @@ class DailyCaloriesController < ApplicationController
   private
 
   def daily_calorie_params
-    params.require(:daily_calorie).permit(:date, :total_calories)
+    params.require(:daily_calorie).permit(:user_id, :date, :total_calories)
   end
 end

@@ -6,8 +6,8 @@ class IntakeCaloriesController < ApplicationController
 
   def create
     Rails.logger.info("Received params: #{params.inspect}") # デバッグコード
-    intake_calorie = IntakeCalorie.new(intake_calorie_params)
-    intake_calorie.user_id = 1  # デフォルトで user_id を 1 に設定
+    intake_calorie = IntakeCalorie.find_or_initialize_by(user_id: intake_calorie_params[:user_id], date: intake_calorie_params[:date])
+    intake_calorie.assign_attributes(intake_calorie_params)
 
     if intake_calorie.save
       render json: intake_calorie, status: :created
@@ -19,6 +19,6 @@ class IntakeCaloriesController < ApplicationController
   private
 
   def intake_calorie_params
-    params.require(:intake_calorie).permit(:date, :calories)
+    params.require(:intake_calorie).permit(:user_id, :date, :calories)
   end
 end
