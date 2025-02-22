@@ -43,6 +43,7 @@ const CalorieInfo = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
   const [error, setError] = useState("");
+  const [period, setPeriod] = useState('7days'); // デフォルトの期間を7日間に設定
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -115,35 +116,80 @@ const CalorieInfo = () => {
         value: intakeCaloriesData[index] ? intakeCaloriesData[index].value - item.value : 0,
       }));
 
+      let filteredStepsData = stepsData;
+      let filteredDailyCaloriesData = dailyCaloriesData;
+      let filteredIntakeCaloriesData = intakeCaloriesData;
+      let filteredCalorieDifferenceData = calorieDifferenceData;
+
+      const now = new Date();
+
+      switch (period) {
+        case '7days':
+          filteredStepsData = stepsData.slice(-7);
+          filteredDailyCaloriesData = dailyCaloriesData.slice(-7);
+          filteredIntakeCaloriesData = intakeCaloriesData.slice(-7);
+          filteredCalorieDifferenceData = calorieDifferenceData.slice(-7);
+          break;
+        case '1month':
+          filteredStepsData = stepsData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
+          filteredDailyCaloriesData = dailyCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
+          filteredIntakeCaloriesData = intakeCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
+          filteredCalorieDifferenceData = calorieDifferenceData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 30);
+          break;
+        case '2months':
+          filteredStepsData = stepsData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
+          filteredDailyCaloriesData = dailyCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
+          filteredIntakeCaloriesData = intakeCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
+          filteredCalorieDifferenceData = calorieDifferenceData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 60);
+          break;
+        case '3months':
+          filteredStepsData = stepsData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
+          filteredDailyCaloriesData = dailyCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
+          filteredIntakeCaloriesData = intakeCaloriesData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
+          filteredCalorieDifferenceData = calorieDifferenceData.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= 90);
+          break;
+        case 'all':
+          filteredStepsData = stepsData;
+          filteredDailyCaloriesData = dailyCaloriesData;
+          filteredIntakeCaloriesData = intakeCaloriesData;
+          filteredCalorieDifferenceData = calorieDifferenceData;
+          break;
+        default:
+          filteredStepsData = stepsData.slice(-7);
+          filteredDailyCaloriesData = dailyCaloriesData.slice(-7);
+          filteredIntakeCaloriesData = intakeCaloriesData.slice(-7);
+          filteredCalorieDifferenceData = calorieDifferenceData.slice(-7);
+      }
+
       setChartData({
-        labels: stepsData.map(item => item.date),
+        labels: filteredStepsData.map(item => item.date),
         datasets: [
           {
-            ...chartData.datasets[0],
-            data: dailyCaloriesData.map(item => item.value),
+        ...chartData.datasets[0],
+        data: filteredDailyCaloriesData.map(item => item.value),
           },
           {
-            ...chartData.datasets[1],
-            data: intakeCaloriesData.map(item => item.value),
+        ...chartData.datasets[1],
+        data: filteredIntakeCaloriesData.map(item => item.value),
           },
           {
-            ...chartData.datasets[2],
-            data: stepsData.map(item => item.value),
+        ...chartData.datasets[2],
+        data: filteredStepsData.map(item => item.value),
           },
           {
-            ...chartData.datasets[3],
-            data: calorieDifferenceData.map(item => item.value),
+        ...chartData.datasets[3],
+        data: filteredCalorieDifferenceData.map(item => item.value),
           },
         ],
       });
-    } catch (error) {
+        } catch (error) {
       console.error('データの取得に失敗しました:', error);
-    }
-  };
+        }
+      };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+      useEffect(() => {
+        fetchData();
+      }, [period]);
 
   const handleStepsChange = (value) => setSteps(value);
   const handleTrainingCaloriesChange = (value) => setTrainingCalories(value);
@@ -315,7 +361,21 @@ const CalorieInfo = () => {
       <div className="calorie-chart">
         <Line data={chartData} options={options} />
       </div>
-      <p className="legend-instruction">凡例をクリックすると、グラフからデータを非表示にできます。</p>
+      <p className="legend-instruction">凡例をクリックすると、グラフからデータセットを非表示にできます。</p>
+      <div className="calorie-chart-controls">
+        <label htmlFor="period-select">表示期間:</label>
+        <select
+          id="period-select"
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+        >
+          <option value="7days">直近7日</option>
+          <option value="1month">直近1ヶ月</option>
+          <option value="2months">直近2ヶ月</option>
+          <option value="3months">直近3ヶ月</option>
+          <option value="all">すべて</option>
+        </select>
+      </div>
       <div className="calorie-input-group">
         <label className="calorie-label">日付を選択:</label>
         <input
