@@ -210,3 +210,9 @@
     border-radius: 4px;
     text-align: center;
 }
+
+.calorie-error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
