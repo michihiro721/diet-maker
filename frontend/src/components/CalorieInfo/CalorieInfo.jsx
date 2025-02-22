@@ -358,10 +358,6 @@ const CalorieInfo = () => {
 
   return (
     <div className="calorie-info-container">
-      <div className="calorie-chart">
-        <Line data={chartData} options={options} />
-      </div>
-      <p className="legend-instruction">凡例をクリックすると、グラフからデータセットを非表示にできます。</p>
       <div className="calorie-chart-controls">
         <label htmlFor="period-select">表示期間:</label>
         <select
@@ -376,6 +372,10 @@ const CalorieInfo = () => {
           <option value="all">すべて</option>
         </select>
       </div>
+      <div className="calorie-chart">
+        <Line data={chartData} options={options} />
+      </div>
+      <p className="legend-instruction">凡例をクリックすると、グラフからデータセットを非表示にできます。</p>
       <div className="calorie-input-group">
         <label className="calorie-label">日付を選択:</label>
         <input
