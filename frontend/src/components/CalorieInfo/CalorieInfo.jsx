@@ -42,6 +42,7 @@ const CalorieInfo = () => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
+  const [error, setError] = useState("");
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -172,9 +173,11 @@ const CalorieInfo = () => {
 
   const handleSave = async () => {
     if (!selectedDate || !steps || !trainingCalories || !basalMetabolism || !intakeCalories) {
-      alert('全ての項目を入力してください');
+      setError('全ての項目を入力してください');
       return;
     }
+
+    setError('');
 
     const totalCalories = parseFloat(trainingCalories) + parseFloat(basalMetabolism) + (parseFloat(steps) * 0.04);
 
@@ -303,6 +306,7 @@ const CalorieInfo = () => {
         <label className="calorie-label">1日の摂取カロリー:</label>
         <input type="text" value={intakeCalories ? `${intakeCalories} kcal` : ''} readOnly onClick={() => openWeightModal("intakeCalories")} className="calorie-input" />
       </div>
+      {error && <p className="calorie-error-message">{error}</p>}
       <div className="calorie-summary">
         <p>歩数から計算した消費カロリー: {Math.round(calculateStepCalories() * 10) / 10} kcal</p>
         <p>合計消費カロリー: {Math.round(totalCaloriesBurned() * 10) / 10} kcal</p>
