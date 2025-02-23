@@ -53,7 +53,7 @@ const Weight = () => {
   const [period, setPeriod] = useState('7days'); // デフォルトの期間を7日間に設定
   const [goalWeight, setGoalWeight] = useState(60); // 目標体重を設定
   const [goalDate, setGoalDate] = useState(new Date()); // 目標達成予定日を設定
-  const [selectedDate, setSelectedDate] = useState(''); // 選択された日付を管理する状態を追加
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); // 選択された日付がデフォルトで表示（たかさん対応）
   const [weight, setWeight] = useState(''); // 体重データを管理する状態を追加
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false); // 体重モーダルの表示状態を管理
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false); // カレンダーモーダルの表示状態を管理
