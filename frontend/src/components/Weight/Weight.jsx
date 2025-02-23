@@ -115,13 +115,14 @@ const Weight = () => {
             {
               label: "体重",
               data: weightValues,
-              borderColor: "rgba(0, 123, 255, 0.5)",
-              backgroundColor: "rgba(0, 123, 255, 0.2)",
+              borderColor: "rgba(0, 123, 255, 0.8)",
+              backgroundColor: "rgba(0, 123, 255, 0.5)",
               pointBackgroundColor: "rgba(0, 123, 255, 1)",
               pointBorderColor: "#fff",
               pointHoverBackgroundColor: "#fff",
               pointHoverBorderColor: "rgba(0, 123, 255, 1)",
               fill: true,
+              type: 'bar',
             },
           ],
         });
