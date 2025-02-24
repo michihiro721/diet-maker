@@ -51,102 +51,91 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
             ]);
         } else if (volume === "普通がいいかな〜") {
             createMenu("6回/週の標準メニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3 }, { name: "ペックフライ", reps: 10, sets: 3 }] },
-            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3 }, { name: "ダンベルローイング", reps: 10, sets: 3 }, { name: "ラットプルダウン", reps: 10, sets: 3 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3 }, { name: "レッグプレス", reps: 10, sets: 3 }, { name: "レッグカール", reps: 10, sets: 3 }] },
-            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 3 }, { name: "ダンベルショルダープレス", reps: 10, sets: 3 }, { name: "サイドレイズ", reps: 15, sets: 3 }] },
-            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 3 }, { name: "インクラインダンベルカール", reps: 10, sets: 3 }, { name: "ケーブルプルオーバー", reps: 15, sets: 3 }] },
-            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3 }, { name: "レッグレイズ", reps: 20, sets: 3 }] },
-
-          ]);
-        } else {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 3, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 3, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 3, workout_id: 17 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 3, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 3, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 3, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 3, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 3, workout_id: 31 }] },
+            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 3, workout_id: 37 }, { name: "インクラインダンベルカール", reps: 10, sets: 3, workout_id: 48 }, { name: "ケーブルプルオーバー", reps: 15, sets: 3, workout_id: 49 }] },
+            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3, workout_id: 60 }, { name: "レッグレイズ", reps: 20, sets: 3, workout_id: 61 }] },
+            ]);
+          } else {
             createMenu("6回/週の軽めメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2 }, { name: "ペックフライ", reps: 10, sets: 2 }] },
-            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2 }, { name: "ダンベルローイング", reps: 10, sets: 2 }, { name: "ラットプルダウン", reps: 10, sets: 2 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2 }, { name: "レッグプレス", reps: 10, sets: 2 }, { name: "レッグカール", reps: 10, sets: 2 }] },
-            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 2 }, { name: "ダンベルショルダープレス", reps: 10, sets: 2 }, { name: "サイドレイズ", reps: 15, sets: 2 }] },
-            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 2 }, { name: "インクラインダンベルカール", reps: 10, sets: 2 }, { name: "ケーブルプルオーバー", reps: 15, sets: 2 }] },
-            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2 }, { name: "レッグレイズ", reps: 20, sets: 2 }] },
-
-          ]);
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 2, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 2, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 2, workout_id: 17 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 2, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 2, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 2, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 2, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 2, workout_id: 31 }] },
+            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 2, workout_id: 37 }, { name: "インクラインダンベルカール", reps: 10, sets: 2, workout_id: 48 }, { name: "ケーブルプルオーバー", reps: 15, sets: 2, workout_id: 49 }] },
+            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2, workout_id: 60 }, { name: "レッグレイズ", reps: 20, sets: 2, workout_id: 61 }] },
+            ]);
           }
           } else if (frequency === "5回/週") {
           if (volume === "多いのがいい！") {
             createMenu("5回/週のハードメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 5 }, { name: "インクラインダンベルフライ", reps: 10, sets: 5 }, { name: "ペックフライ", reps: 10, sets: 5 }] },
-            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 5 }, { name: "ダンベルローイング", reps: 10, sets: 5 }, { name: "ラットプルダウン", reps: 10, sets: 5 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5 }, { name: "レッグプレス", reps: 10, sets: 5 }, { name: "レッグカール", reps: 10, sets: 5 }] },
-            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 5 }, { name: "ダンベルショルダープレス", reps: 10, sets: 5 }, { name: "サイドレイズ", reps: 15, sets: 5 }] },
-            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 5 }, { name: "インクラインダンベルカール", reps: 10, sets: 5 }, { name: "ケーブルプルオーバー", reps: 15, sets: 5 }] },
-
-          ]);
-        } else if (volume === "普通がいいかな〜") {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 5, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 5, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 5, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 5, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 5, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 5, workout_id: 17 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 5, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 5, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 5, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 5, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 5, workout_id: 31 }] },
+            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 5, workout_id: 37 }, { name: "インクラインダンベルカール", reps: 10, sets: 5, workout_id: 48 }, { name: "ケーブルプルオーバー", reps: 15, sets: 5, workout_id: 49 }] },
+            ]);
+          } else if (volume === "普通がいいかな〜") {
             createMenu("5回/週の標準メニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3 }, { name: "ペックフライ", reps: 10, sets: 3 }] },
-            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3 }, { name: "ダンベルローイング", reps: 10, sets: 3 }, { name: "ラットプルダウン", reps: 10, sets: 3 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3 }, { name: "レッグプレス", reps: 10, sets: 3 }, { name: "レッグカール", reps: 10, sets: 3 }] },
-            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 3 }, { name: "ダンベルショルダープレス", reps: 10, sets: 3 }, { name: "サイドレイズ", reps: 15, sets: 3 }] },
-            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 3 }, { name: "インクラインダンベルカール", reps: 10, sets: 3 }, { name: "ケーブルプルオーバー", reps: 15, sets: 3 }] },
-
-          ]);
-        } else {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 3, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 3, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 3, workout_id: 17 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 3, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 3, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 3, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 3, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 3, workout_id: 31 }] },
+            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 3, workout_id: 37 }, { name: "インクラインダンベルカール", reps: 10, sets: 3, workout_id: 48 }, { name: "ケーブルプルオーバー", reps: 15, sets: 3, workout_id: 49 }] },
+            ]);
+          } else {
             createMenu("5回/週の軽めメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2 }, { name: "ペックフライ", reps: 10, sets: 2 }] },
-            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2 }, { name: "ダンベルローイング", reps: 10, sets: 2 }, { name: "ラットプルダウン", reps: 10, sets: 2 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2 }, { name: "レッグプレス", reps: 10, sets: 2 }, { name: "レッグカール", reps: 10, sets: 2 }] },
-            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 2 }, { name: "ダンベルショルダープレス", reps: 10, sets: 2 }, { name: "サイドレイズ", reps: 15, sets: 2 }] },
-            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 2 }, { name: "インクラインダンベルカール", reps: 10, sets: 2 }, { name: "ケーブルプルオーバー", reps: 15, sets: 2 }] },
-
-          ]);
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 2, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 2, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 2, workout_id: 17 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 2, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 2, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 2, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 2, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 2, workout_id: 31 }] },
+            { day: "金曜日", exercises: [{ name: "バーベルカール", reps: 10, sets: 2, workout_id: 37 }, { name: "インクラインダンベルカール", reps: 10, sets: 2, workout_id: 48 }, { name: "ケーブルプルオーバー", reps: 15, sets: 2, workout_id: 49 }] },
+            ]);
         }
       } else if (frequency === "4回/週") {
         if (volume === "多いのがいい！") {
             createMenu("4回/週のハードメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 5 }, { name: "インクラインダンベルフライ", reps: 10, sets: 5 }, { name: "ペックフライ", reps: 10, sets: 5 }] },
-            { day: "火曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5 }, { name: "レッグプレス", reps: 10, sets: 5 }, { name: "レッグカール", reps: 10, sets: 5 }] },
-            { day: "木曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 5 }, { name: "ダンベルローイング", reps: 10, sets: 5 }, { name: "ラットプルダウン", reps: 10, sets: 5 }] },
-            { day: "金曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 5 }, { name: "ダンベルショルダープレス", reps: 10, sets: 5 }, { name: "サイドレイズ", reps: 15, sets: 5 }] },
-
-          ]);
-        } else if (volume === "普通がいいかな〜") {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 5, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 5, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 5, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 5, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 5, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 5, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 5, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 5, workout_id: 17 }] },
+            { day: "金曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 5, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 5, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 5, workout_id: 31 }] },
+            ]);
+          } else if (volume === "普通がいいかな〜") {
             createMenu("4回/週の標準メニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3 }, { name: "ペックフライ", reps: 10, sets: 3 }] },
-            { day: "火曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3 }, { name: "レッグプレス", reps: 10, sets: 3 }, { name: "レッグカール", reps: 10, sets: 3 }] },
-            { day: "木曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3 }, { name: "ダンベルローイング", reps: 10, sets: 3 }, { name: "ラットプルダウン", reps: 10, sets: 3 }] },
-            { day: "金曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 3 }, { name: "ダンベルショルダープレス", reps: 10, sets: 3 }, { name: "サイドレイズ", reps: 15, sets: 3 }] },
-
-          ]);
-        } else {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 3, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 3, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 3, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 3, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 3, workout_id: 17 }] },
+            { day: "金曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 3, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 3, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 3, workout_id: 31 }] },
+            ]);
+          } else {
             createMenu("4回/週の軽めメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2 }, { name: "ペックフライ", reps: 10, sets: 2 }] },
-            { day: "火曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2 }, { name: "レッグプレス", reps: 10, sets: 2 }, { name: "レッグカール", reps: 10, sets: 2 }] },
-            { day: "木曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2 }, { name: "ダンベルローイング", reps: 10, sets: 2 }, { name: "ラットプルダウン", reps: 10, sets: 2 }] },
-            { day: "金曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 2 }, { name: "ダンベルショルダープレス", reps: 10, sets: 2 }, { name: "サイドレイズ", reps: 15, sets: 2 }] },
-
-          ]);
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 2, workout_id: 8 }] },
+            { day: "火曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 2, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 2, workout_id: 55 }] },
+            { day: "木曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 2, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 2, workout_id: 17 }] },
+            { day: "金曜日", exercises: [{ name: "ミリタリープレス", reps: 10, sets: 2, workout_id: 30 }, { name: "ダンベルショルダープレス", reps: 10, sets: 2, workout_id: 35 }, { name: "サイドレイズ", reps: 15, sets: 2, workout_id: 31 }] },
+            ]);
         }
       } else if (frequency === "3回/週") {
         if (volume === "多いのがいい！") {
             createMenu("3回/週のハードメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 5 }, { name: "インクラインダンベルフライ", reps: 10, sets: 5 }, { name: "ペックフライ", reps: 10, sets: 5 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5 }, { name: "レッグプレス", reps: 10, sets: 5 }, { name: "レッグカール", reps: 10, sets: 5 }] },
-            { day: "金曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 5 }, { name: "ダンベルローイング", reps: 10, sets: 5 }, { name: "ラットプルダウン", reps: 10, sets: 5 }] },
-
-          ]);
-        } else if (volume === "普通がいいかな〜") {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 5, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 5, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 5, workout_id: 8 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 5, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 5, workout_id: 55 }] },
+            { day: "金曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 5, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 5, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 5, workout_id: 17 }] },
+            ]);
+          } else if (volume === "普通がいいかな〜") {
             createMenu("3回/週の標準メニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3 }, { name: "ペックフライ", reps: 10, sets: 3 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3 }, { name: "レッグプレス", reps: 10, sets: 3 }, { name: "レッグカール", reps: 10, sets: 3 }] },
-            { day: "金曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3 }, { name: "ダンベルローイング", reps: 10, sets: 3 }, { name: "ラットプルダウン", reps: 10, sets: 3 }] },
-
-          ]);
-        } else {
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 3, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 3, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 3, workout_id: 8 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 3, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 3, workout_id: 55 }] },
+            { day: "金曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 3, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 3, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 3, workout_id: 17 }] },
+            ]);
+          } else {
             createMenu("3回/週の軽めメニュー", [
-            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2 }, { name: "ペックフライ", reps: 10, sets: 2 }] },
-            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2 }, { name: "レッグプレス", reps: 10, sets: 2 }, { name: "レッグカール", reps: 10, sets: 2 }] },
-            { day: "金曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2 }, { name: "ダンベルローイング", reps: 10, sets: 2 }, { name: "ラットプルダウン", reps: 10, sets: 2 }] },
-
-          ]);
+            { day: "月曜日", exercises: [{ name: "ベンチプレス", reps: 10, sets: 2, workout_id: 1 }, { name: "インクラインダンベルフライ", reps: 10, sets: 2, workout_id: 6 }, { name: "ペックフライ", reps: 10, sets: 2, workout_id: 8 }] },
+            { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2, workout_id: 50 }, { name: "レッグプレス", reps: 10, sets: 2, workout_id: 52 }, { name: "レッグカール", reps: 10, sets: 2, workout_id: 55 }] },
+            { day: "金曜日", exercises: [{ name: "デットリフト", reps: 10, sets: 2, workout_id: 18 }, { name: "ダンベルローイング", reps: 10, sets: 2, workout_id: 21 }, { name: "ラットプルダウン", reps: 10, sets: 2, workout_id: 17 }] },
+            ]);
         }
       }
     }
