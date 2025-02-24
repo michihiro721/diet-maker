@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { getTrainingMenu1 } from "./GetTrainingMenuMen1";
 import { getTrainingMenu2 } from "./GetTrainingMenuMen2";
 import { getTrainingMenu3 } from "./GetTrainingMenuMen3";
@@ -20,6 +21,7 @@ const TrainingMenu = () => {
   const [volume, setVolume] = useState("");
   const [menu, setMenu] = useState(null);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,9 +64,56 @@ const TrainingMenu = () => {
     setMenu(generatedMenu);
   };
 
+  const handleApplyMenu = async () => {
+    try {
+      const userId = 1; // ユーザーID
+      const today = new Date();
+      const trainingData = [];
+
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+
+        const dayMenu = menu.find(m => m.items.some(item => item.day === date.toLocaleDateString('ja-JP', { weekday: 'long' })));
+        if (dayMenu) {
+          dayMenu.items.forEach(item => {
+            item.exercises.forEach(exercise => {
+              trainingData.push({
+                user_id: userId,
+                date: date.toISOString().split('T')[0],
+                goal_id: 1, // 適切なデフォルト値を設定
+                workout_id: 1, // 適切なデフォルト値を設定
+                sets: exercise.sets,
+                reps: exercise.reps,
+                weight: exercise.weight,
+              });
+            });
+          });
+        }
+      }
+
+      // デバッグのために送信するデータをコンソールに出力
+      console.log("Sending training data:", trainingData);
+
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/trainings`, {
+        training: trainingData,
+      });
+
+      if (response.status === 201) {
+        setSuccessMessage("トレーニングメニューが保存されました");
+      } else {
+        setError("トレーニングメニューの保存に失敗しました");
+      }
+    } catch (error) {
+      console.error("Error saving training menu:", error);
+      setError("トレーニングメニューの保存に失敗しました");
+    }
+  };
+
   return (
     <div className="training-menu-container">
       {error && <div className="training-menu-error-message">{error}</div>}
+      {successMessage && <div className="training-menu-success-message">{successMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div className="training-menu-form-group">
           <label>性別</label>
@@ -110,9 +159,24 @@ const TrainingMenu = () => {
       {menu && (
         <div className="training-menu-menu-result">
           <h2>トレーニングメニュー</h2>
-          {menu.map((item, index) => (
-            <div key={index}>{item}</div>
+          {menu.map((dayMenu, index) => (
+            <div key={index}>
+              <h3 className="training-menu-title">{dayMenu.title}</h3>
+              <ul className="training-menu-list">
+                {dayMenu.items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="training-menu-list-item">
+                    <span className="training-menu-day">{item.day}:</span>
+                    <ul>
+                      {item.exercises.map((exercise, exerciseIndex) => (
+                        <li key={exercise.key}>{exercise.name} - {exercise.sets}セット x {exercise.reps}回</li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
+          <button onClick={handleApplyMenu} className="training-menu-apply-button">メニューを反映</button>
         </div>
       )}
     </div>

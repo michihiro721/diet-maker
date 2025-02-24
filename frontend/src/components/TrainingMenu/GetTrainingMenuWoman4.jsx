@@ -2,27 +2,19 @@ export const getTrainingMenu4Woman = (gender, gymType, frequency, volume) => {
   let suggestedMenu = [];
 
   const createMenu = (title, menuItems) => {
-    suggestedMenu.push(<div className='training-menu-title'>{title}</div>);
-    suggestedMenu.push(
-      <ul className='training-menu-list'>
-      {menuItems.map((item, index) => (
-        <li key={index}>
-        <span className='training-menu-day'>{item.day}:</span>
-        {Array.isArray(item.exercises) ? (
-          item.exercises.map((exercise, i) => (
-          <div key={i}>
-            {typeof exercise === "string"
-            ? exercise
-            : `${exercise.name} ${exercise.reps ? `${exercise.reps}回` : ""}${exercise.sets ? `×${exercise.sets}セット` : exercise.duration ? ` ${exercise.duration}` : ""}`}
-          </div>
-          ))
-        ) : (
-          <div>{item.exercises || "エクササイズなし"}</div>
-        )}
-        </li>
-      ))}
-      </ul>
-    );
+    suggestedMenu.push({
+      title: title,
+      items: menuItems.map((item, itemIndex) => ({
+        day: item.day,
+        exercises: item.exercises.map((exercise, exerciseIndex) => ({
+          key: `${itemIndex}-${exerciseIndex}`,
+          name: exercise.name,
+          sets: exercise.sets,
+          reps: exercise.reps,
+          weight: 0 // 重量は0で初期化
+        }))
+      }))
+    });
   };
 
   // **条件ごとに適切なメニューを決定**

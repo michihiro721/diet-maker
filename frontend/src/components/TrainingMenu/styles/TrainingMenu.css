@@ -123,6 +123,28 @@
   color: #007acc;
   display: block;
   margin-bottom: 5px;
+  text-align: center;
+}
+
+/* 保存ボタン */
+.training-menu-apply-button {
+  width: 30%;
+  padding: 10px;
+  background-color: #87CEFA;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  border: 2px solid rgba(162, 217, 255, 1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* 保存ボタンのホバー効果 */
+.training-menu-apply-button:hover {
+  background-color: #4a8ad4;
+  transform: translateY(-2px);
 }
 
 /* 未入力時のエラーメッセージ */
