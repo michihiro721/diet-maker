@@ -66,7 +66,7 @@ const TrainingMenu = () => {
 
   const handleApplyMenu = async () => {
     try {
-      const userId = 1; // ユーザーID
+      const userId = 1; // ユーザーID固定ログイン機能実装後に変更
       const today = new Date();
       const trainingData = [];
 
@@ -79,15 +79,15 @@ const TrainingMenu = () => {
           dayMenu.items.forEach(item => {
             item.exercises.forEach(exercise => {
               for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
-          trainingData.push({
-            user_id: userId,
-            date: date.toISOString().split('T')[0],
-            goal_id: 1, // 適切なデフォルト値を設定
-            workout_id: exercise.workout_id, // 適切なデフォルト値を設定
-            sets: setIndex + 1,
-            reps: exercise.reps,
-            weight: exercise.weight,
-          });
+                trainingData.push({
+                  user_id: userId,
+                  date: date.toISOString().split('T')[0],
+                  goal_id: 1,
+                  workout_id: exercise.workout_id,
+                  sets: setIndex + 1,
+                  reps: exercise.reps,
+                  weight: exercise.weight,
+                });
               }
             });
           });
@@ -114,8 +114,6 @@ const TrainingMenu = () => {
 
   return (
     <div className="training-menu-container">
-      {error && <div className="training-menu-error-message">{error}</div>}
-      {successMessage && <div className="training-menu-success-message">{successMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div className="training-menu-form-group">
           <label>性別</label>
@@ -178,6 +176,8 @@ const TrainingMenu = () => {
               </ul>
             </div>
           ))}
+          {error && <div className="training-menu-error-message">{error}</div>}
+          {successMessage && <div className="training-menu-success-message">{successMessage}</div>}
           <button onClick={handleApplyMenu} className="training-menu-apply-button">メニューを反映</button>
         </div>
       )}
