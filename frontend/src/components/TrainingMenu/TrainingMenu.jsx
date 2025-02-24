@@ -110,7 +110,9 @@ const TrainingMenu = () => {
       {menu && (
         <div className="training-menu-menu-result">
           <h2>トレーニングメニュー</h2>
-          {menu}
+          {menu.map((item, index) => (
+            <div key={index}>{item}</div>
+          ))}
         </div>
       )}
     </div>
