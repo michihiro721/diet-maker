@@ -78,15 +78,17 @@ const TrainingMenu = () => {
         if (dayMenu) {
           dayMenu.items.forEach(item => {
             item.exercises.forEach(exercise => {
-              trainingData.push({
-                user_id: userId,
-                date: date.toISOString().split('T')[0],
-                goal_id: 1, // 適切なデフォルト値を設定
-                workout_id: exercise.workout_id, // 適切なデフォルト値を設定
-                sets: exercise.sets,
-                reps: exercise.reps,
-                weight: exercise.weight,
-              });
+              for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
+          trainingData.push({
+            user_id: userId,
+            date: date.toISOString().split('T')[0],
+            goal_id: 1, // 適切なデフォルト値を設定
+            workout_id: exercise.workout_id, // 適切なデフォルト値を設定
+            sets: setIndex + 1,
+            reps: exercise.reps,
+            weight: exercise.weight,
+          });
+              }
             });
           });
         }
