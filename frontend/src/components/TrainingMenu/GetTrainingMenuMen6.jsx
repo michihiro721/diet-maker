@@ -5,9 +5,22 @@ export const getTrainingMenu6 = (gender, gymType, frequency, volume) => {
     suggestedMenu.push(<div className='training-menu-title'>{title}</div>);
     suggestedMenu.push(
       <ul className='training-menu-list'>
-        {menuItems.map((item, index) => (
-          <li key={index}><span className='training-menu-day'>{item.day}:</span> {item.exercises.map((exercise, i) => <div key={i}>{exercise}</div>)}</li>
-        ))}
+      {menuItems.map((item, index) => (
+        <li key={index}>
+        <span className='training-menu-day'>{item.day}:</span>
+        {Array.isArray(item.exercises) ? (
+          item.exercises.map((exercise, i) => (
+          <div key={i}>
+            {typeof exercise === "string"
+            ? exercise
+            : `${exercise.name} ${exercise.reps ? `${exercise.reps}回` : ""}${exercise.sets ? `×${exercise.sets}セット` : exercise.duration ? ` ${exercise.duration}` : ""}`}
+          </div>
+          ))
+        ) : (
+          <div>{item.exercises || "エクササイズなし"}</div>
+        )}
+        </li>
+      ))}
       </ul>
     );
   };
@@ -17,113 +30,113 @@ export const getTrainingMenu6 = (gender, gymType, frequency, volume) => {
     if (gymType === "自重のみ") {
       if (frequency === "6回/週") {
         if (volume === "多いのがいい！") {
-          createMenu("6回/週のハードメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×5セット", "スクワット 20回×5セット"] },
-            { day: "水曜日", exercises: ["クランチ 20回×5セット", "レッグレイズ 20回×5セット"] },
-            { day: "木曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "金曜日", exercises: ["ブルガリアンスクワット 10回×5セット", "スクワット 20回×5セット"] },
-            { day: "土曜日", exercises: ["クランチ 20回×5セット", "レッグレイズ 20回×5セット"] },
-            { day: "日曜日", exercises: ["休み"] }
-          ]);
-        } else if (volume === "普通がいいかな〜") {
-          createMenu("6回/週の標準メニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×3セット", "スクワット 20回×3セット"] },
-            { day: "水曜日", exercises: ["クランチ 20回×3セット", "レッグレイズ 20回×3セット"] },
-            { day: "木曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "金曜日", exercises: ["ブルガリアンスクワット 10回×3セット", "スクワット 20回×3セット"] },
-            { day: "土曜日", exercises: ["クランチ 20回×3セット", "レッグレイズ 20回×3セット"] },
-            { day: "日曜日", exercises: ["休み"] }
-          ]);
-        } else {
-          createMenu("6回/週の軽めメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×2セット", "スクワット 20回×2セット"] },
-            { day: "水曜日", exercises: ["クランチ 20回×2セット", "レッグレイズ 20回×2セット"] },
-            { day: "木曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "金曜日", exercises: ["ブルガリアンスクワット 10回×2セット", "スクワット 20回×2セット"] },
-            { day: "土曜日", exercises: ["クランチ 20回×2セット", "レッグレイズ 20回×2セット"] },
-            { day: "日曜日", exercises: ["休み"] }
-          ]);
+            createMenu("6回/週のハードメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 5 }, { name: "スクワット", reps: 20, sets: 5 }] },
+            { day: "水曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5 }, { name: "レッグレイズ", reps: 20, sets: 5 }] },
+            { day: "木曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+            { day: "金曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 5 }, { name: "スクワット", reps: 20, sets: 5 }] },
+            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5 }, { name: "レッグレイズ", reps: 20, sets: 5 }] },
+
+            ]);
+          } else if (volume === "普通がいいかな〜") {
+            createMenu("6回/週の標準メニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 3 }, { name: "スクワット", reps: 20, sets: 3 }] },
+            { day: "水曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3 }, { name: "レッグレイズ", reps: 20, sets: 3 }] },
+            { day: "木曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+            { day: "金曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 3 }, { name: "スクワット", reps: 20, sets: 3 }] },
+            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3 }, { name: "レッグレイズ", reps: 20, sets: 3 }] },
+
+            ]);
+          } else {
+            createMenu("6回/週の軽めメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 2 }, { name: "スクワット", reps: 20, sets: 2 }] },
+            { day: "水曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2 }, { name: "レッグレイズ", reps: 20, sets: 2 }] },
+            { day: "木曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+            { day: "金曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 2 }, { name: "スクワット", reps: 20, sets: 2 }] },
+            { day: "土曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2 }, { name: "レッグレイズ", reps: 20, sets: 2 }] },
+
+            ]);
         }
       } else if (frequency === "5回/週") {
         if (volume === "多いのがいい！") {
-          createMenu("5回/週のハードメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×5セット", "スクワット 20回×5セット"] },
-            { day: "水曜日", exercises: ["クランチ 20回×5セット", "レッグレイズ 20回×5セット"] },
-            { day: "木曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "金曜日", exercises: ["ブルガリアンスクワット 10回×5セット", "スクワット 20回×5セット"] },
-            { day: "土日", exercises: ["休み"] }
-          ]);
-        } else if (volume === "普通がいいかな〜") {
-          createMenu("5回/週の標準メニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×3セット", "スクワット 20回×3セット"] },
-            { day: "水曜日", exercises: ["クランチ 20回×3セット", "レッグレイズ 20回×3セット"] },
-            { day: "木曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "金曜日", exercises: ["ブルガリアンスクワット 10回×3セット", "スクワット 20回×3セット"] },
-            { day: "土日", exercises: ["休み"] }
-          ]);
-        } else {
-          createMenu("5回/週の軽めメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×2セット", "スクワット 20回×2セット"] },
-            { day: "水曜日", exercises: ["クランチ 20回×2セット", "レッグレイズ 20回×2セット"] },
-            { day: "木曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "金曜日", exercises: ["ブルガリアンスクワット 10回×2セット", "スクワット 20回×2セット"] },
-            { day: "土日", exercises: ["休み"] }
-          ]);
+            createMenu("5回/週のハードメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 5 }, { name: "スクワット", reps: 20, sets: 5 }] },
+            { day: "水曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5 }, { name: "レッグレイズ", reps: 20, sets: 5 }] },
+            { day: "木曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+            { day: "金曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 5 }, { name: "スクワット", reps: 20, sets: 5 }] },
+
+            ]);
+          } else if (volume === "普通がいいかな〜") {
+            createMenu("5回/週の標準メニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 3 }, { name: "スクワット", reps: 20, sets: 3 }] },
+            { day: "水曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3 }, { name: "レッグレイズ", reps: 20, sets: 3 }] },
+            { day: "木曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+            { day: "金曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 3 }, { name: "スクワット", reps: 20, sets: 3 }] },
+
+            ]);
+          } else {
+            createMenu("5回/週の軽めメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 2 }, { name: "スクワット", reps: 20, sets: 2 }] },
+            { day: "水曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2 }, { name: "レッグレイズ", reps: 20, sets: 2 }] },
+            { day: "木曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+            { day: "金曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 2 }, { name: "スクワット", reps: 20, sets: 2 }] },
+
+            ]);
         }
       } else if (frequency === "4回/週") {
         if (volume === "多いのがいい！") {
-          createMenu("4回/週のハードメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×5セット", "スクワット 20回×5セット"] },
-            { day: "木曜日", exercises: ["クランチ 20回×5セット", "レッグレイズ 20回×5セット"] },
-            { day: "金曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "水土日", exercises: ["休み"] }
-          ]);
-        } else if (volume === "普通がいいかな〜") {
-          createMenu("4回/週の標準メニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×3セット", "スクワット 20回×3セット"] },
-            { day: "木曜日", exercises: ["クランチ 20回×3セット", "レッグレイズ 20回×3セット"] },
-            { day: "金曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "水土日", exercises: ["休み"] }
-          ]);
-        } else {
-          createMenu("4回/週の軽めメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "火曜日", exercises: ["ブルガリアンスクワット 10回×2セット", "スクワット 20回×2セット"] },
-            { day: "木曜日", exercises: ["クランチ 20回×2セット", "レッグレイズ 20回×2セット"] },
-            { day: "金曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "水土日", exercises: ["休み"] }
-          ]);
+            createMenu("4回/週のハードメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 5 }, { name: "スクワット", reps: 20, sets: 5 }] },
+            { day: "木曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5 }, { name: "レッグレイズ", reps: 20, sets: 5 }] },
+            { day: "金曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+
+            ]);
+          } else if (volume === "普通がいいかな〜") {
+            createMenu("4回/週の標準メニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 3 }, { name: "スクワット", reps: 20, sets: 3 }] },
+            { day: "木曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3 }, { name: "レッグレイズ", reps: 20, sets: 3 }] },
+            { day: "金曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+
+            ]);
+          } else {
+            createMenu("4回/週の軽めメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+            { day: "火曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 2 }, { name: "スクワット", reps: 20, sets: 2 }] },
+            { day: "木曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2 }, { name: "レッグレイズ", reps: 20, sets: 2 }] },
+            { day: "金曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+
+            ]);
         }
       } else if (frequency === "3回/週") {
         if (volume === "多いのがいい！") {
-          createMenu("3回/週のハードメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×5セット", "腕立て伏せ 20回×5セット"] },
-            { day: "水曜日", exercises: ["ブルガリアンスクワット 10回×5セット", "スクワット 20回×5セット"] },
-            { day: "金曜日", exercises: ["クランチ 20回×5セット", "レッグレイズ 20回×5セット"] },
-            { day: "火木土日", exercises: ["休み"] }
-          ]);
-        } else if (volume === "普通がいいかな〜") {
-          createMenu("3回/週の標準メニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×3セット", "腕立て伏せ 20回×3セット"] },
-            { day: "水曜日", exercises: ["ブルガリアンスクワット 10回×3セット", "スクワット 20回×3セット"] },
-            { day: "金曜日", exercises: ["クランチ 20回×3セット", "レッグレイズ 20回×3セット"] },
-            { day: "火木土日", exercises: ["休み"] }
-          ]);
-        } else {
-          createMenu("3回/週の軽めメニュー", [
-            { day: "月曜日", exercises: ["ディップス（椅子） 20回×2セット", "腕立て伏せ 20回×2セット"] },
-            { day: "水曜日", exercises: ["ブルガリアンスクワット 10回×2セット", "スクワット 20回×2セット"] },
-            { day: "金曜日", exercises: ["クランチ 20回×2セット", "レッグレイズ 20回×2セット"] },
-            { day: "火木土日", exercises: ["休み"] }
-          ]);
+            createMenu("3回/週のハードメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 5 }, { name: "腕立て伏せ", reps: 20, sets: 5 }] },
+            { day: "水曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 5 }, { name: "スクワット", reps: 20, sets: 5 }] },
+            { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5 }, { name: "レッグレイズ", reps: 20, sets: 5 }] },
+
+            ]);
+          } else if (volume === "普通がいいかな〜") {
+            createMenu("3回/週の標準メニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 3 }, { name: "腕立て伏せ", reps: 20, sets: 3 }] },
+            { day: "水曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 3 }, { name: "スクワット", reps: 20, sets: 3 }] },
+            { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3 }, { name: "レッグレイズ", reps: 20, sets: 3 }] },
+
+            ]);
+          } else {
+            createMenu("3回/週の軽めメニュー", [
+            { day: "月曜日", exercises: [{ name: "ディップス（椅子）", reps: 20, sets: 2 }, { name: "腕立て伏せ", reps: 20, sets: 2 }] },
+            { day: "水曜日", exercises: [{ name: "ブルガリアンスクワット", reps: 10, sets: 2 }, { name: "スクワット", reps: 20, sets: 2 }] },
+            { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2 }, { name: "レッグレイズ", reps: 20, sets: 2 }] },
+
+            ]);
         }
       }
     }
