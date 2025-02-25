@@ -153,30 +153,6 @@
   font-weight: bold;
 }
 
-.training-menu-error-message {
-  color: #ff4d4d;
-  font-size: 16px;
-  margin-top: 10px;
-  font-weight: bold;
-  background-color: #ffe6e6;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-}
-
-.training-menu-success-message {
-  color: #4d79ff;
-  font-size: 16px;
-  margin-top: 10px;
-  font-weight: bold;
-  background-color: #e6ecff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-}
-
 .training-menu-date-input {
   width: 300px;
   font-size: 18px;
@@ -210,4 +186,64 @@
 
 .training-menu-save-button:hover {
   background-color: #0056b3;
+}
+
+.training-menu-calendar-modal-overlay,
+.training-menu-confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.training-menu-calendar-modal,
+.training-menu-confirm-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.training-menu-confirm-button {
+  background-color: #007BFF;
+  color: white;
+  width: 120px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px; /* ボタン間の間隔を追加 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  font-weight: bold;
+}
+
+.training-menu-confirm-button:hover {
+  background-color: #0056b3;
+}
+
+.training-menu-cancel-button {
+  background-color: #dc3545;
+  color: white;
+  width: 120px;
+  padding: 10px;
+  margin-right: 10px;
+  margin-left: 10px; /* ボタン間の間隔を追加 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  font-weight: bold;
+}
+
+.training-menu-cancel-button:hover {
+  background-color: #c82333;
 }
