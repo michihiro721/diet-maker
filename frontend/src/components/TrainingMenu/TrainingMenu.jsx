@@ -31,8 +31,9 @@ const TrainingMenu = () => {
   const [menu, setMenu] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [selectedDate, setSelectedDate] = useState("日付を入力してください");
+  const [selectedDates, setSelectedDates] = useState({});
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  const [currentDayMenuIndex, setCurrentDayMenuIndex] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,10 +76,11 @@ const TrainingMenu = () => {
     setMenu(generatedMenu);
   };
 
-  const handleSaveMenu = async (dayMenu) => {
+  const handleSaveMenu = async (dayMenu, index) => {
     try {
       const userId = 1; // ユーザーID固定ログイン機能実装後に変更
       const trainingData = [];
+      const selectedDate = selectedDates[index];
 
       // 各エクササイズをtrainingDataに追加
       dayMenu.items.forEach((item) => {
@@ -117,7 +119,10 @@ const TrainingMenu = () => {
 
   const handleDateChange = (date) => {
     const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setSelectedDates((prevDates) => ({
+      ...prevDates,
+      [currentDayMenuIndex]: offsetDate.toISOString().split('T')[0],
+    }));
     setIsCalendarModalOpen(false);
   };
 
@@ -185,12 +190,15 @@ const TrainingMenu = () => {
               </ul>
               <input
                 type="text"
-                value={selectedDate}
-                onClick={() => setIsCalendarModalOpen(true)}
+                value={selectedDates[index] || "日付を入力してください"}
+                onClick={() => {
+                  setCurrentDayMenuIndex(index);
+                  setIsCalendarModalOpen(true);
+                }}
                 readOnly
                 className="training-menu-date-input"
               />
-              <button onClick={() => handleSaveMenu(dayMenu)} className="training-menu-save-button">保存</button>
+              <button onClick={() => handleSaveMenu(dayMenu, index)} className="training-menu-save-button">保存</button>
             </div>
           ))}
           {error && <div className="training-menu-error-message">{error}</div>}
