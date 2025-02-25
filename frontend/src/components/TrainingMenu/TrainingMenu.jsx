@@ -105,13 +105,13 @@ const TrainingMenu = () => {
       });
 
       if (response.status === 201) {
-        setSuccessMessage("トレーニングメニューが保存されました");
+        alert("トレーニングメニューが保存されました");
       } else {
-        setError("トレーニングメニューの保存に失敗しました");
+        alert("トレーニングメニューの保存に失敗しました");
       }
     } catch (error) {
       console.error("Error saving training menu:", error);
-      setError("トレーニングメニューの保存に失敗しました");
+      alert("トレーニングメニューの保存に失敗しました");
     }
   };
 
