@@ -34,6 +34,8 @@ const TrainingMenu = () => {
   const [selectedDates, setSelectedDates] = useState({});
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [currentDayMenuIndex, setCurrentDayMenuIndex] = useState(null);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [currentDayMenu, setCurrentDayMenu] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,14 +78,14 @@ const TrainingMenu = () => {
     setMenu(generatedMenu);
   };
 
-  const handleSaveMenu = async (dayMenu, index) => {
+  const handleSaveMenu = async () => {
     try {
       const userId = 1; // ユーザーID固定ログイン機能実装後に変更
       const trainingData = [];
-      const selectedDate = selectedDates[index];
+      const selectedDate = selectedDates[currentDayMenuIndex];
 
       // 各エクササイズをtrainingDataに追加
-      dayMenu.items.forEach((item) => {
+      currentDayMenu.items.forEach((item) => {
         item.exercises.forEach((exercise) => {
           for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
             trainingData.push({
@@ -114,6 +116,8 @@ const TrainingMenu = () => {
     } catch (error) {
       console.error("Error saving training menu:", error);
       alert("トレーニングメニューの保存に失敗しました");
+    } finally {
+      setIsConfirmModalOpen(false);
     }
   };
 
@@ -124,6 +128,12 @@ const TrainingMenu = () => {
       [currentDayMenuIndex]: offsetDate.toISOString().split('T')[0],
     }));
     setIsCalendarModalOpen(false);
+  };
+
+  const openConfirmModal = (dayMenu, index) => {
+    setCurrentDayMenu(dayMenu);
+    setCurrentDayMenuIndex(index);
+    setIsConfirmModalOpen(true);
   };
 
   return (
@@ -198,7 +208,7 @@ const TrainingMenu = () => {
                 readOnly
                 className="training-menu-date-input"
               />
-              <button onClick={() => handleSaveMenu(dayMenu, index)} className="training-menu-save-button">保存</button>
+              <button onClick={() => openConfirmModal(dayMenu, index)} className="training-menu-save-button">保存</button>
             </div>
           ))}
           {error && <div className="training-menu-error-message">{error}</div>}
@@ -206,14 +216,23 @@ const TrainingMenu = () => {
         </div>
       )}
       {isCalendarModalOpen && (
-        <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
-          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="training-menu-calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
+          <div className="training-menu-calendar-modal" onClick={(e) => e.stopPropagation()}>
             <Calendar
               onChange={handleDateChange}
               formatShortWeekday={CalenderFormatShortWeekday}
               tileClassName={CalenderTileClassName}
               tileContent={CalenderTileContent}
             />
+          </div>
+        </div>
+      )}
+      {isConfirmModalOpen && (
+        <div className="training-menu-confirm-modal-overlay" onClick={() => setIsConfirmModalOpen(false)}>
+          <div className="training-menu-confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <p>本当に保存しますか？</p>
+            <button onClick={handleSaveMenu} className="training-menu-confirm-button">はい</button>
+            <button onClick={() => setIsConfirmModalOpen(false)} className="training-menu-cancel-button">いいえ</button>
           </div>
         </div>
       )}
