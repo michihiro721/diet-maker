@@ -22,6 +22,7 @@ const TrainingMenu = () => {
   const [menu, setMenu] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,35 +65,27 @@ const TrainingMenu = () => {
     setMenu(generatedMenu);
   };
 
-  const handleApplyMenu = async () => {
+  const handleSaveMenu = async (dayMenu) => {
     try {
       const userId = 1; // ユーザーID固定ログイン機能実装後に変更
-      const today = new Date();
       const trainingData = [];
 
-      for (let i = 0; i < 7; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-
-        const dayMenu = menu.find(m => m.items.some(item => item.day === date.toLocaleDateString('ja-JP', { weekday: 'long' })));
-        if (dayMenu) {
-          dayMenu.items.forEach(item => {
-            item.exercises.forEach(exercise => {
-              for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
-                trainingData.push({
-                  user_id: userId,
-                  date: date.toISOString().split('T')[0],
-                  goal_id: 1,
-                  workout_id: exercise.workout_id,
-                  sets: setIndex + 1,
-                  reps: exercise.reps,
-                  weight: exercise.weight,
-                });
-              }
+      // 各エクササイズをtrainingDataに追加
+      dayMenu.items.forEach((item) => {
+        item.exercises.forEach((exercise) => {
+          for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
+            trainingData.push({
+              user_id: userId,
+              date: selectedDate,
+              goal_id: 1,
+              workout_id: exercise.workout_id,
+              sets: setIndex + 1,
+              reps: exercise.reps,
+              weight: exercise.weight,
             });
-          });
-        }
-      }
+          }
+        });
+      });
 
       // デバッグのために送信するデータをコンソールに出力
       console.log("Sending training data:", trainingData);
@@ -174,11 +167,17 @@ const TrainingMenu = () => {
                   </li>
                 ))}
               </ul>
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="training-menu-date-input"
+              />
+              <button onClick={() => handleSaveMenu(dayMenu)} className="training-menu-save-button">保存</button>
             </div>
           ))}
           {error && <div className="training-menu-error-message">{error}</div>}
           {successMessage && <div className="training-menu-success-message">{successMessage}</div>}
-          <button onClick={handleApplyMenu} className="training-menu-apply-button">メニューを反映</button>
         </div>
       )}
     </div>

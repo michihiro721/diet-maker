@@ -176,3 +176,38 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
 }
+
+.training-menu-date-input {
+  width: 300px;
+  font-size: 18px;
+  padding: 5px;
+  margin-right: 10px;
+  outline: 1px solid #87CEFA;
+  outline-offset: 2px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  height: 30px;
+}
+
+.training-menu-date-input:hover {
+  border: 1px solid #87CEFA;
+  background-color: #f8fcff;
+}
+
+.training-menu-save-button {
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: #0366d6;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 47px;
+}
+
+.training-menu-save-button:hover {
+  background-color: #0056b3;
+}
