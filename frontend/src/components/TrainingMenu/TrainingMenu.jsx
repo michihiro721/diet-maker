@@ -12,7 +12,16 @@ import { getTrainingMenu3Woman } from "./GetTrainingMenuWoman3";
 import { getTrainingMenu4Woman } from "./GetTrainingMenuWoman4";
 import { getTrainingMenu5Woman } from "./GetTrainingMenuWoman5";
 import { getTrainingMenu6Woman } from "./GetTrainingMenuWoman6";
-import "./styles/TrainingMenu.css";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import './styles/TrainingMenu.css';
+import '../Home/Body/Calender/styles/CalenderWeekdays.css';
+import '../Home/Body/Calender/styles/CalenderNavigation.css';
+import '../Home/Body/Calender/styles/CalenderDays.css';
+import '../Home/Body/Calender/styles/CalenderCommon.css';
+import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
+import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
+import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 
 const TrainingMenu = () => {
   const [gender, setGender] = useState("");
@@ -22,7 +31,8 @@ const TrainingMenu = () => {
   const [menu, setMenu] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("日付を入力してください");
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -105,6 +115,12 @@ const TrainingMenu = () => {
     }
   };
 
+  const handleDateChange = (date) => {
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setIsCalendarModalOpen(false);
+  };
+
   return (
     <div className="training-menu-container">
       <form onSubmit={handleSubmit}>
@@ -168,9 +184,10 @@ const TrainingMenu = () => {
                 ))}
               </ul>
               <input
-                type="date"
+                type="text"
                 value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                onClick={() => setIsCalendarModalOpen(true)}
+                readOnly
                 className="training-menu-date-input"
               />
               <button onClick={() => handleSaveMenu(dayMenu)} className="training-menu-save-button">保存</button>
@@ -178,6 +195,18 @@ const TrainingMenu = () => {
           ))}
           {error && <div className="training-menu-error-message">{error}</div>}
           {successMessage && <div className="training-menu-success-message">{successMessage}</div>}
+        </div>
+      )}
+      {isCalendarModalOpen && (
+        <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
+          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+            <Calendar
+              onChange={handleDateChange}
+              formatShortWeekday={CalenderFormatShortWeekday}
+              tileClassName={CalenderTileClassName}
+              tileContent={CalenderTileContent}
+            />
+          </div>
         </div>
       )}
     </div>
