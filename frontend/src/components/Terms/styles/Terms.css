@@ -1,5 +1,5 @@
 /* 全体のスタイル */
-.privacy-container {
+.terms-container {
     max-width: 800px;
     margin: 0 auto;
     margin-top: 70px;
@@ -11,13 +11,13 @@
   }
   
   /* 見出しのスタイル */
-  .privacy-container h1 {
+  .terms-container h1 {
     font-size: 2em;
     margin-bottom: 20px;
     color: #2c3e50;
   }
   
-  .privacy-container h2 {
+  .terms-container h2 {
     font-size: 1.5em;
     margin-top: 30px;
     margin-bottom: 15px;
@@ -25,26 +25,16 @@
   }
   
   /* 段落のスタイル */
-  .privacy-container p {
+  .terms-container p {
     margin-bottom: 15px;
   }
   
   /* リストのスタイル */
-  .privacy-container ul {
+  .terms-container ul {
     list-style-type: disc;
     padding-left: 20px;
   }
   
-  .privacy-container ul li {
+  .terms-container ul li {
     margin-bottom: 10px;
-  }
-  
-  /* リンクのスタイル */
-  .privacy-container a {
-    color: #3498db;
-    text-decoration: none;
-  }
-  
-  .privacy-container a:hover {
-    text-decoration: underline;
   }
