@@ -1,6 +1,97 @@
-.login-container {
+.custom-login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #f8f9fa;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-login-container h2 {
+    position: absolute;
+    top: 10%;
+    font-size: 35px;
+    color: #333;
+    margin-top: 0px;
+}
+
+.custom-login-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 50px 0;
+}
+
+.custom-login-form input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+.custom-login-form button {
+    width: 90%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.custom-login-form button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.custom-login-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.custom-login-form p {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.signup-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.signup-button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
 }

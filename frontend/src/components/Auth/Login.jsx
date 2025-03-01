@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Login.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
       const res = await axios.post('/auth/sign_in', {
         user: {
-          email,
-          password,
+          email: data.email,
+          password: data.password,
         },
       });
       if (res.status === 200) {
@@ -34,30 +33,28 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="custom-login-container">
       <h2>ログイン</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit(onSubmit)} className="custom-login-form">
         <div>
-          <label>Email:</label>
+          <label>メールアドレス</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...register('email', { required: 'メールアドレスを入力してください' })}
           />
+          {errors.email && <p>{errors.email.message}</p>}
         </div>
         <div>
-          <label>Password:</label>
+          <label>パスワード</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            {...register('password', { required: 'パスワードを入力してください' })}
           />
+          {errors.password && <p>{errors.password.message}</p>}
         </div>
         <button type="submit">ログイン</button>
       </form>
-      <button onClick={goToSignUp}>新規登録</button>
+      <button onClick={goToSignUp} className="signup-button">新規登録</button>
     </div>
   );
 };
