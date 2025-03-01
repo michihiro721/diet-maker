@@ -52,17 +52,27 @@
 }
 
 .header-login-button {
-  font-size: 4vh; /* アイコンのサイズを設定 */
-  color: #5d9cec; /* アイコンの色を設定 */
+  font-size: 28px; /* アイコンのサイズを小さく設定 */
+  color: #fff; /* アイコンの色を設定 */
   border: 2px solid #5d9cec; /* 枠線の色を設定 */
-  border-radius: 50%; /* 丸くする */
-  padding: 10px; /* 内側の余白を設定 */
+  border-radius: 8px; /* 角を少し丸める */
+  padding: 10px 5px; /* 内側の余白を設定 */
   display: flex; /* フレックスボックスレイアウトを使用 */
   justify-content: center; /* 中央に配置 */
   align-items: center; /* 中央に配置 */
-  transition: background-color 0.3s, transform 0.3s;
+  background-color: #5d9cec; /* 背景色を白に設定 */
+  transition: transform 0.2s ease, background-color 0.2s ease; /* スムーズな変化を追加 */
+  height: 8.5vh;
 }
 
 .header-login-button:hover {
+  background-color: #d3f2ff; /* ホバー時の背景色を設定 */
   transform: scale(1.1); /* ホバー時にボタンを少し拡大 */
+  color:#000
+}
+
+.login-text {
+  font-size: 20px; /* フォントサイズを設定 */
+  margin-right: 10px; /* 右側の余白を設定 */
+  padding-left: 1em; /* 左側に一文字分の余白を追加 */
 }

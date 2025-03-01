@@ -69,6 +69,7 @@ const Header = () => {
         <div className="header-title">{getTitle()}</div>
         <button className="header-login-button" onClick={goToLogin}>
           <i className="fa-solid fa-right-to-bracket"></i>
+          <span className="login-text">ログイン</span>
         </button>
         <MenuButton toggleMenu={toggleMenu} />
       </header>
