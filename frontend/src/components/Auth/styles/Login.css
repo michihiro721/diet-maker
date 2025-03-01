@@ -10,10 +10,9 @@
 }
 
 .custom-login-container h2 {
-    position: absolute;
-    top: 10%;
     font-size: 35px;
     color: #333;
+    margin-bottom: 0px;
     margin-top: 0px;
 }
 
