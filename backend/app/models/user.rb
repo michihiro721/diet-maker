@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  has_secure_password
+  # Deviseモジュールの追加
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 
   validates :email, presence: true, uniqueness: true
-  validates :password_digest, presence: true
 end
