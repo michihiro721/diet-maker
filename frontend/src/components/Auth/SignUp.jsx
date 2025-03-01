@@ -12,13 +12,13 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/users', {
+      const res = await axios.post('/auth', {
         user: {
           email,
           password,
           password_confirmation: passwordConfirmation,
         },
-      });
+    }, { withCredentials: true });
       if (res.status === 201) {
         alert('新規登録に成功しました');
         navigate('/login');

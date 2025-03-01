@@ -11,7 +11,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/users/sign_in', {
+      const res = await axios.post('/auth/sign_in', {
         user: {
           email,
           password,

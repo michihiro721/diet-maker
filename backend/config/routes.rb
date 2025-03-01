@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, path: 'auth', controllers: {
+  sessions: 'users/sessions',
+  registrations: 'users/registrations'
+}
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
