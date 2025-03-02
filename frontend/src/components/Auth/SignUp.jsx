@@ -33,7 +33,11 @@ const SignUp = () => {
             }
         } catch (error) {
             console.error('新規登録エラー:', error);
-            alert('新規登録中にエラーが発生しました');
+            if (error.response && error.response.data && error.response.data.errors) {
+                alert(`新規登録中にエラーが発生しました: ${error.response.data.errors.join(', ')}`);
+            } else {
+                alert('新規登録中にエラーが発生しました');
+            }
         }
     };
 
