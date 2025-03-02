@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, 
-    path: 'auth', 
+    path: 'users', 
     defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :daily_calories, only: [:index, :create]
   resources :steps, only: [:index, :create]
   resources :intake_calories, only: [:index, :create]
+  resources :users, only: [:show]
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {

@@ -4,19 +4,27 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/SignUp.css';
 
+
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
+        console.log('Form data:', data);
         try {
-            const res = await axios.post('/auth', {
-                user: {
-                    email: data.email,
-                    password: data.password,
-                    password_confirmation: data.passwordConfirmation,
-                },
-            }, { withCredentials: true });
+            const res = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/users/sign_up', {
+                email: data.email,
+                password: data.password,
+                password_confirmation: data.passwordConfirmation,
+            }, {
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true
+            });
+
+            localStorage.setItem("access-token", res.headers["access-token"]);
+            localStorage.setItem("client", res.headers["client"]);
+            localStorage.setItem("uid", res.headers["uid"]);
+            console.log('Response:', res);
             if (res.status === 201) {
                 alert('新規登録に成功しました');
                 navigate('/login');
