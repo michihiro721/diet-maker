@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, 
-    path: 'users', 
+    path: 'auth', 
     defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',

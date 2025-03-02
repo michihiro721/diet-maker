@@ -13,7 +13,7 @@ const SignUp = () => {
     const onSubmit = async (data) => {
         console.log('Form data:', data);
         try {
-            const res = await axios.post(`${API_BASE_URL}/users`, {
+            const res = await axios.post(`${API_BASE_URL}/auth`, {
                 user: {
                     name: data.name,
                     email: data.email,
@@ -24,10 +24,6 @@ const SignUp = () => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true
             });
-
-            localStorage.setItem("access-token", res.headers["access-token"]);
-            localStorage.setItem("client", res.headers["client"]);
-            localStorage.setItem("uid", res.headers["uid"]);
             console.log('Response:', res);
             if (res.status === 201) {
                 alert('新規登録に成功しました');
@@ -37,7 +33,7 @@ const SignUp = () => {
             }
         } catch (error) {
             console.error('新規登録エラー:', error);
-            alert(`新規登録中にエラーが発生しました');
+            alert('新規登録中にエラーが発生しました');
         }
     };
 
