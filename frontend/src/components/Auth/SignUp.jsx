@@ -25,7 +25,7 @@ const SignUp = () => {
                 withCredentials: true
             });
             console.log('Response:', res);
-            if (res.status === 201) {
+            if (res.status === 201 || res.status === 200) {
                 alert('新規登録に成功しました');
                 navigate('/login');
             } else {
