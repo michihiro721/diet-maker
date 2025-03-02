@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/SignUp.css';
 
+const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -12,10 +13,13 @@ const SignUp = () => {
     const onSubmit = async (data) => {
         console.log('Form data:', data);
         try {
-            const res = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/users/sign_up', {
-                email: data.email,
-                password: data.password,
-                password_confirmation: data.passwordConfirmation,
+            const res = await axios.post(`${API_BASE_URL}/users`, {
+                user: {
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                    password_confirmation: data.passwordConfirmation,
+                },
             }, {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true
@@ -33,7 +37,7 @@ const SignUp = () => {
             }
         } catch (error) {
             console.error('新規登録エラー:', error);
-            alert('新規登録中にエラーが発生しました');
+            alert(`新規登録中にエラーが発生しました');
         }
     };
 
@@ -41,6 +45,14 @@ const SignUp = () => {
         <div className="custom-signup-container">
             <h2>新規登録</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="custom-signup-form">
+                <div>
+                    <label>名前</label>
+                    <input
+                        type="text"
+                        {...register('name', { required: '名前を入力してください' })}
+                    />
+                    {errors.name && <p>{errors.name.message}</p>}
+                </div>
                 <div>
                     <label>メールアドレス</label>
                     <input
