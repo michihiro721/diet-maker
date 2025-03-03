@@ -13,18 +13,17 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/auth/sign_in`, {
-        user: {
-          email: data.email,
-          password: data.password,
-        },
+        email: data.email,
+        password: data.password,
       }, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true
       });
+      console.log('Response Headers:', res.headers);
 
       if (res.status === 200) {
         // トークンをlocalStorageに保存
-        const token = res.headers['authorization'];
+        const token = res.data.token || res.headers['authorization'].split(' ')[1];
         if (token) {
           localStorage.setItem('jwt', token);
         }
