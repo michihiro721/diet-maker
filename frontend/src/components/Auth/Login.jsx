@@ -13,8 +13,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/auth/sign_in`, {
-        email: data.email,
-        password: data.password,
+        user: {
+            email: data.email,
+            password: data.password,
+          },
       }, {
         headers: { "Content-Type": "application/json" }
       });
