@@ -19,7 +19,7 @@ const Login = () => {
         },
       }, {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true
+        withCredentials: false
       });
 
       if (res.status === 200) {
