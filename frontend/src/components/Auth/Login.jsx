@@ -13,10 +13,8 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/auth/sign_in`, {
-        user: {
-          email: data.email,
-          password: data.password,
-        },
+        email: data.email,
+        password: data.password,
       }, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true
@@ -25,15 +23,21 @@ const Login = () => {
       console.log("レスポンスヘッダー:", res.headers);
 
       if (res.status === 200) {
-        // トークンをlocalStorageに保存
-        const token = res.headers['authorization'] || res.headers['Authorization'];
-        console.log("取得したトークン:", token);
-        if (token) {
-          localStorage.setItem('jwt', token);
-        }
+        const token = res.headers['access-token'];
+        const client = res.headers['client'];
+        const uid = res.headers['uid'];
 
-        alert('ログインに成功しました');
-        navigate('/');
+        console.log("取得したトークン:", token, client, uid);
+
+        if (token && client && uid) {
+          localStorage.setItem('access-token', token);
+          localStorage.setItem('client', client);
+          localStorage.setItem('uid', uid);
+          alert('ログインに成功しました');
+          navigate('/');
+        } else {
+          alert('ログイン成功しましたが、トークンが取得できませんでした');
+        }
       } else {
         alert('ログインに失敗しました');
       }
