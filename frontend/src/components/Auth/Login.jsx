@@ -24,7 +24,7 @@ const Login = () => {
 
       if (res.status === 200) {
         // トークンをlocalStorageに保存
-        const token = res.headers['authorization'];
+        const token = res.headers['authorization'] || res.headers['Authorization'];
         if (token) {
           localStorage.setItem('jwt', token);
         }
