@@ -4,19 +4,31 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Login.css';
 
+const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
+
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post('/auth/sign_in', {
+      const res = await axios.post(`${API_BASE_URL}/auth/sign_in`, {
         user: {
           email: data.email,
           password: data.password,
         },
+      }, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true
       });
+
       if (res.status === 200) {
+        // トークンをlocalStorageに保存
+        const token = res.headers['authorization'];
+        if (token) {
+          localStorage.setItem('jwt', token);
+        }
+
         alert('ログインに成功しました');
         navigate('/');
       } else {
@@ -24,7 +36,11 @@ const Login = () => {
       }
     } catch (error) {
       console.error('ログインエラー:', error);
-      alert('ログイン中にエラーが発生しました');
+      if (error.response && error.response.data && error.response.data.errors) {
+        alert(`ログイン中にエラーが発生しました: ${error.response.data.errors.join(', ')}`);
+      } else {
+        alert('ログイン中にエラーが発生しました');
+      }
     }
   };
 
