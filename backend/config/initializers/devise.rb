@@ -320,8 +320,5 @@ Devise.setup do |config|
       ['DELETE', %r{^/auth/sign_out$}]
     ]
     jwt.expiration_time = ENV['DEVISE_JWT_EXPIRATION_TIME'].to_i.hours
-    jwt.request_formats = {
-      user: [:json]
-    }
   end
 end
