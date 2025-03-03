@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Login.css';
 
-const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
+const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,36 +13,40 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/auth/sign_in`, {
-        user: {
-          email: data.email,
-          password: data.password,
-        },
+        email: data.email,
+        password: data.password,
       }, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true
+        headers: { "Content-Type": "application/json" }
       });
 
       console.log("レスポンスヘッダー:", res.headers);
 
-      if (res.status === 200) {
-        // トークンをlocalStorageに保存
-        const token = res.headers['authorization'] || res.headers['Authorization'];
-        console.log("取得したトークン:", token);
-        if (token) {
-          localStorage.setItem('jwt', token);
-        }
+      // `Authorization` ヘッダーを取得
+      const token = res.headers['authorization'] || res.headers['Authorization'];
+      console.log("取得したトークン:", token);
 
+      if (token) {
+        localStorage.setItem('jwt', token);
         alert('ログインに成功しました');
         navigate('/');
       } else {
-        alert('ログインに失敗しました');
+        alert('ログインに失敗しました: JWTトークンが見つかりません');
       }
+
     } catch (error) {
       console.error('ログインエラー:', error);
-      if (error.response && error.response.data && error.response.data.errors) {
-        alert(`ログイン中にエラーが発生しました: ${error.response.data.errors.join(', ')}`);
+      
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 401) {
+          alert('認証に失敗しました。メールアドレスまたはパスワードが正しくありません。');
+        } else if (status === 500) {
+          alert('サーバーエラーが発生しました。しばらくしてから再試行してください。');
+        } else {
+          alert(`エラーが発生しました: ${data.message || '不明なエラー'}`);
+        }
       } else {
-        alert('ログイン中にエラーが発生しました');
+        alert('ネットワークエラーが発生しました。インターネット接続を確認してください。');
       }
     }
   };
