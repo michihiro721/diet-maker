@@ -24,17 +24,16 @@ const Login = () => {
 
 
     if (res.status === 200) {
-      console.log(res.headers);
-      
-      const token = res.headers['authorization'];
-      
-      console.log("取得したトークン:", token);
-      
-      if (token) {
-          localStorage.setItem('jwt', token.split(' ')[1]);
-      }
-      alert('ログインに成功しました');
-      navigate('/');
+        const token = res.headers['authorization'];
+        if (token) {
+            console.log("取得したトークン:", token);
+            // トークンをlocalStorageに保存
+            localStorage.setItem('jwt', token.split(' ')[1]);
+            alert('ログインに成功しました');
+            navigate('/');
+        } else {
+            alert('トークンが見つかりませんでした');
+        }
     }
 
         alert('ログインに成功しました');
