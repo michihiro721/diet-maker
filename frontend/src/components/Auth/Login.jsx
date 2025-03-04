@@ -25,7 +25,7 @@ const Login = () => {
       console.log("レスポンスヘッダー:", res.headers);
 
       if (res.status === 200) {
-        console.log("レスポンスヘッダー:", res.headers);
+        console.log("取得したトークン:", token);
         // トークンをlocalStorageに保存
         const token = res.headers.get('Authorization');
         console.log("取得したトークン:", token);
