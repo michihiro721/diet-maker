@@ -19,14 +19,15 @@ const Login = () => {
         },
       }, {
         headers: { "Content-Type": "application/json" },
-        // withCredentials: true
+        withCredentials: true
       });
 
-      console.log("レスポンスヘッダー:", res.headers);
+    //   console.log("レスポンスヘッダー:", res.headers);
 
-      if (res.status === 200) {
+    //   if (res.status === 200) {
+        console.log(Object.keys(res.status))
         // トークンをlocalStorageに保存
-        const token = res.headers['authorization'] || res.headers['authorization'];
+        const token = res.headers['authorization'] || res.headers['Authorization'];
         console.log("取得したトークン:", token);
         if (token) {
           localStorage.setItem('jwt', token);
@@ -34,9 +35,9 @@ const Login = () => {
 
         alert('ログインに成功しました');
         navigate('/');
-      } else {
-        alert('ログインに失敗しました');
-      }
+    //   } else {
+    //     alert('ログインに失敗しました');
+    //   }
     } catch (error) {
       console.error('ログインエラー:', error);
       if (error.response && error.response.data && error.response.data.errors) {
