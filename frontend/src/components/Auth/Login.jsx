@@ -23,7 +23,6 @@ const Login = () => {
       });
 
     console.log("レスポンスヘッダー:", res.headers);
-    console.log("Authorizationヘッダー:", res.headers['authorization']);
 
       if (res.status === 200) {
         // トークンをlocalStorageに保存

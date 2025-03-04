@@ -103,7 +103,7 @@ Rails.application.configure do
         headers: :any,
         methods: [:get, :post, :put, :patch, :delete, :options, :head],
         credentials: true,
-        expose: ['Authorization']
+        expose: ['Authorization', 'Content-Length']
     end
   end
 end
