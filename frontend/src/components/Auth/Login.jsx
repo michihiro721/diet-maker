@@ -29,7 +29,7 @@ const Login = () => {
         const token = res.headers['authorization'] || res.headers['Authorization'];
         console.log("取得したトークン:", token);
         if (token) {
-          localStorage.setItem('jwt', token);
+            localStorage.setItem('jwt', token.split(' ')[1]);
         }
 
         alert('ログインに成功しました');
