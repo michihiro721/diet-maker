@@ -26,10 +26,10 @@ const Login = () => {
     if (res.status === 200) {
       console.log(res.headers['authorization']);
       // トークンをlocalStorageに保存
-      const token = res.headers['authorization'] || res.headers['Authorization'];
+      const token = res.headers['authorization'];
       console.log("取得したトークン:", token);
       if (token) {
-        localStorage.setItem('jwt', token);
+        localStorage.setItem('jwt', token.split(' ')[1]);
       }
     }
 
