@@ -13,34 +13,34 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(`${API_BASE_URL}/auth/sign_in`, {
-        user: {
-          email: data.email,
-          password: data.password,
-        },
+        email: data.email,
+        password: data.password,
       }, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true
       });
 
-    console.log("取得したトークン:", res.headers['authorization'] || res.headers['Authorization']);
-    if (res.status === 200) {
-        const token = res.headers['authorization'] || res.headers['Authorization'];
-        if (token) {
-            console.log("取得したトークン:", token);
-            // トークンをlocalStorageに保存
-            localStorage.setItem('jwt', token.split(' ')[1]);
-            alert('ログインに成功しました');
-            navigate('/');
-        } else {
-            alert('トークンが見つかりませんでした');
-        }
-    }
+      console.log("レスポンスヘッダー:", res.headers);
 
-        alert('ログインに成功しました');
-        navigate('/');
-    //   } else {
-    //     alert('ログインに失敗しました');
-    //   }
+      if (res.status === 200) {
+        const token = res.headers['access-token'];
+        const client = res.headers['client'];
+        const uid = res.headers['uid'];
+
+        console.log("取得したトークン:", token, client, uid);
+
+        if (token && client && uid) {
+          localStorage.setItem('access-token', token);
+          localStorage.setItem('client', client);
+          localStorage.setItem('uid', uid);
+          alert('ログインに成功しました');
+          navigate('/');
+        } else {
+          alert('ログイン成功しましたが、トークンが取得できませんでした');
+        }
+      } else {
+        alert('ログインに失敗しました');
+      }
     } catch (error) {
       console.error('ログインエラー:', error);
       if (error.response && error.response.data && error.response.data.errors) {
