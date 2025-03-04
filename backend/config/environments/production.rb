@@ -102,7 +102,8 @@ Rails.application.configure do
       resource '*',
         headers: :any,
         methods: [:get, :post, :put, :patch, :delete, :options, :head],
-        credentials: true
+        credentials: true,
+        expose: ['Authorization']
     end
   end
 end
