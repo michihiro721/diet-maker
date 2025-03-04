@@ -22,7 +22,7 @@ const Login = () => {
         withCredentials: true
       });
 
-
+      console.log("取得したトークン:", token);
     if (res.status === 200) {
         const token = res.headers['authorization'] || res.headers['Authorization'];
         if (token) {
