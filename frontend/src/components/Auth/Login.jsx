@@ -22,10 +22,10 @@ const Login = () => {
         // withCredentials: true
       });
 
-      console.log("レスポンスヘッダー:", res.headers);
+    console.log("レスポンスヘッダー:", res.headers);
+    console.log("Authorizationヘッダー:", res.headers['authorization']);
 
       if (res.status === 200) {
-        console.log("取得したトークン:", token);
         // トークンをlocalStorageに保存
         const token = res.headers.get('Authorization');
         console.log("取得したトークン:", token);
