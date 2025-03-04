@@ -7,10 +7,7 @@ class Users::SessionsController < Devise::SessionsController
   def respond_with(resource, _opts = {})
     token = request.env['warden-jwt_auth.token']  # JWTトークンを取得
     if token
-      headers['Authorization'] = "Bearer #{token}"  # ヘッダーを設定
-      headers['access-token'] = token
-      headers['client'] = resource.client_id
-      headers['uid'] = resource.uid
+      response.set_header('Authorization', "Bearer #{token}")  # ヘッダーを設定
       render json: { message: 'Logged in successfully.', token: token }, status: :ok
     else
       render json: { message: 'JWT token is missing' }, status: :unauthorized
