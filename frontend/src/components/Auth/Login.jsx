@@ -23,14 +23,17 @@ const Login = () => {
       });
 
 
-    if (res.status === 200) {
-      console.log(res.headers['authorization']);
-      // トークンをlocalStorageに保存
-      const token = res.headers['authorization'];
-      console.log("取得したトークン:", token);
-      if (token) {
-        localStorage.setItem('jwt', token.split(' ')[1]);
-      }
+      if (res.status === 200) {
+        console.log(res.headers);
+        
+        // `get` メソッドを試す
+        const token = res.headers.get('Authorization') || res.headers['authorization'];
+        
+        console.log("取得したトークン:", token);
+        
+        if (token) {
+            localStorage.setItem('jwt', token.split(' ')[1]);
+        }
     }
 
         alert('ログインに成功しました');
