@@ -21,7 +21,7 @@ const Profile = () => {
       }
 
       try {
-        const res = await axios.get(`${API_BASE_URL}/profile`, {
+        const res = await axios.get(`${API_BASE_URL}/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,7 +47,7 @@ const Profile = () => {
     }
 
     try {
-      await axios.put(`${API_BASE_URL}/profile`, {
+      await axios.put(`${API_BASE_URL}/user`, {
         nickname: newNickname,
       }, {
         headers: {
