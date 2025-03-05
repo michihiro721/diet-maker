@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
+  resource :user, only: [:show, :update]
+
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
 
