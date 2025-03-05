@@ -19,6 +19,7 @@ import Privacy from './components/Privacy/Privacy';
 import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
 import Resources from './components/Resources';
+import Profile from './components/Profile/Profile';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -46,6 +47,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/" element={
           <>
             <Calender onDateSelect={handleDateSelect} />

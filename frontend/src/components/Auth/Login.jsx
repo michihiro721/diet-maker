@@ -19,18 +19,21 @@ const Login = () => {
         },
       }, {
         headers: { "Content-Type": "application/json" },
-        // withCredentials: true
       });
 
-    console.log("レスポンスヘッダー:", res.headers);
+      console.log("レスポンスヘッダー:", res.headers);
 
       if (res.status === 200) {
         // トークンをlocalStorageに保存
-        const token = res.headers.get('Authorization');
+        const token = res.headers['authorization'];
         console.log("取得したトークン:", token);
         if (token) {
-            localStorage.setItem('jwt', token.split(' ')[1]);
+          localStorage.setItem('jwt', token.split(' ')[1]);
         }
+
+        // ユーザーIDをlocalStorageに保存
+        const userId = res.data.user.id;
+        localStorage.setItem('userId', userId);
 
         alert('ログインに成功しました');
         navigate('/');

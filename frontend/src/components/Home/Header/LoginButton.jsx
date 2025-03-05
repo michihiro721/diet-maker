@@ -17,7 +17,7 @@ const LoginButton = () => {
   return (
     <div>
       <button className="header-login-button" onClick={toggleMenu}>
-      <i class="fa-solid fa-user"></i>
+        <i className="fa-solid fa-user"></i>
       </button>
       {isMenuOpen && <LoginModal closeMenu={closeMenu} />}
     </div>
