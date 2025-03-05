@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/header.css";
+import LoginModal from "./LoginModal";
+import "./styles/LoginButton.css";
 
 const LoginButton = () => {
-  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const goToLogin = () => {
-    navigate("/login");
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
-return (
-    <button className="header-login-button" onClick={goToLogin}>
-        <i class="fa-solid fa-circle-user"></i>
-    </button>
-);
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <div>
+      <button className="header-login-button" onClick={toggleMenu}>
+      <i class="fa-solid fa-user"></i>
+      </button>
+      {isMenuOpen && <LoginModal closeMenu={closeMenu} />}
+    </div>
+  );
 };
 
 export default LoginButton;
