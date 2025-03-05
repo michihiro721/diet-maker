@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import MenuButton from "./MenuButton";
 import MenuModal from "./MenuModal";
+import LoginButton from "./LoginButton";
 import "./styles/header.css";
 
 const Header = () => {
@@ -19,10 +20,6 @@ const Header = () => {
 
   const goToHome = () => {
     navigate("/");
-  };
-
-  const goToLogin = () => {
-    navigate("/login");
   };
 
   const getTitle = () => {
@@ -67,10 +64,7 @@ const Header = () => {
           </button>
         )}
         <div className="header-title">{getTitle()}</div>
-        <button className="header-login-button" onClick={goToLogin}>
-          <i className="fa-solid fa-right-to-bracket"></i>
-          <span className="login-text">ログイン</span>
-        </button>
+        <LoginButton />
         <MenuButton toggleMenu={toggleMenu} />
       </header>
 

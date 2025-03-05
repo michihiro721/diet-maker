@@ -1,0 +1,21 @@
+.header-login-button {
+    background: #5d9cec;
+    transition: background-color 0.3s, transform 0.3s; /* 背景色と拡大の変化をスムーズに */
+    border: none;
+    position: fixed; /* ページ遷移しても位置が変わらないように固定 */
+    left: 30px;
+    top: 15px;
+  }
+  
+  .header-login-button .fa-user {
+    font-size: 5vh;
+    color: #fff;
+  }
+
+.header-login-button:hover .fa-user {
+    color: #d3f2ff;
+}
+  
+  .header-login-button:hover {
+    transform: scale(1.1);
+  }
