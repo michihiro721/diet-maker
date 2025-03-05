@@ -14,20 +14,21 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('jwt');
-      if (!token) {
+      const userId = localStorage.getItem('userId');
+      if (!token || !userId) {
         alert('ログインしてください');
         navigate('/login');
         return;
       }
 
       try {
-        const res = await axios.get(`${API_BASE_URL}/user`, {
+        const res = await axios.get(`${API_BASE_URL}/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setEmail(res.data.email);
-        setNickname(res.data.nickname);
+        setNickname(res.data.name);
       } catch (error) {
         console.error('プロフィール取得エラー:', error);
         alert('ログインしてください');
@@ -40,15 +41,16 @@ const Profile = () => {
 
   const handleNicknameChange = async () => {
     const token = localStorage.getItem('jwt');
-    if (!token) {
+    const userId = localStorage.getItem('userId');
+    if (!token || !userId) {
       alert('ログインしてください');
       navigate('/login');
       return;
     }
 
     try {
-      await axios.put(`${API_BASE_URL}/user`, {
-        nickname: newNickname,
+      await axios.put(`${API_BASE_URL}/users/${userId}`, {
+        name: newNickname,
       }, {
         headers: {
           Authorization: `Bearer ${token}`,

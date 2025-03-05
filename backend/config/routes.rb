@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-  resource :user, only: [:show, :update]
+  resources :users, only: [:show, :update]
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
@@ -30,7 +30,6 @@ Rails.application.routes.draw do
   resources :daily_calories, only: [:index, :create]
   resources :steps, only: [:index, :create]
   resources :intake_calories, only: [:index, :create]
-  resources :users, only: [:show]
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {

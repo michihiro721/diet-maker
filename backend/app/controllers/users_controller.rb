@@ -2,20 +2,22 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    render json: { email: current_user.email, nickname: current_user.nickname }
+    user = User.find(params[:id])
+    render json: { email: user.email, name: user.name }
   end
 
   def update
-    if current_user.update(user_params)
+    user = User.find(params[:id])
+    if user.update(user_params)
       render json: { message: 'Profile updated successfully.' }, status: :ok
     else
-      render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:nickname)
+    params.require(:user).permit(:name)
   end
 end
