@@ -12,7 +12,7 @@
     transition: background-color 0.3s, transform 0.3s; /* 背景色と拡大の変化をスムーズに */
     position: absolute; /* 絶対位置に配置 */
     right: 70px; /* 右端からの距離を設定 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* スタイリッシュな影を追加 */
+
   }
   
   /* メニューボタン内のアイコンのスタイル */
