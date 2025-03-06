@@ -27,7 +27,7 @@ Devise.setup do |config|
   config.mailer_sender = 'ms.michihiro.0721@gmail.com'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'Devise::Mailer'
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -318,9 +318,6 @@ Devise.setup do |config|
     jwt.expiration_time = (ENV['DEVISE_JWT_EXPIRATION_TIME'] || 24).to_i.hours
     jwt.request_formats = { user: [:json] }
   end
-  
-  # パスワードリセットURLをフロントエンドのURLに変更
-  config.mailer.default_url_options = { host: 'diet-maker-d07eb3099e56.herokuapp.com', protocol: 'https' }
 
   # Deviseのパスワードリセットルートをカスタマイズ
   ActionMailer::Base.default_url_options = { host: 'diet-maker-d07eb3099e56.herokuapp.com', protocol: 'https' }
