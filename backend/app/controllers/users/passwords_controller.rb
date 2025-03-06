@@ -27,6 +27,23 @@ class Users::PasswordsController < Devise::PasswordsController
     end
   end
 
+  # トークン検証用のエンドポイント
+  def validate_token
+    reset_password_token = params[:token]
+    user = User.with_reset_password_token(reset_password_token)
+    
+    if user.present?
+      render json: { valid: true }, status: :ok
+    else
+      render json: { valid: false, error: "無効なトークンです" }, status: :unprocessable_entity
+    end
+  end
+
+  # パスワードリセット用メールのURLをカスタマイズ
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    nil
+  end
+
   protected
 
   def json_request?

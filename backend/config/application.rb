@@ -41,7 +41,8 @@ module DietMaker
     # APIモードでもセッションを有効にする
     config.middleware.use ActionDispatch::Session::CookieStore
 
-
     config.public_file_server.enabled = true
+
+    config.i18n.default_locale = :ja
   end
 end

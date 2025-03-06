@@ -1,0 +1,10 @@
+ja:
+  devise:
+    mailer:
+      reset_password_instructions:
+        subject: "パスワード再設定のご案内"
+        greeting: "こんにちは、%{recipient}様"
+        instruction: "パスワード再設定のリクエストを受け付けました。以下のリンクをクリックしてパスワードを再設定してください。"
+        action: "パスワードを変更する"
+        instruction_2: "このリクエストを行っていない場合は、このメールを無視してください。"
+        instruction_3: "上記のリンクにアクセスして新しいパスワードを設定するまで、パスワードは変更されません。"
