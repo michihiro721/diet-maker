@@ -20,6 +20,8 @@ import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
 import Resources from './components/Resources';
 import Profile from './components/Profile/Profile';
+import ForgotPassword from './components/Auth/ForgotPassword';
+import ResetPassword from './components/Auth/ResetPassword';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -48,6 +50,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/" element={
           <>
             <Calender onDateSelect={handleDateSelect} />

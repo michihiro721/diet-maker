@@ -4,8 +4,14 @@ Rails.application.routes.draw do
     defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',
-      registrations: 'users/registrations'
+      registrations: 'users/registrations',
+      passwords: 'users/passwords'
     }
+
+  # パスワードリセットトークン検証用のルート
+  devise_scope :user do
+    post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
+  end
 
   resources :users, only: [:show, :update]
 

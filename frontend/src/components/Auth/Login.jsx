@@ -81,6 +81,10 @@ const Login = () => {
         <button type="submit">ログイン</button>
       </form>
       <button onClick={goToSignUp} className="signup-button">新規登録</button>
+        {/* パスワードリセットへのリンクを追加 */}
+  <div className="forgot-password-link">
+    <a href="/forgot-password">パスワードをお忘れですか？</a>
+  </div>
     </div>
   );
 };
