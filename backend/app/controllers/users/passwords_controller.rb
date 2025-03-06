@@ -2,9 +2,6 @@
 class Users::PasswordsController < Devise::PasswordsController
   respond_to :json
 
-  # API用のコントローラーでは、protect_from_forgeryを使用します
-  protect_from_forgery with: :null_session, if: :json_request?
-
   # パスワードリセットリクエスト
   def create
     self.resource = resource_class.send_reset_password_instructions(resource_params)
