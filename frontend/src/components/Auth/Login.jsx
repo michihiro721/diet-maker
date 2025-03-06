@@ -28,7 +28,11 @@ const Login = () => {
         const token = res.headers['authorization'];
         console.log("取得したトークン:", token);
         if (token) {
-          localStorage.setItem('jwt', token.split(' ')[1]);
+          // より堅牢な方法でBearerプレフィックスを除去
+          const cleanToken = token.replace('Bearer ', '');
+          localStorage.setItem('jwt', cleanToken);
+          
+          console.log("保存されたトークン:", cleanToken);
         }
 
         // ユーザーIDをlocalStorageに保存
