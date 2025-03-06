@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    render json: { email: current_user.email, nickname: current_user.nickname }
+    render json: { email: current_user.email, nickname: current_user.name }
   end
 
   def update
@@ -16,6 +16,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:nickname)
+    params.require(:user).permit(:name)
   end
 end
