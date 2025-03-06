@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',
-      registrations: 'users/registrations'
+      registrations: 'users/registrations',
+      passwords: 'users/passwords'
     }
 
   resources :users, only: [:show, :update]
