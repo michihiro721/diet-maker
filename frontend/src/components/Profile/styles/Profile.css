@@ -5,36 +5,49 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    margin-top: 200px;
+    text-align: center;
   }
-  
+
   .profile-container h1 {
     font-size: 24px;
     margin-bottom: 20px;
+
   }
-  
+
   .profile-container p {
     font-size: 18px;
     margin-bottom: 10px;
+    font-weight: bold;
   }
-  
+
   .profile-container input {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    display: block;
+    margin: 10px auto;
   }
-  
+
   .profile-container button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
+    width: 40%;
+    padding: 12px;
+    background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 25px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
   }
-  
+
   .profile-container button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
+    transform: scale(1.05);
   }

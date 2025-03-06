@@ -77,7 +77,7 @@ const Profile = () => {
     try {
       const res = await axios.put(`${API_BASE_URL}/users/${userId}`, {
         user: {
-          nickname: newNickname
+          name: newNickname
         }
       }, {
         headers: {
@@ -102,10 +102,10 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <h1>プロフィール</h1>
+      <h1 className="profile-title">プロフィール</h1>
       <div className="profile-info">
-        <p>メールアドレス: {email || '読み込み中...'}</p>
-        <p>ニックネーム: {nickname || '読み込み中...'}</p>
+        <p className="profile-email">メールアドレス: {email || '読み込み中...'}</p>
+        <p className="profile-nickname">ニックネーム: {nickname || '読み込み中...'}</p>
       </div>
       <div className="profile-form">
         <input
