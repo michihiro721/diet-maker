@@ -1,7 +1,9 @@
 # app/controllers/users/passwords_controller.rb
 class Users::PasswordsController < Devise::PasswordsController
   respond_to :json
-  skip_before_action :verify_authenticity_token, if: :json_request?
+
+  # API用のコントローラーでは、protect_from_forgeryを使用します
+  protect_from_forgery with: :null_session, if: :json_request?
 
   # パスワードリセットリクエスト
   def create
