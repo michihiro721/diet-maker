@@ -5,12 +5,24 @@ class GoalsController < ApplicationController
   end
 
   def create
-    # 既存の目標を検索し、存在する場合は更新、存在しない場合は新規作成
-    goal = Goal.first_or_initialize(user_id: goal_params[:user_id], goal_type: goal_params[:goal_type])
-    if goal.update(goal_params)
-      render json: goal, status: :created
+    # user_idとgoal_typeに基づいて既存の目標を検索
+    existing_goal = Goal.find_by(user_id: goal_params[:user_id], goal_type: goal_params[:goal_type])
+    
+    if existing_goal
+      # 既存のレコードが見つかれば更新
+      if existing_goal.update(goal_params)
+        render json: existing_goal, status: :ok
+      else
+        render json: existing_goal.errors, status: :unprocessable_entity
+      end
     else
-      render json: goal.errors, status: :unprocessable_entity
+      # 見つからなければ新規作成
+      goal = Goal.new(goal_params)
+      if goal.save
+        render json: goal, status: :created
+      else
+        render json: goal.errors, status: :unprocessable_entity
+      end
     end
   end
 
