@@ -33,9 +33,9 @@ const ResetPassword = () => {
 
       if (response.status === 200) {
         setMessage('パスワードが正常に更新されました。');
-        // 3秒後にログインページへリダイレクト
+        // 3秒後に本番環境のログインページへリダイレクト
         setTimeout(() => {
-          navigate('/login');
+          window.location.href = 'https://diet-maker-mu.vercel.app/login';
         }, 3000);
       }
     } catch (error) {
