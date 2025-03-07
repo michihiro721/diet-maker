@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./styles/BodyInfo.css";
 import CalculatorModal from "./CalculatorModal"; // CalculatorModalコンポーネントをインポート
 
@@ -11,6 +12,56 @@ const BodyInfo = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentField, setCurrentField] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // ユーザーIDを取得し、既存のデータがあれば読み込む
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10));
+      fetchUserData(storedUserId);
+    } else {
+      setError("ユーザーIDが見つかりません。ログインしてください。");
+      setLoading(false);
+    }
+  }, []);
+
+  // ユーザーデータを取得する関数
+  const fetchUserData = async (userId) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const token = localStorage.getItem('jwt');
+      
+      if (!token) {
+        setError("認証情報が見つかりません。再度ログインしてください。");
+        setLoading(false);
+        return;
+      }
+      
+      const response = await axios.get(`${apiUrl}/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const userData = response.data;
+      
+      // 取得したデータをセット
+      if (userData.gender) setGender(userData.gender);
+      if (userData.height) setHeight(`${userData.height} cm`);
+      if (userData.weight) setWeight(`${userData.weight} kg`);
+      if (userData.age) setAge(`${userData.age} 歳`);
+      
+      setLoading(false);
+    } catch (error) {
+      console.error("ユーザーデータの取得に失敗しました:", error);
+      setError("ユーザーデータの取得に失敗しました。");
+      setLoading(false);
+    }
+  };
 
   const calculateBMR = () => {
     const heightValue = parseFloat(height.replace(" cm", ""));
@@ -24,16 +75,63 @@ const BodyInfo = () => {
       bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
     }
     setBmr(bmrValue);
+    return bmrValue;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!gender || !height || !weight || !age) {
-      setError("全ての項目を入力してください");
+    
+    if (!userId) {
+      setError("ユーザーIDが見つかりません。ログインしてください。");
       return;
     }
+    
+    if (!gender || !height || !weight || !age) {
+      setError("全ての項目を入力してください");
+      setSuccess("");
+      return;
+    }
+    
     setError("");
-    calculateBMR();
+    const bmrValue = calculateBMR();
+    
+    // データをサーバーに保存
+    try {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const token = localStorage.getItem('jwt');
+      
+      if (!token) {
+        setError("認証情報が見つかりません。再度ログインしてください。");
+        return;
+      }
+      
+      const heightValue = parseFloat(height.replace(" cm", ""));
+      const weightValue = parseFloat(weight.replace(" kg", ""));
+      const ageValue = parseFloat(age.replace(" 歳", ""));
+      
+      const response = await axios.put(`${apiUrl}/users/${userId}`, {
+        user: {
+          height: heightValue,
+          weight: weightValue,
+          age: ageValue,
+          gender: gender
+        }
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.status === 200) {
+        setBmr(bmrValue);
+        alert("身体情報が正常に保存されました。");
+      }
+    } catch (error) {
+      console.error("データの保存に失敗しました:", error);
+      setError("データの保存に失敗しました: " + (error.response?.data?.errors?.join(", ") || error.message));
+      setSuccess("");
+    }
   };
 
   const handleInputClick = (field) => {
@@ -52,11 +150,16 @@ const BodyInfo = () => {
     setModalOpen(false);
   };
 
+  if (loading) {
+    return <div className="body-info-loading">データを読み込み中...</div>;
+  }
+
   return (
     <div className="body-info-wrapper">
       <div className="body-info-container">
         <form onSubmit={handleSubmit} className="body-info-form">
           {error && <p className="body-info-error-message">{error}</p>}
+          {success && <p className="body-info-success-message">{success}</p>}
           <div className="body-info-form-group">
             <label>性別</label>
             <select value={gender} onChange={(e) => setGender(e.target.value)} className="body-info-select">
