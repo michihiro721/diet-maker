@@ -14,10 +14,10 @@ import {
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './styles/Weight.css';
-import '../Home/Body/Calender/styles/CalenderWeekdays.css'; // カレンダーのスタイルをインポート
-import '../Home/Body/Calender/styles/CalenderNavigation.css'; // カレンダーのスタイルをインポート
-import '../Home/Body/Calender/styles/CalenderDays.css'; // カレンダーのスタイルをインポート
-import '../Home/Body/Calender/styles/CalenderCommon.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderWeekdays.css';
+import '../Home/Body/Calender/styles/CalenderNavigation.css';
+import '../Home/Body/Calender/styles/CalenderDays.css';
+import '../Home/Body/Calender/styles/CalenderCommon.css';
 import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
 import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
 import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
@@ -50,22 +50,38 @@ const Weight = () => {
       },
     ],
   });
-  const [period, setPeriod] = useState('7days'); // デフォルトの期間を7日間に設定
-  const [goalWeight, setGoalWeight] = useState(60); // 目標体重を設定
-  const [goalDate, setGoalDate] = useState(new Date()); // 目標達成予定日を設定
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); // 選択された日付がデフォルトで表示（たかさん対応）
-  const [weight, setWeight] = useState(''); // 体重データを管理する状態を追加
-  const [isWeightModalOpen, setIsWeightModalOpen] = useState(false); // 体重モーダルの表示状態を管理
-  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false); // カレンダーモーダルの表示状態を管理
-  const [errorMessage, setErrorMessage] = useState(''); // エラーメッセージを管理
-  const [successMessage, setSuccessMessage] = useState(''); // 成功メッセージを管理
+  const [period, setPeriod] = useState('7days');
+  const [goalWeight, setGoalWeight] = useState(null);
+  const [goalDate, setGoalDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [weight, setWeight] = useState('');
+  const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [userId, setUserId] = useState(null);
+
+  // ユーザーIDをローカルストレージから取得
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10));
+    } else {
+      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
+    }
+  }, []);
 
   const fetchData = async () => {
+    if (!userId) return;
+
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/weights`);
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const response = await axios.get(`${apiUrl}/weights`, {
+        params: { user_id: userId }
+      });
       const weights = response.data;
 
-      console.log("Fetched weights data:", weights); // デバッグ用
+      console.log("Fetched weights data:", weights);
 
       if (weights && weights.length > 0) {
         // 日付でソート
@@ -135,58 +151,81 @@ const Weight = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [period]);
+    if (userId) {
+      fetchData();
+    }
+  }, [period, userId]);
 
   useEffect(() => {
     const fetchGoalData = async () => {
+      if (!userId) return;
+
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/goals/latest`);
+        const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+        const response = await axios.get(`${apiUrl}/goals/latest`, {
+          params: { user_id: userId }
+        });
         const goal = response.data;
 
-        console.log("Fetched goal data:", goal); // デバッグ用
+        console.log("Fetched goal data:", goal);
 
-        setGoalWeight(goal.target_weight);
-        setGoalDate(new Date(goal.end_date));
+        if (goal && Object.keys(goal).length > 0) {
+          setGoalWeight(goal.target_weight);
+          setGoalDate(new Date(goal.end_date));
+        } else {
+          setGoalWeight(null);
+          setGoalDate(null);
+        }
       } catch (error) {
         console.error("Error fetching goal data:", error);
+        setGoalWeight(null);
+        setGoalDate(null);
       }
     };
 
-    fetchGoalData();
-  }, []);
+    if (userId) {
+      fetchGoalData();
+    }
+  }, [userId]);
 
   const handleSave = async () => {
+    if (!userId) {
+      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
+      setSuccessMessage('');
+      return;
+    }
+
     if (!selectedDate || !weight) {
       setErrorMessage('全ての項目を入力してください');
-      setSuccessMessage(''); // 成功メッセージをクリア
+      setSuccessMessage('');
       return;
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/weights`, {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const response = await axios.post(`${apiUrl}/weights`, {
         weight: {
-          user_id: 1, // ユーザーIDを追加
-          date: selectedDate, // 選択された日付を送信
-          weight: weight, // 体重データを送信
+          user_id: userId, // ローカルストレージから取得したIDを使用
+          date: selectedDate,
+          weight: weight,
         }
       });
 
       if (response.status === 201) {
         console.log("Data saved successfully");
-        // データを再取得してグラフを更新
         fetchData();
-        setErrorMessage(''); // エラーメッセージをクリア
-        setSuccessMessage('データの保存に成功しました'); // 成功メッセージを設定
+        setErrorMessage('');
+        setSuccessMessage('データの保存に成功しました');
+        setWeight(''); // 入力フィールドをクリア
       } else {
         console.error("Error saving data:", response.data);
         setErrorMessage('データの保存に失敗しました');
-        setSuccessMessage(''); // 成功メッセージをクリア
+        setSuccessMessage('');
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      setErrorMessage('データの保存に失敗しました');
-      setSuccessMessage(''); // 成功メッセージをクリア
+      setErrorMessage(`データの保存に失敗しました: ${error.response?.data?.error || error.message}`);
+      setSuccessMessage('');
     }
   };
 
@@ -199,15 +238,15 @@ const Weight = () => {
           display: true,
           text: '（日付）',
           font: {
-            size: 20, // フォントサイズを調整
+            size: 20,
           },
-          className: 'weight-x-axis-title', // クラス名を追加
+          className: 'weight-x-axis-title',
         },
         ticks: {
           font: {
-            size: 16, // フォントサイズを調整
+            size: 16,
           },
-          className: 'weight-x-axis-ticks', // クラス名を追加
+          className: 'weight-x-axis-ticks',
         },
       },
       y: {
@@ -215,35 +254,36 @@ const Weight = () => {
           display: true,
           text: '(kg)',
           font: {
-            size: 16, // フォントサイズを調整
+            size: 16,
           },
-          className: 'weight-y-axis-title', // クラス名を追加
+          className: 'weight-y-axis-title',
         },
         ticks: {
           font: {
-            size: 16, // フォントサイズを調整
+            size: 16,
           },
-          className: 'weight-y-axis-ticks', // クラス名を追加
+          className: 'weight-y-axis-ticks',
         },
       },
     },
     plugins: {
       legend: {
-        display: false, // 凡例を非表示にする
+        display: false,
       },
       tooltip: {
         titleFont: {
-          size: 16, // フォントサイズを調整
+          size: 16,
         },
         bodyFont: {
-          size: 12, // フォントサイズを調整
+          size: 12,
         },
-        className: 'weight-tooltip', // クラス名を追加
+        className: 'weight-tooltip',
       },
     },
   };
 
-  const remainingDays = Math.ceil((goalDate - new Date()) / (1000 * 60 * 60 * 24));
+  // 目標達成予定日までの残り日数を計算
+  const remainingDays = goalDate ? Math.ceil((goalDate - new Date()) / (1000 * 60 * 60 * 24)) : null;
 
   const handleDateChange = (date) => {
     const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
@@ -273,10 +313,15 @@ const Weight = () => {
           <Line data={chartData} options={options} />
         </div>
       </div>
-      <div className="goal-info">
-        <p className="goal-info-target-weight">目標体重: {goalWeight} kg</p>
-        <p className="goal-info-target">目標達成予定日までの残り日数: {remainingDays} 日</p>
-      </div>
+      
+      {/* 目標情報は目標が設定されている場合のみ表示 */}
+      {goalWeight && goalDate && (
+        <div className="goal-info">
+          <p className="goal-info-target-weight">目標体重: {goalWeight} kg</p>
+          <p className="goal-info-target">目標達成予定日までの残り日数: {remainingDays} 日</p>
+        </div>
+      )}
+      
       <div className="weight-save-controls">
         <label htmlFor="date-select">日付を選択:</label>
         <input
