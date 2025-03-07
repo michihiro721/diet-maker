@@ -1,7 +1,7 @@
 class TrainingsController < ApplicationController
   def index
     date = params[:date]
-    user_id = params[:user_id] || 1 # ユーザーIDを固定値に設定（ログイン機能実装後に変更）
+    user_id = params[:user_id] # ユーザーIDをパラメーターから直接取得（デフォルト値を削除）
 
     trainings = Training.where(date: date, user_id: user_id)
     render json: trainings
