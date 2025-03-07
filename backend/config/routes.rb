@@ -37,6 +37,9 @@ Rails.application.routes.draw do
   resources :steps, only: [:index, :create]
   resources :intake_calories, only: [:index, :create]
 
+  # パスワードリセット用のルート（優先度高）
+get 'reset-password/:token', to: 'home#index'
+
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {
     !request.xhr? && request.format.html? && !request.path.start_with?('/cable', '/api')
