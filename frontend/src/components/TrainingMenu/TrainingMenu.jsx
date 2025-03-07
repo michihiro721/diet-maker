@@ -80,7 +80,8 @@ const TrainingMenu = () => {
 
   const handleSaveMenu = async () => {
     try {
-      const userId = 1; // ユーザーID固定ログイン機能実装後に変更
+      // ローカルストレージからユーザーIDを取得
+      const userId = localStorage.getItem('userid') || 1;
       const trainingData = [];
       const selectedDate = selectedDates[currentDayMenuIndex];
 

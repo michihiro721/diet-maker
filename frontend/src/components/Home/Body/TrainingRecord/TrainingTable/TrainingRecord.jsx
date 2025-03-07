@@ -47,7 +47,8 @@ const TrainingRecord = () => {
     const fetchTrainings = async () => {
       try {
         const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}`);
+        const userId = localStorage.getItem('userid') || 1; // ローカルストレージからユーザーIDを取得
+        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}&user_id=${userId}`);
         const data = Array.isArray(response.data) ? response.data : [];
         
         // トレーニングデータを種目ごとにまとめる
@@ -179,12 +180,13 @@ const TrainingRecord = () => {
 
   const saveTrainingRecord = async () => {
     const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
+    const userId = localStorage.getItem('userid') || 1; // ローカルストレージからユーザーIDを取得
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
       return training.sets.map(set => ({
         date: formattedDate,
-        user_id: 1, // 固定値のuser_idを設定 ログイン機能実装後に変更
+        user_id: userId, // ローカルストレージから取得したユーザーIDを設定
         goal_id: null, // 必要に応じて設定
         workout_id: workout ? workout.id : null, // workout_idを追加
         sets: training.sets.length, // セット数
