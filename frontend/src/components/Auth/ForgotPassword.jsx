@@ -40,10 +40,10 @@ const ForgotPassword = () => {
   return (
     <div className="forgot-password-container">
       <h2>パスワードをお忘れの方</h2>
-      <p>登録したメールアドレスを入力して、パスワードリセット用のリンクを送信します。</p>
+      <p>登録したメールアドレスを入力して、<br />パスワードリセット用のリンクを送信します。</p>
       
-      {message && <div className="success-message">{message}</div>}
-      {error && <div className="error-message">{error}</div>}
+      {message && <div className="forgot-password-success-message">{message}</div>}
+      {error && <div className="forgot-password-error-message">{error}</div>}
       
       <form onSubmit={handleSubmit(onSubmit)} className="forgot-password-form">
         <div>
@@ -58,13 +58,13 @@ const ForgotPassword = () => {
               }
             })}
           />
-          {errors.email && <p className="form-error">{errors.email.message}</p>}
+          {errors.email && <p className="forgot-password-form-error">{errors.email.message}</p>}
         </div>
         <button type="submit" disabled={loading}>
           {loading ? '送信中...' : 'リセットリンクを送信'}
         </button>
       </form>
-      <div className="auth-links">
+      <div className="forgot-password-auth-links">
         <a href="/login">ログインページに戻る</a>
       </div>
     </div>
