@@ -1,11 +1,15 @@
 class StepsController < ApplicationController
   def index
-    steps = Step.where(user_id: 1) # デフォルトで user_id を 1 に設定
+    if params[:user_id].present?
+      steps = Step.where(user_id: params[:user_id])
+    else
+      steps = Step.all
+    end
     render json: steps
   end
 
   def create
-    Rails.logger.info("Received params: #{params.inspect}") # デバッグコード
+    Rails.logger.info("Received params: #{params.inspect}")
     step = Step.find_or_initialize_by(user_id: step_params[:user_id], date: step_params[:date])
     step.assign_attributes(step_params)
 

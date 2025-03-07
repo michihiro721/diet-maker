@@ -16,10 +16,10 @@ import {
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './styles/calorie-info.css';
-import '../Home/Body/Calender/styles/CalenderWeekdays.css'; // カレンダーのスタイルをインポート
-import '../Home/Body/Calender/styles/CalenderNavigation.css'; // カレンダーのスタイルをインポート
-import '../Home/Body/Calender/styles/CalenderDays.css'; // カレンダーのスタイルをインポート
-import '../Home/Body/Calender/styles/CalenderCommon.css'; // カレンダーのスタイルをインポート
+import '../Home/Body/Calender/styles/CalenderWeekdays.css';
+import '../Home/Body/Calender/styles/CalenderNavigation.css';
+import '../Home/Body/Calender/styles/CalenderDays.css';
+import '../Home/Body/Calender/styles/CalenderCommon.css';
 import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
 import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
 import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
@@ -47,7 +47,8 @@ const CalorieInfo = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
   const [error, setError] = useState("");
-  const [period, setPeriod] = useState('7days'); // デフォルトの期間を7日間に設定
+  const [period, setPeriod] = useState('7days');
+  const [userId, setUserId] = useState(null);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -83,7 +84,7 @@ const CalorieInfo = () => {
         pointStyle: 'circle',
         pointRadius: 3,
         type: 'line',
-        hidden: true, // デフォルトで非表示に設定
+        hidden: true,
       },
       {
         label: 'カロリー差分',
@@ -100,30 +101,64 @@ const CalorieInfo = () => {
     ],
   });
 
+  // ユーザーIDをローカルストレージから取得
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10));
+    } else {
+      setError('ユーザーIDが見つかりません。ログインしてください。');
+    }
+  }, []);
+
   const fetchData = async () => {
+    if (!userId) return;
+
     try {
-      const stepsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/steps`);
-      const dailyCaloriesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/daily_calories`);
-      const intakeCaloriesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/intake_calories`);
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      
+      const stepsResponse = await axios.get(`${apiUrl}/steps`, {
+        params: { user_id: userId }
+      });
+      
+      const dailyCaloriesResponse = await axios.get(`${apiUrl}/daily_calories`, {
+        params: { user_id: userId }
+      });
+      
+      const intakeCaloriesResponse = await axios.get(`${apiUrl}/intake_calories`, {
+        params: { user_id: userId }
+      });
 
       const stepsData = stepsResponse.data.map(item => ({
-        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付 表示方法：x/x
+        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }),
         value: item.steps,
       }));
 
       const dailyCaloriesData = dailyCaloriesResponse.data.map(item => ({
-        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付
+        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }),
         value: item.total_calories,
       }));
 
       const intakeCaloriesData = intakeCaloriesResponse.data.map(item => ({
-        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }), // グラフのラベルに表示する日付
+        date: new Date(item.date).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }),
         value: item.calories,
       }));
 
-      const calorieDifferenceData = dailyCaloriesData.map((item, index) => ({
-        date: item.date,
-        value: intakeCaloriesData[index] ? intakeCaloriesData[index].value - item.value : 0,
+      // カロリー差分データを計算
+      // 日付をキーとした辞書を作成して、同じ日付のデータを結合
+      const dateMap = new Map();
+      
+      dailyCaloriesData.forEach(item => {
+        dateMap.set(item.date, { ...dateMap.get(item.date) || {}, dailyCalories: item.value });
+      });
+      
+      intakeCaloriesData.forEach(item => {
+        dateMap.set(item.date, { ...dateMap.get(item.date) || {}, intakeCalories: item.value });
+      });
+      
+      const calorieDifferenceData = Array.from(dateMap.entries()).map(([date, values]) => ({
+        date,
+        value: (values.intakeCalories || 0) - (values.dailyCalories || 0),
       }));
 
       let filteredStepsData = stepsData;
@@ -134,7 +169,11 @@ const CalorieInfo = () => {
       const now = new Date();
 
       const filterDataByDays = (data, days) => data.slice(-days);
-      const filterDataByMonths = (data, months) => data.filter(item => (now - new Date(item.date.replace(/(\d+)\/(\d+)/, `${now.getFullYear()}/$1/$2`))) / (1000 * 60 * 60 * 24) <= months * 30);
+      const filterDataByMonths = (data, months) => data.filter(item => {
+        const dateParts = item.date.split('/');
+        const itemDate = new Date(now.getFullYear(), parseInt(dateParts[0]) - 1, parseInt(dateParts[1]));
+        return (now - itemDate) / (1000 * 60 * 60 * 24) <= months * 30;
+      });
 
       switch (period) {
         case '7days':
@@ -174,44 +213,69 @@ const CalorieInfo = () => {
           filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
       }
 
+      // 日付順にソート
+      const allDates = [...new Set([
+        ...filteredStepsData.map(item => item.date),
+        ...filteredDailyCaloriesData.map(item => item.date),
+        ...filteredIntakeCaloriesData.map(item => item.date)
+      ])].sort((a, b) => {
+        const [aMonth, aDay] = a.split('/').map(Number);
+        const [bMonth, bDay] = b.split('/').map(Number);
+        return aMonth !== bMonth ? aMonth - bMonth : aDay - bDay;
+      });
+
       setChartData({
-        labels: filteredStepsData.map(item => item.date),
+        labels: allDates,
         datasets: [
           {
-        ...chartData.datasets[0],
-        data: filteredDailyCaloriesData.map(item => item.value),
+            ...chartData.datasets[0],
+            data: allDates.map(date => {
+              const found = filteredDailyCaloriesData.find(item => item.date === date);
+              return found ? found.value : null;
+            }),
           },
           {
-        ...chartData.datasets[1],
-        data: filteredIntakeCaloriesData.map(item => item.value),
+            ...chartData.datasets[1],
+            data: allDates.map(date => {
+              const found = filteredIntakeCaloriesData.find(item => item.date === date);
+              return found ? found.value : null;
+            }),
           },
           {
-        ...chartData.datasets[2],
-        data: filteredStepsData.map(item => item.value),
+            ...chartData.datasets[2],
+            data: allDates.map(date => {
+              const found = filteredStepsData.find(item => item.date === date);
+              return found ? found.value : null;
+            }),
           },
           {
-        ...chartData.datasets[3],
-        data: filteredCalorieDifferenceData.map(item => item.value),
+            ...chartData.datasets[3],
+            data: allDates.map(date => {
+              const found = filteredCalorieDifferenceData.find(item => item.date === date);
+              return found ? found.value : null;
+            }),
           },
         ],
       });
-        } catch (error) {
+    } catch (error) {
       console.error('データの取得に失敗しました:', error);
-        }
-      };
+    }
+  };
 
-      useEffect(() => {
-        fetchData();
-      }, [period]);
+  useEffect(() => {
+    if (userId) {
+      fetchData();
+    }
+  }, [period, userId]);
 
   const handleStepsChange = (value) => setSteps(value);
   const handleTrainingCaloriesChange = (value) => setTrainingCalories(value);
   const handleBasalMetabolismChange = (value) => setBasalMetabolism(value);
   const handleIntakeCaloriesChange = (value) => setIntakeCalories(value);
 
-  const calculateStepCalories = () => steps * 0.04; // 歩数 × 0.04 kcal/歩
-  const totalCaloriesBurned = () => calculateStepCalories() + parseFloat(trainingCalories) + parseFloat(basalMetabolism);
-  const calorieDifference = () => intakeCalories - totalCaloriesBurned();
+  const calculateStepCalories = () => steps * 0.04;
+  const totalCaloriesBurned = () => calculateStepCalories() + parseFloat(trainingCalories || 0) + parseFloat(basalMetabolism || 0);
+  const calorieDifference = () => parseFloat(intakeCalories || 0) - totalCaloriesBurned();
 
   const openCalendarModal = () => setIsCalendarOpen(true);
   const closeCalendarModal = () => setIsCalendarOpen(false);
@@ -245,11 +309,16 @@ const CalorieInfo = () => {
 
   const handleDateChange = (date) => {
     const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setSelectedDate(offsetDate);
     setIsCalendarOpen(false);
   };
 
   const handleSave = async () => {
+    if (!userId) {
+      setError('ユーザーIDが見つかりません。ログインしてください。');
+      return;
+    }
+
     if (!selectedDate || !steps || !trainingCalories || !basalMetabolism || !intakeCalories) {
       setError('全ての項目を入力してください');
       return;
@@ -257,46 +326,58 @@ const CalorieInfo = () => {
 
     setError('');
 
+    const formattedDate = selectedDate instanceof Date 
+      ? selectedDate.toISOString().split('T')[0]
+      : selectedDate;
+      
     const totalCalories = parseFloat(trainingCalories) + parseFloat(basalMetabolism) + (parseFloat(steps) * 0.04);
 
     try {
-      const stepsResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/steps`, {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      
+      const stepsResponse = await axios.post(`${apiUrl}/steps`, {
         step: {
-          user_id: 1, // ユーザーIDを追加
-          date: selectedDate, // 選択された日付を送信
-          steps: steps, // 歩数データを送信
-          calories_burned: parseFloat(steps) * 0.04, // 歩数から計算した消費カロリーを送信
+          user_id: userId,
+          date: formattedDate,
+          steps: steps,
+          calories_burned: parseFloat(steps) * 0.04,
         }
       });
 
-      const dailyCaloriesResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/daily_calories`, {
+      const dailyCaloriesResponse = await axios.post(`${apiUrl}/daily_calories`, {
         daily_calorie: {
-          user_id: 1, // ユーザーIDを追加
-          date: selectedDate, // 選択された日付を送信
-          total_calories: totalCalories, // 合計消費カロリーを送信
+          user_id: userId,
+          date: formattedDate,
+          total_calories: totalCalories,
         }
       });
 
-      const intakeCaloriesResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/intake_calories`, {
+      const intakeCaloriesResponse = await axios.post(`${apiUrl}/intake_calories`, {
         intake_calorie: {
-          user_id: 1, // ユーザーIDを追加
-          date: selectedDate, // 選択された日付を送信
-          calories: intakeCalories, // 1日の摂取カロリーを送信
+          user_id: userId,
+          date: formattedDate,
+          calories: intakeCalories,
         }
       });
 
       if (stepsResponse.status === 201 && dailyCaloriesResponse.status === 201 && intakeCaloriesResponse.status === 201) {
         console.log("Data saved successfully");
-        // データを再取得してグラフを更新
         fetchData();
+        setError('');
         alert('データの保存に成功しました');
+        
+        // 入力フィールドをクリア
+        setSteps(0);
+        setTrainingCalories(0);
+        setBasalMetabolism(0);
+        setIntakeCalories(0);
       } else {
         console.error("Error saving data:", stepsResponse.data, dailyCaloriesResponse.data, intakeCaloriesResponse.data);
-        alert('データの保存に失敗しました');
+        setError('データの保存に失敗しました');
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      alert('データの保存に失敗しました');
+      setError(`データの保存に失敗しました: ${error.response?.data?.error || error.message}`);
     }
   };
 
@@ -309,15 +390,15 @@ const CalorieInfo = () => {
           display: true,
           text: '（日付）',
           font: {
-            size: 20, // フォントサイズを調整
+            size: 20,
           },
-          className: 'calorie-x-axis-title', // クラス名を追加
+          className: 'calorie-x-axis-title',
         },
         ticks: {
           font: {
-            size: 16, // フォントサイズを調整
+            size: 16,
           },
-          className: 'calorie-x-axis-ticks', // クラス名を追加
+          className: 'calorie-x-axis-ticks',
         },
       },
       y: {
@@ -325,46 +406,45 @@ const CalorieInfo = () => {
           display: true,
           text: '(kcal)',
           font: {
-            size: 16, // フォントサイズを調整
+            size: 16,
           },
-          className: 'calorie-y-axis-title', // クラス名を追加
+          className: 'calorie-y-axis-title',
         },
         ticks: {
           font: {
-            size: 16, // フォントサイズを調整
+            size: 16,
           },
-          className: 'calorie-y-axis-ticks', // クラス名を追加
+          className: 'calorie-y-axis-ticks',
         },
       },
     },
     plugins: {
       legend: {
-        display: true, // 凡例を表示
+        display: true,
         labels: {
           font: {
-            size: 14, // フォントサイズを調整
+            size: 14,
           },
-          usePointStyle: true, // ポイントスタイルを使用
-          padding: 20, // パディングを追加
+          usePointStyle: true,
+          padding: 20,
         },
         onClick: (e, legendItem, legend) => {
           const index = legendItem.datasetIndex;
           const ci = legend.chart;
           const meta = ci.getDatasetMeta(index);
 
-          // 凡例のクリックでデータセットの表示/非表示を切り替え
           meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
           ci.update();
         },
       },
       tooltip: {
         titleFont: {
-          size: 16, // フォントサイズを調整
+          size: 16,
         },
         bodyFont: {
-          size: 12, // フォントサイズを調整
+          size: 12,
         },
-        className: 'calorie-tooltip', // クラス名を追加
+        className: 'calorie-tooltip',
       },
     },
   };
@@ -393,7 +473,7 @@ const CalorieInfo = () => {
         <label className="calorie-label">日付を選択:</label>
         <input
           type="text"
-          value={selectedDate ? new Date(selectedDate).toLocaleDateString() : ''}
+          value={selectedDate ? (selectedDate instanceof Date ? selectedDate.toLocaleDateString() : new Date(selectedDate).toLocaleDateString()) : ''}
           readOnly
           onClick={openCalendarModal}
           className="calorie-input"
@@ -431,7 +511,7 @@ const CalorieInfo = () => {
               formatShortWeekday={CalenderFormatShortWeekday}
               tileClassName={CalenderTileClassName}
               tileContent={CalenderTileContent}
-              value={selectedDate ? new Date(selectedDate) : new Date()}
+              value={selectedDate ? (selectedDate instanceof Date ? selectedDate : new Date(selectedDate)) : new Date()}
             />
           </div>
         </div>
