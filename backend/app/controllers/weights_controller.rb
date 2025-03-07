@@ -1,6 +1,10 @@
 class WeightsController < ApplicationController
   def index
-    weights = Weight.all
+    if params[:user_id].present?
+      weights = Weight.where(user_id: params[:user_id])
+    else
+      weights = Weight.all
+    end
     render json: weights
   end
 
