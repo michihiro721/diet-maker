@@ -47,7 +47,7 @@ const TrainingRecord = () => {
     const fetchTrainings = async () => {
       try {
         const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-        const userId = localStorage.getItem('userid') || 1; // ローカルストレージからユーザーIDを取得
+        const userId = localStorage.getItem('userId') || 1; // ローカルストレージからユーザーIDを取得（キー名を修正）
         const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}&user_id=${userId}`);
         const data = Array.isArray(response.data) ? response.data : [];
         
@@ -180,7 +180,7 @@ const TrainingRecord = () => {
 
   const saveTrainingRecord = async () => {
     const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-    const userId = localStorage.getItem('userid') || 1; // ローカルストレージからユーザーIDを取得
+    const userId = localStorage.getItem('userId') || 1; // ローカルストレージからユーザーIDを取得（キー名を修正）
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;

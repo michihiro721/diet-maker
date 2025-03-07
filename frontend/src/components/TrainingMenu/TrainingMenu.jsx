@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getTrainingMenu1 } from "./GetTrainingMenuMen1";
 import { getTrainingMenu2 } from "./GetTrainingMenuMen2";
@@ -36,6 +36,18 @@ const TrainingMenu = () => {
   const [currentDayMenuIndex, setCurrentDayMenuIndex] = useState(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [currentDayMenu, setCurrentDayMenu] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginMessage, setLoginMessage] = useState("");
+
+  // コンポーネントのマウント時にログイン状態を確認
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      setIsLoggedIn(true);
+    } else {
+      setLoginMessage("ログインしていない状態ではトレーニングメニューを保存できません。");
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,9 +91,22 @@ const TrainingMenu = () => {
   };
 
   const handleSaveMenu = async () => {
+    // ログインしていない場合は保存できないようにする
+    if (!isLoggedIn) {
+      alert("ログインしていない状態ではトレーニングメニューを保存できません。ログインしてください。");
+      setIsConfirmModalOpen(false);
+      return;
+    }
+
     try {
       // ローカルストレージからユーザーIDを取得
-      const userId = localStorage.getItem('userid') || 1;
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        alert("ユーザー情報が見つかりません。再度ログインしてください。");
+        setIsConfirmModalOpen(false);
+        return;
+      }
+
       const trainingData = [];
       const selectedDate = selectedDates[currentDayMenuIndex];
 
@@ -132,6 +157,12 @@ const TrainingMenu = () => {
   };
 
   const openConfirmModal = (dayMenu, index) => {
+    // ログインしていない場合は保存ボタンを押せなくする
+    if (!isLoggedIn) {
+      alert("ログインしていない状態ではトレーニングメニューを保存できません。ログインしてください。");
+      return;
+    }
+
     setCurrentDayMenu(dayMenu);
     setCurrentDayMenuIndex(index);
     setIsConfirmModalOpen(true);
@@ -139,6 +170,11 @@ const TrainingMenu = () => {
 
   return (
     <div className="training-menu-container">
+      {loginMessage && (
+        <div className="training-menu-login-message">
+          {loginMessage}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="training-menu-form-group">
           <label>性別</label>
@@ -203,13 +239,23 @@ const TrainingMenu = () => {
                 type="text"
                 value={selectedDates[index] || "日付を入力してください"}
                 onClick={() => {
+                  if (!isLoggedIn) {
+                    alert("ログインしていない状態ではトレーニングメニューを保存できません。ログインしてください。");
+                    return;
+                  }
                   setCurrentDayMenuIndex(index);
                   setIsCalendarModalOpen(true);
                 }}
                 readOnly
                 className="training-menu-date-input"
               />
-              <button onClick={() => openConfirmModal(dayMenu, index)} className="training-menu-save-button">保存</button>
+              <button 
+                onClick={() => openConfirmModal(dayMenu, index)} 
+                className={`training-menu-save-button ${!isLoggedIn ? 'training-menu-save-button-disabled' : ''}`}
+                disabled={!isLoggedIn}
+              >
+                保存
+              </button>
             </div>
           ))}
           {error && <div className="training-menu-error-message">{error}</div>}
