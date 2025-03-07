@@ -1,11 +1,15 @@
 class DailyCaloriesController < ApplicationController
   def index
-    daily_calories = DailyCalorie.where(user_id: 1) # デフォルトで user_id を 1 に設定
+    if params[:user_id].present?
+      daily_calories = DailyCalorie.where(user_id: params[:user_id])
+    else
+      daily_calories = DailyCalorie.all
+    end
     render json: daily_calories
   end
 
   def create
-    Rails.logger.info("Received params: #{params.inspect}") # デバッグコード
+    Rails.logger.info("Received params: #{params.inspect}")
     daily_calorie = DailyCalorie.find_or_initialize_by(user_id: daily_calorie_params[:user_id], date: daily_calorie_params[:date])
     daily_calorie.assign_attributes(daily_calorie_params)
 
