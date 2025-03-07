@@ -124,8 +124,8 @@ const BodyInfo = () => {
       });
       
       if (response.status === 200) {
-        setSuccess("身体情報が正常に保存されました。");
         setBmr(bmrValue);
+        alert("身体情報が正常に保存されました。");
       }
     } catch (error) {
       console.error("データの保存に失敗しました:", error);
