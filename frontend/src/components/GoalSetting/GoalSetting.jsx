@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Header from "../Home/Header/Header"; // 代わりに共通のHeaderコンポーネントをインポート
+import Header from "../Home/Header/Header";
 import "./styles/GoalSetting.css";
-import "../Home/Body/Calender/styles/CalenderWeekdays.css"; // カレンダーのスタイルをインポート
-import "../Home/Body/Calender/styles/CalenderNavigation.css"; // カレンダーのスタイルをインポート
-import "../Home/Body/Calender/styles/CalenderDays.css"; // カレンダーのスタイルをインポート
-import "../Home/Body/Calender/styles/CalenderCommon.css"; // カレンダーのスタイルをインポート
+import "../Home/Body/Calender/styles/CalenderWeekdays.css";
+import "../Home/Body/Calender/styles/CalenderNavigation.css";
+import "../Home/Body/Calender/styles/CalenderDays.css";
+import "../Home/Body/Calender/styles/CalenderCommon.css";
 import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
 import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
 import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
@@ -19,13 +19,60 @@ const GoalSetting = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
   const [modalValue, setModalValue] = useState(new Date());
-  const [submittedData, setSubmittedData] = useState(null); // 提出されたデータを保存する状態
-  const [submissionDate, setSubmissionDate] = useState(""); // 目標設定がされた日を保存する状態
-  const [warningModalOpen, setWarningModalOpen] = useState(false); // 警告モーダルの状態
-  const [inputWarning, setInputWarning] = useState(""); // 入力警告メッセージの状態
+  const [submittedData, setSubmittedData] = useState(null);
+  const [submissionDate, setSubmissionDate] = useState("");
+  const [warningModalOpen, setWarningModalOpen] = useState(false);
+  const [inputWarning, setInputWarning] = useState("");
+  const [userId, setUserId] = useState(null);
+  const [existingGoal, setExistingGoal] = useState(null);
+
+  // コンポーネントマウント時にローカルストレージからユーザーIDを取得し、
+  // 既存の目標があるか確認する
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      const parsedUserId = parseInt(storedUserId, 10);
+      setUserId(parsedUserId);
+      
+      // ユーザーの既存の目標を取得
+      fetchUserGoal(parsedUserId);
+    } else {
+      setInputWarning("ユーザーIDが見つかりません。ログインしてください。");
+    }
+  }, []);
+
+  // ユーザーの既存の目標を取得する関数
+  const fetchUserGoal = async (userId) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const response = await axios.get(`${apiUrl}/goals/latest`, {
+        params: { user_id: userId }
+      });
+      
+      if (response.data && Object.keys(response.data).length > 0) {
+        console.log('Fetched user goal:', response.data);
+        setExistingGoal(response.data);
+        // 既存の目標データがあれば、フォームに設定
+        if (response.data.target_weight) {
+          setTargetWeight(response.data.target_weight.toString());
+        }
+        if (response.data.end_date) {
+          setTargetDate(response.data.end_date);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch user goal:', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ユーザーIDチェック
+    if (!userId) {
+      setInputWarning("ユーザーIDが見つかりません。ログインしてください。");
+      return;
+    }
 
     // 入力チェック
     if (!currentWeight || !targetWeight || !targetDate) {
@@ -57,40 +104,81 @@ const GoalSetting = () => {
       targetWeight,
       targetDate,
     });
-    setInputWarning(""); // 入力警告メッセージをクリア
+    setInputWarning("");
 
-    // 目標設定データを保存するAPIを呼び出す
     try {
-      console.log('Sending request to /goals with data:', {
-        user_id: 1,
+      const goalData = {
+        user_id: userId,
         goal_type: 'weight_loss',
         target_weight: targetWeightNum,
         start_date: today,
         end_date: targetDate,
-      });
-
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/goals`, {
-        user_id: 1, // ユーザーIDを適切に設定
-        goal_type: 'weight_loss', // 目標タイプを適切に設定
-        target_weight: targetWeightNum,
-        start_date: today,
-        end_date: targetDate,
-      });
-
-      if (response.status !== 201) {
-        console.error('Error saving goal:', response.data);
+      };
+      
+      console.log('Sending goal data:', goalData);
+      
+      let response;
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      
+      // 既存の目標があり、そのユーザーIDがローカルストレージのIDと一致する場合は更新
+      if (existingGoal && existingGoal.user_id === userId) {
+        console.log(`Updating goal with ID ${existingGoal.id}`);
+        try {
+          response = await axios.put(
+            `${apiUrl}/goals/${existingGoal.id}`, 
+            { goal: goalData }, // 注意: Rails の慣習に合わせてネストする
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            }
+          );
+          console.log('Goal update response:', response);
+        } catch (updateError) {
+          console.error('Goal update error:', updateError.response?.data || updateError);
+          throw updateError;
+        }
       } else {
-        console.log('Goal saved successfully');
+        // 既存の目標がない、またはユーザーIDが一致しない場合は新規作成
+        console.log('Creating new goal');
+        try {
+          response = await axios.post(
+            `${apiUrl}/goals`, 
+            { goal: goalData }, // 注意: Rails の慣習に合わせてネストする
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+            }
+          );
+          console.log('New goal response:', response);
+        } catch (createError) {
+          console.error('Goal creation error:', createError.response?.data || createError);
+          throw createError;
+        }
+      }
+
+      if (response.status >= 200 && response.status < 300) {
+        console.log('Goal operation successful:', response.data);
+        // 成功したら最新の目標情報を再取得
+        fetchUserGoal(userId);
+        // 成功メッセージを表示
+        alert(existingGoal && existingGoal.user_id === userId ? '目標を更新しました' : '新しい目標を設定しました');
+      } else {
+        console.error('Error with goal operation:', response.status, response.data);
       }
     } catch (error) {
       console.error('Error during fetch:', error);
+      alert('操作に失敗しました：' + (error.response?.data?.error || error.message || 'Unknown error'));
     }
   };
 
   const openModal = (type) => {
     setModalType(type);
     if (type === "targetDate") {
-      setModalValue(new Date());
+      setModalValue(targetDate ? new Date(targetDate) : new Date());
     } else {
       setModalValue(type === "currentWeight" ? currentWeight : targetWeight);
     }
@@ -183,7 +271,9 @@ const GoalSetting = () => {
             />
           </div>
         </div>
-        <button type="submit" className="goal-setting-button">設定</button>
+        <button type="submit" className="goal-setting-button">
+          {existingGoal && existingGoal.user_id === userId ? '更新' : '設定'}
+        </button>
       </form>
 
       {submittedData && (
