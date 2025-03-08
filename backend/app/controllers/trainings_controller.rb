@@ -56,6 +56,19 @@ class TrainingsController < ApplicationController
     
     render json: result
   end
+  
+  def destroy_by_date
+    date = params[:date]
+    user_id = params[:user_id]
+    
+    trainings = Training.where(date: date, user_id: user_id)
+    
+    if trainings.destroy_all
+      render json: { message: 'Training records successfully deleted' }, status: :ok
+    else
+      render json: { error: 'Failed to delete training records' }, status: :unprocessable_entity
+    end
+  end
 
   private
 

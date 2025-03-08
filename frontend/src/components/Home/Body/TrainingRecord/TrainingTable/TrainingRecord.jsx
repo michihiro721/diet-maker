@@ -365,8 +365,8 @@ const TrainingRecord = () => {
       const userId = localStorage.getItem('userId');
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
       
-      // 選択された日付のトレーニング記録を削除するAPIを呼び出す
-      const response = await axios.delete(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings`, {
+
+      const response = await axios.delete(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/destroy_by_date`, {
         params: {
           date: formattedDate,
           user_id: userId
@@ -388,7 +388,10 @@ const TrainingRecord = () => {
         const monthlyResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
         
         if (monthlyResponse.data && Array.isArray(monthlyResponse.data)) {
-          const dates = monthlyResponse.data.map(training => training.date);
+          // 削除した日付のデータを除外
+          const dates = monthlyResponse.data
+            .filter(training => training.date !== formattedDate)
+            .map(training => training.date);
           const uniqueDates = [...new Set(dates)];
           setTrainingDates(uniqueDates);
         }
