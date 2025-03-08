@@ -7,6 +7,7 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -28,6 +29,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -60,6 +62,7 @@ const Weight = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [userId, setUserId] = useState(null);
+  const [displayMode, setDisplayMode] = useState('both'); // 'bar', 'line', 'both'
 
   // ユーザーIDをローカルストレージから取得
   useEffect(() => {
@@ -125,22 +128,45 @@ const Weight = () => {
         });
         const weightValues = filteredWeights.map(weight => weight.weight);
 
+        // データセットを作成
+        const datasets = [];
+
+        // 棒グラフは常に非表示か表示かを決定
+        if (displayMode === 'bar' || displayMode === 'both') {
+          datasets.push({
+            label: "体重(棒グラフ)",
+            data: weightValues,
+            backgroundColor: "rgba(54, 162, 235, 0.5)",
+            borderColor: "rgba(54, 162, 235, 0.8)",
+            borderWidth: 1,
+            type: 'bar',
+            order: 2,
+          });
+        }
+
+        // 折れ線グラフは常に非表示か表示かを決定
+        if (displayMode === 'line' || displayMode === 'both') {
+          datasets.push({
+            label: "体重(折れ線)",
+            data: weightValues,
+            borderColor: "rgba(255, 99, 132, 0.8)",
+            backgroundColor: "rgba(255, 99, 132, 0)",
+            pointBackgroundColor: "rgba(255, 99, 132, 1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: false,
+            type: 'line',
+            order: 1,
+            tension: 0.1
+          });
+        }
+
         setChartData({
           labels: dates,
-          datasets: [
-            {
-              label: "体重",
-              data: weightValues,
-              borderColor: "rgba(0, 123, 255, 0.8)",
-              backgroundColor: "rgba(0, 123, 255, 0.5)",
-              pointBackgroundColor: "rgba(0, 123, 255, 1)",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(0, 123, 255, 1)",
-              fill: true,
-              type: 'bar',
-            },
-          ],
+          datasets: datasets,
         });
       } else {
         console.warn("No weight data available");
@@ -154,7 +180,7 @@ const Weight = () => {
     if (userId) {
       fetchData();
     }
-  }, [period, userId]);
+  }, [period, userId, displayMode]);
 
   useEffect(() => {
     const fetchGoalData = async () => {
@@ -205,7 +231,7 @@ const Weight = () => {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const response = await axios.post(`${apiUrl}/weights`, {
         weight: {
-          user_id: userId, // ローカルストレージから取得したIDを使用
+          user_id: userId,
           date: selectedDate,
           weight: weight,
         }
@@ -268,7 +294,13 @@ const Weight = () => {
     },
     plugins: {
       legend: {
-        display: false,
+        display: displayMode === 'both', // 両方表示の場合のみ凡例を表示
+        position: 'top',
+        labels: {
+          font: {
+            size: 14
+          }
+        }
       },
       tooltip: {
         titleFont: {
@@ -278,6 +310,11 @@ const Weight = () => {
           size: 12,
         },
         className: 'weight-tooltip',
+        callbacks: {
+          label: function(context) {
+            return `${context.dataset.label}: ${context.raw} kg`;
+          }
+        }
       },
     },
   };
@@ -300,6 +337,7 @@ const Weight = () => {
           id="period-select"
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
+          className="weight-period-select"
         >
           <option value="7days">直近7日</option>
           <option value="1month">直近1ヶ月</option>
@@ -307,13 +345,26 @@ const Weight = () => {
           <option value="3months">直近3ヶ月</option>
           <option value="all">すべて</option>
         </select>
+
+        <label htmlFor="display-mode-select" className="display-mode-label">グラフ表示:</label>
+        <select
+          id="display-mode-select"
+          value={displayMode}
+          onChange={(e) => setDisplayMode(e.target.value)}
+          className="weight-display-mode-select"
+        >
+          <option value="both">棒グラフ＋折れ線</option>
+          <option value="bar">棒グラフのみ</option>
+          <option value="line">折れ線グラフのみ</option>
+        </select>
       </div>
+
       <div className="weight-chart-wrapper">
         <div className="weight-chart">
           <Line data={chartData} options={options} />
         </div>
       </div>
-      
+
       {/* 目標情報は目標が設定されている場合のみ表示 */}
       {goalWeight && goalDate && (
         <div className="goal-info">
@@ -321,7 +372,7 @@ const Weight = () => {
           <p className="goal-info-target">目標達成予定日までの残り日数: {remainingDays} 日</p>
         </div>
       )}
-      
+
       <div className="weight-save-controls">
         <label htmlFor="date-select">日付を選択:</label>
         <input
@@ -330,6 +381,7 @@ const Weight = () => {
           value={selectedDate}
           onClick={() => setIsCalendarModalOpen(true)}
           readOnly
+          className="weight-date-input"
         />
         <label htmlFor="weight-input">体重を入力:</label>
         <input
@@ -338,11 +390,13 @@ const Weight = () => {
           value={weight ? `${weight} kg` : ''}
           onClick={() => setIsWeightModalOpen(true)}
           readOnly
+          className="weight-input"
         />
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
       {errorMessage && <p className="weight-error-message">{errorMessage}</p>}
       {successMessage && <p className="weight-success-message">{successMessage}</p>}
+
       <WeightModal
         isOpen={isWeightModalOpen}
         onClose={() => setIsWeightModalOpen(false)}
@@ -351,6 +405,7 @@ const Weight = () => {
           setIsWeightModalOpen(false);
         }}
       />
+
       {isCalendarModalOpen && (
         <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
           <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
