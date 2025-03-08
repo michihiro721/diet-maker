@@ -19,7 +19,7 @@
     border-radius: 15px; /* 角を丸くする */
     width: 500px; /* 横幅を設定 */
     max-width: 90%; /* 最大幅を設定 */
-    max-height: 220px; /* 最大高さを設定 */
+    max-height: 150px; /* 最大高さを設定 */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 軽い影を追加 */
     border: 2px solid #b2ebf2; /* 薄い水色の枠線 */
     text-align: center; /* 文字を中央揃え */

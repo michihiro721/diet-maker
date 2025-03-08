@@ -28,7 +28,7 @@ const Login = () => {
         const token = res.headers['authorization'];
         console.log("取得したトークン:", token);
         if (token) {
-          // より堅牢な方法でBearerプレフィックスを除去
+
           const cleanToken = token.replace('Bearer ', '');
           localStorage.setItem('jwt', cleanToken);
           
@@ -40,7 +40,9 @@ const Login = () => {
         localStorage.setItem('userId', userId);
 
         alert('ログインに成功しました');
-        navigate('/');
+        
+        // ホームページへのリダイレクトとリロードの処理(アイコンの色を変更するため)
+        window.location.href = '/';
       } else {
         alert('ログインに失敗しました');
       }
@@ -81,10 +83,9 @@ const Login = () => {
         <button type="submit">ログイン</button>
       </form>
       <button onClick={goToSignUp} className="signup-button">新規登録</button>
-        {/* パスワードリセットへのリンクを追加 */}
-  <div className="forgot-password-link">
-    <a href="/forgot-password">パスワードをお忘れですか？</a>
-  </div>
+      <div className="forgot-password-link">
+        <a href="/forgot-password">パスワードをお忘れですか？</a>
+      </div>
     </div>
   );
 };
