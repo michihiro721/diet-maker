@@ -1,14 +1,12 @@
 // このコードは、トレーニング記録のテーブルボディを表示するためのコンポーネントです。
-// 各セットの情報を行として表示し、セットの更新や削除が可能です。
+// 各行には、セット情報が表示されます。
 
 import React from "react";
 import TrainingTableRow from './TrainingTableRow';
-import './styles/training-table-body.css';
 
-const TrainingTableBody = ({ sets, openModal, handleUpdateSet, handleRemoveSet }) => (
+const TrainingTableBody = ({ sets, openModal, handleUpdateSet, handleRemoveSet, isAerobic }) => (
   <tbody>
-    {/* 各セットの情報を行として表示 */}
-    {sets.map((set, index) => (
+    {Array.isArray(sets) && sets.map((set, index) => (
       <TrainingTableRow
         key={index}
         index={index}
@@ -16,6 +14,7 @@ const TrainingTableBody = ({ sets, openModal, handleUpdateSet, handleRemoveSet }
         openModal={openModal}
         handleUpdateSet={handleUpdateSet}
         handleRemoveSet={handleRemoveSet}
+        isAerobic={isAerobic}
       />
     ))}
   </tbody>
