@@ -10,7 +10,6 @@ import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
-import CalenderTileClassName from '../../Calender/CalenderTileClassName'; // CalenderTileClassNameをインポート
 import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday'; // CalenderFormatShortWeekdayをインポート
 import CalenderTileContent from '../../Calender/CalenderTileContent'; // CalenderTileContentをインポート
 
@@ -27,6 +26,7 @@ const TrainingRecord = () => {
   const [message, setMessage] = useState("");
   const [messageClass, setMessageClass] = useState("");
   const [workouts, setWorkouts] = useState([]);
+  const [trainingDates, setTrainingDates] = useState([]);
 
   useEffect(() => {
     // ワークアウトデータを取得
@@ -41,6 +41,40 @@ const TrainingRecord = () => {
 
     fetchWorkouts();
   }, []);
+
+  // 月が変わった時に、その月のトレーニングデータがある日付を全て取得
+  useEffect(() => {
+    const fetchMonthlyTrainings = async () => {
+      try {
+        const userId = localStorage.getItem('userId'); // ユーザーIDを取得
+        if (!userId) return;
+
+        // 現在表示されている月の最初と最後の日を計算
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        
+        const firstDayStr = firstDay.toLocaleDateString('en-CA');
+        const lastDayStr = lastDay.toLocaleDateString('en-CA');
+        
+        // 月のトレーニングデータを取得するAPI (バックエンドに実装が必要)
+        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
+        
+        if (response.data && Array.isArray(response.data)) {
+          // トレーニングがある日付の配列を作成
+          const dates = response.data.map(training => training.date);
+          // 重複を削除
+          const uniqueDates = [...new Set(dates)];
+          setTrainingDates(uniqueDates);
+        }
+      } catch (error) {
+        console.error('Error fetching monthly trainings:', error);
+      }
+    };
+
+    fetchMonthlyTrainings();
+  }, [selectedDate.getFullYear(), selectedDate.getMonth()]);
 
   useEffect(() => {
     // 選択された日付に基づいてトレーニングデータを取得
@@ -84,6 +118,35 @@ const TrainingRecord = () => {
 
     fetchTrainings();
   }, [selectedDate, workouts]);
+
+  // トレーニングデータがある日付かどうかをチェックする関数
+  const hasTrainingData = (date) => {
+    const dateStr = date.toLocaleDateString('en-CA');
+    return trainingDates.includes(dateStr);
+  };
+
+  // カレンダータイルのクラス名を決定する関数
+  const tileClassName = ({ date, view }) => {
+    if (view === 'month') {
+      const day = date.getDay();
+      let classNames = [];
+      
+      // 土日の色
+      if (day === 0) {
+        classNames.push('react-calendar__tile--sunday');
+      } else if (day === 6) {
+        classNames.push('react-calendar__tile--saturday');
+      }
+      
+      // トレーニングデータがある日付の色
+      if (hasTrainingData(date)) {
+        classNames.push('react-calendar__tile--has-training');
+      }
+      
+      return classNames.join(' ');
+    }
+    return null;
+  };
 
   const handleAddSet = (trainingIndex) => {
     const lastSet = trainings[trainingIndex].sets && trainings[trainingIndex].sets.length > 0 ? trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1] : null;
@@ -205,6 +268,22 @@ const TrainingRecord = () => {
 
       setMessage('トレーニングデータの保存に成功しました');
       setMessageClass('save-success-message');
+      
+      // 月のトレーニングデータを更新
+      const year = selectedDate.getFullYear();
+      const month = selectedDate.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const firstDayStr = firstDay.toLocaleDateString('en-CA');
+      const lastDayStr = lastDay.toLocaleDateString('en-CA');
+      
+      const monthlyResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
+      
+      if (monthlyResponse.data && Array.isArray(monthlyResponse.data)) {
+        const dates = monthlyResponse.data.map(training => training.date);
+        const uniqueDates = [...new Set(dates)];
+        setTrainingDates(uniqueDates);
+      }
     } catch (error) {
       setMessage('トレーニングデータの保存に失敗しました');
       setMessageClass('save-error-message');
@@ -223,7 +302,7 @@ const TrainingRecord = () => {
       <Calendar
         onChange={setSelectedDate}
         value={selectedDate}
-        tileClassName={CalenderTileClassName}
+        tileClassName={tileClassName}
         formatShortWeekday={CalenderFormatShortWeekday}
         tileContent={CalenderTileContent}
       />

@@ -135,3 +135,30 @@
 .react-calendar__tile abbr[aria-label$="日"] {
     display: none;
 }
+
+/* トレーニングデータがある日付のスタイル */
+.react-calendar__tile--has-training {
+    background-color: #d0e7ff;
+    color: #000;
+    border-radius: 50%;
+    border: 2px solid #b0d4ff;
+}
+
+/* トレーニングデータがある日付のホバー時のスタイル */
+.react-calendar__tile--has-training:enabled:hover,
+.react-calendar__tile--has-training:enabled:focus {
+    background-color: #b0d4ff;
+    border: 2px solid #90c1ff;
+}
+
+/* トレーニングデータがあり、かつ現在の日付の場合のスタイル */
+.react-calendar__tile--now.react-calendar__tile--has-training {
+    background: linear-gradient(135deg, #ffff00 50%, #d0e7ff 50%);
+    border: 2px solid #ffff00;
+}
+
+/* トレーニングデータがあり、かつ選択された日付の場合のスタイル */
+.react-calendar__tile--active.react-calendar__tile--has-training {
+    background: linear-gradient(135deg, rgba(173, 216, 230, 0.7) 50%, rgba(208, 231, 255, 0.7) 50%);
+    border: 2px solid #b0d4ff;
+}

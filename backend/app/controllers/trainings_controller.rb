@@ -40,6 +40,23 @@ class TrainingsController < ApplicationController
     render json: { message: 'Training records saved successfully' }, status: :created
   end
 
+  def monthly
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    user_id = params[:user_id]
+    
+    # 指定された期間とユーザーIDに基づいてトレーニングデータを取得
+    trainings = Training.where(
+      "date >= ? AND date <= ? AND user_id = ?", 
+      start_date, end_date, user_id
+    )
+    
+    # 日付ごとにグループ化
+    result = trainings.select(:date).distinct
+    
+    render json: result
+  end
+
   private
 
   def training_params
