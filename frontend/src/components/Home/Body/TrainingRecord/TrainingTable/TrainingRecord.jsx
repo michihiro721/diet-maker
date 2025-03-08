@@ -27,6 +27,14 @@ const TrainingRecord = () => {
   const [messageClass, setMessageClass] = useState("");
   const [workouts, setWorkouts] = useState([]);
   const [trainingDates, setTrainingDates] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginErrorModalVisible, setLoginErrorModalVisible] = useState(false);
+
+  // ログイン状態の確認
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    setIsLoggedIn(!!userId); // userIdがnullまたはundefinedでない場合はtrueに
+  }, []);
 
   useEffect(() => {
     // ワークアウトデータを取得
@@ -81,7 +89,14 @@ const TrainingRecord = () => {
     const fetchTrainings = async () => {
       try {
         const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-        const userId = localStorage.getItem('userId') || 1; // ローカルストレージからユーザーIDを取得（キー名を修正）
+        const userId = localStorage.getItem('userId');
+        
+        // ユーザーIDが存在しない場合は何もしない
+        if (!userId) {
+          setTrainings([]);
+          return;
+        }
+        
         const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}&user_id=${userId}`);
         const data = Array.isArray(response.data) ? response.data : [];
         
@@ -233,6 +248,12 @@ const TrainingRecord = () => {
   };
 
   const confirmEndTraining = () => {
+    // ログインしていない場合はエラーモーダルを表示
+    if (!isLoggedIn) {
+      setLoginErrorModalVisible(true);
+      return;
+    }
+    
     setConfirmEndModalVisible(true);
   };
 
@@ -242,14 +263,22 @@ const TrainingRecord = () => {
   };
 
   const saveTrainingRecord = async () => {
+    const userId = localStorage.getItem('userId');
+    
+    // ユーザーIDが存在しない場合は早期リターン
+    if (!userId) {
+      setMessage('ログインしていないため、トレーニングデータを保存できません');
+      setMessageClass('save-error-message');
+      return;
+    }
+    
     const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-    const userId = localStorage.getItem('userId') || 1; // ローカルストレージからユーザーIDを取得（キー名を修正）
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
       return training.sets.map(set => ({
         date: formattedDate,
-        user_id: userId, // ローカルストレージから取得したユーザーIDを設定
+        user_id: userId, // 必ずユーザーIDが存在することを確認済み
         goal_id: null, // 必要に応じて設定
         workout_id: workout ? workout.id : null, // workout_idを追加
         sets: training.sets.length, // セット数
@@ -265,9 +294,8 @@ const TrainingRecord = () => {
       if (response.status !== 201) {
         throw new Error('Training data could not be saved');
       }
-
-      setMessage('トレーニングデータの保存に成功しました');
       setMessageClass('save-success-message');
+      alert('トレーニングデータの保存に成功しました');
       
       // 月のトレーニングデータを更新
       const year = selectedDate.getFullYear();
@@ -285,8 +313,8 @@ const TrainingRecord = () => {
         setTrainingDates(uniqueDates);
       }
     } catch (error) {
-      setMessage('トレーニングデータの保存に失敗しました');
       setMessageClass('save-error-message');
+      alert('トレーニングデータの保存に失敗しました');
     }
   };
 
@@ -307,6 +335,14 @@ const TrainingRecord = () => {
         tileContent={CalenderTileContent}
       />
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
+      
+      {!isLoggedIn && (
+        <div className="login-warning-message">
+          ログインしないとトレーニングデータを保存できません。<br />
+          <a href="/login" className="login-link">ログインする</a>
+        </div>
+      )}
+      
       {Array.isArray(trainings) && trainings.length > 0 ? (
         trainings.map((training, trainingIndex) => (
           <div key={trainingIndex} className="training-section">
@@ -330,7 +366,12 @@ const TrainingRecord = () => {
       )}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
-      <button className="save-training-button" onClick={confirmEndTraining}>トレーニング終了</button>
+      <button 
+        className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`} 
+        onClick={confirmEndTraining}
+      >
+        トレーニング終了
+      </button>
       {modalVisible && (
         <Modal
           currentField={currentField}
@@ -355,6 +396,15 @@ const TrainingRecord = () => {
             <p>トレーニングデータが保存されます<br />本当にトレーニングを終了してもよろしいですか？</p>
             <button className="confirm-button" onClick={endTraining}>はい</button>
             <button className="cancel-button" onClick={() => setConfirmEndModalVisible(false)}>いいえ</button>
+          </div>
+        </div>
+      )}
+      {loginErrorModalVisible && (
+        <div className="delete-modal">
+          <div className="delete-modal-content">
+            <p>トレーニングを保存するには<br />ログインが必要です</p>
+            <a href="/login" className="login-button">ログイン画面へ</a>
+            <button className="cancel-button" onClick={() => setLoginErrorModalVisible(false)}>閉じる</button>
           </div>
         </div>
       )}
