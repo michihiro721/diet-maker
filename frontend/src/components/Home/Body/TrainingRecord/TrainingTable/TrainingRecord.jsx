@@ -37,6 +37,7 @@ const TrainingRecord = () => {
   const [trainingDates, setTrainingDates] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginErrorModalVisible, setLoginErrorModalVisible] = useState(false);
+  const [deleteRecordModalVisible, setDeleteRecordModalVisible] = useState(false); // 記録削除モーダル表示状態
 
   // ログイン状態の確認
   useEffect(() => {
@@ -339,6 +340,69 @@ const TrainingRecord = () => {
     saveTrainingRecord();
   };
 
+  // トレーニング記録削除の確認モーダルを表示
+  const confirmDeleteRecord = () => {
+    // ログインしていない場合はエラーモーダルを表示
+    if (!isLoggedIn) {
+      setLoginErrorModalVisible(true);
+      return;
+    }
+    
+    // 記録が存在しない場合は確認なしで終了
+    if (!hasTrainingData(selectedDate)) {
+      alert('この日付のトレーニング記録は存在しません');
+      return;
+    }
+    
+    setDeleteRecordModalVisible(true);
+  };
+
+  // トレーニング記録削除の実行
+  const deleteTrainingRecord = async () => {
+    setDeleteRecordModalVisible(false);
+    
+    try {
+      const userId = localStorage.getItem('userId');
+      const formattedDate = selectedDate.toLocaleDateString('en-CA');
+      
+      // 選択された日付のトレーニング記録を削除するAPIを呼び出す
+      const response = await axios.delete(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings`, {
+        params: {
+          date: formattedDate,
+          user_id: userId
+        }
+      });
+      
+      if (response.status === 200) {
+        // 削除成功
+        setTrainings([]);
+        
+        // 月のトレーニングデータを更新
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const firstDayStr = firstDay.toLocaleDateString('en-CA');
+        const lastDayStr = lastDay.toLocaleDateString('en-CA');
+        
+        const monthlyResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
+        
+        if (monthlyResponse.data && Array.isArray(monthlyResponse.data)) {
+          const dates = monthlyResponse.data.map(training => training.date);
+          const uniqueDates = [...new Set(dates)];
+          setTrainingDates(uniqueDates);
+        }
+        
+        alert('トレーニング記録の削除に成功しました');
+      } else {
+        throw new Error('Training data could not be deleted');
+      }
+    } catch (error) {
+      console.error('Error deleting training record:', error);
+      alert('トレーニング記録の削除に失敗しました');
+    }
+  };
+
   const saveTrainingRecord = async () => {
     const userId = localStorage.getItem('userId');
     
@@ -448,12 +512,23 @@ const TrainingRecord = () => {
       )}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
-      <button 
-        className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`} 
-        onClick={confirmEndTraining}
-      >
-        トレーニング終了
-      </button>
+      
+      {/* 削除ボタンと保存ボタンを横に並べるためのコンテナ */}
+      <div className="training-action-buttons">
+        <button 
+          className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`} 
+          onClick={confirmDeleteRecord}
+        >
+          トレーニング記録削除
+        </button>
+        <button 
+          className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`} 
+          onClick={confirmEndTraining}
+        >
+          トレーニング終了
+        </button>
+      </div>
+      
       {modalVisible && (
         <Modal
           currentField={currentField}
@@ -487,6 +562,16 @@ const TrainingRecord = () => {
             <p>トレーニングを保存するには<br />ログインが必要です</p>
             <a href="/login" className="login-button">ログイン画面へ</a>
             <button className="cancel-button" onClick={() => setLoginErrorModalVisible(false)}>閉じる</button>
+          </div>
+        </div>
+      )}
+      {/* トレーニング記録削除確認モーダル */}
+      {deleteRecordModalVisible && (
+        <div className="delete-modal">
+          <div className="delete-modal-content">
+            <p>{formattedDateDisplay}のトレーニング記録を削除します<br />本当に削除してもよろしいですか？</p>
+            <button className="confirm-button" onClick={deleteTrainingRecord}>はい</button>
+            <button className="cancel-button" onClick={() => setDeleteRecordModalVisible(false)}>いいえ</button>
           </div>
         </div>
       )}
