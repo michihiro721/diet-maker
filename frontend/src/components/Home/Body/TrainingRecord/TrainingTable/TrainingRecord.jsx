@@ -480,6 +480,16 @@ const TrainingRecord = () => {
       />
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
       
+      {/* トレーニング記録削除ボタンをタイトルと種目の間に配置 */}
+      <div className="delete-record-button-container">
+        <button 
+          className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`} 
+          onClick={confirmDeleteRecord}
+        >
+          トレーニング記録削除
+        </button>
+      </div>
+      
       {!isLoggedIn && (
         <div className="login-warning-message">
           ログインしないとトレーニングデータを保存できません。<br />
@@ -513,14 +523,8 @@ const TrainingRecord = () => {
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
       
-      {/* 削除ボタンと保存ボタンを横に並べるためのコンテナ */}
-      <div className="training-action-buttons">
-        <button 
-          className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`} 
-          onClick={confirmDeleteRecord}
-        >
-          トレーニング記録削除
-        </button>
+      {/* トレーニング終了ボタンのみ表示 */}
+      <div className="training-end-button-container">
         <button 
           className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`} 
           onClick={confirmEndTraining}
