@@ -31,7 +31,15 @@ Rails.application.routes.draw do
       get 'latest'
     end
   end
-  resources :trainings, only: [:index, :create]
+  
+  # トレーニング関連のルートを修正
+  resources :trainings, only: [:index, :create] do
+    collection do
+      get 'monthly'
+      delete 'destroy_by_date'
+    end
+  end
+  
   resources :workouts, only: [:index]
   resources :daily_calories, only: [:index, :create]
   resources :steps, only: [:index, :create]
@@ -39,8 +47,6 @@ Rails.application.routes.draw do
 
   # パスワードリセット用のルート（優先度高）
   get 'reset-password/:token', to: 'home#index'
-
-  get 'trainings/monthly', to: 'trainings#monthly'
 
   # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {
