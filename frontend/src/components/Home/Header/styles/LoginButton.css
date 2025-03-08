@@ -5,17 +5,41 @@
     position: fixed; /* ページ遷移しても位置が変わらないように固定 */
     left: 30px;
     top: 15px;
-  }
-  
-  .header-login-button .fa-user {
-    font-size: 5vh;
-    color: #fff;
-  }
-
-.header-login-button:hover .fa-user {
-    color: #d3f2ff;
 }
   
-  .header-login-button:hover {
-    transform: scale(1.1);
+.header-login-button .fa-user {
+    font-size: 5vh;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+/* アイコンの色をログイン状態で変更 */
+.header-login-button .user-logged-in {
+  color: #fff; /* ログインしている場合は薄い青色 */
+  animation: flame 1s infinite;
+}
+
+.header-login-button:hover .fa-user {
+  color: #87cefa; /* ホバー時のアイコン色を薄い青色に */
+}
+
+/* ログイン状態でホバーした時のアイコン色 */
+.header-login-button:hover .user-logged-in {
+  color: #fff; /* 薄い青色 */
+}
+
+.header-login-button:hover {
+  transform: scale(1.1);
+}
+
+@keyframes flame {
+  0% {
+    text-shadow: 0 0 2px #ff4500, 0 0 4px #ff4500;
   }
+  50% {
+    text-shadow: 0 0 4px #ff4500, 0 0 8px #ff4500;
+  }
+  100% {
+    text-shadow: 0 0 2px #ff4500, 0 0 4px #ff4500;
+  }
+}
