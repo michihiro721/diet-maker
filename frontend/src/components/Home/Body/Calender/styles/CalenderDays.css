@@ -138,27 +138,27 @@
 
 /* トレーニングデータがある日付のスタイル */
 .react-calendar__tile--has-training {
-    background-color: #a8e6cf; /* 薄い緑色 */
+    background-color: #d0e7ff;
     color: #000;
     border-radius: 50%;
-    border: 2px solid #76dbc0;
+    border: 2px solid #b0d4ff;
 }
 
 /* トレーニングデータがある日付のホバー時のスタイル */
 .react-calendar__tile--has-training:enabled:hover,
 .react-calendar__tile--has-training:enabled:focus {
-    background-color: #76dbc0; /* より濃い緑色 */
-    border: 2px solid #63c2a6;
+    background-color: #b0d4ff;
+    border: 2px solid #90c1ff;
 }
 
 /* トレーニングデータがあり、かつ現在の日付の場合のスタイル */
 .react-calendar__tile--now.react-calendar__tile--has-training {
-    background: linear-gradient(135deg, #ffff00 50%, #a8e6cf 50%);
+    background: linear-gradient(135deg, #ffff00 50%, #d0e7ff 50%);
     border: 2px solid #ffff00;
 }
 
 /* トレーニングデータがあり、かつ選択された日付の場合のスタイル */
 .react-calendar__tile--active.react-calendar__tile--has-training {
-    background: linear-gradient(135deg, rgba(173, 216, 230, 0.7) 50%, rgba(168, 230, 207, 0.7) 50%);
-    border: 2px solid #a9d4ff;
+    background: linear-gradient(135deg, rgba(173, 216, 230, 0.7) 50%, rgba(208, 231, 255, 0.7) 50%);
+    border: 2px solid #b0d4ff;
 }
