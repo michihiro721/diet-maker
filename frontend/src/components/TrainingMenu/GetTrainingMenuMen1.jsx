@@ -15,21 +15,33 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
     menuItems.forEach((item, itemIndex) => {
       const dayIndex = dayIndexMap[item.day];
       if (!suggestedMenu[dayIndex]) {
-      suggestedMenu[dayIndex] = {
-        title: item.day,
-        items: []
-      };
+        suggestedMenu[dayIndex] = {
+          title: item.day,
+          items: []
+        };
       }
       suggestedMenu[dayIndex].items.push({
-      day: item.day,
-      exercises: item.exercises.map((exercise, exerciseIndex) => ({
-        key: `${itemIndex}-${exerciseIndex}`,
-        name: exercise.name,
-        sets: exercise.sets,
-        reps: exercise.reps,
-        weight: 0, // 重量は0で初期化
-        workout_id: exercise.workout_id
-      }))
+        day: item.day,
+        exercises: item.exercises.map((exercise, exerciseIndex) => {
+          // 有酸素運動（durationあり）とそれ以外で処理を分ける
+          if (exercise.duration) {
+            return {
+              key: `${itemIndex}-${exerciseIndex}`,
+              name: exercise.name,
+              duration: exercise.duration,
+              workout_id: exercise.workout_id
+            };
+          } else {
+            return {
+              key: `${itemIndex}-${exerciseIndex}`,
+              name: exercise.name,
+              sets: exercise.sets,
+              reps: exercise.reps,
+              weight: 0, // 重量は0で初期化
+              workout_id: exercise.workout_id
+            };
+          }
+        })
       });
     });
   };

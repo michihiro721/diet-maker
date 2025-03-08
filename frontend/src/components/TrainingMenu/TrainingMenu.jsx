@@ -113,16 +113,32 @@ const TrainingMenu = () => {
       // 各エクササイズをtrainingDataに追加
       currentDayMenu.items.forEach((item) => {
         item.exercises.forEach((exercise) => {
-          for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
+          // 有酸素運動（durationあり）とそれ以外で処理を分ける
+          if (exercise.duration) {
+            // 有酸素運動の場合、1セットのみ保存し、重量フィールドに時間（分）を数値として保存
+            const durationMinutes = parseInt(exercise.duration);
             trainingData.push({
               user_id: userId,
               date: selectedDate,
               goal_id: 1,
               workout_id: exercise.workout_id,
-              sets: setIndex + 1,
-              reps: exercise.reps,
-              weight: exercise.weight,
+              sets: 1, // 有酸素運動は1セットとして扱う
+              reps: 0, // 回数は0
+              weight: isNaN(durationMinutes) ? 30 : durationMinutes, // 分数を重量として保存（パース失敗時は30分）
             });
+          } else {
+            // 通常のトレーニングの場合、セット数分のデータを作成
+            for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
+              trainingData.push({
+                user_id: userId,
+                date: selectedDate,
+                goal_id: 1,
+                workout_id: exercise.workout_id,
+                sets: setIndex + 1,
+                reps: exercise.reps,
+                weight: exercise.weight,
+              });
+            }
           }
         });
       });
@@ -228,9 +244,14 @@ const TrainingMenu = () => {
                   <li key={itemIndex} className="training-menu-list-item">
                     <span className="training-menu-day">{item.day}:</span>
                     <ul>
-                      {item.exercises.map((exercise, exerciseIndex) => (
-                        <li key={exercise.key}>{exercise.name} - {exercise.sets}セット x {exercise.reps}回</li>
-                      ))}
+                    {item.exercises.map((exercise, exerciseIndex) => (
+                      <li key={exercise.key}>
+                        {exercise.name} 
+                        {exercise.duration ? 
+                          ` - ${exercise.duration}` : 
+                          ` - ${exercise.sets}セット x ${exercise.reps}回`}
+                      </li>
+))}
                     </ul>
                   </li>
                 ))}
