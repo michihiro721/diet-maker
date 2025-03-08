@@ -37,36 +37,7 @@
   transform: translateY(-2px);
 }
 
-.save-success-message {
-  color: green;
-  font-weight: bold;
-  text-align: center;
-  font-size: 18px;
-  background-color: rgba(0, 128, 0, 0.1);
-  padding: 10px;
-  border-radius: 5px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 
-  width: fit-content;
-}
-
-.save-error-message {
-  color: red;
-  font-weight: bold;
-  margin-top: 10px;
-  text-align: center;
-  font-size: 18px;
-  background-color: rgba(255, 0, 0, 0.1);
-  padding: 10px;
-  border-radius: 5px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-
-  width: fit-content;
-}
 
 .no-training-data {
   color: #ff6347;
@@ -81,4 +52,57 @@
   margin-left: auto;
   margin-right: auto;
   width: fit-content;
+}
+
+/* ログイン警告メッセージのスタイル */
+.login-warning-message {
+  background-color: #ffe8e6;
+  color: #d32f2f;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid #ffcdd2;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 500px;
+}
+
+.login-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #5d9cec;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.login-link:hover {
+  background-color: #4a89dc;
+}
+
+.login-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #5d9cec;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #4a89dc;
+}
+
+/* 無効化されたボタンのスタイル */
+.save-training-button-disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.save-training-button-disabled:hover {
+  background-color: #cccccc;
 }
