@@ -13,6 +13,14 @@ import TrainingAdder from './TrainingAdder';
 import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday'; // CalenderFormatShortWeekdayをインポート
 import CalenderTileContent from '../../Calender/CalenderTileContent'; // CalenderTileContentをインポート
 
+// 有酸素運動の種目リスト
+const aerobicExercises = [
+  "トレッドミル", "ランニング", "ウォーキング", "エアロバイク", 
+  "ストレッチ", "水中ウォーキング", "縄跳び", "スイミング",
+  "ジョギング", "エリプティカル", "ステアクライマー", "ローイング",
+  "ズンバ", "ヨガ", "ピラティス"
+];
+
 const TrainingRecord = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [trainings, setTrainings] = useState([]); // 初期値を空の配列に設定
@@ -106,10 +114,18 @@ const TrainingRecord = () => {
           const workout = workouts.find(w => w.id === training.workout_id);
           const exercise = workout ? workout.name : "不明な種目";
           const targetArea = workout ? workout.category : "不明な部位";
-          const set = {
+          
+          // 有酸素運動かどうか判定
+          const isAerobic = aerobicExercises.includes(exercise);
+          
+          // 有酸素運動とそれ以外で保存する項目を変える
+          const set = isAerobic ? {
+            minutes: training.weight || 30, // weightフィールドを分として使用
+            timer: "02:00"
+          } : {
             weight: training.weight,
             reps: training.reps,
-            timer: "02:00" // タイマーのデフォルト値を設定
+            timer: "02:00"
           };
 
           if (trainingMap.has(exercise)) {
@@ -164,13 +180,24 @@ const TrainingRecord = () => {
   };
 
   const handleAddSet = (trainingIndex) => {
-    const lastSet = trainings[trainingIndex].sets && trainings[trainingIndex].sets.length > 0 ? trainings[trainingIndex].sets[trainings[trainingIndex].sets.length - 1] : null;
-    const newSet = {
-      weight: lastSet ? lastSet.weight : 85,
-      reps: lastSet ? lastSet.reps : 5,
-      complete: false,
-      timer: lastSet ? lastSet.timer : "02:00"
-    };
+    const training = trainings[trainingIndex];
+    const isAerobic = aerobicExercises.includes(training.exercise);
+    const lastSet = training.sets && training.sets.length > 0 ? training.sets[training.sets.length - 1] : null;
+    
+    // 有酸素運動かそれ以外かで新しいセットの内容を変える
+    const newSet = isAerobic 
+      ? {
+          minutes: lastSet ? lastSet.minutes : 30,
+          timer: lastSet ? lastSet.timer : "02:00",
+          complete: false
+        }
+      : {
+          weight: lastSet ? lastSet.weight : 20,
+          reps: lastSet ? lastSet.reps : 5,
+          timer: lastSet ? lastSet.timer : "02:00",
+          complete: false
+        };
+    
     const updatedTrainings = trainings.map((training, index) =>
       index === trainingIndex
         ? { ...training, sets: [...(training.sets || []), newSet] } // setsが未定義の場合は空の配列を設定
@@ -224,7 +251,21 @@ const TrainingRecord = () => {
   };
 
   const addTraining = (newTraining) => {
-    setTrainings([...trainings, newTraining]);
+    // 有酸素運動かどうかを判定
+    const isAerobic = aerobicExercises.includes(newTraining.exercise);
+    
+    // 有酸素運動の場合はminutesを設定、それ以外はweightとrepsを設定
+    const initialSet = isAerobic 
+      ? { minutes: 30, timer: "02:00", complete: false }
+      : { weight: 20, reps: 5, timer: "02:00", complete: false };
+    
+    // 新しいトレーニングにセットを追加
+    const trainingWithSet = {
+      ...newTraining,
+      sets: [initialSet]
+    };
+    
+    setTrainings([...trainings, trainingWithSet]);
   };
 
   const confirmDeleteTraining = (trainingIndex) => {
@@ -239,12 +280,48 @@ const TrainingRecord = () => {
   };
 
   const handleExerciseChange = (trainingIndex, exercise, part) => {
-    const updatedTrainings = trainings.map((training, index) =>
-      index === trainingIndex
-        ? { ...training, exercise, targetArea: part }
-        : training
-    );
-    setTrainings(updatedTrainings);
+    // 現在の種目と新しい種目の有酸素状態をチェック
+    const currentExercise = trainings[trainingIndex].exercise;
+    const wasAerobic = aerobicExercises.includes(currentExercise);
+    const isAerobic = aerobicExercises.includes(exercise);
+    
+    // 有酸素運動からそれ以外、またはその逆に変わる場合
+    if (wasAerobic !== isAerobic) {
+      // セットの形式を変換
+      const convertedSets = trainings[trainingIndex].sets.map(set => {
+        if (isAerobic) {
+          // 有酸素運動に変更: weightを分に変換
+          return {
+            minutes: set.weight || 30,
+            timer: set.timer || "02:00",
+            complete: set.complete || false
+          };
+        } else {
+          // 有酸素運動から通常トレーニングに変更
+          return {
+            weight: set.minutes || 20,
+            reps: 5, // デフォルトの回数
+            timer: set.timer || "02:00",
+            complete: set.complete || false
+          };
+        }
+      });
+      
+      const updatedTrainings = trainings.map((training, index) =>
+        index === trainingIndex
+          ? { ...training, exercise, targetArea: part, sets: convertedSets }
+          : training
+      );
+      setTrainings(updatedTrainings);
+    } else {
+      // 有酸素状態が変わらない場合は、単に種目と部位だけ更新
+      const updatedTrainings = trainings.map((training, index) =>
+        index === trainingIndex
+          ? { ...training, exercise, targetArea: part }
+          : training
+      );
+      setTrainings(updatedTrainings);
+    }
   };
 
   const confirmEndTraining = () => {
@@ -276,14 +353,17 @@ const TrainingRecord = () => {
 
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
+      const isAerobic = aerobicExercises.includes(training.exercise);
+      
       return training.sets.map(set => ({
         date: formattedDate,
-        user_id: userId, // 必ずユーザーIDが存在することを確認済み
-        goal_id: null, // 必要に応じて設定
-        workout_id: workout ? workout.id : null, // workout_idを追加
-        sets: training.sets.length, // セット数
-        reps: set.reps,
-        weight: set.weight
+        user_id: userId,
+        goal_id: null,
+        workout_id: workout ? workout.id : null,
+        sets: training.sets.length,
+        // 有酸素運動の場合はminutesをweightに保存、repsは0または省略
+        weight: isAerobic ? (set.minutes || 30) : (set.weight || 0),
+        reps: isAerobic ? 0 : (set.reps || 0)
       }));
     }).flat();
 
@@ -357,6 +437,8 @@ const TrainingRecord = () => {
               handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
               handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
               handleAddSet={() => handleAddSet(trainingIndex)}
+              currentExercise={training.exercise} // 現在の種目名を渡す
+              isAerobic={aerobicExercises.includes(training.exercise)} // 有酸素運動かどうかを判定して渡す
             />
             <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
           </div>
