@@ -15,10 +15,8 @@ import CalenderTileContent from '../../Calender/CalenderTileContent'; // Calende
 
 // 有酸素運動の種目リスト
 const aerobicExercises = [
-  "トレッドミル", "ランニング", "ウォーキング", "エアロバイク", 
-  "ストレッチ", "水中ウォーキング", "縄跳び", "スイミング",
-  "ジョギング", "エリプティカル", "ステアクライマー", "ローイング",
-  "ズンバ", "ヨガ", "ピラティス"
+  "トレッドミル", "ランニング", "ウォーキング", "エアロバイク",
+  "ストレッチ", "水中ウォーキング", "縄跳び", "階段"
 ];
 
 const TrainingRecord = () => {
@@ -472,6 +470,9 @@ const TrainingRecord = () => {
     weekday: 'short'
   }) : '日付が選択されていません';
 
+  // 現在選択中の日付にトレーニングデータがあるかをチェック
+  const currentDateHasTrainingData = hasTrainingData(selectedDate);
+
   return (
     <div className="training-record-container">
       <Calendar
@@ -483,15 +484,17 @@ const TrainingRecord = () => {
       />
       <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
       
-      {/* トレーニング記録削除ボタンをタイトルと種目の間に配置 */}
-      <div className="delete-record-button-container">
-        <button 
-          className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`} 
-          onClick={confirmDeleteRecord}
-        >
-          トレーニング記録削除
-        </button>
-      </div>
+      {/* トレーニング記録削除ボタンはトレーニングデータがある場合のみ表示 */}
+      {currentDateHasTrainingData && (
+        <div className="delete-record-button-container">
+          <button 
+            className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`} 
+            onClick={confirmDeleteRecord}
+          >
+            トレーニング記録削除
+          </button>
+        </div>
+      )}
       
       {!isLoggedIn && (
         <div className="login-warning-message">
