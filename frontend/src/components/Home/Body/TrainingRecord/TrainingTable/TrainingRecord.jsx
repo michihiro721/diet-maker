@@ -9,12 +9,10 @@ import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
 import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday'; // CalenderFormatShortWeekdayをインポート
 import CalenderTileContent from '../../Calender/CalenderTileContent'; // CalenderTileContentをインポート
+import { aerobicExercises } from '../TrainingInfo/TrainingInfo';
 
-// 有酸素運動の種目リスト
-const aerobicExercises = [
-  "トレッドミル", "ランニング", "ウォーキング", "エアロバイク",
-  "ストレッチ", "水中ウォーキング", "縄跳び", "階段"
-];
+// TrainingInfoからaerobicExercisesをインポートするので、ここでの再定義は不要になります
+// ただし、TrainingInfo.jsxでの変更が先に行われていることが前提です
 
 const TrainingRecord = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -34,12 +32,39 @@ const TrainingRecord = () => {
   const [loginErrorModalVisible, setLoginErrorModalVisible] = useState(false);
   const [deleteRecordModalVisible, setDeleteRecordModalVisible] = useState(false); // 記録削除モーダル表示状態
   const [maxWeights, setMaxWeights] = useState({}); // MAX重量を保持するステートを追加
+  const [userWeight, setUserWeight] = useState(70); // ユーザーの体重情報、デフォルト値は70kg
 
   // ログイン状態の確認
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     setIsLoggedIn(!!userId); // userIdがnullまたはundefinedでない場合はtrueに
   }, []);
+
+  // ユーザープロファイル情報（体重）を取得するuseEffect
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+
+        // ユーザープロファイル情報を取得するAPI呼び出し
+        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/users/${userId}`);
+        
+        if (response.status === 200 && response.data) {
+          // ユーザーの体重情報があれば設定
+          if (response.data.weight) {
+            setUserWeight(response.data.weight);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchUserProfile();
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     // ワークアウトデータを取得
@@ -554,7 +579,9 @@ const TrainingRecord = () => {
               currentExercise={training.exercise}
               currentPart={training.targetArea}
               onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
-              maxWeight={getMaxWeightForExercise(training.exercise)} // MAX重量をTrainingInfoコンポーネントに渡す
+              maxWeight={getMaxWeightForExercise(training.exercise)}
+              sets={training.sets} // セット情報を渡す
+              userWeight={userWeight} // ユーザーの体重情報を渡す
             />
             <TrainingTable
               sets={Array.isArray(training.sets) ? training.sets : []} // setsが配列であることを確認

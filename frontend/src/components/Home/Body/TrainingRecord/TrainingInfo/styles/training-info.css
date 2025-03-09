@@ -66,3 +66,27 @@
   box-sizing: border-box; /* ボックスのサイズを調整 */
   cursor: pointer; /* ポインターを追加 */
 }
+
+
+.calories-info {
+  position: relative;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* 消費カロリー値のスタイル */
+.calories-value {
+  font-weight: 600;
+  color: #ff0000;
+  margin-left: 5px;
+}
+
+/* カロリーツールチップのスタイル */
+.calories-tooltip {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
+  font-weight: normal;
+}

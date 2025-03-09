@@ -4,22 +4,43 @@
 
 import React, { useState, useEffect } from "react";
 import CustomizedTraining from '../CustomizedTraining/CustomizedTraining';
+import { calculateTotalCalories, aerobicExercises } from './CaloriesUtils';
 import './styles/training-info.css';
 
-// 有酸素運動の種目リスト
-const aerobicExercises = [
-  "トレッドミル", "ランニング", "ウォーキング", "エアロバイク", 
-  "ストレッチ", "水中ウォーキング", "縄跳び", "階段",
-];
-
-const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange, maxWeight }) => {
+const TrainingInfo = ({ 
+  currentExercise, 
+  currentPart, 
+  onExerciseChange, 
+  maxWeight,
+  sets = [],  // トレーニングのセット情報
+  userWeight = 70  // ユーザーの体重（デフォルト70kg）
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isAerobic, setIsAerobic] = useState(false);
+  const [calories, setCalories] = useState(0);
 
   // 有酸素運動かどうかチェック
   useEffect(() => {
     setIsAerobic(aerobicExercises.includes(currentExercise));
   }, [currentExercise]);
+
+  // 消費カロリーの計算
+  useEffect(() => {
+    if (sets && sets.length > 0) {
+      // METs値を使用した計算方法でカロリーを算出
+      // カロリー = METs × 体重(kg) × 時間 × 1.05
+      // 時間(時) = (レップ数 × 5秒) / 3600
+      const totalCalories = calculateTotalCalories(
+        sets, 
+        currentExercise, 
+        isAerobic, 
+        userWeight
+      );
+      setCalories(totalCalories);
+    } else {
+      setCalories(0);
+    }
+  }, [sets, currentExercise, isAerobic, userWeight]);
 
   const openModal = () => {
     setModalVisible(true);
@@ -34,6 +55,12 @@ const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange, maxWeigh
     closeModal();
   };
 
+  // カロリー表示用のフォーマット関数
+  const formatCalories = (value) => {
+    if (value <= 0) return 'トレーニングデータなし';
+    return `${value} kcal`;
+  };
+
   return (
     <div className="training-info">
       <p>
@@ -44,7 +71,15 @@ const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange, maxWeigh
       </p>
       <p className="target-part">対象部位：{currentPart}</p>
       {!isAerobic && <p>MAX重量：{maxWeight || 'トレーニングデータなし'}</p>}
-      <p>消費カロリー：本リリース時に実装予定</p>
+      <p className="calories-info">
+        消費カロリー：
+        <span className="calories-value">
+          {formatCalories(calories)}
+        </span>
+        {calories > 0 && (
+          <span className="calories-tooltip">※表示されるカロリーは推定値です</span>
+        )}
+      </p>
       {modalVisible && (
         <CustomizedTraining
           currentExercise={currentExercise}
