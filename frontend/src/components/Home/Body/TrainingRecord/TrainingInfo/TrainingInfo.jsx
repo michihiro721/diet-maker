@@ -43,7 +43,7 @@ const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange, maxWeigh
         </span>
       </p>
       <p className="target-part">対象部位：{currentPart}</p>
-      {!isAerobic && <p>MAX重量：{maxWeight || '本リリース時に実装予定'}</p>}
+      {!isAerobic && <p>MAX重量：{maxWeight || 'トレーニングデータなし'}</p>}
       <p>消費カロリー：本リリース時に実装予定</p>
       {modalVisible && (
         <CustomizedTraining
