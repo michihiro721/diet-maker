@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録全体を管理および表示するためのコンポーネントです。
-// トレーニングの基本情報、セットの詳細、モーダルを使用した入力補助機能を提供します。
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar'; // カレンダーコンポーネントを直接インポート
@@ -36,6 +33,7 @@ const TrainingRecord = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginErrorModalVisible, setLoginErrorModalVisible] = useState(false);
   const [deleteRecordModalVisible, setDeleteRecordModalVisible] = useState(false); // 記録削除モーダル表示状態
+  const [maxWeights, setMaxWeights] = useState({}); // MAX重量を保持するステートを追加
 
   // ログイン状態の確認
   useEffect(() => {
@@ -56,6 +54,30 @@ const TrainingRecord = () => {
 
     fetchWorkouts();
   }, []);
+
+  // ユーザーの最大重量データを取得
+  useEffect(() => {
+    const fetchMaxWeights = async () => {
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+
+        // 最大重量を取得するAPI呼び出し
+        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/max_weights?user_id=${userId}`);
+        
+        if (response.status === 200) {
+          setMaxWeights(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching max weights:', error);
+      }
+    };
+
+    // ログイン中の場合のみ実行
+    if (isLoggedIn) {
+      fetchMaxWeights();
+    }
+  }, [isLoggedIn]);
 
   // 月が変わった時に、その月のトレーニングデータがある日付を全て取得
   useEffect(() => {
@@ -148,6 +170,22 @@ const TrainingRecord = () => {
 
     fetchTrainings();
   }, [selectedDate, workouts]);
+
+  // 特定の種目の最大重量を取得する関数
+  const getMaxWeightForExercise = (exerciseName) => {
+    // 有酸素運動の場合は表示しない
+    if (aerobicExercises.includes(exerciseName)) {
+      return null;
+    }
+    
+    // workoutのIDを見つける
+    const workout = workouts.find(w => w.name === exerciseName);
+    if (!workout) return null;
+    
+    // このworkout_idのMAX重量があるか確認
+    const maxWeight = maxWeights[workout.id];
+    return maxWeight ? `${maxWeight}kg` : null;
+  };
 
   // トレーニングデータがある日付かどうかをチェックする関数
   const hasTrainingData = (date) => {
@@ -457,6 +495,12 @@ const TrainingRecord = () => {
         const uniqueDates = [...new Set(dates)];
         setTrainingDates(uniqueDates);
       }
+      
+      // データ保存後に最大重量を再取得
+      const maxWeightsResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/max_weights?user_id=${userId}`);
+      if (maxWeightsResponse.status === 200) {
+        setMaxWeights(maxWeightsResponse.data);
+      }
     } catch (error) {
       setMessageClass('save-error-message');
       alert('トレーニングデータの保存に失敗しました');
@@ -510,6 +554,7 @@ const TrainingRecord = () => {
               currentExercise={training.exercise}
               currentPart={training.targetArea}
               onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
+              maxWeight={getMaxWeightForExercise(training.exercise)} // MAX重量をTrainingInfoコンポーネントに渡す
             />
             <TrainingTable
               sets={Array.isArray(training.sets) ? training.sets : []} // setsが配列であることを確認
