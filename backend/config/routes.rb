@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :trainings, only: [:index, :create] do
     collection do
       get 'monthly'
+      get 'max_weights' # 追加: 最大重量を取得するエンドポイント
       delete 'destroy_by_date'
     end
   end

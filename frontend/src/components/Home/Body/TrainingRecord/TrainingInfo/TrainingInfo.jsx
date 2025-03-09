@@ -9,12 +9,10 @@ import './styles/training-info.css';
 // 有酸素運動の種目リスト
 const aerobicExercises = [
   "トレッドミル", "ランニング", "ウォーキング", "エアロバイク", 
-  "ストレッチ", "水中ウォーキング", "縄跳び", "スイミング",
-  "ジョギング", "エリプティカル", "ステアクライマー", "ローイング",
-  "ズンバ", "ヨガ", "ピラティス"
+  "ストレッチ", "水中ウォーキング", "縄跳び", "階段",
 ];
 
-const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange }) => {
+const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange, maxWeight }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isAerobic, setIsAerobic] = useState(false);
 
@@ -45,7 +43,7 @@ const TrainingInfo = ({ currentExercise, currentPart, onExerciseChange }) => {
         </span>
       </p>
       <p className="target-part">対象部位：{currentPart}</p>
-      {!isAerobic && <p>MAX重量：本リリース時に実装予定</p>}
+      {!isAerobic && <p>MAX重量：{maxWeight || '本リリース時に実装予定'}</p>}
       <p>消費カロリー：本リリース時に実装予定</p>
       {modalVisible && (
         <CustomizedTraining

@@ -70,6 +70,32 @@ class TrainingsController < ApplicationController
     end
   end
 
+  # ユーザーの種目ごとの最大重量を返すアクション
+  def max_weights
+    user_id = params[:user_id]
+    
+    # ユーザーIDが必要
+    unless user_id.present?
+      render json: { error: 'ユーザーIDが必要です' }, status: :bad_request
+      return
+    end
+    
+    # SQL文でワークアウトごとの最大重量を取得
+    max_weights_data = Training.select('workout_id, MAX(weight) as max_weight')
+                            .where(user_id: user_id)
+                            .where('weight > 0') # 重量が0より大きい記録だけ対象
+                            .where('workout_id IS NOT NULL')
+                            .group(:workout_id)
+    
+    # workout_idをキー、max_weightを値とするハッシュを作成
+    result = {}
+    max_weights_data.each do |record|
+      result[record.workout_id] = record.max_weight
+    end
+    
+    render json: result
+  end
+
   private
 
   def training_params
