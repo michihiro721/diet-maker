@@ -7,12 +7,9 @@ import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
-import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday'; // CalenderFormatShortWeekdayをインポート
-import CalenderTileContent from '../../Calender/CalenderTileContent'; // CalenderTileContentをインポート
-import { aerobicExercises } from '../TrainingInfo/TrainingInfo';
-
-// TrainingInfoからaerobicExercisesをインポートするので、ここでの再定義は不要になります
-// ただし、TrainingInfo.jsxでの変更が先に行われていることが前提です
+import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday';
+import CalenderTileContent from '../../Calender/CalenderTileContent';
+import { aerobicExercises, calculateTotalSessionCalories } from '../TrainingInfo/CaloriesUtils';
 
 const TrainingRecord = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -33,6 +30,7 @@ const TrainingRecord = () => {
   const [deleteRecordModalVisible, setDeleteRecordModalVisible] = useState(false); // 記録削除モーダル表示状態
   const [maxWeights, setMaxWeights] = useState({}); // MAX重量を保持するステートを追加
   const [userWeight, setUserWeight] = useState(70); // ユーザーの体重情報、デフォルト値は70kg
+  const [totalSessionCalories, setTotalSessionCalories] = useState(0);
 
   // ログイン状態の確認
   useEffect(() => {
@@ -196,6 +194,13 @@ const TrainingRecord = () => {
     fetchTrainings();
   }, [selectedDate, workouts]);
 
+
+  useEffect(() => {
+    // トレーニング全体の消費カロリーを計算
+    const totalCalories = calculateTotalSessionCalories(trainings, userWeight);
+    setTotalSessionCalories(totalCalories);
+  }, [trainings, userWeight]);
+
   // 特定の種目の最大重量を取得する関数
   const getMaxWeightForExercise = (exerciseName) => {
     // 有酸素運動の場合は表示しない
@@ -239,6 +244,12 @@ const TrainingRecord = () => {
       return classNames.join(' ');
     }
     return null;
+  };
+
+  // カロリー表示用のフォーマット関数
+  const formatTotalCalories = (value) => {
+    if (value <= 0) return 'データなし';
+    return `${value} kcal`;
   };
 
   const handleAddSet = (trainingIndex) => {
@@ -542,6 +553,9 @@ const TrainingRecord = () => {
   // 現在選択中の日付にトレーニングデータがあるかをチェック
   const currentDateHasTrainingData = hasTrainingData(selectedDate);
 
+  // トレーニングデータが存在するか確認
+  const hasAnyTrainingData = Array.isArray(trainings) && trainings.length > 0;
+
   return (
     <div className="training-record-container">
       <Calendar
@@ -572,7 +586,7 @@ const TrainingRecord = () => {
         </div>
       )}
       
-      {Array.isArray(trainings) && trainings.length > 0 ? (
+      {hasAnyTrainingData ? (
         trainings.map((training, trainingIndex) => (
           <div key={trainingIndex} className="training-section">
             <TrainingInfo
@@ -600,6 +614,19 @@ const TrainingRecord = () => {
       )}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
+      
+      {/* トレーニング合計消費カロリーを表示 - トレーニングデータが存在する場合のみ表示 */}
+      {hasAnyTrainingData && totalSessionCalories > 0 && (
+        <div className="total-calories-container">
+          <p className="total-calories-info">
+            合計消費カロリー<br />
+            <span className="total-calories-value">
+              {formatTotalCalories(totalSessionCalories)}
+            </span>
+            <span className="calories-tooltip">※表示されるカロリーは推定値です</span>
+          </p>
+        </div>
+      )}
       
       {/* トレーニング終了ボタンのみ表示 */}
       <div className="training-end-button-container">

@@ -57,7 +57,7 @@ const TrainingInfo = ({
 
   // カロリー表示用のフォーマット関数
   const formatCalories = (value) => {
-    if (value <= 0) return 'トレーニングデータなし';
+    if (value <= 0) return 'データなし';
     return `${value} kcal`;
   };
 
@@ -70,7 +70,7 @@ const TrainingInfo = ({
         </span>
       </p>
       <p className="target-part">対象部位：{currentPart}</p>
-      {!isAerobic && <p>MAX重量：{maxWeight || 'トレーニングデータなし'}</p>}
+      {!isAerobic && <p>MAX重量：{maxWeight || 'データなし'}</p>}
       <p className="calories-info">
         消費カロリー：
         <span className="calories-value">
