@@ -11,7 +11,7 @@ import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 import './styles/Achievements.css';
 
 const Achievements = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('en-CA'));
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [trainingData, setTrainingData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -123,10 +123,9 @@ const Achievements = () => {
     }
   }, [userId, selectedDate]);
 
-  // 日付選択の処理
   const handleDateChange = (date) => {
-    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    const formattedDate = date.toLocaleDateString('en-CA');
+    setSelectedDate(formattedDate);
     setIsCalendarModalOpen(false);
   };
 
@@ -248,6 +247,7 @@ const Achievements = () => {
               tileClassName={tileClassName}
               tileContent={CalenderTileContent}
               value={new Date(selectedDate)}
+              className="ach-calendar"
             />
           </div>
         </div>
