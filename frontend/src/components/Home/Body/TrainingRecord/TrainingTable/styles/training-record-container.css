@@ -132,3 +132,46 @@
   background-color: #e9a5ac;
   cursor: not-allowed;
 }
+
+
+.total-calories-container {
+  margin: 15px auto;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: rgba(255, 99, 71, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 200px;
+}
+
+.total-calories-info {
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.total-calories-value {
+  font-weight: bold;
+  color: #ff5722;
+  font-size: 24px;
+  margin-left: 5px;
+  text-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+.calories-tooltip {
+  display: block;
+  font-size: 16px;
+  color: #757575;
+  margin-top: 5px;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+  }
+  to {
+    text-shadow: 0 0 10px rgba(255, 87, 34, 0.7);
+  }
+}

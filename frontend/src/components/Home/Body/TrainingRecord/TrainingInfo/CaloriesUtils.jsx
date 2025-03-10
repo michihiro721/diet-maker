@@ -183,10 +183,36 @@ const aerobicExercises = [
     return totalCalories;
   };
   
+  /**
+   * すべてのトレーニングの合計消費カロリーを計算
+   * @param {Array} trainings - トレーニングオブジェクトの配列
+   * @param {number} userWeight - ユーザーの体重（kg）
+   * @returns {number} - 合計消費カロリー
+   */
+  const calculateTotalSessionCalories = (trainings, userWeight = 70) => {
+    if (!trainings || trainings.length === 0) return 0;
+    
+    let sessionTotalCalories = 0;
+    
+    trainings.forEach(training => {
+      const isAerobic = aerobicExercises.includes(training.exercise);
+      const exerciseCalories = calculateTotalCalories(
+        training.sets, 
+        training.exercise, 
+        isAerobic, 
+        userWeight
+      );
+      sessionTotalCalories += exerciseCalories;
+    });
+    
+    return sessionTotalCalories;
+  };
+  
   export {
     calculateWeightTrainingCalories,
     calculateAerobicCalories,
     calculateTotalCalories,
+    calculateTotalSessionCalories,
     exerciseMETs,
     aerobicExercises
   };
