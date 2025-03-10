@@ -1,0 +1,235 @@
+.ach-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+  }
+  
+  .ach-title {
+    text-align: center;
+    font-size: 24px;
+    color: #0366d6;
+    margin-bottom: 20px;
+  }
+  
+.ach-date-selection-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.ach-date-input {
+    font-size: 24px;
+    padding: 10px;
+    outline: 1px solid #87CEFA;
+    outline-offset: 2px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+    width: 300px;
+    margin-top: 10px;
+}
+  
+  .ach-date-selection-container label {
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .ach-date-input:hover {
+    border: 1px solid #87CEFA;
+    background-color: #f8fcff;
+  }
+  
+  .ach-error-message {
+    color: #ff4d4d;
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+  }
+  
+  .ach-success-message {
+    color: #4d79ff;
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold;
+    background-color: #e6ecff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+  }
+  
+  .ach-loading-spinner {
+    text-align: center;
+    padding: 20px;
+    color: #0366d6;
+    font-size: 18px;
+  }
+  
+  .ach-training-records-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .ach-training-records-title {
+    font-size: 20px;
+    color: #0366d6;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .ach-training-records-by-category {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .ach-category-section {
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ach-category-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #0366d6;
+    color: #0366d6;
+  }
+  
+.ach-training-records-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ach-training-records-table th,
+.ach-training-records-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e1e4e8;
+}
+
+.ach-training-records-table th {
+    background-color: #f6f8fa;
+    font-weight: bold;
+    color: #24292e;
+}
+
+.ach-training-records-table tr:nth-child(even) {
+    background-color: #f6f8fa;
+}
+
+.ach-training-records-table tr:hover {
+    background-color: #e3f2fd;
+}
+
+.ach-category-section {
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+  
+  .ach-no-data-message {
+    text-align: center;
+    padding: 20px;
+    color: #586069;
+    font-style: italic;
+    background-color: #f6f8fa;
+    border-radius: 8px;
+    border: 1px dashed #e1e4e8;
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* カレンダーモーダル用のスタイル */
+  .ach-calendar-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .ach-calendar-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+  }
+  
+  /* トレーニングマーカーのスタイル */
+  .ach-training-marker {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #0366d6;
+    border-radius: 50%;
+  }
+  
+  /* トレーニングがある日のカレンダータイルのスタイル */
+  .ach-has-training {
+    background-color: #e3f2fd !important;
+  }
+  
+  /* モバイル対応 テスト的にやってみた */
+  @media (max-width: 768px) {
+    .ach-container {
+      max-width: 100%;
+      padding: 10px;
+    }
+    
+    .ach-date-selection-container label {
+      font-size: 16px;
+    }
+    
+    .ach-date-input {
+      font-size: 16px;
+      width: 130px;
+    }
+    
+    .ach-training-records-table th,
+    .ach-training-records-table td {
+      padding: 8px;
+      font-size: 14px;
+    }
+    
+    .ach-category-title {
+      font-size: 16px;
+    }
+    
+    .ach-title {
+      font-size: 20px;
+    }
+    
+    .ach-training-records-title {
+      font-size: 18px;
+    }
+  }
