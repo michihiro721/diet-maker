@@ -505,27 +505,29 @@ const TrainingRecord = () => {
     }
     
     const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-
+  
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
       const isAerobic = aerobicExercises.includes(training.exercise);
       
-      return training.sets.map(set => ({
+      // 各セットごとに正しいセット番号（インデックス+1）を設定する
+      return training.sets.map((set, setIndex) => ({
         date: formattedDate,
         user_id: userId,
         goal_id: null,
         workout_id: workout ? workout.id : null,
-        sets: training.sets.length,
+        // 各セットの番号を1から始まる番号に変更
+        sets: setIndex + 1,
         // 有酸素運動の場合はminutesをweightに保存、repsは0または省略
         weight: isAerobic ? (set.minutes || 30) : (set.weight || 0),
         reps: isAerobic ? 0 : (set.reps || 0)
       }));
     }).flat();
-
+  
     try {
       // 新しいデータを保存
       const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', { training: trainingData });
-
+  
       if (response.status !== 201) {
         throw new Error('Training data could not be saved');
       }
