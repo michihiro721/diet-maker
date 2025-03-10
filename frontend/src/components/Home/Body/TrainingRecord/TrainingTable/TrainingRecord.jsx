@@ -43,22 +43,38 @@ const TrainingRecord = () => {
     const fetchUserProfile = async () => {
       try {
         const userId = localStorage.getItem('userId');
+
+        const token = localStorage.getItem('jwt');
+
+        // console.log('UserId:', userId);
+        // console.log('Token:', token);
+
         if (!userId) return;
 
-        // ユーザープロファイル情報を取得するAPI呼び出し
-        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/users/${userId}`);
-        
-        if (response.status === 200 && response.data) {
-          // ユーザーの体重情報があれば設定
-          if (response.data.weight) {
+        if (!token) {
+          console.log('トークンが存在しないため、デフォルトの体重を使用します');
+          return; // デフォルトの体重（70kg）を使用
+        }
+
+        try {
+          const response = await axios.get(
+            `https://diet-maker-d07eb3099e56.herokuapp.com/users/${userId}`,
+            {
+              headers: { 'Authorization': `Bearer ${token}` }
+            }
+          );
+
+          if (response.status === 200 && response.data && response.data.weight) {
             setUserWeight(response.data.weight);
           }
+        } catch (profileError) {
+          console.error('ユーザープロファイル取得エラー:', profileError);
         }
       } catch (error) {
-        console.error('Error fetching user profile:', error);
+        console.error('fetchUserProfile関数エラー:', error);
       }
     };
-
+  
     if (isLoggedIn) {
       fetchUserProfile();
     }
