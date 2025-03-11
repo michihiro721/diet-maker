@@ -5,6 +5,11 @@
   margin-top: 100px;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 /* 検索とハートカウント */
 .search-container {
   display: flex;
@@ -15,7 +20,7 @@
 
 .search-box {
   display: flex;
-  height: 50px;
+  height: 60px;
 }
 
 .search-input {
@@ -34,7 +39,7 @@
   border-radius: 0 4px 4px 0;
   cursor: pointer;
   font-size: 16px;
-  height: 40px;
+  height: 50px;
 }
 
 .search-button:hover {
@@ -131,13 +136,16 @@
 .pagination {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   margin-top: 20px;
+  gap: 5px;
+  position: relative;
 }
 
 .pagination-number {
-  width: 40px;
-  height: 40px;
-  margin: 0 5px;
+  min-width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +153,8 @@
   background-color: white;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
 .pagination-number.active {
@@ -153,9 +163,13 @@
   border-color: #5B86E5;
 }
 
+.pagination-number:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
 .pagination-arrow {
-  width: 40px;
-  height: 40px;
+  min-width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,11 +177,27 @@
   background-color: white;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
 .pagination-arrow:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.pagination-arrow:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.pagination-end {
+  font-size: 16px;
+}
+
+.pagination-info {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #666;
 }
 
 /* ローディングと エラー */
@@ -190,4 +220,50 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   margin: 20px 0;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .search-box {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+    flex-grow: 1;
+  }
+  
+  .heart-count {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+  }
+  
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .pagination {
+    gap: 3px;
+  }
+  
+  .pagination-number,
+  .pagination-arrow {
+    min-width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  .pagination-info {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
 }

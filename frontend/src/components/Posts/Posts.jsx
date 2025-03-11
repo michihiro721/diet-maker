@@ -207,6 +207,24 @@ const Posts = () => {
     }
   };
   
+  // ページネーションの表示範囲を計算する
+  const getPaginationRange = () => {
+    // 表示数の制限 (スマホの場合はさらに少なくなる)
+    const isSmallScreen = window.innerWidth < 768;
+    const maxDisplayCount = isSmallScreen ? 5 : 9;
+    
+    let startPage = Math.max(1, currentPage - Math.floor(maxDisplayCount / 2));
+    let endPage = Math.min(totalPages, startPage + maxDisplayCount - 1);
+    
+    // startPageの調整（endPageが最大値に達している場合）
+    if (endPage === totalPages) {
+      startPage = Math.max(1, endPage - maxDisplayCount + 1);
+    }
+    
+    // 範囲を配列として返す
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  };
+  
   // ユーザーが投稿にいいねしているかチェック
   const hasUserLiked = (post) => {
     if (!isLoggedIn || !userId) return false;
@@ -216,6 +234,9 @@ const Posts = () => {
 
   if (loading) return <div className="loading">読み込み中...</div>;
   if (error) return <div className="error">{error}</div>;
+  
+  // ページネーションの表示範囲
+  const paginationRange = getPaginationRange();
   
   return (
     <div className="posts-container">
@@ -268,32 +289,66 @@ const Posts = () => {
         </div>
       )}
       
-      {/* ページネーション */}
+      {/* ページネーション - 改良版 */}
       {totalPages > 1 && (
         <div className="pagination">
+          {/* 最初のページへ */}
+          {currentPage > 3 && (
+            <button 
+              onClick={() => handlePageChange(1)}
+              className="pagination-arrow pagination-end"
+              title="最初のページへ"
+            >
+              «
+            </button>
+          )}
+          
+          {/* 前のページへ */}
           <button 
             onClick={() => handlePageChange(currentPage - 1)} 
             disabled={currentPage === 1}
             className="pagination-arrow"
+            title="前のページへ"
           >
             ◀
           </button>
-          {[...Array(totalPages)].map((_, index) => (
+          
+          {/* ページ番号 */}
+          {paginationRange.map(pageNumber => (
             <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              className={`pagination-number ${currentPage === index + 1 ? 'active' : ''}`}
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={`pagination-number ${currentPage === pageNumber ? 'active' : ''}`}
             >
-              {index + 1}
+              {pageNumber}
             </button>
           ))}
+          
+          {/* 次のページへ */}
           <button 
             onClick={() => handlePageChange(currentPage + 1)} 
             disabled={currentPage === totalPages}
             className="pagination-arrow"
+            title="次のページへ"
           >
             ▶
           </button>
+          
+          {/* 最後のページへ */}
+          {currentPage < totalPages - 2 && totalPages > 5 && (
+            <button 
+              onClick={() => handlePageChange(totalPages)}
+              className="pagination-arrow pagination-end"
+              title="最後のページへ"
+            >
+              »
+            </button>
+          )}
+          
+          {/* ページ表示情報 */}
+          <div className="pagination-info">
+            {currentPage} / {totalPages}
+          </div>
         </div>
       )}
     </div>
