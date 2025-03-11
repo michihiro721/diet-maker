@@ -46,6 +46,12 @@ Rails.application.routes.draw do
   resources :steps, only: [:index, :create]
   resources :intake_calories, only: [:index, :create]
 
+  # 投稿、コメント、いいね機能のルート
+  resources :posts do
+    resources :comments, only: [:create, :destroy]
+    resources :likes, only: [:create]
+  end
+
   # パスワードリセット用のルート（優先度高）
   get 'reset-password/:token', to: 'home#index'
 
