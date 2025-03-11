@@ -240,10 +240,8 @@ const Posts = () => {
   
   return (
     <div className="posts-container">
-      <h1></h1>
-      
-      {/* 検索とハートカウント */}
-      <div className="search-container">
+
+      <div className="search-container-centered">
         <div className="search-box">
           <input
             type="text"
@@ -254,6 +252,7 @@ const Posts = () => {
           />
           <button className="search-button">検索</button>
         </div>
+
         <div className="heart-count">
           ❤️をもらった累計数：{totalLikesCount}
         </div>
@@ -289,7 +288,7 @@ const Posts = () => {
         </div>
       )}
       
-      {/* ページネーション - 改良版 */}
+      {/* ページネーション */}
       {totalPages > 1 && (
         <div className="pagination">
           {/* 最初のページへ */}

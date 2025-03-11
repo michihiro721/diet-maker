@@ -5,29 +5,28 @@
   margin-top: 100px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* 検索とハートカウント */
-.search-container {
+.search-container-centered {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 .search-box {
   display: flex;
   height: 60px;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .search-input {
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px 0 0 4px;
-  width: 250px;
+  width: 100%;
   font-size: 16px;
 }
 
@@ -40,6 +39,7 @@ h1 {
   cursor: pointer;
   font-size: 16px;
   height: 50px;
+  width: 100px;
 }
 
 .search-button:hover {
@@ -49,7 +49,8 @@ h1 {
 .heart-count {
   font-weight: bold;
   color: #333;
-  font-size: 16px;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 /* 投稿一覧 */
@@ -141,6 +142,7 @@ h1 {
   margin-top: 20px;
   gap: 5px;
   position: relative;
+  margin-bottom: 100px;
 }
 
 .pagination-number {
@@ -224,25 +226,12 @@ h1 {
 
 /* レスポンシブ */
 @media (max-width: 768px) {
-  .search-container {
-    flex-direction: column;
-    align-items: flex-start;
+  .search-container-centered {
+    width: 100%;
   }
   
   .search-box {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  .search-input {
-    width: 100%;
-    flex-grow: 1;
-  }
-  
-  .heart-count {
-    width: 100%;
-    text-align: center;
-    margin-top: 5px;
+    width: 90%;
   }
   
   .posts-grid {
