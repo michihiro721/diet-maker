@@ -12,6 +12,7 @@ const Posts = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [likesCount, setLikesCount] = useState({});
+  const [totalLikesCount, setTotalLikesCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [userId, setUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,6 +65,43 @@ const Posts = () => {
     fetchPosts();
   }, []);
   
+  // いいねの合計を計算するための useEffect
+  useEffect(() => {
+    const calculateTotalLikes = () => {
+      // ログインしていない場合は0を表示
+      if (!isLoggedIn || !userId) {
+        setTotalLikesCount(0);
+        return;
+      }
+      
+      // ユーザーIDを数値に変換
+      const userIdNum = Number(userId);
+      
+      // 自分の投稿のみ抽出（直接投稿のuser_idと比較）
+      const myPosts = posts.filter(post => post.user_id === userIdNum);
+      
+      // 自分の投稿に対するいいね数を合計
+      let total = 0;
+      myPosts.forEach(post => {
+        total += post.likes?.length || 0;
+      });
+      
+      console.log('いいね数計算:', {
+        userIdNum,
+        myPostsCount: myPosts.length,
+        myPostIds: myPosts.map(p => p.id),
+        allPostUserIds: posts.map(p => p.user_id),
+        postUserProperties: posts.map(p => Object.keys(p)),
+        likesOnMyPosts: myPosts.map(p => p.likes?.length || 0),
+        totalLikes: total
+      });
+      
+      setTotalLikesCount(total);
+    };
+    
+    calculateTotalLikes();
+  }, [posts, isLoggedIn, userId]);
+  
   // いいね機能の処理
   const handleLike = async (postId) => {
     if (!isLoggedIn) {
@@ -75,7 +113,7 @@ const Posts = () => {
     try {
       console.log("いいねリクエスト送信中...");
       
-      // TrainingRecordと同じ方法でトークンを取得
+      // トークンを取得
       const jwt = localStorage.getItem('jwt');
       if (!jwt) {
         alert("認証情報が見つかりません。再ログインしてください。");
@@ -86,44 +124,46 @@ const Posts = () => {
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
       
-      console.log("リクエスト設定:", {
-        url: `/posts/${postId}/likes`,
-        headers: config.headers
-      });
-      
+      // リクエスト送信
       const response = await api.post(`/posts/${postId}/likes`, {}, config);
       console.log("いいねレスポンス:", response.data);
       
-      // 投稿のいいね状態を更新
-      setLikesCount(prev => ({
-        ...prev,
-        [postId]: response.data.likes_count || prev[postId]
-      }));
+      // レスポンスデータから必要な情報を取得
+      const liked = response.data.liked;
+      const likesCount = response.data.likes_count || 0;
+      const userIdNum = Number(userId);
       
-      // 投稿一覧のいいね情報も更新
+      // 投稿の状態を更新
       setPosts(prevPosts => 
         prevPosts.map(post => {
           if (post.id === postId) {
-            const userLiked = response.data.liked;
+            let updatedLikes;
             
-            // いいねが追加または削除された場合の処理
-            if (userLiked) {
+            // いいねの状態によって処理を分ける
+            if (liked) {
               // いいねが追加された場合
-              return {
-                ...post,
-                likes: [...(post.likes || []), { user_id: parseInt(userId) }]
-              };
+              updatedLikes = [...(post.likes || []), { user_id: userIdNum }];
             } else {
               // いいねが削除された場合
-              return {
-                ...post,
-                likes: (post.likes || []).filter(like => like.user_id !== parseInt(userId))
-              };
+              updatedLikes = (post.likes || []).filter(like => like.user_id !== userIdNum);
             }
+            
+            // 投稿を更新
+            return {
+              ...post,
+              likes: updatedLikes
+            };
           }
           return post;
         })
       );
+      
+      // 個別投稿のいいね数を更新
+      setLikesCount(prev => ({
+        ...prev,
+        [postId]: likesCount
+      }));
+      
     } catch (err) {
       console.error("いいねの処理に失敗しました", err);
       console.error("エラーの詳細:", {
@@ -148,9 +188,11 @@ const Posts = () => {
   };
   
   // フィルタリングされた投稿
-  const filteredPosts = posts.filter(post => 
-    post.user?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPosts = posts.filter(post => {
+    // userがundefinedの場合も考慮
+    const userName = post.user?.name || '';
+    return userName.toLowerCase().includes(searchTerm.toLowerCase());
+  });
   
   // ページネーション
   const indexOfLastPost = currentPage * postsPerPage;
@@ -168,7 +210,8 @@ const Posts = () => {
   // ユーザーが投稿にいいねしているかチェック
   const hasUserLiked = (post) => {
     if (!isLoggedIn || !userId) return false;
-    return post.likes?.some(like => like.user_id === parseInt(userId));
+    const userIdNum = Number(userId);
+    return post.likes?.some(like => like.user_id === userIdNum);
   };
 
   if (loading) return <div className="loading">読み込み中...</div>;
@@ -191,7 +234,7 @@ const Posts = () => {
           <button className="search-button">検索</button>
         </div>
         <div className="heart-count">
-          ❤️をもらった累計数：{Object.values(likesCount).reduce((a, b) => a + b, 0)}
+          ❤️をもらった累計数：{totalLikesCount}
         </div>
       </div>
       
