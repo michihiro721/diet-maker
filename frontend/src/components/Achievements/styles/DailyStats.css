@@ -1,0 +1,115 @@
+.daily-stats-container {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 100px;
+  }
+  
+  .daily-stats-title {
+    font-size: 18px;
+    color: #4a6cb3;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .daily-stats-section {
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    background-color: white;
+  }
+  
+  .daily-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .daily-stat-item {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .daily-stat-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .daily-stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .daily-stat-value {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* データなしの表示スタイル */
+  .daily-stat-value:contains('データなし') {
+    color: #888;
+    font-style: italic;
+    font-size: 16px;
+  }
+  
+  /* カロリー収支のプラス表示 */
+  .daily-stat-value.positive {
+    color: rgba(255, 165, 0, 0.7);
+  }
+  
+  /* カロリー収支のマイナス表示 */
+  .daily-stat-value.negative {
+    color: rgba(0, 0, 255, 0.5);
+  }
+  
+  /* ローディング表示 */
+  .daily-stats-loading {
+    text-align: center;
+    padding: 20px;
+    color: #4a6cb3;
+    font-size: 16px;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+  
+  /* エラー表示 */
+  .daily-stats-error {
+    color: #e53e3e;
+    font-size: 14px;
+    margin: 10px 0;
+    background-color: rgba(254, 215, 215, 0.5);
+    padding: 10px 15px;
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* モバイル対応 */
+  @media (max-width: 768px) {
+    .daily-stats-title {
+      font-size: 16px;
+    }
+    
+    .daily-stats-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .daily-stat-label {
+      font-size: 13px;
+    }
+    
+    .daily-stat-value {
+      font-size: 16px;
+    }
+  }

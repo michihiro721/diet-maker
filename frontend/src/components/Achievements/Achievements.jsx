@@ -9,6 +9,7 @@ import '../Home/Body/Calender/styles/CalenderCommon.css';
 import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
 import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
 import './styles/Achievements.css';
+import DailyStats from './DailyStats';
 
 const Achievements = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('en-CA'));
@@ -243,85 +244,90 @@ const Achievements = () => {
       {isLoading ? (
         <div className="ach-loading-spinner">データを読み込み中...</div>
       ) : (
-        <div className="ach-training-records-container">
-          <h2 className="ach-training-records-title">トレーニング記録</h2>
-          
-          {trainingData.length > 0 ? (
-            <div className="ach-training-records-by-category">
-              {/* すべてのカテゴリーを一つのコンテナで表示 */}
-              <div className="ach-category-section">
-                {/* カテゴリー名をリストとして表示 */}
-                <div className="ach-category-list">
-                  {Object.keys(groupedTrainingData).map(category => (
-                    <span 
-                      key={category} 
-                      className={`ach-category-badge ${category === "有酸素" ? 'aerobic' : ''}`}
-                    >
-                      {category}
-                    </span>
-                  ))}
-                </div>
+        <>
+          <div className="ach-training-records-container">
+            <h2 className="ach-training-records-title">トレーニング記録</h2>
+            
+            {trainingData.length > 0 ? (
+              <div className="ach-training-records-by-category">
+                {/* すべてのカテゴリーを一つのコンテナで表示 */}
+                <div className="ach-category-section">
+                  {/* カテゴリー名をリストとして表示 */}
+                  <div className="ach-category-list">
+                    {Object.keys(groupedTrainingData).map(category => (
+                      <span 
+                        key={category} 
+                        className={`ach-category-badge ${category === "有酸素" ? 'aerobic' : ''}`}
+                      >
+                        {category}
+                      </span>
+                    ))}
+                  </div>
 
-                {/* すべてのトレーニングを一つのテーブルにまとめる */}
-                <table className="ach-training-records-table">
-                  <thead>
-                    <tr>
-                      <th>対象部位</th>
-                      <th>種目</th>
-                      <th>セット</th>
-                      <th>重量or時間</th>
-                      <th>回数</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.entries(groupedTrainingData).map(([category, trainings]) => {
-                      const exerciseGroups = getGroupedExerciseData(trainings);
-                      
-                      return Object.entries(exerciseGroups).map(([exerciseName, exerciseData], exerciseIndex) => {
-                        const isAerobic = isAerobicExercise(exerciseData.workoutId);
-                        const setsCount = exerciseData.sets.length;
-                        // カテゴリー名（有酸素運動の場合は「有酸素」と表示）
-                        const categoryName = isAerobic ? "有酸素" : category;
+                  {/* すべてのトレーニングを一つのテーブルにまとめる */}
+                  <table className="ach-training-records-table">
+                    <thead>
+                      <tr>
+                        <th>対象部位</th>
+                        <th>種目</th>
+                        <th>セット</th>
+                        <th>重量or時間</th>
+                        <th>回数</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.entries(groupedTrainingData).map(([category, trainings]) => {
+                        const exerciseGroups = getGroupedExerciseData(trainings);
                         
-                        return (
-                          <React.Fragment key={`exercise-${exerciseIndex}`}>
-                            {/* 各セットを別々の行で表示 */}
-                            {exerciseData.sets.map((set, setIndex) => (
-                              <tr key={`set-${set.id}`} className={setIndex === 0 ? 'ach-exercise-first-row' : ''}>
-                                {/* 最初のセットの場合のみカテゴリー名と種目名を表示して行を結合 */}
-                                {setIndex === 0 ? (
-                                  <>
-                                    <td 
-                                      rowSpan={setsCount} 
-                                      className={`ach-category-name ${isAerobic ? 'aerobic' : ''}`}
-                                    >
-                                      {categoryName}
-                                    </td>
-                                    <td 
-                                      rowSpan={setsCount} 
-                                      className={`ach-exercise-name ${isAerobic ? 'aerobic' : ''}`}
-                                    >
-                                      {exerciseName}
-                                    </td>
-                                  </>
-                                ) : null}
-                                <td>{set.setNumber}</td>
-                                <td>{set.weight}{isAerobic ? '分' : 'kg'}</td>
-                                <td>{isAerobic ? '-' : set.reps}</td>
-                              </tr>
-                            ))}
-                          </React.Fragment>
-                        );
-                      });
-                    })}
-                  </tbody>
-                </table>
+                        return Object.entries(exerciseGroups).map(([exerciseName, exerciseData], exerciseIndex) => {
+                          const isAerobic = isAerobicExercise(exerciseData.workoutId);
+                          const setsCount = exerciseData.sets.length;
+                          // カテゴリー名（有酸素運動の場合は「有酸素」と表示）
+                          const categoryName = isAerobic ? "有酸素" : category;
+                          
+                          return (
+                            <React.Fragment key={`exercise-${exerciseIndex}`}>
+                              {/* 各セットを別々の行で表示 */}
+                              {exerciseData.sets.map((set, setIndex) => (
+                                <tr key={`set-${set.id}`} className={setIndex === 0 ? 'ach-exercise-first-row' : ''}>
+                                  {/* 最初のセットの場合のみカテゴリー名と種目名を表示して行を結合 */}
+                                  {setIndex === 0 ? (
+                                    <>
+                                      <td 
+                                        rowSpan={setsCount} 
+                                        className={`ach-category-name ${isAerobic ? 'aerobic' : ''}`}
+                                      >
+                                        {categoryName}
+                                      </td>
+                                      <td 
+                                        rowSpan={setsCount} 
+                                        className={`ach-exercise-name ${isAerobic ? 'aerobic' : ''}`}
+                                      >
+                                        {exerciseName}
+                                      </td>
+                                    </>
+                                  ) : null}
+                                  <td>{set.setNumber}</td>
+                                  <td>{set.weight}{isAerobic ? '分' : 'kg'}</td>
+                                  <td>{isAerobic ? '-' : set.reps}</td>
+                                </tr>
+                              ))}
+                            </React.Fragment>
+                          );
+                        });
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          ) : (
-            <p className="ach-no-data-message">選択した日付のトレーニング記録はありません</p>
-          )}
-        </div>
+            ) : (
+              <p className="ach-no-data-message">選択した日付のトレーニング記録はありません</p>
+            )}
+          </div>
+
+          {/* 歩数とカロリー情報を表示するコンポーネント */}
+          <DailyStats userId={userId} selectedDate={selectedDate} />
+        </>
       )}
 
       {isCalendarModalOpen && (
