@@ -20,6 +20,12 @@ const Achievements = () => {
   const [workouts, setWorkouts] = useState([]);
   const [trainingDates, setTrainingDates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // 有酸素運動のリスト
+  const aerobicExercises = [
+    "トレッドミル", "ランニング", "ウォーキング", "エアロバイク", 
+    "ストレッチ", "水中ウォーキング", "縄跳び", "階段"
+  ];
 
   // ユーザーIDをローカルストレージから取得
   useEffect(() => {
@@ -51,7 +57,6 @@ const Achievements = () => {
   }, []);
 
   // 月間トレーニングデータを取得（カレンダーのマーキング用）
-  // TrainingRecord.jsxと同じ方法を使用
   useEffect(() => {
     const fetchMonthlyTrainings = async () => {
       try {
@@ -140,6 +145,15 @@ const Achievements = () => {
     const workout = workouts.find(w => w.id === workoutId);
     return workout ? workout.category : '';
   };
+  
+  // 種目が有酸素運動かどうかを判定する関数
+  const isAerobicExercise = (workoutId) => {
+    const workoutName = getWorkoutName(workoutId);
+    const category = getWorkoutCategory(workoutId);
+    
+    // 種目名または種目カテゴリーで判定
+    return aerobicExercises.includes(workoutName) || category === "有酸素";
+  };
 
   // トレーニングデータをカテゴリーごとにグループ化
   const groupedTrainingData = trainingData.reduce((groups, training) => {
@@ -151,13 +165,13 @@ const Achievements = () => {
     return groups;
   }, {});
 
-  // トレーニングデータがある日付かどうかをチェックする関数（TrainingRecord.jsxと同じ）
+  // トレーニングデータがある日付かどうかをチェックする関数
   const hasTrainingData = (date) => {
     const dateStr = date.toLocaleDateString('en-CA');
     return trainingDates.includes(dateStr);
   };
 
-  // カレンダータイルのクラス名を決定する関数（TrainingRecord.jsxと同じ）
+  // カレンダータイルのクラス名を決定する関数
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
       const day = date.getDay();
@@ -206,31 +220,40 @@ const Achievements = () => {
           
           {trainingData.length > 0 ? (
             <div className="ach-training-records-by-category">
-              {Object.keys(groupedTrainingData).map(category => (
-                <div key={category} className="ach-category-section">
-                  <h3 className="ach-category-title">{category}</h3>
-                  <table className="ach-training-records-table">
-                    <thead>
-                      <tr>
-                        <th>種目</th>
-                        <th>重量 (kg)</th>
-                        <th>セット</th>
-                        <th>回数</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {groupedTrainingData[category].map((training) => (
-                        <tr key={training.id}>
-                          <td>{getWorkoutName(training.workout_id)}</td>
-                          <td>{training.weight}</td>
-                          <td>{training.sets}</td>
-                          <td>{training.reps}</td>
+              {Object.keys(groupedTrainingData).map(category => {
+                // カテゴリー内の最初のワークアウトが有酸素運動かどうかをチェック
+                const firstWorkout = groupedTrainingData[category][0];
+                const isAerobic = isAerobicExercise(firstWorkout.workout_id);
+                
+                return (
+                  <div key={category} className="ach-category-section">
+                    <h3 className="ach-category-title">{category}</h3>
+                    <table className="ach-training-records-table">
+                      <thead>
+                        <tr>
+                          <th>種目</th>
+                          {/* 有酸素運動の場合は「時間 (分)」、それ以外は「重量 (kg)」と表示 */}
+                          <th>{isAerobic ? '時間 (分)' : '重量 (kg)'}</th>
+                          <th>セット</th>
+                          {/* 有酸素運動の場合は回数の列見出しを表示しない */}
+                          {!isAerobic && <th>回数</th>}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ))}
+                      </thead>
+                      <tbody>
+                        {groupedTrainingData[category].map((training) => (
+                          <tr key={training.id}>
+                            <td>{getWorkoutName(training.workout_id)}</td>
+                            <td>{training.weight}</td>
+                            <td>{training.sets}</td>
+                            {/* 有酸素運動の場合は回数の列を表示しない */}
+                            {!isAerobic && <td>{training.reps}</td>}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <p className="ach-no-data-message">選択した日付のトレーニング記録はありません</p>
