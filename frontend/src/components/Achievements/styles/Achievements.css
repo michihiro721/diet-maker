@@ -2,108 +2,216 @@
   width: 100%;
   max-width: 800px;
   margin: 80px auto 0;
-  padding: 20px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #333;
+  color: #1a2a47;
+  position: relative;
+}
+
+.ach-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #4a6cb3 0%, #65c0f0 100%);
+  border-radius: 5px 5px 0 0;
+  opacity: 0.7;
 }
 
 .ach-title {
   text-align: center;
-  font-size: 22px;
-  color: #4a6cb3;
-  margin-bottom: 20px;
-  font-weight: 600;
+  font-size: 26px;
+  color: #1e293b;
+  margin-bottom: 25px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.ach-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a6cb3, #65c0f0);
+  border-radius: 10px;
 }
 
 .ach-date-selection-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   width: 100%;
+  position: relative;
 }
 
 .ach-date-input {
   font-size: 18px;
-  padding: 10px 15px;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
   text-align: center;
   cursor: pointer;
-  width: 200px;
-  margin-top: 8px;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 220px;
+  margin-top: 10px;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  color: #334155;
+  background-color: #fff;
 }
 
 .ach-date-selection-container label {
   font-size: 16px;
-  font-weight: 500;
-  color: #555;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background-color: rgba(74, 108, 179, 0.08);
 }
 
-.ach-date-input:hover {
+.ach-date-selection-container label::before {
+  content: "📅 ";
+}
+
+.ach-date-input:hover, .ach-date-input:focus {
   border-color: #a0c4ff;
-  box-shadow: 0 2px 5px rgba(0, 90, 250, 0.08);
+  box-shadow: 0 5px 15px rgba(0, 90, 250, 0.1);
+  transform: translateY(-2px);
 }
 
 .ach-error-message {
-  color: #e53e3e;
+  color: #ef4444;
   font-size: 14px;
-  margin: 10px 0;
-  background-color: rgba(254, 215, 215, 0.5);
-  padding: 10px 15px;
-  border-radius: 6px;
+  margin: 15px 0;
+  background-color: rgba(254, 226, 226, 0.6);
+  padding: 15px;
+  border-radius: 12px;
   width: 100%;
   text-align: center;
+  border-left: 5px solid #ef4444;
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.1);
+  animation: fadeIn 0.5s ease;
 }
 
 .ach-success-message {
-  color: #3182ce;
+  color: #0891b2;
   font-size: 14px;
-  margin: 10px 0;
-  background-color: rgba(235, 244, 255, 0.5);
-  padding: 10px 15px;
-  border-radius: 6px;
+  margin: 15px 0;
+  background-color: rgba(207, 250, 254, 0.6);
+  padding: 15px;
+  border-radius: 12px;
   width: 100%;
   text-align: center;
+  border-left: 5px solid #0891b2;
+  box-shadow: 0 4px 6px rgba(8, 145, 178, 0.1);
+  animation: fadeIn 0.5s ease;
 }
 
 .ach-loading-spinner {
   text-align: center;
-  padding: 20px;
+  padding: 30px;
   color: #4a6cb3;
   font-size: 16px;
+  position: relative;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.ach-loading-spinner::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a6cb3, #65c0f0);
+  margin: 15px auto 0;
+  border-radius: 4px;
+  animation: loadingPulse 1.5s infinite;
+}
+
+@keyframes loadingPulse {
+  0% {
+    opacity: 0.6;
+    width: 40px;
+  }
+  50% {
+    opacity: 1;
+    width: 100px;
+  }
+  100% {
+    opacity: 0.6;
+    width: 40px;
+  }
 }
 
 .ach-training-records-container {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
 .ach-training-records-title {
-  font-size: 18px;
-  color: #4a6cb3;
-  margin-bottom: 15px;
+  font-size: 20px;
+  color: #1e293b;
+  margin-bottom: 18px;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: none;
+  width: 100%;
+}
+
+.ach-training-records-title::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a6cb3, #8a9cc5);
+  border-radius: 10px;
+  left: calc(50% - 20px);
+  bottom: -8px;
 }
 
 .ach-training-records-by-category {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
 .ach-category-section {
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  padding: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: none;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
   background-color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.ach-category-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #4a6cb3, #65c0f0);
 }
 
 /* カテゴリーリストのスタイル */
@@ -111,56 +219,68 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 10px;
+  margin-bottom: 22px;
 }
 
 /* カテゴリーバッジのスタイル */
 .ach-category-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 6px 14px;
   background-color: #4a6cb3;
   color: white;
-  border-radius: 20px;
+  border-radius: 30px;
   font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(74, 108, 179, 0.2);
+  transition: all 0.2s ease;
+}
+
+.ach-category-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 108, 179, 0.3);
 }
 
 /* 有酸素カテゴリーバッジのスタイル */
 .ach-category-badge.aerobic {
-  background-color: #2B9348;
+  background-color: #10b981;
+  box-shadow: 0 2px 5px rgba(16, 185, 129, 0.2);
+}
+
+.ach-category-badge.aerobic:hover {
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
 }
 
 .ach-training-records-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin-top: 5px;
-  border-radius: 8px;
+  margin-top: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .ach-training-records-table th,
 .ach-training-records-table td {
-  padding: 12px 8px;
+  padding: 16px 12px;
   text-align: center;
   border: none;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .ach-training-records-table th {
-  background-color: #f5f8ff;
+  background-color: #f8fafc;
   font-weight: 600;
-  color: #4a6cb3;
+  color: #475569;
   font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.7px;
 }
 
 .ach-training-records-table tr {
-  transition: background-color 0.15s ease;
+  transition: background-color 0.2s ease;
 }
 
 .ach-training-records-table tr:last-child td {
@@ -168,56 +288,58 @@
 }
 
 .ach-training-records-table tr:hover {
-  background-color: #f9fbff;
+  background-color: #f0f9ff;
 }
 
 /* 種目名のセル */
 .ach-exercise-name {
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   vertical-align: middle;
-  border-right: 1px solid #f0f0f0;
+  border-right: 1px solid #f1f5f9;
   background-color: rgba(245, 248, 255, 0.5);
+  color: #334155;
 }
 
 /* 有酸素種目名のセル */
 .ach-exercise-name.aerobic {
   background-color: rgba(236, 253, 245, 0.7);
-  color: #2B9348;
+  color: #047857;
 }
 
 /* カテゴリー名のセル */
 .ach-category-name {
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   vertical-align: middle;
-  border-right: 1px solid #f0f0f0;
+  border-right: 1px solid #f1f5f9;
   color: #4a6cb3;
   background-color: rgba(245, 248, 255, 0.7);
-  min-width: 70px;
+  min-width: 80px;
 }
 
 /* 有酸素カテゴリーのセルに対応するセレクタ */
 .ach-category-name.aerobic {
-  color: #2B9348;
+  color: #047857;
   background-color: rgba(236, 253, 245, 0.7);
 }
 
 /* 種目の最初の行 */
 .ach-exercise-first-row td {
-  border-top: 1px solid #e8f0fe;
+  border-top: 1px solid #e2e8f0;
 }
 
 .ach-no-data-message {
   text-align: center;
-  padding: 25px;
-  color: #666;
+  padding: 35px;
+  color: #64748b;
   font-style: italic;
-  background-color: #fafafa;
-  border-radius: 8px;
-  border: 1px dashed #e0e0e0;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
   width: 100%;
   margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) inset;
 }
 
 /* カレンダーモーダル用のスタイル */
@@ -227,31 +349,32 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(15, 23, 42, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
 }
 
 .ach-calendar-modal {
   background-color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  animation: modalFadeIn 0.25s ease;
+  animation: modalFadeIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  max-width: 90%;
 }
 
 @keyframes modalFadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -261,49 +384,147 @@
   bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background-color: #4a6cb3;
   border-radius: 50%;
+  box-shadow: 0 0 4px rgba(74, 108, 179, 0.4);
 }
 
 /* トレーニングがある日のカレンダータイルのスタイル */
 .ach-has-training {
-  background-color: #f0f7ff !important;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%) !important;
+  font-weight: 600 !important;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* モバイル対応 */
 @media (max-width: 768px) {
   .ach-container {
-    padding: 15px;
+    padding: 20px;
   }
   
   .ach-date-selection-container label {
-    font-size: 15px;
+    font-size: 14px;
   }
   
   .ach-date-input {
     font-size: 16px;
-    width: 140px;
-    padding: 8px 10px;
+    width: 160px;
+    padding: 10px 12px;
   }
   
   .ach-training-records-table th,
   .ach-training-records-table td {
-    padding: 8px 6px;
+    padding: 12px 8px;
     font-size: 13px;
   }
   
   .ach-category-badge {
     font-size: 12px;
-    padding: 3px 8px;
+    padding: 5px 10px;
   }
   
   .ach-title {
-    font-size: 18px;
+    font-size: 20px;
   }
   
   .ach-training-records-title {
-    font-size: 16px;
+    font-size: 18px;
+  }
+  
+  .ach-category-section {
+    padding: 18px;
+  }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+  .ach-container {
+    color: #e2e8f0;
+  }
+  
+  .ach-title {
+    color: #f1f5f9;
+  }
+  
+  .ach-date-input {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    border-color: #334155;
+  }
+  
+  .ach-date-selection-container label {
+    color: #cbd5e1;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  .ach-category-section {
+    background-color: #1e293b;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ach-training-records-table th {
+    background-color: #334155;
+    color: #cbd5e1;
+  }
+  
+  .ach-training-records-table tr:hover {
+    background-color: #2d3748;
+  }
+  
+  .ach-exercise-name {
+    background-color: rgba(51, 65, 85, 0.5);
+    color: #e2e8f0;
+  }
+  
+  .ach-exercise-name.aerobic {
+    background-color: rgba(6, 78, 59, 0.3);
+    color: #a7f3d0;
+  }
+  
+  .ach-category-name {
+    background-color: rgba(51, 65, 85, 0.7);
+    color: #93c5fd;
+  }
+  
+  .ach-category-name.aerobic {
+    background-color: rgba(6, 78, 59, 0.4);
+    color: #a7f3d0;
+  }
+  
+  .ach-no-data-message {
+    background-color: #334155;
+    color: #cbd5e1;
+    border-color: #475569;
+  }
+  
+  .ach-has-training {
+    background: linear-gradient(135deg, #2d3748 0%, #1e293b 100%) !important;
+    color: #93c5fd !important;
+  }
+  
+  .ach-calendar-modal {
+    background-color: #1e293b;
   }
 }
