@@ -5,11 +5,6 @@
   margin-top: 100px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 /* 検索とハートカウント */
 .search-container {
   display: flex;
@@ -20,6 +15,7 @@ h1 {
 
 .search-box {
   display: flex;
+  height: 50px;
 }
 
 .search-input {
@@ -38,6 +34,7 @@ h1 {
   border-radius: 0 4px 4px 0;
   cursor: pointer;
   font-size: 16px;
+  height: 40px;
 }
 
 .search-button:hover {
@@ -94,10 +91,40 @@ h1 {
   font-size: 24px;
   cursor: pointer;
   color: #888;
+  transition: transform 0.2s ease;
+}
+
+.like-button:hover {
+  transform: scale(1.1);
 }
 
 .like-button.liked {
   color: #ff4757;
+}
+
+/* ログインメッセージ */
+.login-message {
+  text-align: center;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.login-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #5B86E5;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.login-link:hover {
+  background-color: #4A75D4;
 }
 
 /* ページネーション */

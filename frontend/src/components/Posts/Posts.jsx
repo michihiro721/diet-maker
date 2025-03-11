@@ -13,27 +13,20 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [likesCount, setLikesCount] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const postsPerPage = 6;
 
-  // ユーザー情報の取得
+  // ログイン状態の確認
   useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-        
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-        const response = await api.get("/users/1", config); // ユーザーIDが1でない場合は調整してください
-        setCurrentUser(response.data);
-        console.log("ログインユーザー情報:", response.data);
-      } catch (err) {
-        console.error("ユーザー情報の取得に失敗しました", err);
-      }
-    };
+    const storedUserId = localStorage.getItem('userId');
+    const jwt = localStorage.getItem('jwt');
     
-    fetchCurrentUser();
+    setUserId(storedUserId);
+    setIsLoggedIn(!!storedUserId && !!jwt);
+    
+    console.log('認証情報:', { userId: storedUserId, jwt: jwt ? '取得済み' : 'なし' });
   }, []);
 
   // 投稿データの取得
@@ -43,13 +36,7 @@ const Posts = () => {
         console.log("投稿データを取得中...");
         setLoading(true);
         
-        // ローカルストレージからトークンを取得
-        const token = localStorage.getItem("token");
-        const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
-        
-        console.log("リクエスト設定:", { url: "/posts", config });
-        
-        const response = await api.get("/posts", config);
+        const response = await api.get("/posts");
         console.log("取得したデータ:", response.data);
         setPosts(response.data);
         
@@ -79,24 +66,38 @@ const Posts = () => {
   
   // いいね機能の処理
   const handleLike = async (postId) => {
-    if (!currentUser) {
+    if (!isLoggedIn) {
       alert("いいねするにはログインが必要です");
+      window.location.href = '/login'; // ログインページへリダイレクト
       return;
     }
     
     try {
-      console.log("いいねリクエスト送信中:", { postId, userId: currentUser.id || 1 });
+      console.log("いいねリクエスト送信中...");
       
-      const token = localStorage.getItem("token");
-      const config = { headers: { Authorization: `Bearer ${token}` } };
+      // TrainingRecordと同じ方法でトークンを取得
+      const jwt = localStorage.getItem('jwt');
+      if (!jwt) {
+        alert("認証情報が見つかりません。再ログインしてください。");
+        return;
+      }
+      
+      const config = {
+        headers: { 'Authorization': `Bearer ${jwt}` }
+      };
+      
+      console.log("リクエスト設定:", {
+        url: `/posts/${postId}/likes`,
+        headers: config.headers
+      });
       
       const response = await api.post(`/posts/${postId}/likes`, {}, config);
-      console.log("いいね結果:", response.data);
+      console.log("いいねレスポンス:", response.data);
       
       // 投稿のいいね状態を更新
       setLikesCount(prev => ({
         ...prev,
-        [postId]: response.data.likes_count
+        [postId]: response.data.likes_count || prev[postId]
       }));
       
       // 投稿一覧のいいね情報も更新
@@ -104,25 +105,39 @@ const Posts = () => {
         prevPosts.map(post => {
           if (post.id === postId) {
             const userLiked = response.data.liked;
-            const userId = currentUser.id || 1; // IDがない場合はデフォルト値を使用
             
-            const updatedLikes = userLiked 
-              ? [...(post.likes || []), { user_id: userId }]
-              : (post.likes || []).filter(like => like.user_id !== userId);
-              
-            return { ...post, likes: updatedLikes };
+            // いいねが追加または削除された場合の処理
+            if (userLiked) {
+              // いいねが追加された場合
+              return {
+                ...post,
+                likes: [...(post.likes || []), { user_id: parseInt(userId) }]
+              };
+            } else {
+              // いいねが削除された場合
+              return {
+                ...post,
+                likes: (post.likes || []).filter(like => like.user_id !== parseInt(userId))
+              };
+            }
           }
           return post;
         })
       );
     } catch (err) {
       console.error("いいねの処理に失敗しました", err);
-      console.error("いいねエラー詳細:", {
+      console.error("エラーの詳細:", {
+        message: err.message,
         status: err.response?.status,
         statusText: err.response?.statusText,
         data: err.response?.data
       });
-      alert("いいねの処理に失敗しました。再度お試しください。");
+      
+      if (err.response?.status === 401) {
+        alert("認証が切れました。再ログインしてください。");
+      } else {
+        alert(`いいねの処理に失敗しました: ${err.message}`);
+      }
     }
   };
 
@@ -152,9 +167,8 @@ const Posts = () => {
   
   // ユーザーが投稿にいいねしているかチェック
   const hasUserLiked = (post) => {
-    if (!currentUser) return false;
-    const userId = currentUser.id || 1; // IDがない場合はデフォルト値を使用
-    return post.likes?.some(like => like.user_id === userId);
+    if (!isLoggedIn || !userId) return false;
+    return post.likes?.some(like => like.user_id === parseInt(userId));
   };
 
   if (loading) return <div className="loading">読み込み中...</div>;
@@ -162,7 +176,7 @@ const Posts = () => {
   
   return (
     <div className="posts-container">
-      <h1>みんなの投稿一覧</h1>
+      <h1></h1>
       
       {/* 検索とハートカウント */}
       <div className="search-container">
@@ -200,6 +214,14 @@ const Posts = () => {
               </button>
             </div>
           ))}
+        </div>
+      )}
+      
+      {/* ログインしていない場合のメッセージ */}
+      {!isLoggedIn && (
+        <div className="login-message">
+          <p>いいねするにはログインが必要です。</p>
+          <a href="/login" className="login-link">ログインする</a>
         </div>
       )}
       
