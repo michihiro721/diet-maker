@@ -108,30 +108,7 @@
   color: #ff4757;
 }
 
-/* ログインメッセージ */
-.login-message {
-  text-align: center;
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  border: 1px solid #e9ecef;
-}
 
-.login-link {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #5B86E5;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-.login-link:hover {
-  background-color: #4A75D4;
-}
 
 /* ページネーション */
 .pagination {

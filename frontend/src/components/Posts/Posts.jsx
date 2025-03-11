@@ -240,7 +240,6 @@ const Posts = () => {
   
   return (
     <div className="posts-container">
-
       <div className="search-container-centered">
         <div className="search-box">
           <input
@@ -280,13 +279,7 @@ const Posts = () => {
         </div>
       )}
       
-      {/* ログインしていない場合のメッセージ */}
-      {!isLoggedIn && (
-        <div className="login-message">
-          <p>いいねするにはログインが必要です。</p>
-          <a href="/login" className="login-link">ログインする</a>
-        </div>
-      )}
+
       
       {/* ページネーション */}
       {totalPages > 1 && (
