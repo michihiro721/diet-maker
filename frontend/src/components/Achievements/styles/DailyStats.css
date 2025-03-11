@@ -1,0 +1,345 @@
+.daily-stats-container {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  .daily-stats-title {
+    font-size: 22px;
+    color: #1a2a47;
+    margin-bottom: 22px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 3px;
+    border-bottom: none;
+    width: 100%;
+  }
+  
+  .daily-stats-title::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 5px;
+    background: linear-gradient(90deg, #4a6cb3, #8a9cc5);
+    border-radius: 10px;
+    left: calc(50% - 20px);
+    bottom: -10px;
+  }
+  
+  .daily-stats-section {
+    border: none;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    background-color: white;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .daily-stats-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6cb3, #65c0f0);
+  }
+  
+  .daily-stats-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  }
+  
+  .daily-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  
+  .daily-stat-item {
+    padding: 25px 20px;
+    background-color: #f9fafc;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f6;
+    position: relative;
+    overflow: hidden;
+    height: 140px;
+  }
+  
+  .daily-stat-item::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+  
+  .daily-stat-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    border-color: #e8e8f0;
+    background-color: #fff;
+  }
+  
+  .daily-stat-label {
+    font-size: 14px;
+    color: #7b8794;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    padding: 3px 8px;
+    background-color: rgba(74, 108, 179, 0.08);
+    display: inline-block;
+  }
+  
+  .daily-stat-value {
+    font-size: 28px;
+    color: #1a2a47;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.3s ease;
+    line-height: 1.2;
+  }
+  
+  /* アイコンの追加（疑似要素を使用） */
+  .daily-stat-item:nth-child(1) .daily-stat-label::before {
+    content: '👣 ';
+  }
+  
+  .daily-stat-item:nth-child(2) .daily-stat-label::before {
+    content: '🔥 ';
+  }
+  
+  .daily-stat-item:nth-child(3) .daily-stat-label::before {
+    content: '🍖 ';
+  }
+  
+  .daily-stat-item:nth-child(4) .daily-stat-label::before {
+    content: '⚖️ ';
+  }
+  
+  /* データなしの表示スタイル */
+  .daily-stat-value:contains('データなし') {
+    color: #c0c6cc;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  
+  /* カロリー収支のプラス表示 */
+  .daily-stat-value.positive {
+    color: #10b981;
+    position: relative;
+    padding: 5px 15px;
+    border-radius: 30px;
+    background: linear-gradient(120deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  }
+  
+  .daily-stat-value.positive::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 5px;
+  }
+  
+  /* カロリー収支のマイナス表示 */
+  .daily-stat-value.negative {
+    color: #ef4444;
+    position: relative;
+    padding: 5px 15px;
+    border-radius: 30px;
+    background: linear-gradient(120deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+  }
+  
+  .daily-stat-value.negative::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 5px;
+  }
+  
+  /* ローディング表示 */
+  .daily-stats-loading {
+    text-align: center;
+    padding: 35px;
+    color: #4a6cb3;
+    font-size: 16px;
+    width: 100%;
+    background-color: #f9fafc;
+    border-radius: 14px;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .daily-stats-loading::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 30%;
+    background: linear-gradient(90deg, #4a6cb3, #65c0f0);
+    animation: loading 1.5s infinite;
+    border-radius: 3px;
+  }
+  
+  @keyframes loading {
+    0% {
+      width: 0;
+      left: 0;
+    }
+    50% {
+      width: 70%;
+    }
+    100% {
+      width: 0;
+      left: 100%;
+    }
+  }
+  
+  /* エラー表示 */
+  .daily-stats-error {
+    color: #ef4444;
+    font-size: 14px;
+    margin: 20px 0;
+    background-color: rgba(254, 226, 226, 0.6);
+    padding: 18px;
+    border-radius: 12px;
+    width: 100%;
+    text-align: center;
+    border-left: 5px solid #ef4444;
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.1);
+  }
+  
+  /* アニメーション */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .daily-stats-section {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .daily-stat-item:nth-child(1) {
+    animation: fadeInUp 0.4s 0.1s ease-out both;
+  }
+  
+  .daily-stat-item:nth-child(2) {
+    animation: fadeInUp 0.4s 0.2s ease-out both;
+  }
+  
+  .daily-stat-item:nth-child(3) {
+    animation: fadeInUp 0.4s 0.3s ease-out both;
+  }
+  
+  .daily-stat-item:nth-child(4) {
+    animation: fadeInUp 0.4s 0.4s ease-out both;
+  }
+  
+  /* モバイル対応 */
+  @media (max-width: 768px) {
+    .daily-stats-title {
+      font-size: 18px;
+    }
+    
+    .daily-stats-section {
+      padding: 20px;
+    }
+    
+    .daily-stats-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    .daily-stat-item {
+      height: 120px;
+      padding: 15px;
+    }
+    
+    .daily-stat-label {
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    
+    .daily-stat-value {
+      font-size: 22px;
+    }
+  }
+  
+  /* ダークモード対応 */
+  @media (prefers-color-scheme: dark) {
+    .daily-stats-title {
+      color: #e5e7eb;
+    }
+    
+    .daily-stats-section {
+      background-color: #1f2937;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .daily-stat-item {
+      background-color: #374151;
+      border-color: #4b5563;
+    }
+    
+    .daily-stat-item:hover {
+      background-color: #323a48;
+      border-color: #6b7280;
+    }
+    
+    .daily-stat-label {
+      color: #d1d5db;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .daily-stat-value {
+      color: #f3f4f6;
+    }
+    
+    .daily-stat-value:contains('データなし') {
+      color: #9ca3af;
+    }
+    
+    .daily-stats-loading {
+      background-color: #374151;
+      color: #d1d5db;
+    }
+  }
