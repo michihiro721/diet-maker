@@ -343,3 +343,184 @@
       color: #d1d5db;
     }
   }
+
+
+  /* 既存のCSSファイルに追加するスタイル */
+
+/* シェアボタン */
+.share-button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.share-button {
+  padding: 10px 20px;
+  background-color: #4a7dff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.share-button:hover {
+  background-color: #3a6ad9;
+}
+
+.share-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* シェアモーダルのスタイル改善 */
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.share-modal {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.share-modal h2 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  width: 100%;
+  text-align: center;
+}
+
+.share-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.share-form-group {
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.share-form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.share-form-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 15px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: vertical;
+  transition: border-color 0.3s;
+  font-family: inherit;
+}
+
+.share-form-textarea:focus {
+  outline: none;
+  border-color: #4a7dff;
+  box-shadow: 0 0 0 2px rgba(74, 125, 255, 0.2);
+}
+
+.share-submit-button {
+  background-color: #4a7dff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 90%;
+  max-width: 300px;
+  margin-top: 10px;
+}
+
+.share-submit-button:hover {
+  background-color: #3a6ad9;
+  transform: translateY(-2px);
+}
+
+.share-submit-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.share-success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  width: 90%;
+  text-align: center;
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #a0aec0;
+  transition: color 0.3s;
+}
+
+.close-modal-button:hover {
+  color: #4a5568;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .share-modal {
+    padding: 20px;
+    width: 95%;
+  }
+  
+  .share-form-group {
+    width: 100%;
+  }
+  
+  .share-submit-button {
+    width: 100%;
+  }
+}
