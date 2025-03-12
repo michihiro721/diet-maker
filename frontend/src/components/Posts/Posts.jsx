@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./styles/Posts.css";
 
@@ -18,15 +19,6 @@ const Posts = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
-  const [selectedAchievementPost, setSelectedAchievementPost] = useState(null);
-  const [achievementData, setAchievementData] = useState({
-    trainingData: [],
-    stepData: null,
-    consumedCalories: null,
-    intakeCalories: null,
-    workouts: []
-  });
-  const [achievementLoading, setAchievementLoading] = useState(false);
   
   const postsPerPage = 6;
 
@@ -97,16 +89,6 @@ const Posts = () => {
         total += post.likes?.length || 0;
       });
       
-      console.log('いいね数計算:', {
-        userIdNum,
-        myPostsCount: myPosts.length,
-        myPostIds: myPosts.map(p => p.id),
-        allPostUserIds: posts.map(p => p.user_id),
-        postUserProperties: posts.map(p => Object.keys(p)),
-        likesOnMyPosts: myPosts.map(p => p.likes?.length || 0),
-        totalLikes: total
-      });
-      
       setTotalLikesCount(total);
     };
     
@@ -115,7 +97,7 @@ const Posts = () => {
   
   // 投稿を削除する関数
   const handleDeletePost = async (postId, e) => {
-    // イベント伝播を停止（もし引数にイベントがある場合）
+    // イベント伝播を停止
     if (e) e.stopPropagation();
     
     if (!isLoggedIn) {
@@ -211,149 +193,9 @@ const Posts = () => {
     return content.trim();
   };
 
-  // 成果を表示する関数
-  const handleViewAchievement = async (post, e) => {
-    // イベント伝播を停止（もし引数にイベントがある場合）
-    if (e) e.stopPropagation();
-    
-    // 投稿日付を取得
-    const achievementDate = getPostDate(post);
-    const postUserId = post.user_id;
-    const userName = post.user?.name || "ユーザー";
-
-    setSelectedAchievementPost({
-      ...post,
-      achievementDate,
-      userName
-    });
-    setAchievementLoading(true);
-
-    try {
-      // 全種目データを取得
-      const workoutsResponse = await api.get('/workouts');
-      const workoutsData = workoutsResponse.data;
-      
-      // トレーニングデータを取得
-      const trainingResponse = await api.get(`/trainings`, {
-        params: { 
-          user_id: postUserId,
-          date: achievementDate
-        }
-      });
-      
-      // 歩数データを取得
-      const stepsResponse = await api.get(`/steps`, {
-        params: { 
-          user_id: postUserId,
-          date: achievementDate
-        }
-      });
-      
-      // 消費カロリーデータを取得
-      const consumedCaloriesResponse = await api.get(`/daily_calories`, {
-        params: {
-          user_id: postUserId,
-          date: achievementDate
-        }
-      });
-      
-      // 摂取カロリーデータを取得
-      const intakeCaloriesResponse = await api.get(`/intake_calories`, {
-        params: { 
-          user_id: postUserId,
-          date: achievementDate
-        }
-      });
-
-      // データをフィルタリング（選択した日付のデータのみ）
-      const stepData = stepsResponse.data.find(item => item.date === achievementDate) || null;
-      const consumedCalories = consumedCaloriesResponse.data.find(item => item.date === achievementDate) || null;
-      const intakeCalories = intakeCaloriesResponse.data.find(item => item.date === achievementDate) || null;
-
-      // トレーニングデータに種目名と種目カテゴリーを追加
-      const enhancedTrainingData = trainingResponse.data.map(training => {
-        const workout = workoutsData.find(w => w.id === training.workout_id) || {};
-        const isAerobic = workout.category === "有酸素";
-        
-        return {
-          ...training,
-          workout_name: workout.name || `種目ID: ${training.workout_id}`,
-          category: workout.category || '',
-          is_aerobic: isAerobic
-        };
-      });
-
-      // トレーニングデータを種目ごとにグループ化
-      const groupedTrainingData = enhancedTrainingData.reduce((groups, training) => {
-        const key = `${training.workout_id}-${training.category}`;
-        if (!groups[key]) {
-          groups[key] = [];
-        }
-        groups[key].push(training);
-        return groups;
-      }, {});
-
-      // 種目ごとにソートされたデータを作成
-      let sortedTrainingData = [];
-      
-      // 各グループから最初のアイテムを取り出して、カテゴリでソート
-      const categories = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
-      
-      // カテゴリでグループ化
-      const categoryGroups = {};
-      categories.forEach(category => {
-        categoryGroups[category] = [];
-      });
-      
-      // 各トレーニンググループをカテゴリグループに振り分け
-      Object.values(groupedTrainingData).forEach(group => {
-        const category = group[0].category;
-        if (categoryGroups[category]) {
-          categoryGroups[category].push(group);
-        }
-      });
-      
-      // カテゴリグループを順番に展開
-      categories.forEach(category => {
-        categoryGroups[category].forEach(group => {
-          // 各グループ内でセット番号でソート
-          const sortedGroup = [...group].sort((a, b) => a.sets - b.sets);
-          sortedTrainingData = [...sortedTrainingData, ...sortedGroup];
-        });
-      });
-
-      setAchievementData({
-        trainingData: sortedTrainingData,
-        stepData,
-        consumedCalories,
-        intakeCalories,
-        date: achievementDate,
-        workouts: workoutsData
-      });
-      
-    } catch (error) {
-      console.error("成果データの取得に失敗しました:", error);
-      alert("成果データの取得に失敗しました。");
-    } finally {
-      setAchievementLoading(false);
-    }
-  };
-
-  // 成果モーダルを閉じる
-  const closeAchievementModal = () => {
-    setSelectedAchievementPost(null);
-    setAchievementData({
-      trainingData: [],
-      stepData: null,
-      consumedCalories: null,
-      intakeCalories: null,
-      workouts: []
-    });
-  };
-  
   // いいね機能の処理
   const handleLike = async (postId, e) => {
-    // イベント伝播を停止（もし引数にイベントがある場合）
+    // イベント伝播を停止
     if (e) e.stopPropagation();
     
     if (!isLoggedIn) {
@@ -418,12 +260,6 @@ const Posts = () => {
       
     } catch (err) {
       console.error("いいねの処理に失敗しました", err);
-      console.error("エラーの詳細:", {
-        message: err.message,
-        status: err.response?.status,
-        statusText: err.response?.statusText,
-        data: err.response?.data
-      });
       
       if (err.response?.status === 401) {
         alert("認証が切れました。再ログインしてください。");
@@ -495,93 +331,11 @@ const Posts = () => {
     return true;
   };
 
-  // カロリー差分を計算する関数
-  const calculateCalorieDifference = () => {
-    const { consumedCalories, intakeCalories } = achievementData;
-    if (consumedCalories && intakeCalories) {
-      return consumedCalories.total_calories - intakeCalories.calories;
-    }
-    return null;
-  };
-
-  // 数値を少数第一位で四捨五入して整数として表示するフォーマット関数
-  const formatCalories = (value) => {
-    if (value === null || value === undefined) return 'データなし';
-    
-    // 数値を少数第一位で四捨五入し、整数に変換
-    const roundedValue = Math.round(value);
-    
-    // 整数にカンマを挿入
-    const formattedValue = roundedValue.toLocaleString();
-    
-    return `${formattedValue} kcal`;
-  };
-
-  // トレーニングのカテゴリーごとにグループ化する関数
-  const groupTrainingsByCategory = () => {
-    const { trainingData } = achievementData;
-    
-    // カテゴリーごとのグループを作成
-    const groupedByCategory = {};
-    
-    trainingData.forEach(training => {
-      const category = training.category || '未分類';
-      if (!groupedByCategory[category]) {
-        groupedByCategory[category] = [];
-      }
-      groupedByCategory[category].push(training);
-    });
-    
-    return groupedByCategory;
-  };
-
-  // 種目ごとのトレーニングデータをグループ化する関数
-  const groupTrainingsByExercise = (trainings) => {
-    const groupByExercise = {};
-    
-    trainings.forEach(training => {
-      const exerciseName = training.workout_name;
-      if (!groupByExercise[exerciseName]) {
-        groupByExercise[exerciseName] = {
-          workout_id: training.workout_id,
-          category: training.category,
-          is_aerobic: training.is_aerobic,
-          sets: []
-        };
-      }
-      
-      groupByExercise[exerciseName].sets.push({
-        id: training.id,
-        setNumber: training.sets,
-        weight: training.weight,
-        reps: training.reps
-      });
-    });
-    
-    // セット順にソート
-    Object.values(groupByExercise).forEach(exercise => {
-      exercise.sets.sort((a, b) => a.setNumber - b.setNumber);
-    });
-    
-    return groupByExercise;
-  };
-
   if (loading) return <div className="loading">読み込み中...</div>;
   if (error) return <div className="error">{error}</div>;
   
   // ページネーションの表示範囲
   const paginationRange = getPaginationRange();
-  
-  // カテゴリー順序の定義
-  const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
-  
-  // トレーニングデータのカテゴリーごとのグループ
-  const groupedTrainingsByCategory = groupTrainingsByCategory();
-  
-  // カテゴリー順にソート
-  const sortedCategories = Object.keys(groupedTrainingsByCategory).sort(
-    (a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b)
-  );
   
   return (
     <div className="posts-container">
@@ -625,16 +379,16 @@ const Posts = () => {
                 </button>
               )}
 
-              {/* トレーニング記録ボタンを上部中央に配置 */}
+              {/* トレーニング記録ボタン */}
               {hasAchievementData(post) && (
                 <div className="training-record-button-container">
-                  <button 
+                  <Link 
+                    to={`/training-details/${post.id}?date=${getPostDate(post)}`}
                     className="view-achievement-button"
-                    onClick={(e) => handleViewAchievement(post, e)}
                     title="トレーニング記録を見る"
                   >
                     トレーニング記録
-                  </button>
+                  </Link>
                 </div>
               )}
 
@@ -656,142 +410,6 @@ const Posts = () => {
               </button>
             </div>
           ))}
-        </div>
-      )}
-      
-      {/* 成果モーダル */}
-      {selectedAchievementPost && (
-        <div className="achievement-modal-overlay" onClick={closeAchievementModal}>
-          <div className="achievement-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-modal-button" onClick={closeAchievementModal}>×</button>
-            
-            <div className="achievement-modal-content">
-              <h2 className="achievement-modal-title">
-                {selectedAchievementPost.userName}さんの
-                {achievementData.date} の成果
-              </h2>
-              
-              {achievementLoading ? (
-                <div className="achievement-loading">成果データを読み込み中...</div>
-              ) : (
-                <>
-                  {/* トレーニング記録 */}
-                  <div className="ach-training-records-container">
-                    <h2 className="ach-training-records-title">トレーニング記録</h2>
-                    
-                    {achievementData.trainingData.length > 0 ? (
-                      <div className="ach-training-records-by-category">
-                        {/* カテゴリー名をリストとして表示 */}
-                        <div className="ach-category-list">
-                          {sortedCategories.map(category => (
-                            <span 
-                              key={category} 
-                              className={`ach-category-badge ${category === "有酸素" ? 'aerobic' : ''}`}
-                            >
-                              {category}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* すべてのトレーニングを一つのテーブルにまとめる */}
-                        <div className="ach-training-records-table-container">
-                          <table className="ach-training-records-table">
-                            <thead>
-                              <tr>
-                                <th>対象部位</th>
-                                <th>種目</th>
-                                <th>セット</th>
-                                <th>重量OR時間</th>
-                                <th>回数</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {sortedCategories.map(category => {
-                                const categoryTrainings = groupedTrainingsByCategory[category];
-                                const exerciseGroups = groupTrainingsByExercise(categoryTrainings);
-                                
-                                return Object.entries(exerciseGroups).map(([exerciseName, exerciseData], exerciseIndex) => {
-                                  const isAerobic = exerciseData.is_aerobic;
-                                  const setsCount = exerciseData.sets.length;
-                                  
-                                  return (
-                                    <React.Fragment key={`exercise-${category}-${exerciseIndex}`}>
-                                      {/* 各セットを別々の行で表示 */}
-                                      {exerciseData.sets.map((set, setIndex) => (
-                                        <tr key={`set-${set.id}`} className={setIndex === 0 ? 'ach-exercise-first-row' : ''}>
-                                          {/* 最初のセットの場合のみカテゴリー名と種目名を表示して行を結合 */}
-                                          {setIndex === 0 ? (
-                                            <>
-                                              <td 
-                                                rowSpan={setsCount} 
-                                                className={`ach-category-name ${isAerobic ? 'aerobic' : ''}`}
-                                              >
-                                                {category}
-                                              </td>
-                                              <td 
-                                                rowSpan={setsCount} 
-                                                className={`ach-exercise-name ${isAerobic ? 'aerobic' : ''}`}
-                                              >
-                                                {exerciseName}
-                                              </td>
-                                            </>
-                                          ) : null}
-                                          <td>{set.setNumber}</td>
-                                          <td>{set.weight}{isAerobic ? '分' : 'kg'}</td>
-                                          <td>{isAerobic ? '-' : set.reps}</td>
-                                        </tr>
-                                      ))}
-                                    </React.Fragment>
-                                  );
-                                });
-                              })}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="ach-no-data-message">トレーニング記録はありません</p>
-                    )}
-                  </div>
-                  
-                  {/* カロリー関係の記録 */}
-                  <div className="daily-stats-container">
-                    <h2 className="daily-stats-title">カロリー関係の記録</h2>
-                    <div className="daily-stats-section">
-                      <div className="daily-stats-grid">
-                        <div className="daily-stat-item">
-                          <div className="daily-stat-label">歩数</div>
-                          <div className="daily-stat-value">
-                            {achievementData.stepData ? `${achievementData.stepData.steps.toLocaleString()} 歩` : 'データなし'}
-                          </div>
-                        </div>
-                        <div className="daily-stat-item">
-                          <div className="daily-stat-label">消費カロリー</div>
-                          <div className="daily-stat-value">
-                            {achievementData.consumedCalories ? formatCalories(achievementData.consumedCalories.total_calories) : 'データなし'}
-                          </div>
-                        </div>
-                        <div className="daily-stat-item">
-                          <div className="daily-stat-label">摂取カロリー</div>
-                          <div className="daily-stat-value">
-                          {achievementData.intakeCalories ? formatCalories(achievementData.intakeCalories.calories) : 'データなし'}
-                          </div>
-                        </div>
-                        <div className="daily-stat-item">
-                          <div className="daily-stat-label">カロリー差分</div>
-                          <div className={`daily-stat-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
-                            {calculateCalorieDifference() !== null 
-                              ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
-                              : 'データなし'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
         </div>
       )}
       

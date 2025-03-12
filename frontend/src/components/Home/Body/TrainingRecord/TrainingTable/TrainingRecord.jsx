@@ -583,7 +583,7 @@ const TrainingRecord = () => {
         formatShortWeekday={CalenderFormatShortWeekday}
         tileContent={CalenderTileContent}
       />
-      <h2 className="training-record-title">トレーニング記録 : {formattedDateDisplay}</h2>
+      <h2 className="training-record-titles">トレーニング記録 : {formattedDateDisplay}</h2>
       
       {/* トレーニング記録削除ボタンはトレーニングデータがある場合のみ表示 */}
       {currentDateHasTrainingData && (

@@ -217,14 +217,20 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   box-shadow: 0 2px 5px rgba(74, 125, 255, 0.4);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 
 .view-achievement-button:hover {
   background-color: #3a6ad9;
   transform: scale(1.05);
+  color: white;
+  text-decoration: none;
 }
 
-/* 成果モーダル */
+/* 以下のモーダル関連のコードはコメントアウト（新しいページコンポーネントを使用するため）*/
+/*
 .achievement-modal-overlay {
   position: fixed;
   top: 0;
@@ -284,7 +290,6 @@
   color: #7f8c8d;
 }
 
-/* 閉じるボタン */
 .close-modal-button {
   position: absolute;
   top: 15px;
@@ -302,186 +307,7 @@
   color: #34495e;
   transform: rotate(90deg);
 }
-
-/* トレーニング記録のスタイル */
-.ach-training-records-container {
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-}
-
-.ach-training-records-title {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: center;
-  font-weight: 600;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 10px;
-}
-
-.ach-training-records-by-category {
-  margin-top: 20px;
-}
-
-.ach-category-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.ach-category-badge {
-  background-color: #f0f5ff;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  color: #4a7dff;
-  font-weight: 500;
-  transition: transform 0.2s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.ach-category-badge:hover {
-  transform: scale(1.05);
-}
-
-/* 有酸素運動のバッジスタイル */
-.ach-category-badge.aerobic {
-  background-color: #e7f9e7;
-  color: #28a745;
-}
-
-.ach-training-records-table-container {
-  overflow-x: auto;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.ach-training-records-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  border: 1px solid #edf2f7;
-}
-
-.ach-training-records-table th,
-.ach-training-records-table td {
-  padding: 12px 15px;
-  text-align: center;
-  border: 1px solid #edf2f7;
-}
-
-.ach-training-records-table th {
-  background-color: #f8fafc;
-  font-weight: 600;
-  color: #4a5568;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-
-.ach-training-records-table tr:nth-child(even) {
-  background-color: #f8fafc;
-}
-
-/* ウエイトトレーニングの行スタイル */
-.ach-exercise-first-row {
-  border-top: 2px solid #edf2f7;
-}
-
-.ach-category-name,
-.ach-exercise-name {
-  font-weight: 600;
-  text-align: left;
-  background-color: #f0f5ff;
-  color: #4a7dff;
-}
-
-/* 有酸素トレーニングの行スタイル */
-.ach-category-name.aerobic,
-.ach-exercise-name.aerobic {
-  background-color: #e7f9e7;
-  color: #28a745;
-}
-
-.ach-no-data-message {
-  text-align: center;
-  padding: 25px;
-  color: #7f8c8d;
-  font-style: italic;
-  background-color: #f8fafc;
-  border-radius: 8px;
-  margin: 15px 0;
-}
-
-/* カロリー関係の記録 */
-.daily-stats-container {
-  margin-top: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-}
-
-.daily-stats-title {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
-  text-align: center;
-  font-weight: 600;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 10px;
-}
-
-.daily-stats-section {
-  padding: 10px;
-}
-
-.daily-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.daily-stat-item {
-  background-color: #f8fafc;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
-  border: 1px solid #edf2f7;
-}
-
-.daily-stat-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-.daily-stat-label {
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.daily-stat-value {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.daily-stat-value.positive {
-  color: #28a745;
-}
-
-.daily-stat-value.negative {
-  color: #dc3545;
-}
+*/
 
 /* ページネーション */
 .pagination {
@@ -630,16 +456,5 @@
     width: 100%;
     text-align: center;
     margin-top: 15px;
-  }
-  
-  .daily-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-}
-
-@media (min-width: 768px) {
-  .daily-stats-grid {
-    grid-template-columns: repeat(4, 1fr);
   }
 }

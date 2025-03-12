@@ -12,6 +12,7 @@ import CalorieInfo from './components/CalorieInfo/CalorieInfo';
 import Weight from './components/Weight/Weight';
 import DietMindset from './components/DietMindset/DietMindset';
 import Posts from './components/Posts/Posts';
+import TrainingRecordDetail from './components/Posts/TrainingRecordDetail';
 import AppUsage from './components/AppUsage/AppUsage';
 import Contact from './components/Contact/Contact';
 import Terms from './components/Terms/Terms';
@@ -42,6 +43,7 @@ function App() {
         <Route path="/weight" element={<Weight />} />
         <Route path="/diet-mindset" element={<DietMindset />} />
         <Route path="/posts" element={<Posts />} />
+        <Route path="/training-details/:postId" element={<TrainingRecordDetail />} />
         <Route path="/app-usage" element={<AppUsage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
