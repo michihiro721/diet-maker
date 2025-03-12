@@ -467,7 +467,6 @@
 
 .share-submit-button:hover {
   background-color: #3a6ad9;
-  transform: translateY(-2px);
 }
 
 .share-submit-button:disabled {
@@ -522,5 +521,175 @@
   
   .share-submit-button {
     width: 100%;
+  }
+}
+
+
+/* シェアデータサマリーのスタイル */
+.share-data-summary {
+  background-color: #f8fafc;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
+}
+
+.share-data-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.share-data-label {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.share-data-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.share-data-value.positive {
+  color: #10b981;
+}
+
+.share-data-value.negative {
+  color: #ef4444;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .share-data-summary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+  .share-data-summary {
+    background-color: #1e293b;
+  }
+  
+  .share-data-item {
+    background-color: #334155;
+  }
+  
+  .share-data-label {
+    color: #94a3b8;
+  }
+  
+  .share-data-value {
+    color: #f1f5f9;
+  }
+}
+
+/* シェアデータサマリーのスタイル */
+.share-data-summary {
+  background-color: #f8fafc;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
+}
+
+.share-data-item {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.share-data-item:hover {
+  transform: translateY(-2px);
+}
+
+.share-data-label {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.share-data-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.share-data-value.positive {
+  color: #10b981;
+}
+
+.share-data-value.negative {
+  color: #ef4444;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.training-count {
+  color: #4a7dff;
+}
+
+/* 投稿フォームの注釈 */
+.share-form-note {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .share-data-summary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+  .share-data-summary {
+    background-color: #1e293b;
+  }
+  
+  .share-data-item {
+    background-color: #334155;
+  }
+  
+  .share-data-label {
+    color: #94a3b8;
+  }
+  
+  .share-data-value {
+    color: #f1f5f9;
+  }
+  
+  .training-count {
+    color: #93c5fd;
+  }
+  
+  .share-form-note {
+    color: #cbd5e1;
   }
 }

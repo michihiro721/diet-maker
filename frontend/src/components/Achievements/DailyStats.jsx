@@ -12,15 +12,56 @@ const DailyStats = ({ userId, selectedDate }) => {
   const [postContent, setPostContent] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const [postSuccess, setPostSuccess] = useState(false);
+  // トレーニングデータの状態を追加
+  const [trainingData, setTrainingData] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
 
   // 日付が変わったらデータをリセットする
   useEffect(() => {
     setStepData(null);
     setConsumedCalories(null);
     setIntakeCalories(null);
+    setTrainingData([]);
     setLoading(true);
     setError("");
   }, [selectedDate]);
+
+  // トレーニングデータを取得
+  useEffect(() => {
+    const fetchTrainingData = async () => {
+      if (!userId || !selectedDate) return;
+
+      try {
+        const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+        const response = await axios.get(`${apiUrl}/trainings`, {
+          params: { 
+            user_id: userId,
+            date: selectedDate
+          }
+        });
+        
+        setTrainingData(response.data);
+      } catch (error) {
+        console.error("Error fetching training data:", error);
+      }
+    };
+
+    // 種目データを取得
+    const fetchWorkouts = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+        const response = await axios.get(`${apiUrl}/workouts`);
+        setWorkouts(response.data);
+      } catch (error) {
+        console.error("Error fetching workouts:", error);
+      }
+    };
+
+    if (userId && selectedDate) {
+      fetchTrainingData();
+      fetchWorkouts();
+    }
+  }, [userId, selectedDate]);
 
   // 選択した日付の歩数データを取得
   useEffect(() => {
@@ -180,27 +221,8 @@ const DailyStats = ({ userId, selectedDate }) => {
 
   // シェアモーダルを開く
   const openShareModal = () => {
-    // 投稿内容の初期値を設定
-    let initialContent = `${selectedDate}のトレーニング成果\n`;
-    
-    if (stepData) {
-      initialContent += `歩数: ${stepData.steps.toLocaleString()} 歩\n`;
-    }
-    
-    if (consumedCalories) {
-      initialContent += `消費カロリー: ${formatCalories(consumedCalories.total_calories)}\n`;
-    }
-    
-    if (intakeCalories) {
-      initialContent += `摂取カロリー: ${formatCalories(intakeCalories.calories)}\n`;
-    }
-    
-    const calorieDiff = calculateCalorieDifference();
-    if (calorieDiff !== null) {
-      initialContent += `カロリー差分: ${calorieDiff > 0 ? '+' : ''}${formatCalories(calorieDiff)}`;
-    }
-    
-    setPostContent(initialContent);
+    // 投稿内容の初期値はユーザー入力用に空にする
+    setPostContent(""); 
     setIsShareModalOpen(true);
   };
 
@@ -211,10 +233,10 @@ const DailyStats = ({ userId, selectedDate }) => {
     setPostSuccess(false);
   };
 
-  // 投稿を送信
+  // 投稿を送信する関数
   const handleSubmitPost = async () => {
-    if (!userId || !postContent) {
-      alert("投稿内容を入力してください");
+    if (!userId) {
+      alert("ログインが必要です");
       return;
     }
 
@@ -229,10 +251,14 @@ const DailyStats = ({ userId, selectedDate }) => {
         return;
       }
       
+
+      // 日付情報を含める
+      let finalContent = `【${selectedDate}】 ${postContent.trim()}`;
+      
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const response = await axios.post(`${apiUrl}/posts`, {
         post: {
-          content: postContent
+          content: finalContent
         }
       }, {
         headers: { 'Authorization': `Bearer ${jwt}` }
@@ -310,25 +336,55 @@ const DailyStats = ({ userId, selectedDate }) => {
         <div className="share-modal-overlay" onClick={closeShareModal}>
           <div className="share-modal" onClick={(e) => e.stopPropagation()}>
             <button className="close-modal-button" onClick={closeShareModal}>×</button>
-            <h2>トレーニング成果をシェア</h2>
+            <h2>{selectedDate} のトレーニング成果をシェア</h2>
             
             <div className="share-form">
+              <div className="share-data-summary">
+                {trainingData.length > 0 && (
+                  <div className="share-data-item full-width">
+                    <span className="share-data-label">トレーニング</span>
+                    <span className="share-data-value training-count">{trainingData.length}件のトレーニング記録</span>
+                  </div>
+                )}
+                <div className="share-data-item">
+                  <span className="share-data-label">歩数</span>
+                  <span className="share-data-value">{stepData ? `${stepData.steps.toLocaleString()} 歩` : 'データなし'}</span>
+                </div>
+                <div className="share-data-item">
+                  <span className="share-data-label">消費カロリー</span>
+                  <span className="share-data-value">{consumedCalories ? formatCalories(consumedCalories.total_calories) : 'データなし'}</span>
+                </div>
+                <div className="share-data-item">
+                  <span className="share-data-label">摂取カロリー</span>
+                  <span className="share-data-value">{intakeCalories ? formatCalories(intakeCalories.calories) : 'データなし'}</span>
+                </div>
+                {calculateCalorieDifference() !== null && (
+                  <div className="share-data-item">
+                    <span className="share-data-label">カロリー差分</span>
+                    <span className={`share-data-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
+                      {`${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}`}
+                    </span>
+                  </div>
+                )}
+              </div>
+              
               <div className="share-form-group">
-                <label htmlFor="post-content">投稿内容</label>
+                <label htmlFor="post-content">コメント (任意)</label>
                 <textarea
                   id="post-content"
-                  placeholder="投稿内容"
+                  placeholder="感想や目標などをご記入ください（省略可能）"
                   value={postContent}
                   onChange={(e) => setPostContent(e.target.value)}
                   className="share-form-textarea"
-                  rows={6}
+                  rows={4}
                 />
+                <div className="share-form-note">※選択した日付のトレーニング記録が自動的に含まれます</div>
               </div>
               
               <button 
                 className="share-submit-button"
                 onClick={handleSubmitPost}
-                disabled={isPosting || !postContent}
+                disabled={isPosting}
               >
                 {isPosting ? '投稿中...' : '投稿'}
               </button>
