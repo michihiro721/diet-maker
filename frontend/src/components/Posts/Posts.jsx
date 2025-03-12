@@ -171,14 +171,44 @@ const Posts = () => {
 
   // 投稿日付から実際の日付文字列を取得する関数
   const getPostDate = (post) => {
-    // 投稿内容から日付を抽出（yyyy-mm-dd形式）を試みる
-    const dateMatch = post.content.match(/(\d{4}-\d{2}-\d{2})/);
-    if (dateMatch) {
-      return dateMatch[1];
+    // 新フォーマット: 【YYYY-MM-DD】
+    const newDateRegex = /【(\d{4}-\d{2}-\d{2})】/;
+    const newDateMatch = post.content.match(newDateRegex);
+    
+    if (newDateMatch) {
+      return newDateMatch[1];
+    }
+    
+    // 旧フォーマットその1: YYYY-MM-DD のトレーニング成果
+    const oldDateRegex1 = /(\d{4}-\d{2}-\d{2})のトレーニング成果/;
+    const oldDateMatch1 = post.content.match(oldDateRegex1);
+    
+    if (oldDateMatch1) {
+      return oldDateMatch1[1];
+    }
+    
+    // 旧フォーマットその2: 単純なYYYY-MM-DD形式
+    const oldDateRegex2 = /(\d{4}-\d{2}-\d{2})/;
+    const oldDateMatch2 = post.content.match(oldDateRegex2);
+    
+    if (oldDateMatch2) {
+      return oldDateMatch2[1];
     }
     
     // 投稿内容に日付がない場合は、投稿の作成日を使用
     return new Date(post.created_at).toLocaleDateString('en-CA'); // YYYY-MM-DD形式
+  };
+
+  // 投稿内容から日付マーカーと不要なテキストを削除する関数
+  const getCleanPostContent = (post) => {
+    if (!post || !post.content) return '';
+    
+    let content = post.content;
+    
+    // 日付マーカーを削除 (【YYYY-MM-DD】 形式)
+    content = content.replace(/【\d{4}-\d{2}-\d{2}】\s*/, '');
+    
+    return content.trim();
   };
 
   // 成果を表示する関数
@@ -609,10 +639,15 @@ const Posts = () => {
               )}
 
               <div className="post-info">
-                <p className="post-date">投稿日：{new Date(post.created_at).toLocaleDateString("ja-JP")}</p>
+                <p className="post-date">
+                  投稿日：{new Date(post.created_at).toLocaleDateString("ja-JP")}
+                  {getPostDate(post) && <span className="training-date"> 【トレーニング日】：{getPostDate(post)}</span>}
+                </p>
                 <p className="post-author">ユーザー名：{post.user?.name || "不明なユーザー"}</p>
               </div>
-              <p className="post-content">{post.content}</p>
+              
+              <p className="post-content">{getCleanPostContent(post)}</p>
+              
               <button 
                 className={`like-button ${hasUserLiked(post) ? 'liked' : ''}`}
                 onClick={(e) => handleLike(post.id, e)}

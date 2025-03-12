@@ -329,19 +329,6 @@
   border-top: 1px solid #e2e8f0;
 }
 
-.ach-no-data-message {
-  text-align: center;
-  padding: 35px;
-  color: #64748b;
-  font-style: italic;
-  background-color: #f8fafc;
-  border-radius: 12px;
-  border: 1px dashed #cbd5e1;
-  width: 100%;
-  margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) inset;
-}
-
 /* カレンダーモーダル用のスタイル */
 .ach-calendar-modal-overlay {
   position: fixed;

@@ -20,8 +20,6 @@
   margin-bottom: 15px;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
 }
 
 .search-input {
@@ -46,7 +44,7 @@
   border-radius: 0 4px 4px 0;
   cursor: pointer;
   font-size: 16px;
-  height: 60px;
+  height: 50px;
   width: 100px;
   transition: background-color 0.3s;
 }
@@ -59,7 +57,6 @@
   font-weight: bold;
   color: #333;
   font-size: 18px;
-  margin-top: 10px;
   padding: 8px 15px;
   background-color: #fff;
   border-radius: 20px;
@@ -104,6 +101,21 @@
   color: #7f8c8d;
   font-size: 14px;
   margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+/* トレーニング日付のスタイル */
+.training-date {
+  color: #4a7dff;
+  font-weight: 500;
+}
+
+/* 日付情報を横並びにするためのスタイル調整 */
+.post-date {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
 }
 
 .post-content {
@@ -293,7 +305,6 @@
 
 /* トレーニング記録のスタイル */
 .ach-training-records-container {
-  margin-bottom: 40px;
   background-color: #ffffff;
   border-radius: 10px;
   padding: 20px;
@@ -579,8 +590,18 @@
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* レスポンシブ */
+/* スマホ表示での調整 */
 @media (max-width: 768px) {
+  .post-date {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  
+  .training-date {
+    margin-left: 0;
+  }
+  
   .search-container-centered {
     width: 100%;
   }
