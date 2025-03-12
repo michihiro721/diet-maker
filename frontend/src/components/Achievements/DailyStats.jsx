@@ -8,6 +8,10 @@ const DailyStats = ({ userId, selectedDate }) => {
   const [intakeCalories, setIntakeCalories] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [postContent, setPostContent] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
+  const [postSuccess, setPostSuccess] = useState(false);
 
   // 日付が変わったらデータをリセットする
   useEffect(() => {
@@ -174,39 +178,166 @@ const DailyStats = ({ userId, selectedDate }) => {
     return `${formattedValue} kcal`;
   };
 
+  // シェアモーダルを開く
+  const openShareModal = () => {
+    // 投稿内容の初期値を設定
+    let initialContent = `${selectedDate}のトレーニング成果\n`;
+    
+    if (stepData) {
+      initialContent += `歩数: ${stepData.steps.toLocaleString()} 歩\n`;
+    }
+    
+    if (consumedCalories) {
+      initialContent += `消費カロリー: ${formatCalories(consumedCalories.total_calories)}\n`;
+    }
+    
+    if (intakeCalories) {
+      initialContent += `摂取カロリー: ${formatCalories(intakeCalories.calories)}\n`;
+    }
+    
+    const calorieDiff = calculateCalorieDifference();
+    if (calorieDiff !== null) {
+      initialContent += `カロリー差分: ${calorieDiff > 0 ? '+' : ''}${formatCalories(calorieDiff)}`;
+    }
+    
+    setPostContent(initialContent);
+    setIsShareModalOpen(true);
+  };
+
+  // モーダルを閉じる
+  const closeShareModal = () => {
+    setIsShareModalOpen(false);
+    setPostContent("");
+    setPostSuccess(false);
+  };
+
+  // 投稿を送信
+  const handleSubmitPost = async () => {
+    if (!userId || !postContent) {
+      alert("投稿内容を入力してください");
+      return;
+    }
+
+    try {
+      setIsPosting(true);
+      
+      // トークンを取得
+      const jwt = localStorage.getItem('jwt');
+      if (!jwt) {
+        alert("認証情報が見つかりません。再ログインしてください。");
+        setIsPosting(false);
+        return;
+      }
+      
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const response = await axios.post(`${apiUrl}/posts`, {
+        post: {
+          content: postContent
+        }
+      }, {
+        headers: { 'Authorization': `Bearer ${jwt}` }
+      });
+      
+      console.log("投稿成功:", response.data);
+      setIsPosting(false);
+      setPostSuccess(true);
+      
+      // 3秒後にモーダルを閉じる
+      setTimeout(() => {
+        closeShareModal();
+      }, 3000);
+      
+    } catch (error) {
+      console.error("投稿に失敗しました:", error);
+      setIsPosting(false);
+      alert(`投稿に失敗しました: ${error.response?.data?.error || error.message}`);
+    }
+  };
+
   return (
     <div className="daily-stats-container">
       <h2 className="daily-stats-title">カロリー関係の記録</h2>
       {loading ? (
         <div className="daily-stats-loading">データを読み込み中...</div>
       ) : (
-        <div className="daily-stats-section">
-          <div className="daily-stats-grid">
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">歩数</div>
-              <div className="daily-stat-value">
-                {stepData ? `${stepData.steps.toLocaleString()} 歩` : 'データなし'}
+        <>
+          <div className="daily-stats-section">
+            <div className="daily-stats-grid">
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">歩数</div>
+                <div className="daily-stat-value">
+                  {stepData ? `${stepData.steps.toLocaleString()} 歩` : 'データなし'}
+                </div>
+              </div>
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">消費カロリー</div>
+                <div className="daily-stat-value">
+                  {consumedCalories ? formatCalories(consumedCalories.total_calories) : 'データなし'}
+                </div>
+              </div>
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">摂取カロリー</div>
+                <div className="daily-stat-value">
+                  {intakeCalories ? formatCalories(intakeCalories.calories) : 'データなし'}
+                </div>
+              </div>
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">カロリー差分</div>
+                <div className={`daily-stat-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
+                  {calculateCalorieDifference() !== null 
+                    ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
+                    : 'データなし'}
+                </div>
               </div>
             </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">消費カロリー</div>
-              <div className="daily-stat-value">
-                {consumedCalories ? formatCalories(consumedCalories.total_calories) : 'データなし'}
+          </div>
+          
+          {/* シェアボタン */}
+          <div className="share-button-container">
+            <button 
+              className="share-button"
+              onClick={openShareModal}
+              disabled={loading}
+            >
+              アプリ内で成果をシェア
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* 投稿モーダル */}
+      {isShareModalOpen && (
+        <div className="share-modal-overlay" onClick={closeShareModal}>
+          <div className="share-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="close-modal-button" onClick={closeShareModal}>×</button>
+            <h2>トレーニング成果をシェア</h2>
+            
+            <div className="share-form">
+              <div className="share-form-group">
+                <label htmlFor="post-content">投稿内容</label>
+                <textarea
+                  id="post-content"
+                  placeholder="投稿内容"
+                  value={postContent}
+                  onChange={(e) => setPostContent(e.target.value)}
+                  className="share-form-textarea"
+                  rows={6}
+                />
               </div>
-            </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">摂取カロリー</div>
-              <div className="daily-stat-value">
-                {intakeCalories ? formatCalories(intakeCalories.calories) : 'データなし'}
-              </div>
-            </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">カロリー差分</div>
-              <div className={`daily-stat-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
-                {calculateCalorieDifference() !== null 
-                  ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
-                  : 'データなし'}
-              </div>
+              
+              <button 
+                className="share-submit-button"
+                onClick={handleSubmitPost}
+                disabled={isPosting || !postContent}
+              >
+                {isPosting ? '投稿中...' : '投稿'}
+              </button>
+              
+              {postSuccess && (
+                <div className="share-success-message">
+                  投稿が完了しました！
+                </div>
+              )}
             </div>
           </div>
         </div>
