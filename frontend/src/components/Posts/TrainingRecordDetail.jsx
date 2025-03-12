@@ -312,15 +312,6 @@ const TrainingRecordDetail = () => {
     // 詳細ページへのURL
     const recordDetailUrl = `${appUrl}/training-details/${postId}?date=${trainingDate}`;
     
-    // 歩数とカロリー情報の追加
-    let statsText = "";
-    if (achievementData.stepData) {
-      statsText += `歩数: ${achievementData.stepData.steps.toLocaleString()}歩\n`;
-    }
-    if (achievementData.consumedCalories) {
-      statsText += `消費カロリー: ${Math.round(achievementData.consumedCalories.total_calories).toLocaleString()}kcal\n`;
-    }
-    
     // 投稿内容があれば追加
     let contentText = "";
     if (cleanContent && cleanContent.trim() !== "") {
@@ -328,7 +319,12 @@ const TrainingRecordDetail = () => {
     }
     
     // テキスト全体を組み立てる（ハッシュタグを最初に、URLを最後に）
-    const fullText = `#ダイエットメーカー\n\n【${trainingDate}のトレーニング記録】\n${statsText}${contentText}\n\n${recordDetailUrl}`;
+    const fullText = `#ダイエットメーカー
+
+【${trainingDate}のトレーニング記録】${contentText}
+
+トレーニングの記録はこちら👇
+${recordDetailUrl}`;
     
     // URLエンコードせずそのままTwitterの共有URLに渡す
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}`, '_blank');
