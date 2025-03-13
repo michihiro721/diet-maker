@@ -320,10 +320,11 @@ const DailyStats = ({ userId, selectedDate }) => {
           
           {/* シェアボタン */}
           <div className="share-button-container">
-            <button 
+            <button
               className="share-button"
               onClick={openShareModal}
               disabled={loading}
+              style={{position: 'relative', zIndex: 15}} // インラインスタイルで確実にz-indexを設定
             >
               アプリ内で成果をシェア
             </button>

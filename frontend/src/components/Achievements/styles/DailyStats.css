@@ -521,7 +521,7 @@
     padding: 20px;
   }
   
-  /* スマホでは縦並び（1列）に変更 */
+
   .daily-stats-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -541,30 +541,31 @@
     font-size: 22px;
   }
   
-  /* カロリー差分のフォントサイズをスマホではさらに調整 */
+  /* カロリー差分 */
   .daily-stat-item:nth-child(4) .daily-stat-value {
     font-size: 20px;
   }
   
+  /* シェアボタン */
   .share-button-container {
     margin-top: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     width: 100%;
     position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
   }
   
   .share-button {
-    width: 80%;
+    width: 90%;
     max-width: 280px;
     font-size: 16px;
-    padding: 12px 20px;
+    padding: 12px 15px;
+    border-radius: 8px;
   }
   
-  .share-data-summary {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  
+  /* シェアモーダルの調整 */
   .share-modal {
     width: 95%;
     padding: 20px 15px;
