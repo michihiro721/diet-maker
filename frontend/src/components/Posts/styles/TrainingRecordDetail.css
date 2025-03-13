@@ -1,360 +1,424 @@
-.training-record-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    margin-top: 100px;
-    margin-bottom: 80px;
-  }
-  
-  .training-record-header {
-    margin-bottom: 30px;
-    position: relative;
-  }
-  
-  .back-button {
-    background-color: #f0f5ff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 14px;
-    color: #4a7dff;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-bottom: 20px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .back-button:hover {
-    background-color: #e0ebff;
-    transform: translateX(-5px);
-  }
-  
-  .post-content-card {
-    background-color: #f9fafb;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
-    border: 1px solid #edf2f7;
-  }
-  
-  /* 投稿情報のスタイル */
-  .post-info {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-  }
-  
-  .post-date, .post-author {
-    color: #7f8c8d;
-    font-size: 14px;
-    margin-bottom: 5px;
-    margin-top: 0px;
-  }
-  
-  .training-date {
-    color: #4a7dff;
-    font-weight: 500;
-  }
-  
-  .post-date {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    align-items: center;
-  }
-  
-  .post-content {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    word-break: break-all;
-    color: #34495e;
-    line-height: 1.5;
-  }
-  
-  /* トレーニング記録コンテナ */
-  .ach-training-records-container {
-    margin-top: 0;
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-  }
-  
-  /* タイトルエリア */
-  .training-record-title-area {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .training-record-title {
-    display: inline-block;
-    position: relative;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .training-record-title::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 3px;
-    background-color: #6d91fb;
-  }
-  
-  /* カテゴリーバッジエリア */
-  .ach-category-list {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-  }
-  
-  .ach-category-badge {
-    background-color: #f0f5ff;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    color: #4a7dff;
-    font-weight: 500;
-  }
-  
-  .ach-category-badge.aerobic {
-    background-color: #e7f9e7;
-    color: #28a745;
-  }
-  
-  /* トレーニングテーブル */
-  .ach-training-records-table-container {
-    margin-top: 15px;
-    overflow-x: auto;
-  }
-  
-  .ach-training-records-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #eaeef2;
-  }
-  
-  .ach-training-records-table th,
-  .ach-training-records-table td {
-    padding: 10px 15px;
-    text-align: center;
-    border: 1px solid #eaeef2;
-  }
-  
-  .ach-training-records-table th {
-    background-color: #f5f9fc;
-    color: #444;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  
-  /* 対象部位列の幅 */
-  .ach-training-records-table th:first-child,
-  .ach-training-records-table td:first-child {
-    width: 100px;
-  }
-  
-  /* 種目列の幅 */
-  .ach-training-records-table th:nth-child(2),
-  .ach-training-records-table td:nth-child(2) {
-    width: 200px;
-  }
-  
-  /* セット/重量/回数列の幅 */
-  .ach-training-records-table th:nth-child(3),
-  .ach-training-records-table th:nth-child(4),
-  .ach-training-records-table th:nth-child(5),
-  .ach-training-records-table td:nth-child(3),
-  .ach-training-records-table td:nth-child(4),
-  .ach-training-records-table td:nth-child(5) {
-    width: 80px;
-  }
-  
-  .ach-category-name {
-    background-color: #f0f5ff;
-    color: #4a7dff;
-    text-align: center;
-    font-weight: 600;
-  }
-  
-  .ach-exercise-name {
-    text-align: center;
-    font-weight: normal;
-  }
-  
-  .ach-category-name.aerobic {
-    background-color: #e7f9e7;
-    color: #28a745;
-  }
-  
-  .ach-no-data-message {
-    text-align: center;
-    padding: 25px;
-    color: #7f8c8d;
-    font-style: italic;
-    background-color: #f8fafc;
-    border-radius: 8px;
-    margin: 15px 0;
-  }
-  
-  /* カロリー情報 */
-  .daily-stats-container {
-    margin-top: 50px;
-    position: relative;
-  }
-  
-  .daily-stats-title-area {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .daily-stats-title {
-    display: inline-block;
-    position: relative;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    padding-bottom: 10px;
-  }
-  
-  .daily-stats-title::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 3px;
-    background-color: #6d91fb;
-  }
-  
-  .daily-stats-section {
-    margin-top: 30px;
-  }
-  
-  .daily-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    padding: 0 10px;
-  }
-  
-  .daily-stat-item {
-    text-align: center;
-    padding: 20px 10px;
-  }
-  
-  .daily-stat-icon {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #aaa;
-  }
-  
-  .daily-stat-label {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 5px;
-  }
-  
-  .daily-stat-value {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .daily-stat-value.positive {
-    color: #28a745;
-  }
-  
-  .daily-stat-value.negative {
-    color: #dc3545;
-  }
-  
+.posts-training-record-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+
+.posts-training-record-header {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.posts-back-button {
+  background-color: #f0f5ff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #4a7dff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-bottom: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.posts-back-button:hover {
+  background-color: #e0ebff;
+  transform: translateX(-5px);
+}
+
+.posts-post-content-card {
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #edf2f7;
+}
+
+/* 投稿情報のスタイル */
+.posts-post-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.posts-post-date, .posts-post-author {
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+.posts-training-date {
+  color: #4a7dff;
+  font-weight: 500;
+}
+
+.posts-post-date {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.posts-post-content {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  word-break: break-all;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* トレーニング記録コンテナ */
+.posts-ach-training-records-container {
+  margin-top: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+}
+
+/* タイトルエリア */
+.posts-training-record-title-area {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.posts-training-record-title {
+  display: inline-block;
+  position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.posts-training-record-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: #6d91fb;
+}
+
+/* カテゴリーバッジエリア */
+.posts-ach-category-list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.posts-ach-category-badge {
+  background-color: #f0f5ff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #4a7dff;
+  font-weight: 500;
+}
+
+.posts-ach-category-badge.posts-aerobic {
+  background-color: #e7f9e7;
+  color: #28a745;
+}
+
+/* トレーニングテーブル */
+.posts-ach-training-records-table-container {
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+.posts-ach-training-records-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #eaeef2;
+}
+
+.posts-ach-training-records-table th,
+.posts-ach-training-records-table td {
+  padding: 10px 15px;
+  text-align: center;
+  border: 1px solid #eaeef2;
+}
+
+.posts-ach-training-records-table th {
+  background-color: #f5f9fc;
+  color: #444;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* 対象部位列の幅 */
+.posts-ach-training-records-table th:first-child,
+.posts-ach-training-records-table td:first-child {
+  width: 100px;
+}
+
+/* 種目列の幅 */
+.posts-ach-training-records-table th:nth-child(2),
+.posts-ach-training-records-table td:nth-child(2) {
+  width: 200px;
+}
+
+/* セット/重量/回数列の幅 */
+.posts-ach-training-records-table th:nth-child(3),
+.posts-ach-training-records-table th:nth-child(4),
+.posts-ach-training-records-table th:nth-child(5),
+.posts-ach-training-records-table td:nth-child(3),
+.posts-ach-training-records-table td:nth-child(4),
+.posts-ach-training-records-table td:nth-child(5) {
+  width: 80px;
+}
+
+.posts-ach-category-name {
+  background-color: #f0f5ff;
+  color: #4a7dff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.posts-ach-exercise-name {
+  text-align: center;
+  font-weight: normal;
+}
+
+.posts-ach-category-name.posts-aerobic {
+  background-color: #e7f9e7;
+  color: #28a745;
+}
+
+.posts-ach-no-data-message {
+  text-align: center;
+  padding: 25px;
+  color: #7f8c8d;
+  font-style: italic;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+/* カロリー情報 - 画像2のスタイルに変更 */
+.posts-daily-stats-container {
+  margin-top: 50px;
+  position: relative;
+}
+
+.posts-daily-stats-title-area {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.posts-daily-stats-title {
+  display: inline-block;
+  position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 10px;
+}
+
+.posts-daily-stats-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: #6d91fb;
+}
+
+/* カロリー情報のグリッドを横並びフレックスに変更 */
+.posts-daily-stats-section {
+  margin-top: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.posts-daily-stats-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 15px;
+}
+
+.posts-daily-stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafc;
+  border-radius: 12px;
+  padding: 15px 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f6;
+  min-height: 100px;
+}
+
+.posts-daily-stat-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  border-color: #e0e7ff;
+}
+
+.posts-daily-stat-icon {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #777;
+}
+
+.posts-daily-stat-label {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.posts-daily-stat-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+}
+
+.posts-daily-stat-value.posts-positive {
+  color: #28a745;
+}
+
+.posts-daily-stat-value.posts-negative {
+  color: #dc3545;
+}
+
 /* シェアボタン */
-.twitter-share-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    padding: 10px;
+.posts-twitter-share-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  padding: 10px;
 }
 
-.twitter-share-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000;
-    color: white;
-    border: 2px solid #000;
-    border-radius: 30px;
-    padding: 10px 24px;
+.posts-twitter-share-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  color: white;
+  border: 2px solid #000;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 30%;
+}
+
+.posts-twitter-share-button:hover {
+  background-color: #333;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.posts-twitter-icon {
+  margin-right: 8px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ローディングとエラー表示 */
+.posts-loading, .posts-error {
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
+  color: #7f8c8d;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+.posts-error {
+  color: #e74c3c;
+  border-left: 4px solid #e74c3c;
+}
+
+/* スマホ表示での調整 */
+@media (max-width: 768px) {
+  .posts-training-record-container {
+    padding: 15px;
+    margin-top: 100px;
+  }
+  
+  .posts-post-date {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  
+  /* スマホではカロリー情報を縦並びに */
+  .posts-daily-stats-grid {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .posts-daily-stat-item {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px 8px;
+  }
+  
+  .posts-daily-stat-icon {
     font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.twitter-share-button:hover {
-    background-color: #333;
-    color: #fff;
-    transform: scale(1.05);
-}
-
-.twitter-icon {
-    margin-right: 8px;
-    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .posts-daily-stat-label {
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+  
+  .posts-daily-stat-value {
     font-size: 18px;
+  }
+  
+  .posts-ach-training-records-table th,
+  .posts-ach-training-records-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+  
+  /* シェアボタンのスタイル */
+  .posts-twitter-share-container {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .posts-twitter-share-button {
+    width: 80%;
+    max-width: 250px;
+    padding: 12px 20px;
+  }
+  
+  /* カテゴリーバッジの */
+  .posts-ach-category-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
-  
-  /* ローディングとエラー表示 */
-  .loading, .error {
-    text-align: center;
-    padding: 40px;
-    font-size: 16px;
-    color: #7f8c8d;
-    background-color: #f8fafc;
-    border-radius: 10px;
-    margin: 20px 0;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-  }
-  
-  .error {
-    color: #e74c3c;
-    border-left: 4px solid #e74c3c;
-  }
-  
-  /* スマホ表示での調整 */
-  @media (max-width: 768px) {
-    .training-record-container {
-      padding: 15px;
-      margin-top: 20px;
-    }
-    
-    .post-date {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
-    }
-    
-    .daily-stats-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-    
-    .ach-training-records-table th,
-    .ach-training-records-table td {
-      padding: 8px;
-      font-size: 13px;
-    }
-  }

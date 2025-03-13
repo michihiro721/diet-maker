@@ -137,7 +137,6 @@
   cursor: pointer;
   color: #bdc3c7;
   transition: transform 0.2s ease, color 0.2s;
-  z-index: 5;
 }
 
 .like-button:hover {
@@ -165,7 +164,6 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s, transform 0.2s;
-  z-index: 20; /* 高いz-index値を設定 */
   box-shadow: 0 2px 5px rgba(255, 71, 87, 0.4);
 }
 
@@ -199,7 +197,6 @@
   margin-bottom: 15px;
   margin-top: 5px;
   position: relative;
-  z-index: 10; /* 削除ボタンより低いz-index */
 }
 
 /* トレーニング記録ボタン */

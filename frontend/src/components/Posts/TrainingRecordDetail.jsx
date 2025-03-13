@@ -335,9 +335,9 @@ ${recordDetailUrl}`;
     navigate('/posts');
   };
 
-  if (loading) return <div className="loading">読み込み中...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!post) return <div className="error">投稿が見つかりません</div>;
+  if (loading) return <div className="posts-loading">読み込み中...</div>;
+  if (error) return <div className="posts-error">{error}</div>;
+  if (!post) return <div className="posts-error">投稿が見つかりません</div>;
 
   // カテゴリー順序の定義
   const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
@@ -351,33 +351,33 @@ ${recordDetailUrl}`;
   );
 
   return (
-    <div className="training-record-container">
+    <div className="posts-training-record-container">
       {/* 投稿情報 */}
-      <div className="post-content-card">
-        <div className="post-info">
-          <p className="post-date">
+      <div className="posts-post-content-card">
+        <div className="posts-post-info">
+          <p className="posts-post-date">
             投稿日：{new Date(post.created_at).toLocaleDateString("ja-JP")}
-            {post.achievementDate && <span className="training-date"> 【トレーニング日】：{post.achievementDate}</span>}
+            {post.achievementDate && <span className="posts-training-date"> 【トレーニング日】：{post.achievementDate}</span>}
           </p>
-          <p className="post-author">ユーザー名：{post.userName}</p>
+          <p className="posts-post-author">ユーザー名：{post.userName}</p>
         </div>
-        <p className="post-content">{getCleanPostContent(post)}</p>
+        <p className="posts-post-content">{getCleanPostContent(post)}</p>
       </div>
 
       {/* トレーニング記録 */}
-      <div className="ach-training-records-container">
-        <div className="training-record-title-area">
-          <h2 className="training-record-title">トレーニング記録</h2>
+      <div className="posts-ach-training-records-container">
+        <div className="posts-training-record-title-area">
+          <h2 className="posts-training-record-title">トレーニング記録</h2>
         </div>
         
         {achievementData.trainingData.length > 0 ? (
-          <div className="ach-training-records-by-category">
+          <div className="posts-ach-training-records-by-category">
             {/* カテゴリー名をリストとして表示 */}
-            <div className="ach-category-list">
+            <div className="posts-ach-category-list">
               {sortedCategories.map(category => (
                 <span 
                   key={category} 
-                  className={`ach-category-badge ${category === "有酸素" ? 'aerobic' : ''}`}
+                  className={`posts-ach-category-badge ${category === "有酸素" ? 'posts-aerobic' : ''}`}
                 >
                   {category}
                 </span>
@@ -385,8 +385,8 @@ ${recordDetailUrl}`;
             </div>
 
             {/* トレーニングテーブル */}
-            <div className="ach-training-records-table-container">
-              <table className="ach-training-records-table">
+            <div className="posts-ach-training-records-table-container">
+              <table className="posts-ach-training-records-table">
                 <thead>
                   <tr>
                     <th>対象部位</th>
@@ -413,13 +413,13 @@ ${recordDetailUrl}`;
                                 <>
                                   <td 
                                     rowSpan={setsCount} 
-                                    className={`ach-category-name ${isAerobic ? 'aerobic' : ''}`}
+                                    className={`posts-ach-category-name ${isAerobic ? 'posts-aerobic' : ''}`}
                                   >
                                     {category}
                                   </td>
                                   <td 
                                     rowSpan={setsCount}
-                                    className="ach-exercise-name"
+                                    className="posts-ach-exercise-name"
                                   >
                                     {exerciseName}
                                   </td>
@@ -439,42 +439,42 @@ ${recordDetailUrl}`;
             </div>
           </div>
         ) : (
-          <p className="ach-no-data-message">トレーニング記録はありません</p>
+          <p className="posts-ach-no-data-message">トレーニング記録はありません</p>
         )}
       </div>
       
       {/* カロリー関係の記録 */}
-      <div className="daily-stats-container">
-        <div className="daily-stats-title-area">
-          <h2 className="daily-stats-title">カロリー関係の記録</h2>
+      <div className="posts-daily-stats-container">
+        <div className="posts-daily-stats-title-area">
+          <h2 className="posts-daily-stats-title">カロリー関係の記録</h2>
         </div>
-        <div className="daily-stats-section">
-          <div className="daily-stats-grid">
-            <div className="daily-stat-item">
-              <div className="daily-stat-icon">👣</div>
-              <div className="daily-stat-label">歩数</div>
-              <div className="daily-stat-value">
+        <div className="posts-daily-stats-section">
+          <div className="posts-daily-stats-grid">
+            <div className="posts-daily-stat-item">
+              <div className="posts-daily-stat-icon">👣</div>
+              <div className="posts-daily-stat-label">歩数</div>
+              <div className="posts-daily-stat-value">
                 {achievementData.stepData ? `${achievementData.stepData.steps.toLocaleString()} 歩` : 'データなし'}
               </div>
             </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-icon">🔥</div>
-              <div className="daily-stat-label">消費カロリー</div>
-              <div className="daily-stat-value">
+            <div className="posts-daily-stat-item">
+              <div className="posts-daily-stat-icon">🔥</div>
+              <div className="posts-daily-stat-label">消費カロリー</div>
+              <div className="posts-daily-stat-value">
                 {achievementData.consumedCalories ? formatCalories(achievementData.consumedCalories.total_calories) : 'データなし'}
               </div>
             </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-icon">🍽️</div>
-              <div className="daily-stat-label">摂取カロリー</div>
-              <div className="daily-stat-value">
+            <div className="posts-daily-stat-item">
+              <div className="posts-daily-stat-icon">🍖</div>
+              <div className="posts-daily-stat-label">摂取カロリー</div>
+              <div className="posts-daily-stat-value">
               {achievementData.intakeCalories ? formatCalories(achievementData.intakeCalories.calories) : 'データなし'}
               </div>
             </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-icon">⚖️</div>
-              <div className="daily-stat-label">カロリー差分</div>
-              <div className={`daily-stat-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
+            <div className="posts-daily-stat-item">
+              <div className="posts-daily-stat-icon">⚖️</div>
+              <div className="posts-daily-stat-label">カロリー差分</div>
+              <div className={`posts-daily-stat-value ${calculateCalorieDifference() > 0 ? 'posts-positive' : calculateCalorieDifference() < 0 ? 'posts-negative' : ''}`}>
                 {calculateCalorieDifference() !== null 
                   ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
                   : 'データなし'}
@@ -485,19 +485,19 @@ ${recordDetailUrl}`;
       </div>
       
       {/* シェアボタン */}
-      <div className="twitter-share-container">
+      <div className="posts-twitter-share-container">
         <button 
-          className="twitter-share-button"
+          className="posts-twitter-share-button"
           onClick={shareOnTwitter}
         >
-          <i className="twitter-icon">𝕏</i> シェア
+          <i className="posts-twitter-icon">𝕏</i> シェア
         </button>
       </div>
       
       {/* 戻るボタン */}
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <button 
-          className="back-button" 
+          className="posts-back-button" 
           onClick={handleBack}
           style={{ display: "inline-flex", margin: "0 auto" }}
         >
