@@ -405,12 +405,11 @@
   }
 }
 
-/* モバイル対応 - Achievements.css */
+/* モバイル対応 */
 @media (max-width: 768px) {
   .ach-container {
     padding: 20px;
-    width: 95%;
-    margin-bottom: 80px;
+    width: 90%;
   }
   
   .ach-date-selection-container label {
@@ -444,11 +443,6 @@
   
   .ach-category-section {
     padding: 18px;
-  }
-
-  .ach-training-records-container {
-    position: relative;
-    z-index: 5;
   }
 }
 

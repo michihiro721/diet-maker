@@ -38,7 +38,7 @@
   background-color: white;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
-
+  overflow: hidden;
 }
   
 .daily-stats-section::after {
@@ -74,7 +74,7 @@
   transition: all 0.3s ease;
   border: 1px solid #f0f0f6;
   position: relative;
-
+  overflow: hidden;
   height: 120px;
 }
   
@@ -207,7 +207,7 @@
   margin: 0 auto;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   position: relative;
-
+  overflow: hidden;
 }
   
 .daily-stats-loading::after {
@@ -287,6 +287,7 @@
   margin-top: 20px;
   text-align: center;
   position: relative;
+  z-index: 100;
   display: flex;
   justify-content: center;
 }
@@ -301,6 +302,7 @@
   cursor: pointer;
   transition: background-color 0.3s;
   position: relative;
+  z-index: 100;
   min-width: 200px;
 }
 
@@ -324,6 +326,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
   backdrop-filter: blur(2px);
 }
 
@@ -521,7 +524,7 @@
     padding: 20px;
   }
   
-
+  /* スマホでは縦並び（1列）に変更 */
   .daily-stats-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -541,38 +544,31 @@
     font-size: 22px;
   }
   
-  /* カロリー差分 */
+  /* カロリー差分のフォントサイズをスマホではさらに調整 */
   .daily-stat-item:nth-child(4) .daily-stat-value {
     font-size: 20px;
   }
   
-  /* シェアボタン */
   .share-button-container {
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     width: 100%;
     position: relative;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
+    z-index: 100;
   }
   
   .share-button {
-    width: 90%;
+    width: 80%;
     max-width: 280px;
     font-size: 16px;
-    padding: 12px 15px;
-    border-radius: 8px;
-    display: inline-block;
-    visibility: visible;
-  }
-
-  .mobile-visible {
-    display: flex !important;
-    visibility: visible !important;
+    padding: 12px 20px;
   }
   
-  /* シェアモーダルの調整 */
+  .share-data-summary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
   .share-modal {
     width: 95%;
     padding: 20px 15px;
