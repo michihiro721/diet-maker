@@ -324,7 +324,6 @@ const DailyStats = ({ userId, selectedDate }) => {
               className="share-button"
               onClick={openShareModal}
               disabled={loading}
-              style={{position: 'relative', zIndex: 15}} //検証用 後で削除
             >
               アプリ内で成果をシェア
             </button>

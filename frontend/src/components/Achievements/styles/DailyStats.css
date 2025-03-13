@@ -38,7 +38,7 @@
   background-color: white;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
-  overflow: hidden;
+
 }
   
 .daily-stats-section::after {
@@ -74,7 +74,7 @@
   transition: all 0.3s ease;
   border: 1px solid #f0f0f6;
   position: relative;
-  overflow: hidden;
+
   height: 120px;
 }
   
@@ -207,7 +207,7 @@
   margin: 0 auto;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   position: relative;
-  overflow: hidden;
+
 }
   
 .daily-stats-loading::after {
@@ -552,7 +552,7 @@
     margin-bottom: 30px;
     width: 100%;
     position: relative;
-    z-index: 10;
+    z-index: 20;
     display: flex;
     justify-content: center;
   }
@@ -563,6 +563,13 @@
     font-size: 16px;
     padding: 12px 15px;
     border-radius: 8px;
+    display: inline-block;
+    visibility: visible;
+  }
+
+  .mobile-visible {
+    display: flex !important;
+    visibility: visible !important;
   }
   
   /* シェアモーダルの調整 */
