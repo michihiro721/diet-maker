@@ -465,7 +465,7 @@ ${recordDetailUrl}`;
               </div>
             </div>
             <div className="posts-daily-stat-item">
-              <div className="posts-daily-stat-icon">🍽️</div>
+              <div className="posts-daily-stat-icon">🍖</div>
               <div className="posts-daily-stat-label">摂取カロリー</div>
               <div className="posts-daily-stat-value">
               {achievementData.intakeCalories ? formatCalories(achievementData.intakeCalories.calories) : 'データなし'}

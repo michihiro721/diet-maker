@@ -409,6 +409,7 @@
 @media (max-width: 768px) {
   .ach-container {
     padding: 20px;
+    width: 90%;
   }
   
   .ach-date-selection-container label {

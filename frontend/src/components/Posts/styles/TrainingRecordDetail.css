@@ -208,7 +208,7 @@
   margin: 15px 0;
 }
 
-/* カロリー情報 */
+/* カロリー情報 - 画像2のスタイルに変更 */
 .posts-daily-stats-container {
   margin-top: 50px;
   position: relative;
@@ -239,38 +239,61 @@
   background-color: #6d91fb;
 }
 
+/* カロリー情報のグリッドを横並びフレックスに変更 */
 .posts-daily-stats-section {
   margin-top: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .posts-daily-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
   gap: 15px;
-  padding: 0 10px;
 }
 
 .posts-daily-stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafc;
+  border-radius: 12px;
+  padding: 15px 10px;
   text-align: center;
-  padding: 20px 10px;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f6;
+  min-height: 100px;
+}
+
+.posts-daily-stat-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  border-color: #e0e7ff;
 }
 
 .posts-daily-stat-icon {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #aaa;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #777;
 }
 
 .posts-daily-stat-label {
   font-size: 14px;
   color: #777;
   margin-bottom: 5px;
+  font-weight: 500;
 }
 
 .posts-daily-stat-value {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 600;
   color: #333;
+  line-height: 1.2;
 }
 
 .posts-daily-stat-value.posts-positive {
@@ -348,9 +371,30 @@
     gap: 2px;
   }
   
+  /* スマホではカロリー情報を縦並びに */
   .posts-daily-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
     gap: 10px;
+  }
+  
+  .posts-daily-stat-item {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px 8px;
+  }
+  
+  .posts-daily-stat-icon {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .posts-daily-stat-label {
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+  
+  .posts-daily-stat-value {
+    font-size: 18px;
   }
   
   .posts-ach-training-records-table th,
@@ -367,8 +411,8 @@
   }
   
   .posts-twitter-share-button {
-    width: 50%;
-    max-width: 300px;
+    width: 80%;
+    max-width: 250px;
     padding: 12px 20px;
   }
   
