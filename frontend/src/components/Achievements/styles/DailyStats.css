@@ -287,7 +287,6 @@
   margin-top: 20px;
   text-align: center;
   position: relative;
-  z-index: 100;
   display: flex;
   justify-content: center;
 }
@@ -302,7 +301,6 @@
   cursor: pointer;
   transition: background-color 0.3s;
   position: relative;
-  z-index: 100;
   min-width: 200px;
 }
 
@@ -554,7 +552,6 @@
     margin-bottom: 20px;
     width: 100%;
     position: relative;
-    z-index: 100;
   }
   
   .share-button {
