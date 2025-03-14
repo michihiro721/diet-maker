@@ -27,6 +27,7 @@
   flex-direction: column;
   max-height: 80vh; /* ビューポートの高さの80%に制限 */
   overflow-y: auto; /* 必要に応じてスクロール可能に */
+  -webkit-overflow-scrolling: touch; /* Safariでのスムーズなスクロール */
 }
 
 @media (max-width: 768px) {
@@ -55,6 +56,8 @@
   margin: 0 0 15px 0;
   flex: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* リストアイテム */
@@ -70,6 +73,7 @@
   color: #000;
   width: 100%;
   box-sizing: border-box;
+  -webkit-appearance: none; /* Safariでのデフォルトスタイルを削除 */
 }
 
 @media (max-width: 768px) {
@@ -98,6 +102,7 @@
   cursor: pointer; /* カーソルをポインターに設定 */
   font-size: 18px; /* フォントサイズを設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
+  -webkit-appearance: none; /* Safariでのデフォルトスタイルを削除 */
 }
 
 /* 閉じるボタンのホバー時のスタイル */
@@ -126,8 +131,10 @@
   justify-content: center !important;
   align-items: center !important;
   padding: 10px 0 !important;
-  gap: 30px !important; 
+  gap: 30px !important; /* アイコン間の間隔を広げる */
   border-bottom: 1px solid #b2ebf2 !important;
+  -webkit-transform: translateZ(0); /* Safariでのレンダリング問題を修正 */
+  transform: translateZ(0);
 }
 
 .social-icon {
@@ -135,6 +142,9 @@
   transition: transform 0.3s ease !important;
   display: inline-block !important;
   width: auto !important;
+  height: auto !important;
+  -webkit-transform: translateZ(0); /* Safariでのレンダリング問題を修正 */
+  transform: translateZ(0);
 }
 
 @media (max-width: 768px) {
@@ -145,14 +155,28 @@
 
 /* Xアイコンのスタイル */
 .x-icon .social-icon {
-  color: #000 !important;
+  color: #000 !important; /* Xのアイコンを黒に */
 }
 
 /* GitHubアイコンのスタイル */
 .github-icon .social-icon {
-  color: #007bff !important;
+  color: #007bff !important; /* GitHubは青いままに */
 }
 
 .social-icon:hover {
   transform: scale(1.2) !important;
+}
+
+/* Safari特有の修正 */
+@supports (-webkit-touch-callout: none) {
+  .social-links {
+      min-height: 40px;
+      position: relative;
+      z-index: 10;
+  }
+  
+  .social-icon {
+      position: relative;
+      z-index: 11;
+  }
 }
