@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaSquareXTwitter, FaGithub } from 'react-icons/fa6'; // react-iconsのインポートを追加
 import "./styles/LoginMenuModal.css";
 
 const LoginModal = ({ closeMenu }) => {
@@ -45,6 +46,18 @@ const LoginModal = ({ closeMenu }) => {
               <li><Link to="/signup" onClick={closeMenu}>新規登録</Link></li>
             </>
           )}
+
+          <li><Link to="/contact" onClick={closeMenu}>お問い合わせ</Link></li>
+          <li><Link to="/terms" onClick={closeMenu}>利用規約</Link></li>
+          <li><Link to="/privacy" onClick={closeMenu}>プライバシーポリシー</Link></li>
+          <li className="social-links">
+            <a href="https://x.com/michihiro721" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="social-icon-link x-icon">
+              <FaSquareXTwitter className="social-icon" />
+            </a>
+            <a href="https://github.com/michihiro721/" target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="social-icon-link github-icon">
+              <FaGithub className="social-icon" />
+            </a>
+          </li>
         </ul>
         <button className="header-login-close-button" onClick={closeMenu}>
           閉じる

@@ -1,100 +1,133 @@
 /* モーダルのオーバーレイ */
 .header-login-menu-overlay {
-    position: fixed; /* 画面全体を覆う */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
-    display: flex;
-    justify-content: center; /* 中央に配置 */
-    align-items: center; /* 中央に配置 */
-    z-index: 1000; /* 他の要素の上に表示 */
-  }
-  
-  /* モーダルウィンドウ */
-  .header-login-menu-modal {
-    background: #f0f8ff; /* 背景色を薄い青に設定 */
-    padding: 30px; /* 内側の余白を設定 */
-    border-radius: 15px; /* 角を丸くする */
-    width: 500px; /* 横幅を設定 */
-    max-width: 90%; /* 最大幅を設定 */
-    max-height: 150px; /* 最大高さを設定 */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 軽い影を追加 */
-    border: 2px solid #b2ebf2; /* 薄い水色の枠線 */
-    text-align: center; /* 文字を中央揃え */
-    animation: fadeIn 0.3s ease; /* フェードインアニメーション */
-  }
-  
-  /* フェードインアニメーションの定義 */
-  @keyframes fadeIn {
-    from {
+  position: fixed; /* 画面全体を覆う */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+  display: flex;
+  justify-content: center; /* 中央に配置 */
+  align-items: center; /* 中央に配置 */
+  z-index: 1000; /* 他の要素の上に表示 */
+}
+
+/* モーダルウィンドウ */
+.header-login-menu-modal {
+  background: #f0f8ff; /* 背景色を薄い青に設定 */
+  padding: 30px; /* 内側の余白を設定 */
+  border-radius: 15px; /* 角を丸くする */
+  width: 500px; /* 横幅を設定 */
+  max-width: 90%; /* 最大幅を設定 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 軽い影を追加 */
+  border: 2px solid #b2ebf2; /* 薄い水色の枠線 */
+  text-align: center; /* 文字を中央揃え */
+  animation: fadeIn 0.3s ease; /* フェードインアニメーション */
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh; /* ビューポートの高さの80%に制限 */
+  overflow-y: auto; /* 必要に応じてスクロール可能に */
+}
+
+/* フェードインアニメーションの定義 */
+@keyframes fadeIn {
+  from {
       opacity: 0; /* 透明から */
       transform: scale(0.9); /* 少し小さい状態から */
-    }
-    to {
+  }
+  to {
       opacity: 1; /* 不透明に */
       transform: scale(1); /* 通常のサイズに */
-    }
   }
-  
-  /* ナビゲーションリンクのリスト */
-  .header-login-menu-list {
-    list-style: none; /* リストマーカーを削除 */
-    padding: 0;
-    margin: 0;
-    transform: translateY(-35px); /* リストを上方向に移動 */
-    
-  }
-  
-  /* リストアイテム */
-  .header-login-menu-list li {
-    padding: 15px 0; /* 上下の余白を設定 */
-    margin: 10px 0; /* 上下のマージンを追加 */
-    border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
-    cursor: pointer; /* カーソルをポインターに設定 */
-    transition: background-color 0.3s, color 0.3s; /* 背景色と文字色の変化をスムーズに */
-    font-size: 20px; /* フォントサイズを大きく設定 */
-    font-weight: bold; /* フォントを太く */
-    border-radius: 10px; /* 角を丸くする */
-    color:#000;
-  }
-  
-  /* リストアイテムのホバー時のスタイル */
-  .header-login-menu-list li:hover {
-    background: #e0f7fa; /* 背景色を変更 */
-    color: #007bff; /* 文字色を変更 */
-  }
-  
-  /* 閉じるボタン */
-  .header-login-close-button {
-    display: block;
-    margin: 25px auto 0; /* 上下の余白を設定し、中央に配置 */
-    padding: 12px 30px; /* 内側の余白を設定 */
-    background: #007bff; /* 背景色を青に設定 */
-    color: white; /* 文字色を白に設定 */
-    border: none; /* 枠線をなしに設定 */
-    border-radius: 20px; /* 角を丸くする */
-    cursor: pointer; /* カーソルをポインターに設定 */
-    font-size: 20px; /* フォントサイズを大きく設定 */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
-    position: relative;
-    top: -6.5vh;
-  }
-  
-  /* 閉じるボタンのホバー時のスタイル */
-  .header-login-close-button:hover {
-    background: #0056b3; /* 背景色を変更 */
-    transform: scale(1.05); /* ボタンを少し拡大 */
-  }
-  
-  /* リンクのスタイル */
-  .header-login-menu-list a {
-    text-decoration: none; /* 下線を削除 */
-    color: inherit; /* 親要素の色を継承 */
-  }
-  
-  /* 訪問済みリンクのスタイル */
-  .header-login-menu-list a:visited {
-    color: inherit; /* 親要素の色を継承 */
-  }
+}
+
+/* ナビゲーションリンクのリスト */
+.header-login-menu-list {
+  list-style: none; /* リストマーカーを削除 */
+  padding: 0;
+  margin: 0 0 20px 0;
+  flex: 1;
+}
+
+/* リストアイテム */
+.header-login-menu-list li {
+  padding: 15px 0; /* 上下の余白を設定 */
+  margin: 10px 0; /* 上下のマージンを追加 */
+  border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  transition: background-color 0.3s, color 0.3s; /* 背景色と文字色の変化をスムーズに */
+  font-size: 20px; /* フォントサイズを大きく設定 */
+  font-weight: bold; /* フォントを太く */
+  border-radius: 10px; /* 角を丸くする */
+  color: #000;
+}
+
+/* リストアイテムのホバー時のスタイル */
+.header-login-menu-list li:hover {
+  background: #e0f7fa; /* 背景色を変更 */
+  color: #007bff; /* 文字色を変更 */
+}
+
+/* 閉じるボタン */
+.header-login-close-button {
+  display: block;
+  width: auto;
+  margin: 10px auto;
+  padding: 12px 30px; /* 内側の余白を設定 */
+  background: #007bff; /* 背景色を青に設定 */
+  color: white; /* 文字色を白に設定 */
+  border: none; /* 枠線をなしに設定 */
+  border-radius: 20px; /* 角を丸くする */
+  cursor: pointer; /* カーソルをポインターに設定 */
+  font-size: 20px; /* フォントサイズを大きく設定 */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
+}
+
+/* 閉じるボタンのホバー時のスタイル */
+.header-login-close-button:hover {
+  background: #0056b3; /* 背景色を変更 */
+  transform: scale(1.05); /* ボタンを少し拡大 */
+}
+
+/* リンクのスタイル */
+.header-login-menu-list a {
+  text-decoration: none; /* 下線を削除 */
+  color: inherit; /* 親要素の色を継承 */
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* 訪問済みリンクのスタイル */
+.header-login-menu-list a:visited {
+  color: inherit; /* 親要素の色を継承 */
+}
+
+/* ソーシャルリンクのスタイル */
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 !important;
+}
+
+.social-icon {
+  font-size: 36px;
+  transition: transform 0.3s ease;
+  display: inline-block !important;
+  width: auto !important;
+}
+
+/* Xアイコンのスタイル */
+.social-links a:first-child .social-icon {
+  color: #000 !important;
+}
+
+/* GitHubアイコンのスタイル */
+.social-links a:last-child .social-icon {
+  color: #007bff !important;
+}
+
+.social-icon:hover {
+  transform: scale(1.2);
+}
