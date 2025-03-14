@@ -251,7 +251,6 @@ const DailyStats = ({ userId, selectedDate }) => {
         return;
       }
       
-
       // 日付情報を含める
       let finalContent = `【${selectedDate}】 ${postContent.trim()}`;
       
@@ -318,12 +317,18 @@ const DailyStats = ({ userId, selectedDate }) => {
             </div>
           </div>
           
-          {/* シェアボタン */}
+          {/* シェアボタン - 修正済み */}
           <div className="share-button-container">
             <button 
               className="share-button"
               onClick={openShareModal}
               disabled={loading}
+              type="button"
+              style={{
+                display: 'inline-block', 
+                WebkitAppearance: 'none',
+                appearance: 'none'
+              }}
             >
               アプリ内で成果をシェア
             </button>
@@ -335,7 +340,7 @@ const DailyStats = ({ userId, selectedDate }) => {
       {isShareModalOpen && (
         <div className="share-modal-overlay" onClick={closeShareModal}>
           <div className="share-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-modal-button" onClick={closeShareModal}>×</button>
+            <button className="close-modal-button" onClick={closeShareModal} type="button">×</button>
             <h2>{selectedDate} のトレーニング成果をシェア</h2>
             
             <div className="share-form">
@@ -385,6 +390,7 @@ const DailyStats = ({ userId, selectedDate }) => {
                 className="share-submit-button"
                 onClick={handleSubmitPost}
                 disabled={isPosting}
+                type="button"
               >
                 {isPosting ? '投稿中...' : '投稿'}
               </button>
