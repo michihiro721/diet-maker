@@ -93,12 +93,13 @@ const NotificationsModal = () => {
             try {
               const likeUserId = like.user_id;
               
-              if (!likeUserId) {
-                console.warn("いいねにユーザーIDがありません:", like);
+              // 自分のいいねは除外
+              if (likeUserId === userId) {
+                console.log(`自分のいいねなのでスキップします。いいねID: ${like.id}`);
                 continue;
               }
-              
-              // ユーザー名の取得方法:
+
+              // いいね情報からユーザー名を取得する処理
               // 1. いいねのuser属性から（APIによってはここにユーザー情報が含まれる）
               // 2. 事前に収集したユーザーマップから
               // 3. 上記がない場合は「ユーザー」と表示
