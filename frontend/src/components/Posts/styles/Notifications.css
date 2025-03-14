@@ -1,0 +1,166 @@
+/* ベルアイコンのスタイル */
+.notifications-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .notification-bell-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+  
+  .notification-bell-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .notification-bell-icon {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* モーダルオーバーレイ */
+  .notification-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* モーダルウィンドウ */
+  .notification-modal {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* モーダルヘッダー */
+  .notification-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .notification-modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .notification-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .notification-close-button:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  /* モーダルコンテンツ */
+  .notification-modal-content {
+    padding: 15px 20px;
+    overflow-y: auto;
+    max-height: calc(80vh - 60px);
+  }
+  
+  /* 通知リスト */
+  .notification-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .notification-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .notification-item:last-child {
+    border-bottom: none;
+  }
+  
+  .notification-icon {
+    font-size: 1.2rem;
+    margin-right: 15px;
+    margin-top: 2px;
+  }
+  
+  .notification-content {
+    flex: 1;
+  }
+  
+  .notification-text {
+    margin: 0 0 5px 0;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .notification-user {
+    font-weight: bold;
+  }
+  
+  .notification-post-content {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+  }
+  
+  .notification-time {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #999;
+  }
+  
+  /* ローディング表示 */
+  .notification-loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+  
+  /* エラー表示 */
+  .notification-error {
+    text-align: center;
+    padding: 20px;
+    color: #e74c3c;
+  }
+  
+  /* 通知がない場合の表示 */
+  .notification-empty {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }

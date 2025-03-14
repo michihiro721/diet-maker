@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./styles/Posts.css";
+import NotificationsModal from "./NotificationsModal";
 
 const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
@@ -353,6 +354,7 @@ const Posts = () => {
 
         <div className="heart-count">
           ❤️をもらった累計数：{totalLikesCount}
+          {isLoggedIn && <NotificationsModal />}
         </div>
       </div>
       
