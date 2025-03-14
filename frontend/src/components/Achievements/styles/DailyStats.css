@@ -120,7 +120,7 @@
 
 /* カロリー差分の表示調整 */
 .daily-stat-item:nth-child(4) .daily-stat-value {
-  font-size: 24px; /* カロリー差分だけフォントサイズを小さく */
+  font-size: 24px;
   line-height: 1.1;
   white-space: nowrap; /* 改行させない */
 }
@@ -293,7 +293,7 @@
 }
 
 .share-button {
-  display: inline-block !important; /* ボタンの表示を明示的に指定 */
+  display: inline-block !important;
   padding: 10px 20px;
   background-color: #4a7dff;
   color: white;
@@ -540,7 +540,7 @@
     font-size: 22px;
   }
   
-  /* カロリー差分のフォントサイズをスマホではさらに調整 */
+  /* カロリー差分 */
   .daily-stat-item:nth-child(4) .daily-stat-value {
     font-size: 20px;
   }

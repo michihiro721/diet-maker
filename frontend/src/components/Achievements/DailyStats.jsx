@@ -280,7 +280,7 @@ const DailyStats = ({ userId, selectedDate }) => {
   };
 
   return (
-    <div className="daily-stats-container" style={{position: 'relative', zIndex: 10}}>
+    <div className="daily-stats-container">
       <h2 className="daily-stats-title">カロリー関係の記録</h2>
       {loading ? (
         <div className="daily-stats-loading">データを読み込み中...</div>
@@ -317,38 +317,21 @@ const DailyStats = ({ userId, selectedDate }) => {
             </div>
           </div>
           
-          {/* 完全にインラインスタイルを使用したシェアボタン */}
-          <div style={{
-            marginTop: '20px',
-            textAlign: 'center',
-            position: 'relative',
-            zIndex: 100,
-            display: 'block',
-            width: '100%'
-          }}>
-            <div
+          {/* シェアボタン */}
+          <div className="share-button-container">
+            <button 
+              className="share-button"
               onClick={openShareModal}
-              role="button"
-              tabIndex={0}
+              disabled={loading}
+              type="button"
               style={{
-                display: 'inline-block',
-                padding: '10px 20px',
-                backgroundColor: '#4a7dff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                fontSize: '16px',
-                cursor: 'pointer',
-                minWidth: '200px',
+                display: 'inline-block', 
                 WebkitAppearance: 'none',
-                appearance: 'none',
-                userSelect: 'none',
-                visibility: 'visible',
-                opacity: 1
+                appearance: 'none'
               }}
             >
               アプリ内で成果をシェア
-            </div>
+            </button>
           </div>
         </>
       )}
@@ -403,31 +386,14 @@ const DailyStats = ({ userId, selectedDate }) => {
                 <div className="share-form-note">※選択した日付のトレーニング記録が自動的に含まれます</div>
               </div>
               
-              <div
-                onClick={!isPosting ? handleSubmitPost : undefined}
-                role="button"
-                tabIndex={0}
-                style={{
-                  display: 'inline-block',
-                  backgroundColor: isPosting ? '#a0aec0' : '#4a7dff',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '12px 0',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  cursor: isPosting ? 'not-allowed' : 'pointer',
-                  width: '90%',
-                  maxWidth: '300px',
-                  marginTop: '10px',
-                  WebkitAppearance: 'none',
-                  appearance: 'none',
-                  userSelect: 'none',
-                  textAlign: 'center'
-                }}
+              <button 
+                className="share-submit-button"
+                onClick={handleSubmitPost}
+                disabled={isPosting}
+                type="button"
               >
                 {isPosting ? '投稿中...' : '投稿'}
-              </div>
+              </button>
               
               {postSuccess && (
                 <div className="share-success-message">
