@@ -15,25 +15,6 @@ const DailyStats = ({ userId, selectedDate }) => {
   // トレーニングデータの状態を追加
   const [trainingData, setTrainingData] = useState([]);
   const [workouts, setWorkouts] = useState([]);
-  // 画面サイズを追跡するための状態を追加
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
-
-  // ウィンドウサイズの変更を監視
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobileView(window.innerWidth <= 768);
-    };
-
-    // 初期状態を設定
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    
-    // クリーンアップ関数
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   // 日付が変わったらデータをリセットする
   useEffect(() => {
@@ -270,6 +251,7 @@ const DailyStats = ({ userId, selectedDate }) => {
         return;
       }
       
+
       // 日付情報を含める
       let finalContent = `【${selectedDate}】 ${postContent.trim()}`;
       
@@ -301,66 +283,52 @@ const DailyStats = ({ userId, selectedDate }) => {
   return (
     <div className="daily-stats-container">
       <h2 className="daily-stats-title">カロリー関係の記録</h2>
-
       {loading ? (
         <div className="daily-stats-loading">データを読み込み中...</div>
       ) : (
-        <div className="daily-stats-section">
-          <div className="daily-stats-grid">
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">歩数</div>
-              <div className="daily-stat-value">
-                {stepData ? `${stepData.steps.toLocaleString()} 歩` : 'データなし'}
+        <>
+          <div className="daily-stats-section">
+            <div className="daily-stats-grid">
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">歩数</div>
+                <div className="daily-stat-value">
+                  {stepData ? `${stepData.steps.toLocaleString()} 歩` : 'データなし'}
+                </div>
               </div>
-            </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">消費カロリー</div>
-              <div className="daily-stat-value">
-                {consumedCalories ? formatCalories(consumedCalories.total_calories) : 'データなし'}
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">消費カロリー</div>
+                <div className="daily-stat-value">
+                  {consumedCalories ? formatCalories(consumedCalories.total_calories) : 'データなし'}
+                </div>
               </div>
-            </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">摂取カロリー</div>
-              <div className="daily-stat-value">
-                {intakeCalories ? formatCalories(intakeCalories.calories) : 'データなし'}
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">摂取カロリー</div>
+                <div className="daily-stat-value">
+                  {intakeCalories ? formatCalories(intakeCalories.calories) : 'データなし'}
+                </div>
               </div>
-            </div>
-            <div className="daily-stat-item">
-              <div className="daily-stat-label">カロリー差分</div>
-              <div className={`daily-stat-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
-                {calculateCalorieDifference() !== null 
-                  ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
-                  : 'データなし'}
+              <div className="daily-stat-item">
+                <div className="daily-stat-label">カロリー差分</div>
+                <div className={`daily-stat-value ${calculateCalorieDifference() > 0 ? 'positive' : calculateCalorieDifference() < 0 ? 'negative' : ''}`}>
+                  {calculateCalorieDifference() !== null 
+                    ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
+                    : 'データなし'}
+                </div>
               </div>
             </div>
           </div>
-
-          {/* PCでのシェアボタン (isMobileViewがfalseの場合) */}
-          {!isMobileView && (
-            <div className="share-button-container">
-              <button
-                className="share-button"
-                onClick={openShareModal}
-                disabled={loading}
-              >
-                アプリ内で成果をシェア
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-      
-      {/* モバイルでのシェアボタン (isMobileViewがtrueの場合) */}
-      {isMobileView && (
-        <div className="mobile-share-button">
-          <button
-            className="share-button"
-            onClick={openShareModal}
-            disabled={loading}
-          >
-            アプリ内で成果をシェア
-          </button>
-        </div>
+          
+          {/* シェアボタン */}
+          <div className="share-button-container">
+            <button 
+              className="share-button"
+              onClick={openShareModal}
+              disabled={loading}
+            >
+              アプリ内で成果をシェア
+            </button>
+          </div>
+        </>
       )}
 
       {/* 投稿モーダル */}
