@@ -16,13 +16,16 @@ const DailyStats = ({ userId, selectedDate }) => {
   const [trainingData, setTrainingData] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   // 画面サイズを追跡するための状態を追加
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
 
   // ウィンドウサイズの変更を監視
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
+      setIsMobileView(window.innerWidth <= 768);
     };
+
+    // 初期状態を設定
+    handleResize();
 
     window.addEventListener('resize', handleResize);
     
@@ -295,9 +298,6 @@ const DailyStats = ({ userId, selectedDate }) => {
     }
   };
 
-  // スマホビューかどうかを判定（768px以下をスマホと判断）
-  const isMobileView = windowWidth <= 768;
-
   return (
     <div className="daily-stats-container">
       <h2 className="daily-stats-title">カロリー関係の記録</h2>
@@ -334,19 +334,34 @@ const DailyStats = ({ userId, selectedDate }) => {
               </div>
             </div>
           </div>
+
+          {/* PCでのシェアボタン (isMobileViewがfalseの場合) */}
+          {!isMobileView && (
+            <div className="share-button-container">
+              <button
+                className="share-button"
+                onClick={openShareModal}
+                disabled={loading}
+              >
+                アプリ内で成果をシェア
+              </button>
+            </div>
+          )}
         </div>
       )}
       
-      {/* シェアボタン */}
-      <div className={`share-button-container ${isMobileView ? 'mobile-share-button' : ''}`}>
-        <button
-          className="share-button"
-          onClick={openShareModal}
-          disabled={loading}
-        >
-          アプリ内で成果をシェア
-        </button>
-      </div>
+      {/* モバイルでのシェアボタン (isMobileViewがtrueの場合) */}
+      {isMobileView && (
+        <div className="mobile-share-button">
+          <button
+            className="share-button"
+            onClick={openShareModal}
+            disabled={loading}
+          >
+            アプリ内で成果をシェア
+          </button>
+        </div>
+      )}
 
       {/* 投稿モーダル */}
       {isShareModalOpen && (
