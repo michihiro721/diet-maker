@@ -15,7 +15,7 @@
 /* モーダルウィンドウ */
 .header-login-menu-modal {
   background: #f0f8ff; /* 背景色を薄い青に設定 */
-  padding: 30px; /* 内側の余白を設定 */
+  padding: 20px; /* 内側の余白を縮小 */
   border-radius: 15px; /* 角を丸くする */
   width: 500px; /* 横幅を設定 */
   max-width: 90%; /* 最大幅を設定 */
@@ -27,6 +27,13 @@
   flex-direction: column;
   max-height: 80vh; /* ビューポートの高さの80%に制限 */
   overflow-y: auto; /* 必要に応じてスクロール可能に */
+}
+
+@media (max-width: 768px) {
+  .header-login-menu-modal {
+      padding: 15px;
+      max-height: 70vh; /* モバイル表示時は少し小さく */
+  }
 }
 
 /* フェードインアニメーションの定義 */
@@ -45,21 +52,31 @@
 .header-login-menu-list {
   list-style: none; /* リストマーカーを削除 */
   padding: 0;
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
   flex: 1;
+  width: 100%;
 }
 
 /* リストアイテム */
 .header-login-menu-list li {
-  padding: 15px 0; /* 上下の余白を設定 */
-  margin: 10px 0; /* 上下のマージンを追加 */
+  padding: 12px 0; /* 上下の余白を設定 */
+  margin: 5px 0; /* 上下のマージンを追加 */
   border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
   cursor: pointer; /* カーソルをポインターに設定 */
   transition: background-color 0.3s, color 0.3s; /* 背景色と文字色の変化をスムーズに */
-  font-size: 20px; /* フォントサイズを大きく設定 */
+  font-size: 18px; /* フォントサイズを設定 */
   font-weight: bold; /* フォントを太く */
   border-radius: 10px; /* 角を丸くする */
   color: #000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .header-login-menu-list li {
+      padding: 10px 0;
+      font-size: 16px;
+  }
 }
 
 /* リストアイテムのホバー時のスタイル */
@@ -73,13 +90,13 @@
   display: block;
   width: auto;
   margin: 10px auto;
-  padding: 12px 30px; /* 内側の余白を設定 */
+  padding: 10px 25px; /* 内側の余白を設定 */
   background: #007bff; /* 背景色を青に設定 */
   color: white; /* 文字色を白に設定 */
   border: none; /* 枠線をなしに設定 */
   border-radius: 20px; /* 角を丸くする */
   cursor: pointer; /* カーソルをポインターに設定 */
-  font-size: 20px; /* フォントサイズを大きく設定 */
+  font-size: 18px; /* フォントサイズを設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
 }
 
@@ -105,29 +122,37 @@
 
 /* ソーシャルリンクのスタイル */
 .social-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   padding: 10px 0 !important;
+  gap: 30px !important; 
+  border-bottom: 1px solid #b2ebf2 !important;
 }
 
 .social-icon {
-  font-size: 36px;
-  transition: transform 0.3s ease;
+  font-size: 32px !important; /* アイコンのサイズ */
+  transition: transform 0.3s ease !important;
   display: inline-block !important;
   width: auto !important;
 }
 
+@media (max-width: 768px) {
+  .social-icon {
+      font-size: 28px !important; /* モバイル用に少し小さく */
+  }
+}
+
 /* Xアイコンのスタイル */
-.social-links a:first-child .social-icon {
+.x-icon .social-icon {
   color: #000 !important;
 }
 
 /* GitHubアイコンのスタイル */
-.social-links a:last-child .social-icon {
+.github-icon .social-icon {
   color: #007bff !important;
 }
 
 .social-icon:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) !important;
 }
