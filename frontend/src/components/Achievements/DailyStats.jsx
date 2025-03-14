@@ -15,6 +15,22 @@ const DailyStats = ({ userId, selectedDate }) => {
   // トレーニングデータの状態を追加
   const [trainingData, setTrainingData] = useState([]);
   const [workouts, setWorkouts] = useState([]);
+  // 画面サイズを追跡するための状態を追加
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // ウィンドウサイズの変更を監視
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // クリーンアップ関数
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // 日付が変わったらデータをリセットする
   useEffect(() => {
@@ -251,7 +267,6 @@ const DailyStats = ({ userId, selectedDate }) => {
         return;
       }
       
-
       // 日付情報を含める
       let finalContent = `【${selectedDate}】 ${postContent.trim()}`;
       
@@ -279,6 +294,9 @@ const DailyStats = ({ userId, selectedDate }) => {
       alert(`投稿に失敗しました: ${error.response?.data?.error || error.message}`);
     }
   };
+
+  // スマホビューかどうかを判定（768px以下をスマホと判断）
+  const isMobileView = windowWidth <= 768;
 
   return (
     <div className="daily-stats-container">
@@ -320,7 +338,7 @@ const DailyStats = ({ userId, selectedDate }) => {
       )}
       
       {/* シェアボタン */}
-      <div className="share-button-container">
+      <div className={`share-button-container ${isMobileView ? 'mobile-share-button' : ''}`}>
         <button
           className="share-button"
           onClick={openShareModal}
