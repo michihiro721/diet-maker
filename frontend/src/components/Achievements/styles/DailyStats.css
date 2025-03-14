@@ -282,17 +282,18 @@
   animation: fadeInUp 0.4s 0.4s ease-out both;
 }
   
-/* シェアボタン */
+/* シェアボタン - Safari対応 */
 .share-button-container {
   margin-top: 20px;
   text-align: center;
   position: relative;
   z-index: 100;
-  display: flex;
-  justify-content: center;
+  display: block; /* flexからblockに変更 */
+  width: 100%;
 }
 
 .share-button {
+  display: inline-block !important; /* ボタンの表示を明示的に指定 */
   padding: 10px 20px;
   background-color: #4a7dff;
   color: white;
@@ -304,6 +305,10 @@
   position: relative;
   z-index: 100;
   min-width: 200px;
+  -webkit-appearance: none; /* Safariでのデフォルトスタイルを無効化 */
+  appearance: none;
+  visibility: visible !important; /* 確実に表示 */
+  opacity: 1 !important;
 }
 
 .share-button:hover {
@@ -328,15 +333,16 @@
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px); /* Safari対応 */
 }
 
 .share-modal {
   background-color: white;
-  border-radius: 12px;
-  padding: 30px;
+  border-radius: 16px;
+  padding: 16px; /* パディングを減らす */
   width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
+  max-width: 550px;
+  max-height: 70vh; /* 最大高さを70vhに減らす */
   overflow-y: auto;
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -344,12 +350,13 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin: 10px 0; /* 上下にマージンを追加 */
 }
 
 .share-modal h2 {
-  font-size: 24px;
+  font-size: 20px; /* サイズ縮小 */
   color: #2c3e50;
-  margin-bottom: 25px;
+  margin-bottom: 16px; /* 余白調整 */
   width: 100%;
   text-align: center;
 }
@@ -362,13 +369,13 @@
 }
 
 .share-form-group {
-  width: 90%;
-  margin-bottom: 20px;
+  width: 92%; /* 幅を広げる */
+  margin-bottom: 14px; /* 余白減らす */
 }
 
 .share-form-group label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* 余白減らす */
   font-weight: 600;
   color: #2c3e50;
   text-align: center;
@@ -376,14 +383,16 @@
 
 .share-form-textarea {
   width: 100%;
-  min-height: 150px;
-  padding: 15px;
+  min-height: 80px; /* 高さを小さく */
+  padding: 12px;
   border: 1px solid #dcdfe6;
   border-radius: 8px;
   font-size: 16px;
   resize: vertical;
   transition: border-color 0.3s;
   font-family: inherit;
+  -webkit-appearance: none; /* Safari対応 */
+  appearance: none;
 }
 
 .share-form-textarea:focus {
@@ -393,18 +402,21 @@
 }
 
 .share-submit-button {
+  display: inline-block; /* 表示方法を明示 */
   background-color: #4a7dff;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 12px 0;
+  padding: 10px 0; /* パディング減らす */
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  width: 90%;
-  max-width: 300px;
-  margin-top: 10px;
+  width: 92%; /* 幅を広げる */
+  max-width: 280px; /* 少し小さく */
+  margin-top: 5px; /* 余白減らす */
+  -webkit-appearance: none; /* Safari対応 */
+  appearance: none;
 }
 
 .share-submit-button:hover {
@@ -417,18 +429,6 @@
   transform: none;
 }
 
-.share-success-message {
-  background-color: #d4edda;
-  color: #155724;
-  border-radius: 8px;
-  padding: 15px;
-  margin-top: 20px;
-  width: 90%;
-  text-align: center;
-  font-weight: 600;
-  animation: fadeIn 0.5s ease;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -436,14 +436,22 @@
 
 .close-modal-button {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
   color: #a0aec0;
   transition: color 0.3s;
+  -webkit-appearance: none; /* Safari対応 */
+  appearance: none;
+  padding: 0; /* 余分なパディングをなくす */
+  width: 28px; /* タップ領域を確保 */
+  height: 28px;
+  display: flex; /* 中央揃え */
+  align-items: center;
+  justify-content: center;
 }
 
 .close-modal-button:hover {
@@ -453,12 +461,12 @@
 /* シェアデータサマリーのスタイル */
 .share-data-summary {
   background-color: #f8fafc;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
+  border-radius: 12px;
+  padding: 10px; /* パディング減らす */
+  margin-bottom: 14px; /* 余白減らす */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 8px; /* 余白減らす */
   width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
 }
@@ -466,9 +474,9 @@
 .share-data-item {
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  padding: 10px; /* パディング減らす */
   background-color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
 }
@@ -480,12 +488,12 @@
 .share-data-label {
   font-size: 12px;
   color: #64748b;
-  margin-bottom: 5px;
+  margin-bottom: 4px; /* 余白減らす */
   font-weight: 500;
 }
 
 .share-data-value {
-  font-size: 16px;
+  font-size: 15px; /* サイズ小さく */
   font-weight: 600;
   color: #334155;
 }
@@ -510,11 +518,11 @@
 .share-form-note {
   font-size: 12px;
   color: #94a3b8;
-  margin-top: 8px;
+  margin-top: 6px;
   font-style: italic;
 }
 
-/* モバイル対応 */
+/* モバイル対応 - スマホでの最適化 */
 @media (max-width: 768px) {
   .daily-stats-title {
     font-size: 18px;
@@ -531,7 +539,7 @@
   }
   
   .daily-stat-item {
-    height: 110px;
+    height: 100px; /* より小さくすっきりと */
     padding: 15px;
   }
   
@@ -544,46 +552,141 @@
     font-size: 22px;
   }
   
-  /* カロリー差分 */
+  /* カロリー差分のフォントサイズをスマホではさらに調整 */
   .daily-stat-item:nth-child(4) .daily-stat-value {
     font-size: 20px;
   }
   
   .share-button-container {
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 15px;
     width: 100%;
     position: relative;
     z-index: 100;
+    display: block; /* Safari対応 */
   }
   
   .share-button {
-    width: 80%;
+    display: inline-block !important; /* Safari対応 */
+    width: 90%;
     max-width: 280px;
-    font-size: 16px;
-    padding: 12px 20px;
+    font-size: 15px;
+    padding: 10px;
+  }
+  
+  /* モーダル関連のスマホ最適化 */
+  .share-modal {
+    width: 94%;
+    padding: 12px 10px;
+    max-height: 65vh; /* スマホでは少し小さく */
+    border-radius: 14px;
+    margin: 15px 0; /* 上下のマージンを増やす */
+  }
+  
+  .share-modal h2 {
+    font-size: 17px;
+    margin-bottom: 12px;
+    padding: 0 15px; /* 横スペース確保 */
+  }
+  
+  .share-form-group {
+    width: 94%;
+    margin-bottom: 12px;
+  }
+  
+  .share-form-textarea {
+    min-height: 70px; /* スマホでは高さを小さく */
+    font-size: 14px;
+    padding: 10px;
   }
   
   .share-data-summary {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding: 8px;
+    margin-bottom: 12px;
   }
   
-  .share-modal {
-    width: 95%;
-    padding: 20px 15px;
+  .share-data-item {
+    padding: 8px;
   }
   
-  .share-modal h2 {
-    font-size: 18px;
+  .share-data-label {
+    font-size: 11px;
   }
   
-  .share-form-group {
-    width: 100%;
+  .share-data-value {
+    font-size: 14px;
   }
   
   .share-submit-button {
-    width: 100%;
+    padding: 10px 0;
+    font-size: 15px;
+    max-width: 230px;
+    width: 94%;
+  }
+
+  .close-modal-button {
+    top: 8px;
+    right: 8px;
+    font-size: 22px;
+  }
+  
+  .share-form-note {
+    font-size: 11px;
+    width: 94%;
+  }
+}
+
+/* 小さいスマホ向け追加調整 */
+@media (max-width: 375px) {
+  .share-modal {
+    width: 96%;
+    padding: 12px 8px;
+    max-height: 60vh; /* 小さいスマホではさらに小さく */
+  }
+  
+  .share-modal h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .daily-stat-item {
+    height: 90px;
+    padding: 12px 10px;
+  }
+  
+  .share-data-item {
+    padding: 8px;
+  }
+  
+  .share-data-value {
+    font-size: 13px;
+  }
+  
+  .share-form-textarea {
+    min-height: 60px;
+  }
+}
+
+/* 低い高さの画面への対応 */
+@media (max-height: 700px) {
+  .share-modal {
+    max-height: 60vh; /* 低い高さの画面ではさらに小さく */
+    padding: 12px 8px;
+    margin: 15px 0;
+  }
+  
+  .share-form-textarea {
+    min-height: 60px; /* テキストエリアをさらに小さく */
+  }
+  
+  .share-data-summary {
+    padding: 6px;
+  }
+  
+  .share-data-item {
+    padding: 6px;
   }
 }
 
@@ -626,6 +729,14 @@
     color: #d1d5db;
   }
   
+  .share-modal {
+    background-color: #1f2937;
+  }
+  
+  .share-modal h2 {
+    color: #e5e7eb;
+  }
+  
   .share-data-summary {
     background-color: #1e293b;
   }
@@ -648,5 +759,15 @@
   
   .share-form-note {
     color: #cbd5e1;
+  }
+  
+  .share-form-textarea {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f3f4f6;
+  }
+  
+  .share-form-group label {
+    color: #d1d5db;
   }
 }

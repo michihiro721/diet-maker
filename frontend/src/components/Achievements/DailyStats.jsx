@@ -432,7 +432,7 @@ const DailyStats = ({ userId, selectedDate }) => {
               
               {postSuccess && (
                 <div className="share-success-message">
-                  投稿が完了しました！
+                  {alert('投稿が完了しました！')}
                 </div>
               )}
             </div>
