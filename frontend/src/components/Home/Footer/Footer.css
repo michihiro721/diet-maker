@@ -8,6 +8,7 @@
     width: 100%; /* 幅を100%に設定 */
     left: 50%; /* 左端を50%に設定 */
     transform: translateX(-50%); /* 中央に固定するためにX軸方向に50%移動 */
+    z-index: 1000; 
 }
 
 .footer-content {

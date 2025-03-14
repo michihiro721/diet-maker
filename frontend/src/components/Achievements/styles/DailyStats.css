@@ -293,7 +293,7 @@
 }
 
 .share-button {
-  display: inline-block; /* ボタンの表示を明示的に指定 */
+  display: inline-block !important; /* ボタンの表示を明示的に指定 */
   padding: 10px 20px;
   background-color: #4a7dff;
   color: white;
@@ -307,6 +307,8 @@
   min-width: 200px;
   -webkit-appearance: none; /* Safariでのデフォルトスタイルを無効化 */
   appearance: none;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .share-button:hover {
@@ -553,7 +555,7 @@
   }
   
   .share-button {
-    display: inline-block; /* Safari対応 */
+    display: inline-block !important; /* Safari対応 */
     width: 80%;
     max-width: 280px;
     font-size: 16px;
