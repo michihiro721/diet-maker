@@ -73,7 +73,7 @@
   color: #000;
   width: 100%;
   box-sizing: border-box;
-  -webkit-appearance: none; /* Safariでのデフォルトスタイルを削除 */
+  appearance: none;
 }
 
 @media (max-width: 768px) {
