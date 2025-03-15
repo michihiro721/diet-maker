@@ -7,6 +7,7 @@ import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
+import TrainingCopyButton from './TrainingCopyButton';
 import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday';
 import CalenderTileContent from '../../Calender/CalenderTileContent';
 import { aerobicExercises, calculateTotalSessionCalories } from '../TrainingInfo/CaloriesUtils';
@@ -119,36 +120,36 @@ const TrainingRecord = () => {
   }, [isLoggedIn]);
 
   // 月が変わった時に、その月のトレーニングデータがある日付を全て取得
-  useEffect(() => {
-    const fetchMonthlyTrainings = async () => {
-      try {
-        const userId = localStorage.getItem('userId'); // ユーザーIDを取得
-        if (!userId) return;
+  const fetchMonthlyTrainings = async () => {
+    try {
+      const userId = localStorage.getItem('userId'); // ユーザーIDを取得
+      if (!userId) return;
 
-        // 現在表示されている月の最初と最後の日を計算
-        const year = selectedDate.getFullYear();
-        const month = selectedDate.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
-        
-        const firstDayStr = firstDay.toLocaleDateString('en-CA');
-        const lastDayStr = lastDay.toLocaleDateString('en-CA');
-        
-        // 月のトレーニングデータを取得するAPI (バックエンドに実装が必要)
-        const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
-        
-        if (response.data && Array.isArray(response.data)) {
-          // トレーニングがある日付の配列を作成
-          const dates = response.data.map(training => training.date);
-          // 重複を削除
-          const uniqueDates = [...new Set(dates)];
-          setTrainingDates(uniqueDates);
-        }
-      } catch (error) {
-        console.error('Error fetching monthly trainings:', error);
+      // 現在表示されている月の最初と最後の日を計算
+      const year = selectedDate.getFullYear();
+      const month = selectedDate.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      
+      const firstDayStr = firstDay.toLocaleDateString('en-CA');
+      const lastDayStr = lastDay.toLocaleDateString('en-CA');
+      
+      // 月のトレーニングデータを取得するAPI (バックエンドに実装が必要)
+      const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
+      
+      if (response.data && Array.isArray(response.data)) {
+        // トレーニングがある日付の配列を作成
+        const dates = response.data.map(training => training.date);
+        // 重複を削除
+        const uniqueDates = [...new Set(dates)];
+        setTrainingDates(uniqueDates);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching monthly trainings:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchMonthlyTrainings();
   }, [selectedDate.getFullYear(), selectedDate.getMonth()]);
 
@@ -216,6 +217,12 @@ const TrainingRecord = () => {
     const totalCalories = calculateTotalSessionCalories(trainings, userWeight);
     setTotalSessionCalories(totalCalories);
   }, [trainings, userWeight]);
+
+  // トレーニングコピー後のデータ更新
+  const handleTrainingCopied = () => {
+    // 月のトレーニングデータを更新する
+    fetchMonthlyTrainings();
+  };
 
   // 特定の種目の最大重量を取得する関数
   const getMaxWeightForExercise = (exerciseName) => {
@@ -585,17 +592,27 @@ const TrainingRecord = () => {
       />
       <h2 className="training-record-titles">トレーニング記録 : {formattedDateDisplay}</h2>
       
-      {/* トレーニング記録削除ボタンはトレーニングデータがある場合のみ表示 */}
-      {currentDateHasTrainingData && (
-        <div className="delete-record-button-container">
-          <button 
-            className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`} 
-            onClick={confirmDeleteRecord}
-          >
-            トレーニング記録削除
-          </button>
-        </div>
-      )}
+      {/* メニューをコピーボタンと記録削除ボタン */}
+      <div className="training-buttons-container">
+        {/* メニューをコピーボタン - 常に表示 */}
+        <TrainingCopyButton 
+          trainings={trainings} 
+          workouts={workouts} 
+          onTrainingCopied={handleTrainingCopied} 
+        />
+        
+        {/* トレーニング記録削除ボタンはトレーニングデータがある場合のみ表示 */}
+        {currentDateHasTrainingData && (
+          <div className="delete-record-button-container">
+            <button 
+              className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`}
+              onClick={confirmDeleteRecord}
+            >
+              トレーニング記録削除
+            </button>
+          </div>
+        )}
+      </div>
       
       {!isLoggedIn && (
         <div className="login-warning-message">
@@ -677,7 +694,7 @@ const TrainingRecord = () => {
       {confirmEndModalVisible && (
         <div className="delete-modal">
           <div className="delete-modal-content">
-            <p>トレーニングデータが保存されます<br />本当にトレーニングを終了してもよろしいですか？</p>
+              <p>トレーニングデータが保存されます<br />本当にトレーニングを終了してもよろしいですか？</p>
             <button className="confirm-button" onClick={endTraining}>はい</button>
             <button className="cancel-button" onClick={() => setConfirmEndModalVisible(false)}>いいえ</button>
           </div>
