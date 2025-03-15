@@ -33,24 +33,23 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
       setErrorMessage("ユーザーIDが見つかりません。ログインしてください。");
       return;
     }
-  
+
     if (trainingData.length === 0) {
       setErrorMessage("コピーするトレーニングデータがありません。");
       return;
     }
-  
+
     try {
       setIsSaving(true);
       setErrorMessage("");
       setSuccessMessage("");
-  
+
       // 日付をYYYY-MM-DD形式に変換（タイムゾーンを考慮）
-      // 選択した日付のローカル時間（年月日）を保持する
       const year = selectedDate.getFullYear();
       const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
       const day = String(selectedDate.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
-  
+
       // トークンを取得
       const jwt = localStorage.getItem('jwt');
       if (!jwt) {
@@ -58,11 +57,11 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
         setIsSaving(false);
         return;
       }
-  
+
       const config = {
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
-  
+
       // 全てのトレーニングデータを配列にまとめる
       const trainingsArray = trainingData.map(training => {
         return {
@@ -74,7 +73,7 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
           reps: training.reps || 0 // 有酸素運動の場合はrepsがない可能性があるため
         };
       });
-  
+
       // バックエンドが期待する形式で送信
       await api.post('/trainings', { training: trainingsArray }, config);
       
@@ -110,10 +109,6 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
         <h3 className="training-copy-modal-title">トレーニングメニューをコピー</h3>
         
         <div className="training-copy-modal-content">
-          <p className="training-copy-modal-info">
-            トレーニングメニューをコピーする日付を選択してください。
-          </p>
-          
           <div className="training-copy-modal-calendar-container">
             <Calendar
               onChange={handleDateChange}
