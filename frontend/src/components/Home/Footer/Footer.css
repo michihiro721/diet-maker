@@ -1,45 +1,40 @@
 .footer {
     background-color: #5D9CEC;
-    color: white; /* テキストの色を白に設定 */
-    text-align: center; /* テキストを中央揃え */
-    padding: 8px 0; /* 上下に20px */
-    position: fixed; /* 固定位置に設定 */
-    bottom: 0; /* 下端に固定 */
-    width: 100%; /* 幅を100%に設定 */
-    left: 50%; /* 左端を50%に設定 */
-    transform: translateX(-50%); /* 中央に固定するためにX軸方向に50%移動 */
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000; 
 }
 
 .footer-content {
-    display: flex; /* フレックスボックスを使用 */
-    justify-content: center; /* 子要素を中央揃え */
-    align-items: center; /* 子要素を垂直方向に中央揃え */
-    gap: 20px; /* 子要素間の間隔を設定 */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
-.link {
-    color: white; /* テキストの色を白に設定 */
-    text-decoration: none; /* 下線を消す */
-    font-weight: bold; /* 文字を太くする */
-    font-size: 16px; /* フォントサイズを設定 */
-    transition: color 0.3s ease; /* 色の変化をスムーズに */
+.footer-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+    width: 20%;
 }
 
-.link:hover {
-    color: #FFD700; /* ホバー時の色をゴールドに設定 */
+.footer-nav-item:hover {
+    color: #FFD700;
 }
 
-.iconLink {
-    color: white; /* アイコンの色を白に設定 */
-    font-size: 24px; /* アイコンのサイズを設定 */
-    transition: color 0.3s ease; /* 色の変化をスムーズに */
-}
-
-.iconLink:hover {
-    color: #FFD700; /* ホバー時の色をゴールドに設定 */
-}
-
-.copy {
-    font-size: 14px; /* フォントサイズを設定 */
+.footer-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
 }

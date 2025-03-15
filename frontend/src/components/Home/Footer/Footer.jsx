@@ -1,33 +1,48 @@
 // このコードは、ウェブサイトのフッターを表示するためのコンポーネントです。
-// フッターには、リンクとソーシャルメディアのアイコンが含まれています。
+// フッターには、ホーム画面、体重、カロリー関係、成果、みんなの投稿のリンクが含まれています。
 
-import React from 'react'; // Reactをインポート
-import { Link } from 'react-router-dom'; // React RouterのLinkコンポーネントをインポート
-import { FaSquareXTwitter, FaGithub } from 'react-icons/fa6'; // react-iconsからFaSquareXTwitterとFaGithubをインポート
-import './Footer.css'; // CSSファイルをインポート
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaHome, FaWeight, FaFire, FaTrophy, FaUsers } from 'react-icons/fa';
+import './Footer.css';
 
 // Footerコンポーネントを定義
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
-        {/* お問い合わせ、利用規約、プライバシーポリシーのリンクを表示 */}
-        <Link to="/contact" className="link">お問い合わせ</Link>
-        <Link to="/terms" className="link">利用規約</Link>
-        <Link to="/privacy" className="link">プライバシーポリシー</Link>
-        {/* XとGitHubのアイコンを表示 */}
-        <a href="https://x.com/michihiro721" className="iconLink" target="_blank" rel="noopener noreferrer">
-          <FaSquareXTwitter className="icon" />
-        </a>
-        <a href="https://github.com/michihiro721/" className="iconLink" target="_blank" rel="noopener noreferrer">
-          <FaGithub className="icon" />
-        </a>
-        {/* コピーライト情報を表示 */}
-        <span className="copy">© 2025 - ver.1.00</span>
+        {/* 体重のリンク */}
+        <Link to="/weight" className="footer-nav-item">
+          <FaWeight className="footer-icon" />
+          <span>体重</span>
+        </Link>
+        
+        {/* カロリー関係のリンク */}
+        <Link to="/calorie-info" className="footer-nav-item">
+          <FaFire className="footer-icon" />
+          <span>カロリー</span>
+        </Link>
+        
+        {/* ホーム画面のリンク */}
+        <Link to="/" className="footer-nav-item">
+          <FaHome className="footer-icon" />
+          <span>ホーム</span>
+        </Link>
+        
+        {/* 成果のリンク */}
+        <Link to="/achievements" className="footer-nav-item">
+          <FaTrophy className="footer-icon" />
+          <span>成果</span>
+        </Link>
+        
+        {/* みんなの投稿一覧のリンク */}
+        <Link to="/posts" className="footer-nav-item">
+          <FaUsers className="footer-icon" />
+          <span>投稿一覧</span>
+        </Link>
       </div>
     </footer>
   );
 }
 
-// Footerコンポーネントをエクスポート
 export default Footer;
