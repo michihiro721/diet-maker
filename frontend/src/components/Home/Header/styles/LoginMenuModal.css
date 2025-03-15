@@ -102,7 +102,7 @@
   cursor: pointer; /* カーソルをポインターに設定 */
   font-size: 18px; /* フォントサイズを設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
-  -webkit-appearance: none; /* Safariでのデフォルトスタイルを削除 */
+  appearance: none;
 }
 
 /* 閉じるボタンのホバー時のスタイル */
