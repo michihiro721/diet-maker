@@ -343,14 +343,47 @@
 
 /* ローディングとエラー表示 */
 .posts-loading, .posts-error {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  padding: 40px;
+  padding: 25px;
   font-size: 16px;
-  color: #7f8c8d;
-  background-color: #f8fafc;
-  border-radius: 10px;
-  margin: 20px 0;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: 200px;
+  max-width: 80%;
+  z-index: 1000;
+}
+
+.posts-loading {
+  color: #4a6cb3;
+}
+
+.posts-error {
+  color: #e74c3c;
+}
+
+.posts-loading::after, .posts-error::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin: 15px auto 0;
+  border-radius: 4px;
+  animation: loadingPulse 1.5s infinite;
+}
+
+.posts-loading::after {
+  background: linear-gradient(90deg, #4a6cb3, #65c0f0);
+}
+
+.posts-error::after {
+  background: linear-gradient(90deg, #e74c3c, #f87171);
 }
 
 .posts-error {
