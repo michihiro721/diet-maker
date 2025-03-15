@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/TrainingRecordDetail.css";
+import TrainingCopyModal from "./TrainingCopyModal";
 
 const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
@@ -26,6 +27,8 @@ const TrainingRecordDetail = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // トレーニングコピーモーダル用の状態
+  const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
 
   // 投稿データの取得
   useEffect(() => {
@@ -364,6 +367,18 @@ ${recordDetailUrl}`;
         <p className="posts-post-content">{getCleanPostContent(post)}</p>
       </div>
 
+      {/* トレーニングメニューをコピーボタン - 対象部位の前に配置 */}
+      {achievementData.trainingData.length > 0 && (
+        <div className="training-copy-container">
+          <button 
+            className="training-copy-button"
+            onClick={() => setIsCopyModalOpen(true)}
+          >
+            トレーニングメニューをコピー
+          </button>
+        </div>
+      )}
+
       {/* トレーニング記録 */}
       <div className="posts-ach-training-records-container">
         <div className="posts-training-record-title-area">
@@ -504,6 +519,14 @@ ${recordDetailUrl}`;
           ← 投稿一覧に戻る
         </button>
       </div>
+
+      {/* トレーニングコピーモーダル */}
+      <TrainingCopyModal
+        isOpen={isCopyModalOpen}
+        onClose={() => setIsCopyModalOpen(false)}
+        trainingData={achievementData.trainingData}
+        userId={post.user_id}
+      />
     </div>
   );
 };
