@@ -1,0 +1,170 @@
+/* frontend/src/components/Posts/styles/TrainingCopyModal.css */
+.training-copy-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .training-copy-modal {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .training-copy-modal-title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4285F4;
+  }
+  
+  .training-copy-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .training-copy-modal-info {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .training-copy-modal-calendar-container {
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .training-copy-modal-selected-date {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .training-copy-modal-error {
+    color: #D32F2F;
+    background-color: #FFEBEE;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .training-copy-modal-success {
+    color: #388E3C;
+    background-color: #E8F5E9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .training-copy-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .training-copy-modal-cancel-button,
+  .training-copy-modal-save-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .training-copy-modal-cancel-button {
+    background-color: #F5F5F5;
+    color: #333;
+  }
+  
+  .training-copy-modal-save-button {
+    background-color: #4285F4;
+    color: white;
+  }
+  
+  .training-copy-modal-cancel-button:hover {
+    background-color: #E0E0E0;
+  }
+  
+  .training-copy-modal-save-button:hover {
+    background-color: #3367D6;
+  }
+  
+  .training-copy-modal-cancel-button:disabled,
+  .training-copy-modal-save-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* トレーニングコピーボタン用スタイル */
+  .training-copy-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+  }
+  
+  .training-copy-button {
+    background-color: #4285F4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .training-copy-button:hover {
+    background-color: #3367D6;
+  }
+  
+  /* カレンダーのスタイル調整 */
+  .training-copy-modal-calendar-container .react-calendar {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .training-copy-modal-calendar-container .react-calendar__tile--active {
+    background: #4285F4;
+    color: white;
+  }
+  
+  /* モバイル対応 */
+  @media (max-width: 768px) {
+    .training-copy-modal {
+      width: 95%;
+      padding: 15px;
+    }
+    
+    .training-copy-modal-calendar-container .react-calendar {
+      max-width: 100%;
+      font-size: 14px;
+    }
+    
+    .training-copy-modal-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .training-copy-modal-cancel-button,
+    .training-copy-modal-save-button {
+      width: 100%;
+    }
+  }
