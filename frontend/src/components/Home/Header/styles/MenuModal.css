@@ -15,22 +15,33 @@
 /* モーダルウィンドウ */
 .header-menu-modal {
   background: #f0f8ff; /* 背景色を薄い青に設定 */
-  padding: 30px; /* 内側の余白を設定 */
+  padding: 20px; /* 内側の余白を縮小 */
   border-radius: 15px; /* 角を丸くする */
   width: 500px; /* 横幅を設定 */
   max-width: 90%; /* 最大幅を設定 */
-  max-height: 80%; /* 最大高さを設定 */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 軽い影を追加 */
   border: 2px solid #b2ebf2; /* 薄い水色の枠線 */
   text-align: center; /* 文字を中央揃え */
   animation: fadeIn 0.3s ease; /* フェードインアニメーション */
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh; /* ビューポートの高さの80%に制限 */
+  overflow-y: auto; /* 必要に応じてスクロール可能に */
+  -webkit-overflow-scrolling: touch; /* Safariでのスムーズなスクロール */
 }
 
-/* フェードインアニメーションの定義 */
+@media (max-width: 768px) {
+  .header-menu-modal {
+    padding: 15px;
+    max-height: 70vh;
+  }
+}
+
+/* フェードインアニメーション */
 @keyframes fadeIn {
   from {
-    opacity: 0; /* 透明から */
-    transform: scale(0.9); /* 少し小さい状態から */
+    opacity: 0;
+    transform: scale(0.9);
   }
   to {
     opacity: 1; /* 不透明に */
@@ -42,21 +53,34 @@
 .header-menu-list {
   list-style: none; /* リストマーカーを削除 */
   padding: 0;
-  margin: 0;
-  transform: translateY(-35px); /* リストを上方向に移動 */
-  
+  margin: 0 0 15px 0;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* リストアイテム */
 .header-menu-list li {
-  padding: 15px 0; /* 上下の余白を設定 */
-  margin: 10px 0; /* 上下のマージンを追加 */
+  padding: 12px 0; /* 上下の余白を設定 */
+  margin: 5px 0; /* 上下のマージンを追加 */
   border-bottom: 1px solid #b2ebf2; /* 下線を設定 */
   cursor: pointer; /* カーソルをポインターに設定 */
   transition: background-color 0.3s, color 0.3s; /* 背景色と文字色の変化をスムーズに */
-  font-size: 20px; /* フォントサイズを大きく設定 */
+  font-size: 18px; /* フォントサイズを設定 */
   font-weight: bold; /* フォントを太く */
   border-radius: 10px; /* 角を丸くする */
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+@media (max-width: 768px) {
+  .header-menu-list li {
+    padding: 10px 0;
+    font-size: 16px;
+  }
 }
 
 /* リストアイテムのホバー時のスタイル */
@@ -66,19 +90,19 @@
 }
 
 /* 閉じるボタン */
-.header-close-buttn {
+.header-close-button {
   display: block;
-  margin: 20px auto 0; /* 上下の余白を設定し、中央に配置 */
-  padding: 12px 30px; /* 内側の余白を設定 */
+  width: auto;
+  margin: 10px auto;
+  padding: 10px 25px; /* 内側の余白を設定 */
   background: #007bff; /* 背景色を青に設定 */
   color: white; /* 文字色を白に設定 */
   border: none; /* 枠線をなしに設定 */
   border-radius: 20px; /* 角を丸くする */
   cursor: pointer; /* カーソルをポインターに設定 */
-  font-size: 20px; /* フォントサイズを大きく設定 */
+  font-size: 18px; /* フォントサイズを設定 */
   transition: background-color 0.3s ease, transform 0.3s ease; /* 背景色と拡大の変化をスムーズに */
-  position: relative;
-  top: -6.5vh; /* ボタンを少し上に移動 */
+  appearance: none;
 }
 
 /* 閉じるボタンのホバー時のスタイル */
@@ -91,6 +115,9 @@
 .header-menu-list a {
   text-decoration: none; /* 下線を削除 */
   color: inherit; /* 親要素の色を継承 */
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* 訪問済みリンクのスタイル */
