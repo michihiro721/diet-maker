@@ -282,6 +282,8 @@ Devise.setup do |config|
   #   access_type: 'offline'
   # }
 
+  config.omniauth_path_prefix = '/users/auth'
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

@@ -1,10 +1,11 @@
-# backend/app/models/user.rb
 class User < ApplicationRecord
-  # JWTを一時的に無効化し、基本認証を確立
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
   
+  # JWTは一時的にコメントアウト
+  # :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
+
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   
@@ -15,6 +16,9 @@ class User < ApplicationRecord
   
   # OmniAuth認証からのユーザー作成・取得メソッド
   def self.from_omniauth(auth)
+    # デバッグログを追加
+    Rails.logger.info "OmniAuth auth data: #{auth.inspect}"
+    
     # プロバイダとUIDでユーザーを検索、なければ作成
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
