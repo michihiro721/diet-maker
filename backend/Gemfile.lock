@@ -225,7 +225,9 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
-    omniauth-github (2.0.1)
+    omniauth-google-oauth2 (1.2.1)
+      jwt (>= 2.9.2)
+      oauth2 (~> 2.0)
       omniauth (~> 2.0)
       omniauth-oauth2 (~> 1.8)
     omniauth-oauth2 (1.8.0)
@@ -352,7 +354,7 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   octokit (~> 4.0)
   omniauth
-  omniauth-github
+  omniauth-google-oauth2
   omniauth-rails_csrf_protection
   pg (~> 1.2)
   puma (>= 5.0)

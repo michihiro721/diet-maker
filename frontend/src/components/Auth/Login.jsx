@@ -5,6 +5,7 @@ import axios from 'axios';
 import './styles/Login.css';
 
 const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -60,6 +61,11 @@ const Login = () => {
     navigate('/signup');
   };
 
+  // Google認証ログイン処理
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_BASE_URL}/auth/google_oauth2`;
+  };
+
   return (
     <div className="custom-login-container">
       <h2>ログイン</h2>
@@ -82,6 +88,22 @@ const Login = () => {
         </div>
         <button type="submit">ログイン</button>
       </form>
+      
+      {/* Google認証ログインボタン */}
+      <div className="social-login-container">
+        <button 
+          onClick={handleGoogleLogin} 
+          className="google-login-button"
+        >
+          <img 
+            src="https://developers.google.com/identity/images/g-logo.png" 
+            alt="Google" 
+            className="google-icon" 
+          />
+          Googleでログイン
+        </button>
+      </div>
+      
       <button onClick={goToSignUp} className="signup-button">新規登録</button>
       <div className="forgot-password-link">
         <a href="/forgot-password">パスワードをお忘れですか？</a>
