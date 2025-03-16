@@ -63,7 +63,7 @@ const Login = () => {
 
   // Google認証ログイン処理
   const handleGoogleLogin = () => {
-    window.location.href = `${API_BASE_URL}/auth/google_oauth2`;
+    window.location.href = 'https://diet-maker-d07eb3099e56.herokuapp.com/auth/google_oauth2';
   };
 
   return (
