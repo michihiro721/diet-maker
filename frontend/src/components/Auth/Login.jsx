@@ -61,11 +61,11 @@ const Login = () => {
 
   // Google認証ログイン処理
   const handleGoogleLogin = () => {
-    const authUrl = `${API_BASE_URL}/users/auth/google_oauth2`;
-    console.log("Google認証リダイレクト先:", authUrl);
-    
-    // 同じウィンドウでリダイレクト
-    window.location.href = authUrl;
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = `${API_BASE_URL}/users/auth/google_oauth2`;
+    document.body.appendChild(form);
+    form.submit();
   };
 
   return (
