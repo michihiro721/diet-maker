@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # CSRF保護の設定
-  skip_before_action :verify_authenticity_token, only: [:google_oauth2]
+
+  protect_from_forgery with: :null_session, only: [:google_oauth2]
 
   def google_oauth2
     # デバッグログを追加
