@@ -1,9 +1,10 @@
+# backend/app/models/user.rb
 class User < ApplicationRecord
+  # JWTを一時的に無効化し、基本認証を確立
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, { jwt_revocation_strategy: JwtDenylist },
-         :omniauthable, { omniauth_providers: [:google_oauth2] }
-
+         :omniauthable, omniauth_providers: [:google_oauth2]
+  
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   
