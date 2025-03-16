@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users, 
-    path: 'auth', 
-    defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations',
@@ -60,11 +58,14 @@ Rails.application.routes.draw do
   # パスワードリセット用のルート（優先度高）
   get 'reset-password/:token', to: 'home#index'
 
-  # フロントエンドの静的ファイルを提供 (ただし、/cable, /api, /auth には適用しない)
+
   get '*path', to: 'home#index', constraints: ->(request) {
-    !request.xhr? && request.format.html? && !request.path.start_with?('/cable', '/api', '/auth')
+    !request.xhr? && 
+    request.format.html? && 
+    !request.path.start_with?('/cable', '/api') && 
+    !request.path.include?('/auth/') && 
+    !request.path.include?('/users/auth/')
   }
 
-  # ルートパスを設定
   root "home#index"
 end

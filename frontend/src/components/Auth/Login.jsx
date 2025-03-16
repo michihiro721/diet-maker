@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Login.css';
 
-const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000';
+const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -29,7 +28,6 @@ const Login = () => {
         const token = res.headers['authorization'];
         console.log("取得したトークン:", token);
         if (token) {
-
           const cleanToken = token.replace('Bearer ', '');
           localStorage.setItem('jwt', cleanToken);
           
@@ -63,7 +61,11 @@ const Login = () => {
 
   // Google認証ログイン処理
   const handleGoogleLogin = () => {
-    window.location.href = 'https://diet-maker-d07eb3099e56.herokuapp.com/auth/google_oauth2';
+    const authUrl = `${API_BASE_URL}/users/auth/google_oauth2`;
+    console.log("Google認証リダイレクト先:", authUrl);
+    
+    // 同じウィンドウでリダイレクト
+    window.location.href = authUrl;
   };
 
   return (

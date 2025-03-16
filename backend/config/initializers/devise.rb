@@ -279,8 +279,7 @@ Devise.setup do |config|
   {
     scope: 'email,profile',
     prompt: 'select_account',
-    access_type: 'offline',
-    redirect_uri: "#{ENV['BACKEND_URL']}/auth/google_oauth2/callback"
+    access_type: 'offline'
   }
 
   # ==> Warden configuration
