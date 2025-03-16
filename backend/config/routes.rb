@@ -7,9 +7,10 @@ Rails.application.routes.draw do
       omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
-  # 明示的なOAuthルートを追加
-  get '/users/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru', as: :user_google_oauth2_omniauth_authorize
-  get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2', as: :user_google_oauth2_omniauth_callback
+    devise_scope :user do
+      post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
+      get '/auth/google', to: redirect('/users/auth/google_oauth2')
+    end
 
   # 既存のルート
   devise_scope :user do

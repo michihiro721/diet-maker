@@ -1,17 +1,11 @@
+# backend/app/controllers/users/omniauth_callbacks_controller.rb
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # CSRFトークン検証を無効化
   skip_before_action :verify_authenticity_token, raise: false
 
-  # パススルーメソッドを修正
   def passthru
-    # Googleの認証ページに直接リダイレクト
-    redirect_to "https://accounts.google.com/o/oauth2/auth?" + {
-      client_id: ENV['GOOGLE_CLIENT_ID'],
-      redirect_uri: "#{request.base_url}/users/auth/google_oauth2/callback",
-      response_type: 'code',
-      scope: 'email profile',
-      prompt: 'select_account'
-    }.to_query
+    Rails.logger.info "Passthru called - これが呼ばれるべきではない"
+    super
   end
 
   def google_oauth2
