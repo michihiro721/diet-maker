@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
+const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const AuthCallback = () => {
   const [loading, setLoading] = useState(true);
@@ -43,6 +43,9 @@ const AuthCallback = () => {
         }
 
         setLoading(false);
+        
+        // ログイン成功メッセージ
+        alert('ログインに成功しました');
         
         // ログイン成功後、ホームページにリダイレクト
         window.location.href = '/';

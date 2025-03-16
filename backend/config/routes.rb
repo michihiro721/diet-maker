@@ -6,13 +6,16 @@ Rails.application.routes.draw do
       sessions: 'users/sessions',
       registrations: 'users/registrations',
       passwords: 'users/passwords',
-      omniauth_callbacks: 'users/omniauth_callbacks'  # 追加
+      omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
-  # パスワードリセットトークン検証用のルート
+  # OmniAuth用の明示的なルート
+  get '/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru'
+  get '/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+
+  # 既存のルート
   devise_scope :user do
     post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
-    get '/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'  # 追加
   end
 
   resources :users, only: [:show, :update]
@@ -57,9 +60,9 @@ Rails.application.routes.draw do
   # パスワードリセット用のルート（優先度高）
   get 'reset-password/:token', to: 'home#index'
 
-  # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
+  # フロントエンドの静的ファイルを提供 (ただし、/cable, /api, /auth には適用しない)
   get '*path', to: 'home#index', constraints: ->(request) {
-    !request.xhr? && request.format.html? && !request.path.start_with?('/cable', '/api')
+    !request.xhr? && request.format.html? && !request.path.start_with?('/cable', '/api', '/auth')
   }
 
   # ルートパスを設定
