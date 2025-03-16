@@ -1,9 +1,8 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
-  protect_from_forgery with: :null_session, only: [:google_oauth2]
+  skip_forgery_protection only: [:google_oauth2]
 
   def google_oauth2
-    # デバッグログを追加
     Rails.logger.info "Google OAuth callback received"
     
     @user = User.from_omniauth(request.env["omniauth.auth"])
@@ -19,5 +18,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def failure
     redirect_to root_path
+  end
+
+  # パススルーメソッドを追加
+  def passthru
+    render status: 404, plain: "Not found. Authentication passthru."
   end
 end

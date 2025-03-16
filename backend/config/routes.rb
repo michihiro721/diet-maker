@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, 
-    controllers: {
-      sessions: 'users/sessions',
-      registrations: 'users/registrations',
-      passwords: 'users/passwords',
-      omniauth_callbacks: 'users/omniauth_callbacks'
-    }
+  controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  },
+  path: 'auth'
 
   # OmniAuth用の明示的なルート
   get '/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru'

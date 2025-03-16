@@ -330,4 +330,6 @@ Devise.setup do |config|
 
   # Deviseのパスワードリセットルートをカスタマイズ
   ActionMailer::Base.default_url_options = { host: 'diet-maker-d07eb3099e56.herokuapp.com', protocol: 'https' }
+
+  config.navigational_formats = ['*/*', :html, :json]
 end

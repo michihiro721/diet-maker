@@ -1,9 +1,8 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, :omniauthable, 
-         jwt_revocation_strategy: JwtDenylist,
-         omniauth_providers: [:google_oauth2]
+         :jwt_authenticatable, { jwt_revocation_strategy: JwtDenylist },
+         :omniauthable, { omniauth_providers: [:google_oauth2] }
 
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true

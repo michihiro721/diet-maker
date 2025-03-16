@@ -10,8 +10,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins 'http://localhost:8000', 'https://diet-maker-mu.vercel.app' # フロントエンドのVercelドメインを指定
     resource '*',
       headers: :any,
-      expose: %w[Authorization Content-Length X-Total-Count],
+      # expose: %w[Authorization Content-Length X-Total-Count],
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
-      credentials: true
+      credentials: true,
+      expose: ['Authorization']
   end
 end

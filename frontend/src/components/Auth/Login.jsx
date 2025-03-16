@@ -61,11 +61,7 @@ const Login = () => {
 
   // Google認証ログイン処理
   const handleGoogleLogin = () => {
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.action = `${API_BASE_URL}/users/auth/google_oauth2`;
-    document.body.appendChild(form);
-    form.submit();
+    window.location.href = `${API_BASE_URL}/users/auth/google_oauth2`;
   };
 
   return (
