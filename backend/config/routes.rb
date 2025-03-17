@@ -9,10 +9,8 @@ Rails.application.routes.draw do
       omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
-  # カスタムルート
+  # ユーザー情報取得エンドポイント
   devise_scope :user do
-    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
-    get '/users/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru'
     get '/users/show', to: 'users#show'
   end
 

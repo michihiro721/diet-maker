@@ -1,59 +1,45 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # CSRFトークン検証を無効化
+  skip_before_action :verify_authenticity_token, raise: false
 
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"
     
-    begin
-      # OAuthデータからユーザーを取得または作成
-      @user = User.from_omniauth(request.env["omniauth.auth"])
-      
-      # セッションから元のホスト情報を取得
-      origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
-      Rails.logger.info "Redirecting to origin: #{origin_url}"
+    # OmniAuthからユーザー情報を取得
+    auth = request.env["omniauth.auth"]
+    Rails.logger.info "Auth data: #{auth.to_json}"
+    
+    @user = User.from_omniauth(auth)
 
-      if @user.persisted?
-        # JWTトークンを生成
-        token = generate_jwt_token(@user)
-        
-        # フロントエンドにリダイレクト
-        redirect_to "#{origin_url}/oauth/callback?token=#{token}&user_id=#{@user.id}", allow_other_host: true
-      else
-        # ユーザー作成に失敗した場合はログイン画面にリダイレクト
-        session["devise.google_data"] = request.env["omniauth.auth"].except(:extra)
-        redirect_to "#{origin_url}/login?error=google_auth_failed", allow_other_host: true
-      end
-    rescue => e
-      Rails.logger.error "Error in Google OAuth callback: #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
+    # フロントエンドのURLを取得
+    frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+    
+    if @user.persisted?
+      Rails.logger.info "User found/created successfully: #{@user.id}"
       
-      # エラー時もオリジンURLを使用
-      origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
-      redirect_to "#{origin_url}/login?error=#{e.message}", allow_other_host: true
+      # JWTトークンを生成
+      token = generate_jwt_token(@user)
+      
+      # フロントエンドにリダイレクト（SPAモード）
+      redirect_to "#{frontend_url}/oauth/callback?token=#{token}&user_id=#{@user.id}", allow_other_host: true
+    else
+      Rails.logger.error "Failed to persist user: #{@user.errors.full_messages}"
+      # ユーザー作成に失敗した場合はエラーと共にリダイレクト
+      redirect_to "#{frontend_url}/login?error=failed_to_create_user", allow_other_host: true
     end
   end
 
   def failure
     Rails.logger.error "OAuth failure: #{request.env['omniauth.error']&.inspect}"
     
-    # エラー時もオリジンURLを使用
-    origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
-    redirect_to "#{origin_url}/login?error=oauth_failure", allow_other_host: true
-  end
-
-  # 認証処理の開始ポイント
-  def passthru
-    Rails.logger.info "Passthru method called for provider: #{params[:provider]}"
-    
-    # オリジンURLをセッションに保存（リダイレクト後も参照できるように）
-    session[:origin_url] = params[:origin] if params[:origin].present?
-    Rails.logger.info "Origin URL set to: #{session[:origin_url]}"
-    
-    # 直接URLを構築してリダイレクト
-    redirect_to "/users/auth/google_oauth2"
+    # エラー時のリダイレクト先
+    frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+    redirect_to "#{frontend_url}/login?error=oauth_failure", allow_other_host: true
   end
 
   private
-
+  
+  # JWTトークンを生成するメソッド
   def generate_jwt_token(user)
     payload = {
       sub: user.id,
