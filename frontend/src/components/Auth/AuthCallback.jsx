@@ -13,9 +13,10 @@ const AuthCallback = () => {
   useEffect(() => {
     const processCallback = async () => {
       try {
-        // URLからトークンを取得
+        // URLからトークンとユーザーIDを取得
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
+        const userId = params.get('user_id');
 
         if (!token) {
           setError('認証トークンが見つかりません');
@@ -25,21 +26,25 @@ const AuthCallback = () => {
         // トークンをローカルストレージに保存
         localStorage.setItem('jwt', token);
 
-        // ユーザー情報を取得
-        try {
-          const res = await axios.get(`${API_BASE_URL}/users/me`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
+        // ユーザーIDを保存
+        if (userId) {
+          localStorage.setItem('userId', userId);
+        } else {
+          // ユーザーIDが渡されなかった場合は、APIで取得
+          try {
+            const res = await axios.get(`${API_BASE_URL}/users/me`, {
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
 
-          // ユーザーIDを保存
-          if (res.data && res.data.id) {
-            localStorage.setItem('userId', res.data.id);
+            if (res.data && res.data.id) {
+              localStorage.setItem('userId', res.data.id);
+            }
+          } catch (error) {
+            console.error('ユーザー情報取得エラー:', error);
+            // エラーがあってもログインは継続
           }
-        } catch (error) {
-          console.error('ユーザー情報取得エラー:', error);
-          // エラーがあってもログインは継続
         }
 
         setLoading(false);
