@@ -1,32 +1,53 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_oauth2
-  Rails.logger.info "Google OAuth callback received"
-  Rails.logger.info "Request ENV: #{request.env["omniauth.auth"].to_json}"
-  
+    Rails.logger.info "Google OAuth callback received"
+    
     begin
       @user = User.from_omniauth(request.env["omniauth.auth"])
+      
+      # セッションから元のホスト情報を取得
+      origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+      Rails.logger.info "Redirecting to origin: #{origin_url}"
 
       if @user.persisted?
         # JWTトークンを生成
         token = generate_jwt_token(@user)
         
         # フロントエンドにリダイレクト
-        redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/oauth/callback?token=#{token}&user_id=#{@user.id}", allow_other_host: true
+        redirect_to "#{origin_url}/oauth/callback?token=#{token}&user_id=#{@user.id}", allow_other_host: true
       else
         session["devise.google_data"] = request.env["omniauth.auth"].except(:extra)
-        redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/login", allow_other_host: true
+        redirect_to "#{origin_url}/login", allow_other_host: true
       end
     rescue => e
       Rails.logger.error "Error in Google OAuth callback: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
-      redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/login", allow_other_host: true
+      
+      # エラー時もオリジンURLを使用
+      origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+      redirect_to "#{origin_url}/login", allow_other_host: true
     end
   end
 
   def failure
     Rails.logger.error "OAuth failure: #{request.env['omniauth.error']&.inspect}"
-    redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/login", allow_other_host: true
+    
+    # エラー時もオリジンURLを使用
+    origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+    redirect_to "#{origin_url}/login", allow_other_host: true
+  end
+
+  # 認証処理の開始ポイント
+  def passthru
+    Rails.logger.info "Passthru method called for provider: #{params[:provider]}"
+    
+    # オリジンURLをセッションに保存（リダイレクト後も参照できるように）
+    session[:origin_url] = params[:origin] if params[:origin].present?
+    Rails.logger.info "Origin URL set to: #{session[:origin_url]}"
+    
+    # 標準のDevise OmniAuthルートにリダイレクト
+    redirect_to "/users/auth/google_oauth2"
   end
 
   private

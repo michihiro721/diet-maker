@@ -1,12 +1,17 @@
-
 import React from 'react';
 
-const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
+// 環境に応じてベースURLを設定
+const API_BASE_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:3000' 
+  : 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-
-    window.location.href = `${API_BASE_URL}/users/auth/google_oauth2`;
+    // 現在のホスト情報をリファラーとして記録できるようにする
+    const currentHost = window.location.origin;
+    
+    // Google認証ページへリダイレクト
+    window.location.href = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(currentHost)}`;
   };
 
   return (
