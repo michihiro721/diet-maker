@@ -1,4 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # Google OAuth2 コールバック処理
   def google_oauth2
     @user = User.from_omniauth(request.env['omniauth.auth'])
 
@@ -7,19 +8,21 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       token = generate_jwt_token(@user)
       
       # フロントエンドにリダイレクト
-      redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/oauth/callback?token=#{token}&user_id=#{@user.id}"
+      redirect_to "https://diet-maker-mu.vercel.app/oauth/callback?token=#{token}&user_id=#{@user.id}"
     else
       session['devise.google_data'] = request.env['omniauth.auth'].except('extra')
-      redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/login"
+      redirect_to "https://diet-maker-mu.vercel.app/login", alert: 'ログインに失敗しました'
     end
   end
 
+  # 認証失敗時
   def failure
-    redirect_to "#{ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'}/login"
+    redirect_to "https://diet-maker-mu.vercel.app/login", alert: 'ログイン認証に失敗しました'
   end
 
   private
 
+  # JWTトークンを生成
   def generate_jwt_token(user)
     payload = {
       sub: user.id,
