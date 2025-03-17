@@ -47,6 +47,7 @@ end
 
 gem "rack-cors"
 gem 'omniauth'
+gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'jwt'
 gem 'dotenv-rails'
@@ -60,4 +61,3 @@ gem 'pg', '~> 1.2'
 gem 'faraday-retry'
 gem 'devise', '~> 4.9'
 gem 'devise-jwt', '~> 0.12'
-gem 'omniauth-google-oauth2'
