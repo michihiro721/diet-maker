@@ -48,8 +48,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # オリジンURLをセッションに保存（リダイレクト後も参照できるように）
     session[:origin_url] = params[:origin] if params[:origin].present?
     Rails.logger.info "Origin URL set to: #{session[:origin_url]}"
-    
-    render html: "", layout: false
+
+    redirect_to user_google_oauth2_omniauth_authorize_path
   end
 
   private
