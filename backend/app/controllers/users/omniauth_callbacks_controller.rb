@@ -1,7 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
-  protect_from_forgery with: :null_session, only: [:google_oauth2, :passthru, :failure]
-
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"
     
