@@ -5,13 +5,17 @@ Rails.application.routes.draw do
     controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations',
-      passwords: 'users/passwords'
+      passwords: 'users/passwords',
+      omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
   # パスワードリセットトークン検証用のルート
   devise_scope :user do
     post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
   end
+
+  # OAuth認証用のルート
+  get '/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
 
   resources :users, only: [:show, :update]
 

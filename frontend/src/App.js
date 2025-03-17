@@ -19,6 +19,7 @@ import Terms from './components/Terms/Terms';
 import Privacy from './components/Privacy/Privacy';
 import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
+import OAuthCallback from './components/Auth/OAuthCallback';
 import Resources from './components/Resources';
 import Profile from './components/Profile/Profile';
 import ForgotPassword from './components/Auth/ForgotPassword';
@@ -50,6 +51,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/oauth/callback" element={<OAuthCallback />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

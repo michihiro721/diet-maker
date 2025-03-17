@@ -1,14 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './styles/Login.css';
+import GoogleLoginButton from './GoogleLoginButton';
 
-const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com/';
+const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // URLからトークンを取得する処理（Google認証コールバック用）
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const token = query.get('token');
+    
+    if (token) {
+      // Google認証からのトークンがある場合
+      localStorage.setItem('jwt', token);
+      
+      // ユーザー情報を取得
+      fetchUserInfo(token);
+    }
+  }, [location]);
+
+  // トークンを使ってユーザー情報を取得
+  const fetchUserInfo = async (token) => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/users/show`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (res.data) {
+        localStorage.setItem('userId', res.data.id);
+        alert('Googleアカウントでログインしました');
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.error('ユーザー情報取得エラー:', error);
+      alert('ログイン中にエラーが発生しました');
+    }
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -28,7 +64,6 @@ const Login = () => {
         const token = res.headers['authorization'];
         console.log("取得したトークン:", token);
         if (token) {
-
           const cleanToken = token.replace('Bearer ', '');
           localStorage.setItem('jwt', cleanToken);
           
@@ -82,6 +117,13 @@ const Login = () => {
         </div>
         <button type="submit">ログイン</button>
       </form>
+      
+      {/* Googleログインボタン */}
+      <div className="social-login">
+        <p className="or-divider">または</p>
+        <GoogleLoginButton />
+      </div>
+      
       <button onClick={goToSignUp} className="signup-button">新規登録</button>
       <div className="forgot-password-link">
         <a href="/forgot-password">パスワードをお忘れですか？</a>

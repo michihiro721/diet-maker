@@ -158,3 +158,55 @@
     color: #e74c3c;
     margin-bottom: 20px;
   }
+
+
+
+  .social-login {
+    width: 100%;
+    margin: 15px 0;
+  }
+  
+  .or-divider {
+    text-align: center;
+    margin: 15px 0;
+    position: relative;
+  }
+  
+  .or-divider:before,
+  .or-divider:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #ccc;
+  }
+  
+  .or-divider:before {
+    left: 0;
+  }
+  
+  .or-divider:after {
+    right: 0;
+  }
+  
+  .google-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0;
+    transition: background-color 0.3s;
+  }
+  
+  .google-login-button:hover {
+    background-color: #f1f1f1;
+  }
+  
