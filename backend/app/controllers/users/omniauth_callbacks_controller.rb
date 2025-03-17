@@ -13,17 +13,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
     if @user.persisted?
-      # JWTトークンを生成
-      token = JWT.encode(
-        { sub: @user.id, exp: (Time.now + 24.hours).to_i },
-        ENV['DEVISE_JWT_SECRET_KEY'],
-        'HS256'
-      )
+      # JWTトークンを手動で生成
+      payload = {
+        sub: @user.id,
+        exp: (Time.now + 24.hours).to_i
+      }
+      token = JWT.encode(payload, ENV['DEVISE_JWT_SECRET_KEY'], 'HS256')
       
       # フロントエンドのURL
       frontend_url = 'https://diet-maker-mu.vercel.app'
       
-      # パラメータにトークンとユーザーIDを追加してリダイレクト
+      # リダイレクト
       redirect_to "#{frontend_url}/auth/callback?token=#{token}&user_id=#{@user.id}"
     else
       session["devise.google_data"] = request.env["omniauth.auth"].except(:extra)
