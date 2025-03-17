@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     }
   end
 
-  update do
+  def update
     if current_user.update(user_params)
       render json: {
         message: 'Profile updated successfully.',

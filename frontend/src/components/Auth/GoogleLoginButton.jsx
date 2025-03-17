@@ -7,10 +7,11 @@ const API_BASE_URL = process.env.NODE_ENV === 'development'
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    // 現在のホスト情報をリファラーとして記録できるようにする
+    // 現在のホスト情報をリファラーとして記録
     const currentHost = window.location.origin;
     
-    // Google認証ページへリダイレクト
+    console.log('Starting Google OAuth flow with origin:', currentHost);
+
     window.location.href = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(currentHost)}`;
   };
 

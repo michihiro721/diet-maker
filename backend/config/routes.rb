@@ -7,18 +7,17 @@ Rails.application.routes.draw do
       registrations: 'users/registrations',
       passwords: 'users/passwords',
       omniauth_callbacks: 'users/omniauth_callbacks'
-    },
-    skip: []
+    }
 
+  # カスタムルート
   devise_scope :user do
     get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
     get '/users/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru'
-    post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
     get '/users/show', to: 'users#show'
   end
 
   # 既存APIルート
-  resources :users, only: [:show, :update]
+  resources :users, only: [:update]
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
@@ -37,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
   
-  # トレーニング関連のルートを修正
+  # トレーニング関連のルート
   resources :trainings, only: [:index, :create] do
     collection do
       get 'monthly'
@@ -59,7 +58,6 @@ Rails.application.routes.draw do
 
   # パスワードリセット用のルート
   get 'reset-password/:token', to: 'home#index'
-
 
   get '*path', to: 'home#index', constraints: ->(request) {
     !request.xhr? && request.format.html? && 

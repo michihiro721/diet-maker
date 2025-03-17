@@ -1,8 +1,11 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_action :verify_authenticity_token, only: [:google_oauth2, :passthru, :failure]
+
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"
     
     begin
+      # OAuthデータからユーザーを取得または作成
       @user = User.from_omniauth(request.env["omniauth.auth"])
       
       # セッションから元のホスト情報を取得
@@ -16,8 +19,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         # フロントエンドにリダイレクト
         redirect_to "#{origin_url}/oauth/callback?token=#{token}&user_id=#{@user.id}", allow_other_host: true
       else
+        # ユーザー作成に失敗した場合はログイン画面にリダイレクト
         session["devise.google_data"] = request.env["omniauth.auth"].except(:extra)
-        redirect_to "#{origin_url}/login", allow_other_host: true
+        redirect_to "#{origin_url}/login?error=google_auth_failed", allow_other_host: true
       end
     rescue => e
       Rails.logger.error "Error in Google OAuth callback: #{e.message}"
@@ -25,7 +29,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       
       # エラー時もオリジンURLを使用
       origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
-      redirect_to "#{origin_url}/login", allow_other_host: true
+      redirect_to "#{origin_url}/login?error=#{e.message}", allow_other_host: true
     end
   end
 
@@ -34,7 +38,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     
     # エラー時もオリジンURLを使用
     origin_url = session[:origin_url] || ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
-    redirect_to "#{origin_url}/login", allow_other_host: true
+    redirect_to "#{origin_url}/login?error=oauth_failure", allow_other_host: true
   end
 
   # 認証処理の開始ポイント
@@ -45,8 +49,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session[:origin_url] = params[:origin] if params[:origin].present?
     Rails.logger.info "Origin URL set to: #{session[:origin_url]}"
     
-    # 標準のDevise OmniAuthルートにリダイレクト
-    redirect_to "/users/auth/google_oauth2"
+    render html: "", layout: false
   end
 
   private
