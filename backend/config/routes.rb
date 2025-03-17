@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # Deviseルート - OmniAuth用の設定を追加
   devise_for :users, 
     path: 'auth', 
     defaults: { format: :json },
@@ -9,8 +10,10 @@ Rails.application.routes.draw do
       omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
-  # ユーザー情報取得エンドポイント
+
   devise_scope :user do
+    get '/users/auth/google_oauth2', to: redirect('/auth/google_oauth2')
+    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
     get '/users/show', to: 'users#show'
   end
 

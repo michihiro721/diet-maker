@@ -274,15 +274,19 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   
-config.omniauth :google_oauth2, 
-ENV['GOOGLE_CLIENT_ID'], 
-ENV['GOOGLE_CLIENT_SECRET'],
-{ 
-  access_type: "offline", 
-  prompt: "select_account",
-  scope: 'userinfo.email,userinfo.profile',
-  redirect_uri: ENV['GOOGLE_CALLBACK_URL']
-}
+  config.omniauth :google_oauth2,
+  ENV['GOOGLE_CLIENT_ID'],
+  ENV['GOOGLE_CLIENT_SECRET'],
+  {
+    scope: 'email,profile',
+    prompt: 'select_account',
+    access_type: 'offline',
+    redirect_uri: ENV['GOOGLE_CALLBACK_URL'] || "https://diet-maker-d07eb3099e56.herokuapp.com/users/auth/google_oauth2/callback"
+  }
+
+config.omniauth_path_prefix = '/auth'
+
+config.navigational_formats = ['*/*', :html, :json]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

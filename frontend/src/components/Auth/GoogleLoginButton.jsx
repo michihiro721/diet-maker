@@ -10,9 +10,10 @@ const GoogleLoginButton = () => {
     // Googleログイン処理を開始
     console.log('Starting Google OAuth flow');
     
-    // Google OAuth URL を構築
-    // パラメータとしてフロントエンドのオリジンを含める
-    const googleAuthUrl = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}`;
+    const googleAuthUrl = `${API_BASE_URL}/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}`;
+    
+    // デバッグ用ログ
+    console.log('Redirecting to:', googleAuthUrl);
     
     // Google認証ページにリダイレクト
     window.location.href = googleAuthUrl;
