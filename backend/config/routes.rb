@@ -7,10 +7,13 @@ Rails.application.routes.draw do
       registrations: 'users/registrations',
       passwords: 'users/passwords',
       omniauth_callbacks: 'users/omniauth_callbacks'
-    }
+    },
+    skip: [:omniauth_callbacks]
 
   # パスワードリセットトークン検証用のルート
   devise_scope :user do
+    get '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#google_oauth2'
+    get '/users/auth/:provider', to: redirect('/users/auth/%{provider}/callback')
     post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
   end
 
