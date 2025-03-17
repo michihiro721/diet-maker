@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 
 const OAuthCallback = () => {
   const [loading, setLoading] = useState(true);
@@ -67,33 +65,43 @@ const OAuthCallback = () => {
 
   if (loading) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          flexDirection: 'column'
-        }}
-      >
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        height: '100vh',
+        flexDirection: 'column'
+      }}>
         <h2>認証処理中...</h2>
-        <CircularProgress size={50} />
+        <div style={{ 
+          width: '50px', 
+          height: '50px', 
+          border: '5px solid #f3f3f3', 
+          borderTop: '5px solid #3498db', 
+          borderRadius: '50%',
+          animation: 'spin 2s linear infinite',
+          margin: '20px 0'
+        }} />
         <p>しばらくお待ちください</p>
-      </Box>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          flexDirection: 'column'
-        }}
-      >
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        height: '100vh',
+        flexDirection: 'column'
+      }}>
         <h2>エラーが発生しました</h2>
         <p>{error}</p>
         <button 
@@ -110,7 +118,7 @@ const OAuthCallback = () => {
         >
           ログイン画面に戻る
         </button>
-      </Box>
+      </div>
     );
   }
 
