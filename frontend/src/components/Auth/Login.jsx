@@ -61,7 +61,8 @@ const Login = () => {
 
   // Google認証ログイン処理
   const handleGoogleLogin = () => {
-    window.location.href = `${API_BASE_URL}/users/auth/google_oauth2`;
+    // URLを直接指定して、セッションクッキーを含めるようにする
+    window.location.href = `${API_BASE_URL}/auth/google_oauth2`;
   };
 
   return (

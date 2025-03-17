@@ -1,20 +1,27 @@
+# backend/config/routes.rb
 Rails.application.routes.draw do
+  # Deviseルート設定
   devise_for :users,
     controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations',
       passwords: 'users/passwords',
       omniauth_callbacks: 'users/omniauth_callbacks'
+    },
+    path: 'auth',
+    path_names: {
+      sign_in: 'sign_in',
+      sign_out: 'sign_out',
+      registration: 'sign_up'
     }
 
-    devise_scope :user do
-      post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
-      get '/auth/google', to: redirect('/users/auth/google_oauth2')
-    end
-
-  # 既存のルート
+  # 既存のdevise_scopeを修正
   devise_scope :user do
     post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
+    get '/auth/google', to: redirect('/auth/google_oauth2')
+    # セッション関連のカスタムルート
+    post '/auth/sign_in', to: 'users/sessions#create'
+    delete '/auth/sign_out', to: 'users/sessions#destroy'
   end
 
   resources :users, only: [:show, :update]
@@ -59,6 +66,8 @@ Rails.application.routes.draw do
   # パスワードリセット用のルート（優先度高）
   get 'reset-password/:token', to: 'home#index'
 
+  # カスタムエンドポイント：認証済みユーザー情報取得
+  get '/users/me', to: 'users#show'
 
   get '*path', to: 'home#index', constraints: ->(request) {
     !request.xhr? && 
