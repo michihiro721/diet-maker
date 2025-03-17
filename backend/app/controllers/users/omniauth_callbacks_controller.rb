@@ -1,5 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # CSRFトークン検証を無効化
+
   skip_before_action :verify_authenticity_token, raise: false
 
   def google_oauth2
@@ -11,7 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # JWTトークンを生成
       token = generate_jwt_token(@user)
       
-      # フロントエンドにリダイレクト（トークンをURLパラメータとして渡す）
+      # フロントエンドにリダイレクト
       redirect_to "https://diet-maker-mu.vercel.app/oauth/callback?token=#{token}&user_id=#{@user.id}"
     else
       session["devise.google_data"] = request.env["omniauth.auth"].except(:extra)
