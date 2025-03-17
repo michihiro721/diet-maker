@@ -1,5 +1,4 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  skip_before_action :verify_authenticity_token
 
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"

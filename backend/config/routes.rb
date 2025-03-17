@@ -59,9 +59,8 @@ Rails.application.routes.draw do
 
 
   get '*path', to: 'home#index', constraints: ->(request) {
-    !request.xhr? && 
-    request.format.html? && 
-    !request.path.start_with?('/cable', '/api', '/users/auth/')
+    !request.xhr? && request.format.html? && 
+    !request.path.start_with?('/auth/', '/users/auth/', '/cable')
   }
 
   # ルートパスを設定
