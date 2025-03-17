@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const OAuthCallback = () => {
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const OAuthCallback = () => {
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        console.log('OAuth callback processing...');
+        console.log('OAuth callback URL:', location.search);
         
         // URLパラメータからトークンとユーザーIDを取得
         const params = new URLSearchParams(location.search);
@@ -19,34 +20,43 @@ const OAuthCallback = () => {
         const userId = params.get('user_id');
         const error = params.get('error');
         
-        // エラーの確認
         if (error) {
-          console.error('Error returned from OAuth flow:', error);
+          console.error('Error from OAuth flow:', error);
           setError(`認証エラー: ${error}`);
           setLoading(false);
           return;
         }
-        
-        // トークンの確認
+
         if (!token) {
           console.error('No token found in callback URL');
-          setError('認証情報が不足しています');
+          setError('トークンが見つかりません');
           setLoading(false);
           return;
         }
-        
-        console.log('Authentication successful!');
-        
-        // 認証情報をローカルストレージに保存
+
+        console.log('Token received:', token);
+        console.log('User ID received:', userId);
+
+        // ローカルストレージにトークンとユーザーIDを保存
         localStorage.setItem('jwt', token);
+        
         if (userId) {
           localStorage.setItem('userId', userId);
         }
         
-        // ホーム画面にリダイレクト
-        navigate('/', { replace: true });
+        // データが保存されたことを確認
+        console.log('Saved to localStorage:', {
+          jwt: localStorage.getItem('jwt'),
+          userId: localStorage.getItem('userId')
+        });
+        
+        // 1秒待機してからリダイレクト（状態の更新を確実にするため）
+        setTimeout(() => {
+          // ホーム画面にリダイレクト
+          navigate('/', { replace: true });
+        }, 1000);
       } catch (err) {
-        console.error('Error during callback processing:', err);
+        console.error('Authentication callback error:', err);
         setError('認証処理中にエラーが発生しました');
         setLoading(false);
       }
@@ -57,28 +67,33 @@ const OAuthCallback = () => {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center',
-        height: '100vh',
-        flexDirection: 'column'
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          flexDirection: 'column'
+        }}
+      >
         <h2>認証処理中...</h2>
+        <CircularProgress size={50} />
         <p>しばらくお待ちください</p>
-      </div>
+      </Box>
     );
   }
 
   if (error) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center',
-        height: '100vh',
-        flexDirection: 'column'
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          flexDirection: 'column'
+        }}
+      >
         <h2>エラーが発生しました</h2>
         <p>{error}</p>
         <button 
@@ -95,7 +110,7 @@ const OAuthCallback = () => {
         >
           ログイン画面に戻る
         </button>
-      </div>
+      </Box>
     );
   }
 

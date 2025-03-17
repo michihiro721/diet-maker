@@ -13,8 +13,12 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   
-  # Google OAuth認証からのユーザー作成・更新
+  # OmniAuth認証からのユーザー作成・取得メソッド
   def self.from_omniauth(auth)
+    # nilチェックを追加
+    return nil if auth.nil?
+    
+    # デバッグログを追加
     Rails.logger.info "OmniAuth auth data: #{auth.inspect}"
     
     # プロバイダとUIDでユーザーを検索、なければ作成
@@ -24,5 +28,16 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0, 20] # ランダムなパスワードを生成
       user.image = auth.info.image if auth.info.image.present?
     end
+  end
+  
+  # JWTトークンを生成するメソッド
+  def generate_jwt
+    JWT.encode(
+      { 
+        id: id,
+        exp: 30.days.from_now.to_i 
+      },
+      Rails.application.credentials.devise_jwt_secret_key || ENV['DEVISE_JWT_SECRET_KEY']
+    )
   end
 end
