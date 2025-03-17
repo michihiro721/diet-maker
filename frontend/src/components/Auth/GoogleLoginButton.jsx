@@ -4,7 +4,12 @@ const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    window.location.href = `${API_BASE_URL}/users/auth/google_oauth2`;
+    // OmniAuth用のCORSを考慮したフォームを使用
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = `${API_BASE_URL}/users/auth/google_oauth2`;
+    document.body.appendChild(form);
+    form.submit();
   };
 
   return (
