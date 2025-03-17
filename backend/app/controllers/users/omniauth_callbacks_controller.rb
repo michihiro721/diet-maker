@@ -1,5 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  skip_before_action :verify_authenticity_token, only: [:google_oauth2, :passthru, :failure]
+
+  protect_from_forgery with: :null_session, only: [:google_oauth2, :passthru, :failure]
 
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"
@@ -48,8 +49,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # オリジンURLをセッションに保存（リダイレクト後も参照できるように）
     session[:origin_url] = params[:origin] if params[:origin].present?
     Rails.logger.info "Origin URL set to: #{session[:origin_url]}"
-
-    redirect_to user_google_oauth2_omniauth_authorize_path
+    
+    # 直接URLを構築してリダイレクト
+    redirect_to "/users/auth/google_oauth2"
   end
 
   private
