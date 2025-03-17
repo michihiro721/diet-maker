@@ -6,6 +6,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   }
 end
 
-# CSRFトークンの検証を無効にする（APIモードの場合）
+
 OmniAuth.config.allowed_request_methods = [:post, :get]
 OmniAuth.config.silence_get_warning = true

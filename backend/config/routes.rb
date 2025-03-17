@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, 
-    path: 'auth', 
-    defaults: { format: :json },
+    path: 'users',
     controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations',
@@ -14,9 +13,7 @@ Rails.application.routes.draw do
     post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
   end
 
-  # OAuth認証用のルート
-  get '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#google_oauth2'
-
+  # 既存APIルート
   resources :users, only: [:show, :update]
 
   # Health check endpoint
@@ -40,7 +37,7 @@ Rails.application.routes.draw do
   resources :trainings, only: [:index, :create] do
     collection do
       get 'monthly'
-      get 'max_weights' # 追加: 最大重量を取得するエンドポイント
+      get 'max_weights'
       delete 'destroy_by_date'
     end
   end
@@ -56,12 +53,14 @@ Rails.application.routes.draw do
     resources :likes, only: [:create]
   end
 
-  # パスワードリセット用のルート（優先度高）
+  # パスワードリセット用のルート
   get 'reset-password/:token', to: 'home#index'
 
-  # フロントエンドの静的ファイルを提供 (ただし、/cable, /api には適用しない)
+
   get '*path', to: 'home#index', constraints: ->(request) {
-    !request.xhr? && request.format.html? && !request.path.start_with?('/cable', '/api')
+    !request.xhr? && 
+    request.format.html? && 
+    !request.path.start_with?('/cable', '/api', '/users/auth/')
   }
 
   # ルートパスを設定

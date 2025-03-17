@@ -4,7 +4,6 @@ const API_BASE_URL = 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    // バックエンドのGoogle認証URLへリダイレクト
     window.location.href = `${API_BASE_URL}/users/auth/google_oauth2`;
   };
 
