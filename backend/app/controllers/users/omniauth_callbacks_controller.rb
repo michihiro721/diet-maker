@@ -1,9 +1,9 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
   skip_before_action :verify_authenticity_token, raise: false
 
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"
+    Rails.logger.info "Auth data: #{request.env['omniauth.auth'].inspect}"
     
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
@@ -20,6 +20,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
+    Rails.logger.error "OAuth failure: #{request.env['omniauth.error']&.inspect}"
     redirect_to "https://diet-maker-mu.vercel.app/login"
   end
 

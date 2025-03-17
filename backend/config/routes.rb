@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   # OAuth認証用のルート
-  get '/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+  get '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#google_oauth2'
 
   resources :users, only: [:show, :update]
 
