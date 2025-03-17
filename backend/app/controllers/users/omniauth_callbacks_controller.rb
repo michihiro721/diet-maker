@@ -1,5 +1,4 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
   def google_oauth2
     Rails.logger.info "Google OAuth callback received"
     

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
     get '/users/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru'
     post '/auth/validate_reset_token', to: 'users/passwords#validate_token'
+    get '/users/show', to: 'users#show'
   end
 
   # 既存APIルート
