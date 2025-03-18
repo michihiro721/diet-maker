@@ -16,50 +16,67 @@ class User < ApplicationRecord
   # OmniAuth認証からのユーザー作成・取得メソッド
   def self.from_omniauth(auth)
     # nilチェックを追加
-    return nil if auth.nil?
+    if auth.nil?
+      Rails.logger.error "OmniAuth auth data is nil"
+      return nil
+    end
     
-    # デバッグログを追加
-    Rails.logger.info "OmniAuth auth data: #{auth.inspect}"
+    # デバッグログ
+    Rails.logger.info "OmniAuth auth data: provider=#{auth.provider}, uid=#{auth.uid}, email=#{auth.info.email}"
     
-    # 既存ユーザーの検索 - まずはメールアドレスで検索
+    # まずは既存ユーザーをメールアドレスで検索
     user = User.find_by(email: auth.info.email)
     
     if user
-      # 既存ユーザーが見つかった場合は、プロバイダとuidを更新
-      user.update(provider: auth.provider, uid: auth.uid) unless user.provider == auth.provider && user.uid == auth.uid
-      Rails.logger.info "Existing user found: #{user.id}, #{user.email}"
+      # すでに同じプロバイダとUIDで認証済みかチェック
+      if user.provider == auth.provider && user.uid == auth.uid
+        Rails.logger.info "Existing user already authenticated with this provider: #{user.id}, #{user.email}"
+      else
+        # プロバイダとUIDを更新
+        user.update(
+          provider: auth.provider,
+          uid: auth.uid
+        )
+        Rails.logger.info "Updated existing user with new provider info: #{user.id}, #{user.email}"
+      end
       return user
-    end
-    
-    # 既存ユーザーが見つからない場合は新規作成
-    Rails.logger.info "Creating new user with email: #{auth.info.email}"
-    user = User.new(
-      provider: auth.provider,
-      uid: auth.uid,
-      email: auth.info.email,
-      name: auth.info.name || auth.info.email.split('@').first,
-      password: Devise.friendly_token[0, 20], # ランダムなパスワードを生成
-      image: auth.info.image
-    )
-    
-    # ユーザー保存の試行とログ
-    if user.save
-      Rails.logger.info "New user created: #{user.id}, #{user.email}"
     else
-      Rails.logger.error "Failed to create user: #{user.errors.full_messages.join(', ')}"
+      # 新規ユーザーを作成
+      Rails.logger.info "Creating new user for email: #{auth.info.email}"
+      
+      # 名前が無い場合はメールアドレスから生成
+      display_name = auth.info.name.presence || auth.info.email.split('@').first
+      
+      # 新規ユーザーを作成
+      new_user = User.new(
+        provider: auth.provider,
+        uid: auth.uid,
+        email: auth.info.email,
+        name: display_name,
+        password: Devise.friendly_token[0, 20],
+        image: auth.info.image
+      )
+      
+      if new_user.save
+        Rails.logger.info "Successfully created new user: #{new_user.id}, #{new_user.email}"
+        return new_user
+      else
+        Rails.logger.error "Failed to create new user: #{new_user.errors.full_messages.join(', ')}"
+        return nil
+      end
     end
-    
-    user
   end
   
   # JWTトークンを生成するメソッド
   def generate_jwt
-    JWT.encode(
-      { 
-        id: id,
-        exp: 30.days.from_now.to_i 
-      },
-      Rails.application.credentials.devise_jwt_secret_key || ENV['DEVISE_JWT_SECRET_KEY']
-    )
+    payload = {
+      id: id,
+      email: email,
+      exp: 30.days.from_now.to_i,
+      jti: SecureRandom.uuid # 一意のトークンID
+    }
+    
+    secret_key = Rails.application.credentials.devise_jwt_secret_key || ENV['DEVISE_JWT_SECRET_KEY']
+    JWT.encode(payload, secret_key)
   end
 end

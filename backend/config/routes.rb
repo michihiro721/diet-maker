@@ -12,13 +12,19 @@ Rails.application.routes.draw do
 
 
   devise_scope :user do
-    get '/users/auth/google_oauth2', to: redirect('/auth/google_oauth2')
-    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+    # Google OAuth2用のルート - パスを直接指定
+    get '/users/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru', as: :user_google_oauth2_omniauth_authorize
+    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2', as: :user_google_oauth2_omniauth_callback
+    
+    # ユーザー情報取得用のエンドポイント
     get '/users/show', to: 'users#show'
   end
 
-  # 既存APIルート
+  # ユーザーリソース
   resources :users, only: [:show, :update]
+  
+  # ユーザーID取得用のルート
+  get '/users/:id', to: 'users#show_by_id'
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
