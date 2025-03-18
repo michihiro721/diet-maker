@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./styles/BodyInfo.css";
-import CalculatorModal from "./CalculatorModal"; // CalculatorModalコンポーネントをインポート
+import CalculatorModal from "./CalculatorModal";
 
 const BodyInfo = () => {
   const [gender, setGender] = useState("");
@@ -12,7 +12,6 @@ const BodyInfo = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentField, setCurrentField] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,25 +38,44 @@ const BodyInfo = () => {
         setLoading(false);
         return;
       }
-      
-      const response = await axios.get(`${apiUrl}/users/${userId}`, {
+
+      const response = await axios.get(`${apiUrl}/users/show`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
       
+      console.log('取得したユーザーデータ:', response.data);
       const userData = response.data;
       
-      // 取得したデータをセット
+      // 取得したデータをセット (データが存在する場合のみ)
       if (userData.gender) setGender(userData.gender);
       if (userData.height) setHeight(`${userData.height} cm`);
       if (userData.weight) setWeight(`${userData.weight} kg`);
       if (userData.age) setAge(`${userData.age} 歳`);
       
+      // 計算
+      if (userData.gender && userData.height && userData.weight && userData.age) {
+        const heightValue = parseFloat(userData.height);
+        const weightValue = parseFloat(userData.weight);
+        const ageValue = parseFloat(userData.age);
+        
+        let bmrValue;
+        if (userData.gender === "男性") {
+          bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
+        } else if (userData.gender === "女性") {
+          bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
+        }
+        if (bmrValue) {
+          setBmr(bmrValue);
+        }
+      }
+      
       setLoading(false);
     } catch (error) {
       console.error("ユーザーデータの取得に失敗しました:", error);
+      console.error("エラーの詳細:", error.response?.data);
       setError("ユーザーデータの取得に失敗しました。");
       setLoading(false);
     }
@@ -88,7 +106,6 @@ const BodyInfo = () => {
     
     if (!gender || !height || !weight || !age) {
       setError("全ての項目を入力してください");
-      setSuccess("");
       return;
     }
     
@@ -130,7 +147,6 @@ const BodyInfo = () => {
     } catch (error) {
       console.error("データの保存に失敗しました:", error);
       setError("データの保存に失敗しました: " + (error.response?.data?.errors?.join(", ") || error.message));
-      setSuccess("");
     }
   };
 
@@ -159,7 +175,6 @@ const BodyInfo = () => {
       <div className="body-info-container">
         <form onSubmit={handleSubmit} className="body-info-form">
           {error && <p className="body-info-error-message">{error}</p>}
-          {success && <p className="body-info-success-message">{success}</p>}
           <div className="body-info-form-group">
             <label>性別</label>
             <select value={gender} onChange={(e) => setGender(e.target.value)} className="body-info-select">
@@ -176,6 +191,7 @@ const BodyInfo = () => {
               onClick={() => handleInputClick("height")}
               readOnly
               className="body-info-input"
+              placeholder="クリックして入力"
             />
           </div>
           <div className="body-info-form-group">
@@ -186,6 +202,7 @@ const BodyInfo = () => {
               onClick={() => handleInputClick("weight")}
               readOnly
               className="body-info-input"
+              placeholder="クリックして入力"
             />
           </div>
           <div className="body-info-form-group">
@@ -196,6 +213,7 @@ const BodyInfo = () => {
               onClick={() => handleInputClick("age")}
               readOnly
               className="body-info-input"
+              placeholder="クリックして入力"
             />
           </div>
           <button type="submit" className="body-info-button">設定</button>
