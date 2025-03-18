@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   # 既存APIルート
-  resources :users, only: [:update]
+  resources :users, only: [:show, :update]
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check

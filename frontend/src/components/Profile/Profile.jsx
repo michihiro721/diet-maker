@@ -26,7 +26,7 @@ const Profile = () => {
         console.log('Token:', token);
         console.log('UserID:', userId);
         
-        const res = await axios.get(`${API_BASE_URL}/users/${userId}`, {
+        const res = await axios.get(`${API_BASE_URL}/users/show`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.put(`${API_BASE_URL}/users/${userId}`, {
+      const res = await axios.put(`${API_BASE_URL}/users`, {
         user: {
           name: newNickname
         }
