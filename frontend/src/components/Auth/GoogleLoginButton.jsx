@@ -10,7 +10,7 @@ const GoogleLoginButton = () => {
     // Googleログイン処理を開始
     console.log('Starting Google OAuth flow');
     
-    const googleAuthUrl = `${API_BASE_URL}/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}`;
+    const googleAuthUrl = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}`;
     
     // デバッグ用ログ
     console.log('Redirecting to:', googleAuthUrl);
@@ -19,38 +19,38 @@ const GoogleLoginButton = () => {
     window.location.href = googleAuthUrl;
   };
 
-return (
+  return (
     <button
-        onClick={handleGoogleLogin}
-        className="google-login-button"
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '10px 15px',
-            background: 'white',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            fontWeight: 'bold',
-            color: '#444',
-            cursor: 'pointer',
-            width: '100%',
-            margin: '10px 0',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-        }}
+      onClick={handleGoogleLogin}
+      className="google-login-button"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '10px 15px',
+        background: 'white',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        fontWeight: 'bold',
+        color: '#444',
+        cursor: 'pointer',
+        width: '100%',
+        margin: '10px 0',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      }}
     >
-        <img 
-            src="https://developers.google.com/identity/images/g-logo.png" 
-            alt="Google logo"
-            style={{ 
-                width: '18px', 
-                height: '18px', 
-                marginRight: '10px' 
-            }}
-        />
-        Googleでログイン
-        </button>
+      <img 
+        src="https://developers.google.com/identity/images/g-logo.png" 
+        alt="Google logo"
+        style={{ 
+          width: '18px', 
+          height: '18px', 
+          marginRight: '10px' 
+        }}
+      />
+      Googleでログイン
+    </button>
   );
 };
 

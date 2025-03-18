@@ -36,48 +36,66 @@ const OAuthCallback = () => {
         console.log('Token received:', token);
         console.log('User ID received:', userId);
 
+        // ローカルストレージに保存する前にデータをクリア
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('userId');
+
         // APIエンドポイントのベースURL
-        const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://api.diet-maker.com';
-        
-        // JWTトークンをAuthorizationヘッダーに設定
-        const config = {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        };
+        const API_BASE_URL = process.env.NODE_ENV === 'development'
+          ? 'http://localhost:3000'
+          : 'https://diet-maker-d07eb3099e56.herokuapp.com';
         
         try {
-          // ユーザー情報を取得
-          const response = await axios.get(`${API_BASE_URL}/api/v1/users/me`, config);
+          // JWTトークンをAuthorizationヘッダーに設定してユーザー情報を取得
+          const response = await axios.get(`${API_BASE_URL}/users/show`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          console.log('User data from API:', response.data);
           
           if (response.data && response.data.id) {
-            // ユーザー情報が取得できた場合、そのIDを使用
+            // API経由で取得したユーザーID
             const verifiedUserId = response.data.id;
             
             // ローカルストレージにトークンとユーザーIDを保存
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', verifiedUserId);
             
-            console.log('User data verified:', response.data);
+            console.log('Saved verified data to localStorage:', {
+              jwt: token,
+              userId: verifiedUserId
+            });
           } else {
             // APIからユーザー情報が取得できなかった場合はURLのユーザーIDを使用
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', userId);
+            
+            console.log('Saved URL data to localStorage:', {
+              jwt: token,
+              userId: userId
+            });
           }
         } catch (apiError) {
           console.error('Error fetching user info:', apiError);
           // エラーが発生した場合でも、URLから取得したユーザーIDを使用
           localStorage.setItem('jwt', token);
           localStorage.setItem('userId', userId);
+          
+          console.log('Saved fallback data to localStorage:', {
+            jwt: token,
+            userId: userId
+          });
         }
         
-        // データが保存されたことを確認
-        console.log('Saved to localStorage:', {
+        // ローカルストレージの保存を確認
+        console.log('Current localStorage state:', {
           jwt: localStorage.getItem('jwt'),
           userId: localStorage.getItem('userId')
         });
         
-        // 1秒待機してからリダイレクト（状態の更新を確実にするため）
+        // 1秒待機してからリダイレクト
         setTimeout(() => {
           // ホーム画面にリダイレクト
           navigate('/', { replace: true });
