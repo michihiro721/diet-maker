@@ -37,7 +37,7 @@ const Profile = () => {
         console.log('API Response:', res.data);
         
         setEmail(res.data.email);
-        setNickname(res.data.nickname);
+        setNickname(res.data.name);
       } catch (error) {
         console.error('プロフィール取得エラー:', error);
         console.error('エラーレスポンス:', error.response?.data);
@@ -75,7 +75,7 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.put(`${API_BASE_URL}/users`, {
+      const res = await axios.put(`${API_BASE_URL}/users/${userId}`, {
         user: {
           name: newNickname
         }
