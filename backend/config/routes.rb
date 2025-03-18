@@ -12,11 +12,6 @@ Rails.application.routes.draw do
 
 
   devise_scope :user do
-    # Google OAuth2用のルート - パスを直接指定
-    get '/users/auth/google_oauth2', to: 'users/omniauth_callbacks#passthru', as: :user_google_oauth2_omniauth_authorize
-    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2', as: :user_google_oauth2_omniauth_callback
-    
-    # ユーザー情報取得用のエンドポイント
     get '/users/show', to: 'users#show'
   end
 
