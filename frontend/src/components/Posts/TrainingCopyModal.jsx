@@ -1,4 +1,3 @@
-// frontend/src/components/Posts/TrainingCopyModal.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar';
@@ -29,10 +28,39 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
   };
 
   const handleCopyTrainings = async () => {
-    if (!userId) {
+    // ローカルストレージからログインユーザーのIDを取得
+    const parseJwt = (token) => {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch(e) {
+        console.error("JWTの解析に失敗:", e);
+        return null;
+      }
+    };
+
+    // トークンを取得
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+      setErrorMessage("認証情報が見つかりません。再ログインしてください。");
+      return;
+    }
+
+    // JWTからユーザーIDを取得
+    const decodedToken = parseJwt(jwt);
+    const loggedInUserId = decodedToken && decodedToken.sub ? decodedToken.sub : null;
+
+    // ログインユーザーIDを確認
+    if (!loggedInUserId) {
       setErrorMessage("ユーザーIDが見つかりません。ログインしてください。");
       return;
     }
+
+    console.log("現在ログインしているユーザーID:", loggedInUserId);
 
     if (trainingData.length === 0) {
       setErrorMessage("コピーするトレーニングデータがありません。");
@@ -50,32 +78,31 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
       const day = String(selectedDate.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
 
-      // トークンを取得
-      const jwt = localStorage.getItem('jwt');
-      if (!jwt) {
-        setErrorMessage("認証情報が見つかりません。再ログインしてください。");
-        setIsSaving(false);
-        return;
-      }
-
       const config = {
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
 
+      // デバッグ
+      console.log("保存するユーザーID:", loggedInUserId);
+      console.log("コピー元トレーニングデータ:", trainingData);
+
       // 全てのトレーニングデータを配列にまとめる
       const trainingsArray = trainingData.map(training => {
         return {
-          user_id: userId,
+          user_id: loggedInUserId, // 必ずJWTから取得したログインユーザーIDを使用
           workout_id: training.workout_id,
           date: formattedDate,
           sets: training.sets,
           weight: training.weight,
-          reps: training.reps || 0 // 有酸素運動の場合はrepsがない可能性があるため
+          reps: training.reps || 0 // レップ数がない場合は0を設定
         };
       });
 
+      console.log("送信するデータ:", { training: trainingsArray });
+
       // バックエンドが期待する形式で送信
-      await api.post('/trainings', { training: trainingsArray }, config);
+      const response = await api.post('/trainings', { training: trainingsArray }, config);
+      console.log("APIレスポンス:", response.data);
       
       setSuccessMessage(`${formattedDate}にトレーニングメニューを保存しました`);
       setIsSaving(false);
