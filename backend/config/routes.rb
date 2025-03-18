@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Deviseルート - OmniAuth用の設定を追加
   devise_for :users, 
-    path: 'auth', 
+    path: 'users', 
     defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',
@@ -10,21 +10,12 @@ Rails.application.routes.draw do
       omniauth_callbacks: 'users/omniauth_callbacks'
     }
 
-
-  devise_scope :user do
-    # Google OAuth2用のルートを明示的に設定
-    get '/users/auth/google_oauth2', to: redirect('/auth/google_oauth2')
-    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
-    
-    # ユーザー情報取得用のエンドポイント
-    get '/users/show', to: 'users#show'
-  end
-
-  # ユーザーリソース
-  resources :users, only: [:show, :update]
-  
-  # ユーザーID取得用のルート
+  # ユーザー情報取得用のエンドポイント
+  get '/users/show', to: 'users#show'
   get '/users/:id', to: 'users#show_by_id'
+
+  # 既存APIルート
+  resources :users, only: [:show, :update]
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
@@ -68,7 +59,7 @@ Rails.application.routes.draw do
 
   get '*path', to: 'home#index', constraints: ->(request) {
     !request.xhr? && request.format.html? && 
-    !request.path.start_with?('/auth/', '/users/auth/', '/cable')
+    !request.path.start_with?('/users/auth/', '/cable')
   }
 
   # ルートパスを設定

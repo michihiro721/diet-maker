@@ -273,7 +273,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
-  
+
   config.omniauth :google_oauth2,
   ENV['GOOGLE_CLIENT_ID'],
   ENV['GOOGLE_CLIENT_SECRET'],
@@ -281,10 +281,12 @@ Devise.setup do |config|
     scope: 'email,profile',
     prompt: 'select_account',
     access_type: 'offline',
+    provider_ignores_state: true,
+    skip_jwt: true,
     redirect_uri: ENV['GOOGLE_CALLBACK_URL'] || "https://diet-maker-d07eb3099e56.herokuapp.com/users/auth/google_oauth2/callback"
   }
 
-config.omniauth_path_prefix = '/auth'
+config.omniauth_path_prefix = '/users/auth'
 
 config.navigational_formats = ['*/*', :html, :json]
 

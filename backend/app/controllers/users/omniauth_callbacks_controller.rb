@@ -1,4 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_action :verify_authenticity_token, only: [:google_oauth2]
 
   # Google OAuth2のコールバック処理
   def google_oauth2
@@ -6,43 +7,37 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     
     begin
       # OmniAuth Auth情報を取得
-      Rails.logger.info "OmniAuth auth data available: #{request.env['omniauth.auth'].present?}"
+      auth_hash = request.env['omniauth.auth']
+      Rails.logger.info "OmniAuth auth data available: #{auth_hash.present?}"
       
-      # OmniAuthから認証情報を取得できない場合
-      if request.env['omniauth.auth'].nil?
-        # OmniAuthが設定されていないか、エラーがある場合
-        # 追加のデバッグ情報を記録
-        Rails.logger.error "Missing omniauth.auth - trying to extract information from auth code"
+      if auth_hash.nil?
+        Rails.logger.error "Missing omniauth.auth data - this is a critical error"
+        Rails.logger.info "Request env keys: #{request.env.keys.select { |k| k.to_s.include?('omniauth') }}"
+        Rails.logger.info "Request params: #{params.inspect}"
         
-        # Googleから取得したコードを使用
         if params['code'].present?
           auth_code = params['code']
-          Rails.logger.info "Auth code received: #{auth_code}"
-
-          # Google APIからトークンとプロファイル情報を取得（本来はこちらを実装すべき）
-          # 今回はログを残す実装に変更
-          Rails.logger.error "Cannot automatically detect Google account from code. Redirecting to login page."
-          redirect_to_error("google_auth_failed")
-          return
-        else
-          # コードもない場合はエラー
-          error_msg = "No OAuth data or code available"
-          Rails.logger.error error_msg
-          redirect_to_error(error_msg)
-          return
+          Rails.logger.info "Auth code received but could not process it: #{auth_code}"
         end
+        
+        # 認証失敗としてログインページにリダイレクト
+        redirect_to_error("authentication_failed")
+        return
+      end
+      
+      # 認証データ詳細のログ
+      Rails.logger.info "Auth provider: #{auth_hash.provider}"
+      Rails.logger.info "Auth UID: #{auth_hash.uid}"
+      Rails.logger.info "Auth email: #{auth_hash.info.email}"
+      Rails.logger.info "Auth name: #{auth_hash.info.name}"
+      
+      # ユーザーを検索または作成
+      @user = User.from_omniauth(auth_hash)
+      
+      if @user
+        Rails.logger.info "User from omniauth: ID=#{@user.id}, email=#{@user.email}"
       else
-        # 通常のOmniAuth処理 - request.env['omniauth.auth']が利用可能な場合
-        auth_data = request.env['omniauth.auth']
-        Rails.logger.info "Processing OmniAuth data: #{auth_data.provider}, #{auth_data.uid}, #{auth_data.info.email}"
-        
-        @user = User.from_omniauth(auth_data)
-        
-        if @user
-          Rails.logger.info "User from omniauth: ID=#{@user.id}, email=#{@user.email}"
-        else
-          Rails.logger.error "Failed to create or find user from omniauth"
-        end
+        Rails.logger.error "Failed to create or find user from omniauth"
       end
       
       # フロントエンドのURLを取得
@@ -75,6 +70,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to_error("oauth_failure")
   end
 
+  def passthru
+    Rails.logger.info "OAuth passthru called"
+    render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+  end
+
   private
   
   # JWTトークンを生成
@@ -82,8 +82,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     payload = {
       sub: user.id,
       exp: (Time.now + 24.hours).to_i,
-      email: user.email, # 追加のクレーム
-      jti: SecureRandom.uuid # 一意のトークンID
+      email: user.email,
+      jti: SecureRandom.uuid
     }
     
     JWT.encode(payload, ENV['DEVISE_JWT_SECRET_KEY'])
