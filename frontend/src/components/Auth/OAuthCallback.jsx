@@ -36,58 +36,46 @@ const OAuthCallback = () => {
         console.log('Token received:', token);
         console.log('User ID received:', userId);
 
-        // トークンをローカルストレージに保存する前に、サーバーからユーザー情報を取得
+        // APIエンドポイントのベースURL
+        const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://api.diet-maker.com';
+        
+        // JWTトークンをAuthorizationヘッダーに設定
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        };
+        
         try {
-          // APIエンドポイントのベースURL
-          const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://api.diet-maker.com';
-          
-          // JWTトークンをAuthorizationヘッダーに設定
-          const config = {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          };
-          
           // ユーザー情報を取得
           const response = await axios.get(`${API_BASE_URL}/api/v1/users/me`, config);
           
           if (response.data && response.data.id) {
-            // 正しいuserIdを取得
-            const correctUserId = response.data.id;
+            // ユーザー情報が取得できた場合、そのIDを使用
+            const verifiedUserId = response.data.id;
             
-            // ローカルストレージにトークンと正しいユーザーIDを保存
+            // ローカルストレージにトークンとユーザーIDを保存
             localStorage.setItem('jwt', token);
-            localStorage.setItem('userId', correctUserId);
+            localStorage.setItem('userId', verifiedUserId);
             
-            console.log('Updated user info from server:', response.data);
-            console.log('Saved to localStorage:', {
-              jwt: localStorage.getItem('jwt'),
-              userId: localStorage.getItem('userId')
-            });
+            console.log('User data verified:', response.data);
           } else {
-            // バックアップとして、元のuserIdを使用
+            // APIからユーザー情報が取得できなかった場合はURLのユーザーIDを使用
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', userId);
-            
-            console.log('Saved to localStorage (fallback):', {
-              jwt: localStorage.getItem('jwt'),
-              userId: localStorage.getItem('userId')
-            });
           }
         } catch (apiError) {
           console.error('Error fetching user info:', apiError);
-          
-          // エラーが発生した場合でも、元のトークンとユーザーIDを保存
+          // エラーが発生した場合でも、URLから取得したユーザーIDを使用
           localStorage.setItem('jwt', token);
-          if (userId) {
-            localStorage.setItem('userId', userId);
-          }
-          
-          console.log('Saved to localStorage (despite API error):', {
-            jwt: localStorage.getItem('jwt'),
-            userId: localStorage.getItem('userId')
-          });
+          localStorage.setItem('userId', userId);
         }
+        
+        // データが保存されたことを確認
+        console.log('Saved to localStorage:', {
+          jwt: localStorage.getItem('jwt'),
+          userId: localStorage.getItem('userId')
+        });
         
         // 1秒待機してからリダイレクト（状態の更新を確実にするため）
         setTimeout(() => {

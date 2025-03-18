@@ -9,13 +9,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       Rails.logger.info "OmniAuth auth data available: #{request.env['omniauth.auth'].present?}"
       
       if request.env['omniauth.auth'].nil?
-        # OmniAuthの認証情報がない場合は手動でユーザーを検索
-        if params['email'].present?
-          @user = User.find_by(email: params['email'])
-        else
-          # HTTPステータスコードを使用して、ユーザーを作成
-          @user = create_user_from_code(params['code'])
-        end
+        # OmniAuthの認証情報がない場合はエラーを返す
+        Rails.logger.error "No OAuth data available"
+        frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+        redirect_to "#{frontend_url}/login?error=no_oauth_data", allow_other_host: true
+        return
       else
         # 通常のOmniAuth処理
         @user = User.from_omniauth(request.env['omniauth.auth'])
@@ -25,7 +23,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
       
       if @user && @user.persisted?
-        Rails.logger.info "User authenticated: #{@user.email}"
+        Rails.logger.info "User authenticated: #{@user.email}, ID: #{@user.id}"
         
         # JWTトークンを生成
         token = generate_jwt_token(@user)
@@ -55,15 +53,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
   
-  # 認証コードからユーザー情報を取得してユーザーを作成/検索する
-  def create_user_from_code(code)
-    return nil unless code.present?
-    
-    # ここでGoogle APIを使って認証コードからユーザー情報を取得する実装も可能ですが、
-    # 簡易的な実装として、既存ユーザーをデフォルトで返す
-    User.first
-  end
-
   # JWTトークンを生成
   def generate_jwt_token(user)
     payload = {
