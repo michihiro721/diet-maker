@@ -12,6 +12,11 @@ Rails.application.routes.draw do
 
 
   devise_scope :user do
+    # Google OAuth2用のルートを明示的に設定
+    get '/users/auth/google_oauth2', to: redirect('/auth/google_oauth2')
+    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+    
+    # ユーザー情報取得用のエンドポイント
     get '/users/show', to: 'users#show'
   end
 
