@@ -10,12 +10,17 @@ const API_BASE_URL = process.env.NODE_ENV === 'development'
 const OAuthCallback = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userData, setUserData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleCallback = async () => {
       try {
+        // ログイン開始時刻を取得（キャッシュバスティング対策）
+        const authStarted = sessionStorage.getItem('auth_started');
+        console.log('Authentication started at:', authStarted);
+        
         console.log('OAuth callback URL:', location.search);
         
         // URLパラメータからトークンとユーザーIDを取得
@@ -48,30 +53,38 @@ const OAuthCallback = () => {
         localStorage.removeItem('userId');
         
         try {
-          // トークンを使ってユーザー情報を取得
-          const response = await axios.get(`${API_BASE_URL}/users/show`, {
+          // APIリクエストのヘッダーを設定
+          const config = {
             headers: {
-              'Authorization': `Bearer ${token}`
+              'Authorization': `Bearer ${token}`,
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache',
+              'If-Modified-Since': '0'
             }
-          });
+          };
+          
+          // トークンを使ってユーザー情報を取得
+          console.log('Fetching user data with token...');
+          const response = await axios.get(`${API_BASE_URL}/users/show`, config);
           
           console.log('User data from API:', response.data);
+          setUserData(response.data);
           
           if (response.data && response.data.id) {
             // APIから取得したユーザー情報をローカルストレージに保存
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', response.data.id);
             
-            console.log('Saved user data to localStorage from API:', {
+            console.log('Saved user data to localStorage:', {
               token,
               userId: response.data.id
             });
           } else {
-            // ユーザー情報が取得できなかった場合は、URLから取得したIDを使用
+            // ユーザー情報が正しく取得できなかった場合は、URLから取得したIDを使用
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', userId);
             
-            console.log('Saved user data to localStorage from URL:', {
+            console.log('Saved user data from URL parameters:', {
               token,
               userId
             });
@@ -80,42 +93,18 @@ const OAuthCallback = () => {
           // APIエラーが発生した場合
           console.error('Error fetching user info:', apiError);
           
-          // 2回目の試行 - `/users/:id` エンドポイントを試す
-          try {
-            const userResponse = await axios.get(`${API_BASE_URL}/users/${userId}`);
-            if (userResponse.data && userResponse.data.id) {
-              localStorage.setItem('jwt', token);
-              localStorage.setItem('userId', userResponse.data.id);
-              
-              console.log('Saved user data from users/:id endpoint:', {
-                token,
-                userId: userResponse.data.id
-              });
-            } else {
-              // フォールバック
-              localStorage.setItem('jwt', token);
-              localStorage.setItem('userId', userId);
-              
-              console.log('Saved fallback data to localStorage:', {
-                token,
-                userId
-              });
-            }
-          } catch (secondError) {
-            console.error('Error fetching user by ID:', secondError);
-            // 最終フォールバック
-            localStorage.setItem('jwt', token);
-            localStorage.setItem('userId', userId);
-            
-            console.log('Saved final fallback data to localStorage:', {
-              token,
-              userId
-            });
-          }
+          // URLのユーザーIDを使用
+          localStorage.setItem('jwt', token);
+          localStorage.setItem('userId', userId);
+          
+          console.log('Saved data from URL after API error:', {
+            token,
+            userId
+          });
         }
         
-        // 現在のローカルストレージの状態をログ出力
-        console.log('Current localStorage state:', {
+        // 現在のローカルストレージ状態をログ出力
+        console.log('Final localStorage state:', {
           jwt: localStorage.getItem('jwt'),
           userId: localStorage.getItem('userId')
         });

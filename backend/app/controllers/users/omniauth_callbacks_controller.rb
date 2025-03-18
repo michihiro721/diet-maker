@@ -12,38 +12,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if request.env['omniauth.auth'].nil?
         # OmniAuthが設定されていないか、エラーがある場合
         # 追加のデバッグ情報を記録
-        Rails.logger.error "Missing omniauth.auth - trying direct Google API approach"
+        Rails.logger.error "Missing omniauth.auth - trying to extract information from auth code"
         
         # Googleから取得したコードを使用
         if params['code'].present?
           auth_code = params['code']
           Rails.logger.info "Auth code received: #{auth_code}"
 
-          # メールアドレスからユーザーを検索
-          # 本来はGoogleのAPIからプロフィール情報を取得して
-          # 実際のメールアドレスを使うべきだが、簡略化のために既知のアドレスを使用
-          email = 'ms.michihiro.0721@gmail.com'
-          user = User.find_by(email: email)
-          
-          if user
-            # 既存ユーザーの場合は更新
-            user.update(
-              provider: 'google_oauth2',
-              uid: Time.now.to_i.to_s # 実際のUIDがないので仮の値
-            )
-            @user = user
-            Rails.logger.info "Existing user updated via code path: #{@user.id}, #{@user.email}"
-          else
-            # 新規ユーザーの場合は作成
-            @user = User.create!(
-              email: email,
-              name: '新規ユーザー', # デフォルト値
-              password: Devise.friendly_token[0, 20],
-              provider: 'google_oauth2',
-              uid: Time.now.to_i.to_s
-            )
-            Rails.logger.info "New user created via code path: #{@user.id}, #{@user.email}"
-          end
+          # Google APIからトークンとプロファイル情報を取得（本来はこちらを実装すべき）
+          # 今回はログを残す実装に変更
+          Rails.logger.error "Cannot automatically detect Google account from code. Redirecting to login page."
+          redirect_to_error("google_auth_failed")
+          return
         else
           # コードもない場合はエラー
           error_msg = "No OAuth data or code available"

@@ -7,10 +7,14 @@ const API_BASE_URL = process.env.NODE_ENV === 'development'
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
+    // セッションストレージに現在の時刻を保存（認証セッションの識別用）
+    sessionStorage.setItem('auth_started', new Date().getTime());
+    
     // Googleログイン処理を開始
     console.log('Starting Google OAuth flow');
     
-    const googleAuthUrl = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}`;
+    // Googleの認証エンドポイントにリダイレクト
+    const googleAuthUrl = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}&ts=${Date.now()}`;
     
     // デバッグ用ログ
     console.log('Redirecting to:', googleAuthUrl);
