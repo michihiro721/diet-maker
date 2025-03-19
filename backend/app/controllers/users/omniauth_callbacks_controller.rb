@@ -40,7 +40,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
       
       # フロントエンドのURLを取得
-      frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+      frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker.jp'
       
       if @user && @user.persisted?
         Rails.logger.info "User authenticated: #{@user.email}, ID: #{@user.id}"
@@ -90,7 +90,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   # エラー時のリダイレクト
   def redirect_to_error(error_message)
-    frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker-mu.vercel.app'
+    frontend_url = ENV['FRONTEND_URL'] || 'https://diet-maker.jp'
     redirect_to "#{frontend_url}/login?error=#{CGI.escape(error_message)}", allow_other_host: true
   end
 end

@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:8000', 'https://diet-maker-mu.vercel.app'
+    origins 'http://localhost:8000', 'https://diet-maker-mu.vercel.app', 'https://diet-maker.jp'
     resource '*',
       headers: :any,
       expose: %w[Authorization Content-Length X-Total-Count],
