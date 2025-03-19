@@ -310,7 +310,7 @@ const TrainingRecordDetail = () => {
     const trainingDate = post.achievementDate || "";
     
     // アプリのベースURL
-    const appUrl = "https://diet-maker-mu.vercel.app";
+    const appUrl = "https://diet-maker.jp";
     
     // 詳細ページへのURL
     const recordDetailUrl = `${appUrl}/training-details/${postId}?date=${trainingDate}`;
