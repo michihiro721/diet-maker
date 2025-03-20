@@ -50,6 +50,11 @@ const CalorieInfo = () => {
   const [period, setPeriod] = useState('7days');
   const [userId, setUserId] = useState(null);
   const [totalCalorieDifference, setTotalCalorieDifference] = useState(0);
+
+  const [userGender, setUserGender] = useState("");
+  const [userHeight, setUserHeight] = useState(0);
+  const [userWeight, setUserWeight] = useState(0);
+  const [userAge, setUserAge] = useState(0);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -107,10 +112,69 @@ const CalorieInfo = () => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
+      fetchUserData(storedUserId);
     } else {
       setError('ユーザーIDが見つかりません。ログインしてください。');
     }
   }, []);
+
+  // ユーザーデータを取得する関数
+  const fetchUserData = async (userId) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
+      const token = localStorage.getItem('jwt');
+      
+      if (!token) {
+        setError("認証情報が見つかりません。再度ログインしてください。");
+        return;
+      }
+
+      const response = await axios.get(`${apiUrl}/users/show`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const userData = response.data;
+      
+      // 取得したデータをセット (データが存在する場合のみ)
+      if (userData.gender) setUserGender(userData.gender);
+      if (userData.height) setUserHeight(userData.height);
+      if (userData.weight) setUserWeight(userData.weight);
+      if (userData.age) setUserAge(userData.age);
+      
+      // 基礎代謝を計算
+      if (userData.gender && userData.height && userData.weight && userData.age) {
+        const calculatedBMR = calculateBMR(
+          userData.gender,
+          userData.height,
+          userData.weight,
+          userData.age
+        );
+        setBasalMetabolism(Math.round(calculatedBMR));
+      }
+      
+    } catch (error) {
+      console.error("ユーザーデータの取得に失敗しました:", error);
+      setError("ユーザーデータの取得に失敗しました。");
+    }
+  };
+
+  // 基礎代謝を計算する関数
+  const calculateBMR = (gender, height, weight, age) => {
+    const heightValue = parseFloat(height);
+    const weightValue = parseFloat(weight);
+    const ageValue = parseFloat(age);
+    
+    let bmrValue = 0;
+    if (gender === "男性") {
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
+    } else if (gender === "女性") {
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
+    }
+    return bmrValue;
+  };
 
   const fetchData = async () => {
     if (!userId) return;
@@ -374,8 +438,8 @@ const CalorieInfo = () => {
         // 入力フィールドをクリア
         setSteps(0);
         setTrainingCalories(0);
-        setBasalMetabolism(0);
         setIntakeCalories(0);
+        // 基礎代謝はクリアしない（ユーザー情報から計算された値を維持）
       } else {
         console.error("Error saving data:", stepsResponse.data, dailyCaloriesResponse.data, intakeCaloriesResponse.data);
         setError('データの保存に失敗しました');
