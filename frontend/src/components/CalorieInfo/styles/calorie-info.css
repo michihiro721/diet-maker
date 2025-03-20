@@ -229,3 +229,30 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+
+/* カロリー差分合計の表示エリア */
+.total-calorie-difference {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+}
+
+.total-calorie-difference p {
+    margin: 0;
+}
+
+/* カロリー差分の正と負の値の色分け */
+.total-calorie-difference .positive {
+    color: #ff9500;
+}
+
+.total-calorie-difference .negative {
+    color: #0366d6;
+}
