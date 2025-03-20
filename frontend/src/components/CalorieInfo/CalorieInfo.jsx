@@ -49,6 +49,7 @@ const CalorieInfo = () => {
   const [error, setError] = useState("");
   const [period, setPeriod] = useState('7days');
   const [userId, setUserId] = useState(null);
+  const [totalCalorieDifference, setTotalCalorieDifference] = useState(0);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -212,6 +213,10 @@ const CalorieInfo = () => {
           filteredIntakeCaloriesData = filterDataByDays(intakeCaloriesData, 7);
           filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
       }
+
+      // カロリー差分の合計を計算
+      const totalDifference = filteredCalorieDifferenceData.reduce((sum, item) => sum + item.value, 0);
+      setTotalCalorieDifference(Math.round(totalDifference * 10) / 10);
 
       // 日付順にソート
       const allDates = [...new Set([
@@ -467,6 +472,9 @@ const CalorieInfo = () => {
       </div>
       <div className="calorie-chart">
         <Line data={chartData} options={options} />
+      </div>
+      <div className="total-calorie-difference">
+        <p>表示期間内のカロリー差分合計: <span className={totalCalorieDifference < 0 ? "negative" : "positive"}>{totalCalorieDifference} kcal</span></p>
       </div>
       <p className="legend-instruction">凡例をクリックすると、グラフからデータセットを非表示にできます。</p>
       <div className="calorie-input-group">
