@@ -1,0 +1,272 @@
+.app-usage-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 110px;
+  }
+  
+  .app-usage-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .app-usage-title {
+    font-size: 2.5rem;
+    color: #3a86ff;
+    margin-bottom: 10px;
+  }
+  
+  .app-usage-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .app-usage-subtitle-recommendation {
+    font-size: 1.2rem;
+    color: red;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .feature-section {
+    margin-bottom: 40px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    color: #3a86ff;
+    border-bottom: 2px solid #3a86ff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .feature-card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .feature-icon {
+    font-size: 2.5rem;
+    color: #3a86ff;
+    margin-bottom: 15px;
+  }
+  
+  .feature-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .feature-description {
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .usage-steps {
+    counter-reset: step-counter;
+    margin-bottom: 30px;
+  }
+  
+  .step-item {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .step-item:hover {
+    background-color: #e6f2ff;
+  }
+  
+  .step-number {
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #3a86ff;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+  
+  .step-number::before {
+    content: counter(step-counter);
+  }
+  
+  .step-content {
+    flex: 1;
+  }
+  
+  .step-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .step-description {
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .step-details {
+    background-color: #fff;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border-left: 3px solid #3a86ff;
+  }
+  
+  .step-url {
+    display: inline-block;
+    margin-top: 10px;
+    color: #3a86ff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .tips-section {
+    background-color: #e6f2ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .tips-title {
+    font-size: 1.5rem;
+    color: #3a86ff;
+    margin-bottom: 15px;
+  }
+  
+  .tips-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .tips-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #cce4ff;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .tips-item:last-child {
+    border-bottom: none;
+  }
+  
+  .tip-icon {
+    color: #3a86ff;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .tip-text {
+    flex: 1;
+    line-height: 1.5;
+  }
+  
+  .faq-section {
+    margin-bottom: 40px;
+  }
+  
+  .faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .faq-question {
+    background-color: #f8f9fa;
+    padding: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .faq-answer {
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  
+  .contact-section {
+    text-align: center;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 150px;
+  }
+  
+  .contact-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #3a86ff;
+  }
+  
+  .contact-description {
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .contact-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #3a86ff;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-button:hover {
+    background-color: #2a75e6;
+  }
+  
+  @media (max-width: 768px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .app-usage-title {
+      font-size: 2rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
