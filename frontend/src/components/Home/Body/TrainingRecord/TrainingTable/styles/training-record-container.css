@@ -187,13 +187,6 @@
     font-size: 18px;
   }
   
-  .save-training-button,
-  .delete-record-button {
-    padding: 10px 15px;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  
   .total-calories-container {
     padding: 8px 10px;
   }
@@ -221,14 +214,6 @@
   .training-record-titles {
     font-size: 16px;
   }
-  
-  .save-training-button,
-  .delete-record-button {
-    padding: 8px 12px;
-    font-size: 13px;
-    margin-bottom: 15px;
-  }
-  
 
   .training-info-container {
     padding: 10px;
