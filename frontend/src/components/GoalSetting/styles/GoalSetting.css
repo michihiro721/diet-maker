@@ -138,28 +138,25 @@
   font-weight: bold;
 }
 
-.calendar-modal-overlay {
+.goal-setting-calendar-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  text-align: center;
 }
 
-.calendar-modal {
-  background-color: #fefefe;
+.goal-setting-calendar-modal {
+  background-color: #fff;
   padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-  max-width: 800px;
-  border-radius: 10px;
+  border-radius: 4px;
   text-align: center;
-  position: relative;
 }
 
 /* モーダルウィンドウのスタイル */

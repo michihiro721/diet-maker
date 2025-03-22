@@ -179,6 +179,7 @@ const GoalSetting = () => {
   const openModal = (type) => {
     setModalType(type);
     if (type === "targetDate") {
+
       setIsCalendarModalOpen(true);
       setModalValue(targetDate ? new Date(targetDate) : new Date());
     } else {
@@ -287,19 +288,19 @@ const GoalSetting = () => {
         </div>
       )}
 
-{isCalendarModalOpen && (
-  <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
-    <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
-      <Calendar
-        onChange={handleDateChange}
-        value={modalValue}
-        formatShortWeekday={CalenderFormatShortWeekday}
-        tileClassName={CalenderTileClassName}
-        tileContent={CalenderTileContent}
-      />
-    </div>
-  </div>
-)}
+      {isCalendarModalOpen && (
+        <div className="goal-setting-calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
+          <div className="goal-setting-calendar-modal" onClick={(e) => e.stopPropagation()}>
+            <Calendar
+              onChange={handleDateChange}
+              value={modalValue}
+              formatShortWeekday={CalenderFormatShortWeekday}
+              tileClassName={CalenderTileClassName}
+              tileContent={CalenderTileContent}
+            />
+          </div>
+        </div>
+      )}
 
       {isModalOpen && (
         <div className="goal-setting-modal" style={{ display: 'block' }} onClick={handleClickOutside}>
