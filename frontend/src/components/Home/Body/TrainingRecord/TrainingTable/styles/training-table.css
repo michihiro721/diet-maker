@@ -5,3 +5,31 @@
     border-collapse: collapse; /* 境界線を重ねて表示 */
     font-size: 18px; /* フォントサイズを大きく */
 }
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+  .training-table {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 16px;
+    overflow-x: visible;
+    white-space: normal;
+    table-layout: auto;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+  .training-table {
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: visible;
+  }
+  
+  .training-table th,
+  .training-table td {
+    padding: 6px 3px;
+    font-size: 14px;
+  }
+}
