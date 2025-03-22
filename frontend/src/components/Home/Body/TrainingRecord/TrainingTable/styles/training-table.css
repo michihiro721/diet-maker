@@ -6,6 +6,18 @@
     font-size: 18px; /* フォントサイズを大きく */
 }
 
+.training-delete-button {
+    background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
+    color: white; /* 文字色を白に */
+    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+  }
+  
+  .training-delete-button:hover {
+    background-color: red; /* ホバー時の背景色 */
+    cursor: pointer; /* ホバー時にポインターを表示 */
+  }
+
+
 /* レスポンシブ対応 */
 @media screen and (max-width: 768px) {
   .training-table {
@@ -16,6 +28,14 @@
     white-space: normal;
     table-layout: auto;
   }
+
+  .training-delete-button {
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+    font-size: 14px;
+  }
+
   .completion-cell {
     width: 40px !important;
     min-width: 40px !important;
@@ -43,6 +63,14 @@
     padding: 6px 3px;
     font-size: 14px;
   }
+
+  .training-delete-button {
+    width: 22px;
+    height: 22px;
+    padding: 3px;
+    font-size: 12px;
+  }
+
   .completion-cell {
     width: 35px !important;
     min-width: 35px !important;
