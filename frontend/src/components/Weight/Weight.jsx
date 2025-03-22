@@ -407,8 +407,8 @@ const Weight = () => {
       />
 
       {isCalendarModalOpen && (
-        <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
-          <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="weight-calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
+          <div className="weight-calendar-modal" onClick={(e) => e.stopPropagation()}>
             <Calendar
               onChange={handleDateChange}
               formatShortWeekday={CalenderFormatShortWeekday}
