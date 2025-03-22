@@ -25,6 +25,7 @@ const GoalSetting = () => {
   const [inputWarning, setInputWarning] = useState("");
   const [userId, setUserId] = useState(null);
   const [existingGoal, setExistingGoal] = useState(null);
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
   // コンポーネントマウント時にローカルストレージからユーザーIDを取得し、
   // 既存の目標があるか確認する
@@ -178,11 +179,12 @@ const GoalSetting = () => {
   const openModal = (type) => {
     setModalType(type);
     if (type === "targetDate") {
+      setIsCalendarModalOpen(true);
       setModalValue(targetDate ? new Date(targetDate) : new Date());
     } else {
       setModalValue(type === "currentWeight" ? currentWeight : targetWeight);
+      setIsModalOpen(true);
     }
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -190,8 +192,6 @@ const GoalSetting = () => {
       setCurrentWeight(modalValue);
     } else if (modalType === "targetWeight") {
       setTargetWeight(modalValue);
-    } else if (modalType === "targetDate") {
-      setTargetDate(modalValue.toISOString().split('T')[0]);
     }
     setIsModalOpen(false);
   };
@@ -200,6 +200,7 @@ const GoalSetting = () => {
     const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
     setModalValue(offsetDate);
     setTargetDate(offsetDate.toISOString().split('T')[0]);
+    setIsCalendarModalOpen(false); // カレンダーモーダルを閉じる
   };
 
   const handleCalculatorClick = (value) => {
@@ -215,7 +216,7 @@ const GoalSetting = () => {
   };
 
   const handleClickOutside = (e) => {
-    if (e.target.className === "goal-setting-modal" || e.target.className === "goal-setting-modal-calendar") {
+    if (e.target.className === "goal-setting-modal") {
       closeModal();
     }
   };
@@ -286,23 +287,21 @@ const GoalSetting = () => {
         </div>
       )}
 
-      {isModalOpen && modalType === "targetDate" && (
-        <div className="goal-setting-modal-calendar" style={{ display: 'block' }} onClick={handleClickOutside}>
-          <div className="goal-setting-modal-content-calendar">
-            <Calendar
-              onChange={handleDateChange}
-              value={modalValue}
-              className="react-calendar"
-              formatShortWeekday={CalenderFormatShortWeekday}
-              tileClassName={CalenderTileClassName}
-              tileContent={CalenderTileContent}
-            />
-            <button className="goal-setting-modal-button" onClick={handleModalSave}>保存</button>
-          </div>
-        </div>
-      )}
+{isCalendarModalOpen && (
+  <div className="calendar-modal-overlay" onClick={() => setIsCalendarModalOpen(false)}>
+    <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+      <Calendar
+        onChange={handleDateChange}
+        value={modalValue}
+        formatShortWeekday={CalenderFormatShortWeekday}
+        tileClassName={CalenderTileClassName}
+        tileContent={CalenderTileContent}
+      />
+    </div>
+  </div>
+)}
 
-      {isModalOpen && modalType !== "targetDate" && (
+      {isModalOpen && (
         <div className="goal-setting-modal" style={{ display: 'block' }} onClick={handleClickOutside}>
           <div className="goal-setting-modal-content">
             <input
