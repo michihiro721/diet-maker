@@ -42,3 +42,48 @@
 .training-table td:nth-child(6) {
     width: 80px; /* 操作列 */
 }
+
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+  .training-table th {
+    font-size: 16px;
+    padding: 8px 5px;
+    white-space: nowrap;
+  }
+  
+  .training-table th:nth-child(1),
+  .training-table td:nth-child(1) {
+    width: auto;
+    min-width: 40px;
+  }
+  
+  .training-table th:nth-child(2),
+  .training-table td:nth-child(2),
+  .training-table th:nth-child(3),
+  .training-table td:nth-child(3),
+  .training-table th:nth-child(5),
+  .training-table td:nth-child(5),
+  .training-table th:nth-child(6),
+  .training-table td:nth-child(6) {
+    width: auto;
+  }
+  
+  .training-table th:nth-child(4),
+  .training-table td:nth-child(4) {
+    width: auto;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+  .training-table th,
+  .training-table td {
+    padding: 5px 2px;
+    width: auto !important;
+  }
+  
+  .training-table th {
+    font-size: 14px;
+  }
+}

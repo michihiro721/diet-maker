@@ -3,7 +3,6 @@
 .training-table input[type="text"] {
     width: 70px; /* 横幅を広く */
     text-align: center; /* 中央寄せ */
-    -moz-appearance: textfield; /* Firefox用 */
     border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
     border-radius: 10px; /* 角を丸く */
     padding: 10px; /* 内側の余白を大きく */
@@ -24,4 +23,37 @@
 .training-table input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none; /* Chrome, Safari, Edge用 */
     margin: 0;
+}
+
+
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+  .training-table input[type="number"],
+  .training-table input[type="text"] {
+    width: 50px;
+    padding: 8px 5px;
+    font-size: 16px;
+  }
+  
+  .delete-button {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+  .training-table input[type="number"],
+  .training-table input[type="text"] {
+    width: 40px;
+    padding: 6px 3px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  
+  .delete-button {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
 }
