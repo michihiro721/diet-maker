@@ -23,15 +23,26 @@
     cursor: pointer; /* ホバー時にポインターを表示 */
 }
 
-/* 削除ボタンのスタイル */
-.training-table .delete-button {
-    background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
-    color: white; /* 文字色を白に */
-    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+
+@media screen and (max-width: 768px) {
+    .training-table button {
+        width: 50px !important; /* ボタンの幅を50pxに */
+        padding: 8px 5px; /* パディングを小さく */
+        font-size: 14px; /* フォントサイズを小さく */
+    }
+    
+    .training-table .complete-button,
+    .training-table .incomplete-button {
+        width: 50px !important; /* 完了ボタンの幅を50pxに */
+    }
 }
 
-/* 削除ボタンのホバー時のスタイル */
-.training-table .delete-button:hover {
-    background-color: red; /* ホバー時の背景色 */
-    cursor: pointer; /* ホバー時にポインターを表示 */
+
+@media screen and (max-width: 480px) {
+    .training-table button {
+        width: 50px !important; /* ボタンの幅を50pxに維持 */
+        height: 35px; /* 高さを小さく */
+        padding: 5px 3px; /* パディングをさらに小さく */
+        font-size: 12px; /* フォントサイズをさらに小さく */
+    }
 }
