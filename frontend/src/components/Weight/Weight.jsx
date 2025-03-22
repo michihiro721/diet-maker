@@ -55,14 +55,14 @@ const Weight = () => {
   const [period, setPeriod] = useState('7days');
   const [goalWeight, setGoalWeight] = useState(null);
   const [goalDate, setGoalDate] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [weight, setWeight] = useState('');
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [userId, setUserId] = useState(null);
-  const [displayMode, setDisplayMode] = useState('both'); // 'bar', 'line', 'both'
+  const [displayMode, setDisplayMode] = useState('both');
 
   // ユーザーIDをローカルストレージから取得
   useEffect(() => {
@@ -228,11 +228,16 @@ const Weight = () => {
     }
 
     try {
+      // CalorieInfo.jsxと同様の方法で日付をフォーマット
+      const formattedDate = selectedDate instanceof Date 
+        ? selectedDate.toISOString().split('T')[0]
+        : selectedDate;
+
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const response = await axios.post(`${apiUrl}/weights`, {
         weight: {
           user_id: userId,
-          date: selectedDate,
+          date: formattedDate,
           weight: weight,
         }
       });
@@ -324,7 +329,7 @@ const Weight = () => {
 
   const handleDateChange = (date) => {
     const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    setSelectedDate(offsetDate.toISOString().split('T')[0]);
+    setSelectedDate(offsetDate);
     setIsCalendarModalOpen(false);
   };
 
@@ -378,7 +383,7 @@ const Weight = () => {
         <input
           type="text"
           id="date-select"
-          value={selectedDate}
+          value={selectedDate ? (selectedDate instanceof Date ? selectedDate.toLocaleDateString() : new Date(selectedDate).toLocaleDateString()) : ''}
           onClick={() => setIsCalendarModalOpen(true)}
           readOnly
           className="weight-date-input"
@@ -414,6 +419,7 @@ const Weight = () => {
               formatShortWeekday={CalenderFormatShortWeekday}
               tileClassName={CalenderTileClassName}
               tileContent={CalenderTileContent}
+              value={selectedDate ? (selectedDate instanceof Date ? selectedDate : new Date(selectedDate)) : new Date()}
             />
           </div>
         </div>
