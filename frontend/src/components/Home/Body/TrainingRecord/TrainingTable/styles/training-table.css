@@ -16,6 +16,17 @@
     white-space: normal;
     table-layout: auto;
   }
+  .completion-cell {
+    width: 40px !important;
+    min-width: 40px !important;
+    padding: 3px !important;
+  }
+  
+  .operation-cell {
+    width: 60px !important;
+    min-width: 60px !important;
+    padding: 3px !important;
+  }
 }
 
 
@@ -31,5 +42,16 @@
   .training-table td {
     padding: 6px 3px;
     font-size: 14px;
+  }
+  .completion-cell {
+    width: 35px !important;
+    min-width: 35px !important;
+    padding: 2px !important;
+  }
+  
+  .operation-cell {
+    width: 50px !important;
+    min-width: 50px !important;
+    padding: 2px !important;
   }
 }

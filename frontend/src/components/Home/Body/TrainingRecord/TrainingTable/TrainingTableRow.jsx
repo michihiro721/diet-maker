@@ -39,11 +39,11 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
         />
       </td>
       {/* 完了ボタン */}
-      <td>
+      <td className="completion-cell">
         <TimerButton index={index} set={set} handleUpdateSet={handleUpdateSet} />
       </td>
       {/* 削除ボタン */}
-      <td>
+      <td className="operation-cell">
         <button
           onClick={() => handleRemoveSet(index)}
           className="delete-button"
