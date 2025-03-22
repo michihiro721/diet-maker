@@ -2,6 +2,7 @@
 // 有酸素運動かそれ以外かによって表示項目が変わります。
 
 import React from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import TimerButton from '../TimerButton/TimerButton';
 import './styles/training-table-row-input.css';
 
@@ -42,13 +43,13 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
       <td className="completion-cell">
         <TimerButton index={index} set={set} handleUpdateSet={handleUpdateSet} />
       </td>
-      {/* 削除ボタン */}
       <td className="operation-cell">
         <button
           onClick={() => handleRemoveSet(index)}
-          className="delete-button"
+          className="training-delete-button"
+          aria-label="削除"
         >
-          削除
+          <FaTrashAlt />
         </button>
       </td>
     </tr>

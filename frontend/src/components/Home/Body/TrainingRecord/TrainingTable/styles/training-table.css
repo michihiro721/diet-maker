@@ -6,6 +6,26 @@
     font-size: 18px; /* フォントサイズを大きく */
 }
 
+.training-delete-button {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    background-color: rgba(220, 53, 69, 0.5);;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
+  .training-delete-button:hover {
+    background-color: rgba(220, 53, 69, 0.8);
+  }
+
+
 /* レスポンシブ対応 */
 @media screen and (max-width: 768px) {
   .training-table {
@@ -16,6 +36,14 @@
     white-space: normal;
     table-layout: auto;
   }
+
+  .delete-button {
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+    font-size: 14px;
+  }
+
   .completion-cell {
     width: 40px !important;
     min-width: 40px !important;
@@ -43,6 +71,14 @@
     padding: 6px 3px;
     font-size: 14px;
   }
+
+  .training-delete-button {
+    width: 22px;
+    height: 22px;
+    padding: 3px;
+    font-size: 12px;
+  }
+
   .completion-cell {
     width: 35px !important;
     min-width: 35px !important;
