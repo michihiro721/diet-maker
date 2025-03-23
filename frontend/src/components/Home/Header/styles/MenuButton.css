@@ -46,7 +46,7 @@
     .header-menu-button {
       width: 40px;
       height: 40px;
-      right: 15px; /* 小さい画面でも余白を確保 */
+      right: 30px; /* 小さい画面でも余白を確保 */
     }
     
     .header-menu-button .fa-bars {

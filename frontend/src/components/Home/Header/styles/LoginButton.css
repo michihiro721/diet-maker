@@ -1,12 +1,11 @@
 .header-login-button {
-    background: transparent; /* 背景を透明に */
-    transition: background-color 0.3s, transform 0.3s;
+    background: transparent;
     border: none;
-    position: absolute; /* fixed ではなく absolute に変更 */
+    position: absolute;
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1001; /* 他の要素より前面に表示 */
+    z-index: 1001;
 }
   
 .header-login-button .fa-user {
@@ -23,15 +22,6 @@
 
 .header-login-button:hover .fa-user {
   color: #87cefa; /* ホバー時のアイコン色を薄い青色に */
-}
-
-/* ログイン状態でホバーした時のアイコン色 */
-.header-login-button:hover .user-logged-in {
-  color: #fff; /* 薄い青色 */
-}
-
-.header-login-button:hover {
-  transform: scale(1.1);
 }
 
 @keyframes flame {
@@ -52,8 +42,8 @@
 @media (max-width: 768px) {
   .header-login-button {
     left: 10px;
-    top: 50%; /* 中央位置を保持 */
-    transform: translateY(-50%); /* 中央位置を保持 */
+    top: 50%;
+    transform: translateY(-50%);
   }
   
   .header-login-button .fa-user {
