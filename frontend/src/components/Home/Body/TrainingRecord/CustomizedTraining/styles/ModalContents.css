@@ -18,9 +18,9 @@
 /* スマートフォン向けのスタイル */
 @media screen and (max-width: 768px) {
   .modal-contents {
-    max-height: 70%; /* スマホでは高さを制限 */
+    max-height: 80%; /* スマホでは高さを制限 */
     padding: 15px; /* パディングも少し小さく */
-    padding-bottom: 70px; /* 閉じるボタン用のスペースを確保 */
+    padding-bottom: 30px; /* 閉じるボタン用のスペースを確保 */
   }
 }
 
