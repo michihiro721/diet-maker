@@ -26,3 +26,31 @@
     background-color: #d3f2ff; /* ホバー時の背景色を設定 */
     transform: scale(1.1); /* ホバー時にボタンを少し拡大 */
   }
+
+
+
+
+  @media (max-width: 768px) {
+    .header-menu-button {
+      width: 45px;
+      height: 45px;
+      right: 30px;
+    }
+    
+    .header-menu-button .fa-bars {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header-menu-button {
+      width: 40px;
+      height: 40px;
+      right: 15px; /* 小さい画面でも余白を確保 */
+    }
+    
+    .header-menu-button .fa-bars {
+      font-size: 18px;
+    }
+  }
+  

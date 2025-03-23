@@ -1,10 +1,12 @@
 .header-login-button {
-    background: #5d9cec;
-    transition: background-color 0.3s, transform 0.3s; /* 背景色と拡大の変化をスムーズに */
+    background: transparent; /* 背景を透明に */
+    transition: background-color 0.3s, transform 0.3s;
     border: none;
-    position: fixed; /* ページ遷移しても位置が変わらないように固定 */
-    left: 30px;
-    top: 15px;
+    position: absolute; /* fixed ではなく absolute に変更 */
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001; /* 他の要素より前面に表示 */
 }
   
 .header-login-button .fa-user {
@@ -41,5 +43,30 @@
   }
   100% {
     text-shadow: 0 0 2px #ff4500, 0 0 4px #ff4500;
+  }
+}
+
+
+
+
+@media (max-width: 768px) {
+  .header-login-button {
+    left: 10px;
+    top: 50%; /* 中央位置を保持 */
+    transform: translateY(-50%); /* 中央位置を保持 */
+  }
+  
+  .header-login-button .fa-user {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-login-button {
+    left: 5px;
+  }
+  
+  .header-login-button .fa-user {
+    font-size: 22px;
   }
 }
