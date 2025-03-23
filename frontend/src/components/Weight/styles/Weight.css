@@ -133,16 +133,19 @@
 .weight-save-button {
   font-size: 18px;
   padding: 10px 20px;
-  background-color: #0366d6;
-  color: #fff;
+  background-color: rgba(135, 206, 250, 0.3);
+  color: rgba(0, 0, 0, 0.7);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  border: 2px solid rgba(162, 217, 255, 1);
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .weight-save-button:hover {
-  background-color: #024a9b;
+  background-color: rgba(135, 206, 250, 0.1);
+  transform: scale(1.05);
 }
 
 .weight-save-button:active {
@@ -277,6 +280,9 @@
     padding: 20px 10px;
     margin-top: 50px;
     margin-bottom: 100px;
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .weight-chart-wrapper {
