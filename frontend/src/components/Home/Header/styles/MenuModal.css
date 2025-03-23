@@ -124,3 +124,24 @@
 .header-menu-list a:visited {
   color: inherit; /* 親要素の色を継承 */
 }
+
+
+
+@media (max-width: 480px) {
+  .header-menu-modal {
+    padding: 10px;
+    max-height: 80vh;
+    max-width: 95%;
+  }
+  
+  .header-menu-list li {
+    padding: 8px 0;
+    font-size: 14px;
+    margin: 3px 0;
+  }
+  
+  .header-close-button {
+    padding: 8px 20px;
+    font-size: 16px;
+  }
+}

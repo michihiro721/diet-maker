@@ -54,3 +54,34 @@
   transform: translateX(-50%); /* 中央に配置するために左に50%移動 */
 }
 
+
+
+
+@media (max-width: 768px) {
+  .header {
+    padding: 8px 10px;
+    height: 60px;
+  }
+
+  .header-title {
+    font-size: 24px;
+  }
+
+  .header-back-button {
+    font-size: 30px;
+    margin-left: 10px;
+    top: 15px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .header-title {
+    font-size: 20px;
+  }
+  
+  .header-back-button {
+    font-size: 26px;
+    margin-left: 5px;
+  }
+}
