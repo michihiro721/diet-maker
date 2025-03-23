@@ -53,6 +53,7 @@
     margin: 0; /* ボタンの左右のスペースを無くす */
     cursor: pointer;
     width: 80px; /* ボタンを大きく */
+    color: rgba(0, 0, 255, 0.7);
   }
 
   .weight-modal-button:hover {
