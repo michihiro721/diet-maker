@@ -31,7 +31,7 @@ const Header = () => {
       case "/goal-setting":
         return "目標設定";
       case "/training-menu":
-        return "トレーニングメニュー提案";
+        return "トレーニングメニュー";
       case "/body-info":
         return "身体情報";
       case "/calorie-info":
