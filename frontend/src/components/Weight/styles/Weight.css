@@ -9,11 +9,6 @@
   height: 100vh;
 }
 
-.weight-chart-container h2 {
-  text-align: center;
-  color: #0366d6;
-  margin-bottom: 20px;
-}
 
 .weight-chart-wrapper {
   position: relative;
@@ -251,17 +246,21 @@
     margin-bottom: 5px;
     text-align: center;
   }
-
+  
   .weight-save-controls input {
-    width: 100%;
+    width: 80%;
     margin-right: 0;
     margin-bottom: 10px;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
-
+  
   .weight-save-button {
-    width: 100%;
+    width: 60%;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .weight-calendar-modal {
@@ -271,8 +270,14 @@
   }
 }
 
-
 @media (max-width: 480px) {
+  .weight-chart-container {
+    justify-content: flex-start;
+    height: auto;
+    padding: 20px 10px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
 
   .weight-chart-wrapper {
     height: 250px;
@@ -294,11 +299,18 @@
     display: block;
   }
 
-  .weight-save-controls input,
+  .weight-save-controls input {
+    font-size: 16px;
+    margin: 0 auto 10px;
+    display: block;
+    width: 70%;
+  }
+  
   .weight-save-button {
     font-size: 16px;
     margin: 0 auto 10px;
     display: block;
+    width: 50%;
   }
 
   .goal-info-target-weight,
