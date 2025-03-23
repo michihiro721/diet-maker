@@ -335,33 +335,36 @@ const Weight = () => {
 
   return (
     <div className="weight-chart-container">
-      <h2 className="weight-chart-title">体重推移</h2>
       <div className="weight-chart-controls">
-        <label htmlFor="period-select">表示期間:</label>
-        <select
-          id="period-select"
-          value={period}
-          onChange={(e) => setPeriod(e.target.value)}
-          className="weight-period-select"
-        >
-          <option value="7days">直近7日</option>
-          <option value="1month">直近1ヶ月</option>
-          <option value="2months">直近2ヶ月</option>
-          <option value="3months">直近3ヶ月</option>
-          <option value="all">すべて</option>
-        </select>
+        <div className="period-control">
+          <label htmlFor="period-select">表示期間:</label>
+          <select
+            id="period-select"
+            value={period}
+            onChange={(e) => setPeriod(e.target.value)}
+            className="weight-period-select"
+          >
+            <option value="7days">直近7日</option>
+            <option value="1month">直近1ヶ月</option>
+            <option value="2months">直近2ヶ月</option>
+            <option value="3months">直近3ヶ月</option>
+            <option value="all">すべて</option>
+          </select>
+        </div>
 
-        <label htmlFor="display-mode-select" className="display-mode-label">グラフ表示:</label>
-        <select
-          id="display-mode-select"
-          value={displayMode}
-          onChange={(e) => setDisplayMode(e.target.value)}
-          className="weight-display-mode-select"
-        >
-          <option value="both">棒グラフ＋折れ線</option>
-          <option value="bar">棒グラフのみ</option>
-          <option value="line">折れ線グラフのみ</option>
-        </select>
+        <div className="display-mode-control">
+          <label htmlFor="display-mode-select">グラフ表示:</label>
+          <select
+            id="display-mode-select"
+            value={displayMode}
+            onChange={(e) => setDisplayMode(e.target.value)}
+            className="weight-display-mode-select"
+          >
+            <option value="both">棒グラフ＋折れ線</option>
+            <option value="bar">棒グラフのみ</option>
+            <option value="line">折れ線グラフのみ</option>
+          </select>
+        </div>
       </div>
 
       <div className="weight-chart-wrapper">
@@ -379,7 +382,7 @@ const Weight = () => {
       )}
 
       <div className="weight-save-controls">
-        <label htmlFor="date-select">日付を選択:</label>
+        <label htmlFor="date-select">日付を選択</label>
         <input
           type="text"
           id="date-select"
@@ -388,7 +391,7 @@ const Weight = () => {
           readOnly
           className="weight-date-input"
         />
-        <label htmlFor="weight-input">体重を入力:</label>
+        <label htmlFor="weight-input">体重を入力</label>
         <input
           type="text"
           id="weight-input"
