@@ -76,6 +76,11 @@
 
 
 @media (max-width: 480px) {
+  .header {
+    padding: 3px 8px;
+    height: 40px;
+  }
+
   .header-title {
     font-size: 20px;
   }
