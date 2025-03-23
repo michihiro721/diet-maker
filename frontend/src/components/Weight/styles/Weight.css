@@ -2,7 +2,6 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,11 +29,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.weight-chart-title {
-  font-size: 24px; /* タイトルのフォントサイズを調整 */
-  margin-bottom: 20px;
-}
-
 .weight-chart-controls {
   margin-bottom: 20px;
   display: flex;
@@ -43,18 +37,24 @@
 
 .weight-chart-controls label {
   margin-right: 10px;
-  font-size: 18px; /* ラベルのフォントサイズを調整 */
+  font-size: 18px;
 }
 
 .weight-chart-controls select {
-  font-size: 18px; /* 選択欄のフォントサイズを調整 */
+  font-size: 18px;
   padding: 5px;
-  background-color: #fff; /* 薄い青の背景色 */
-  border: 1px solid #b3d7ff; /* 薄い青の境界線 */
-  border-radius: 5px; /* 角を丸くする */
+  background-color: #fff;
+  border: 1px solid #b3d7ff;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.period-control, .display-mode-control {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
 }
 
 .weight-save-controls {
@@ -65,12 +65,12 @@
 
 .weight-save-controls label {
   margin-right: 10px;
-  font-size: 18px; /* ラベルのフォントサイズを調整 */
+  font-size: 18px;
   font-weight: bold;
 }
 
 .weight-save-controls input {
-  font-size: 18px; /* 入力欄のフォントサイズを調整 */
+  font-size: 18px;
   padding: 5px;
   margin-right: 10px;
   outline: 1px solid #87CEFA;
@@ -87,26 +87,26 @@
 }
 
 .weight-save-controls button {
-  font-size: 18px; /* ボタンのフォントサイズを調整 */
+  font-size: 18px;
   padding: 5px 10px;
 }
 
 .weight-x-axis-title,
 .weight-y-axis-title {
-  font-size: 14px; /* 軸タイトルのフォントサイズを調整 */
+  font-size: 14px;
 }
 
 .weight-x-axis-ticks,
 .weight-y-axis-ticks {
-  font-size: 12px; /* 軸目盛りのフォントサイズを調整 */
+  font-size: 12px;
 }
 
 .weight-legend-labels {
-  font-size: 14px; /* 凡例ラベルのフォントサイズを調整 */
+  font-size: 14px;
 }
 
 .weight-tooltip {
-  font-size: 12px; /* ツールチップのフォントサイズを調整 */
+  font-size: 12px;
 }
 
 .goal-info {
@@ -154,7 +154,6 @@
   transform: scale(0.95);
 }
 
-
 .weight-calendar-modal-overlay {
   position: fixed;
   top: 0;
@@ -196,4 +195,118 @@
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .weight-chart-container {
+    justify-content: flex-start;
+    height: auto;
+    padding: 20px 10px;
+    margin-top: 100px;
+    margin-bottom: 150px;
+  }
+
+  .weight-chart-wrapper {
+    height: 300px;
+  }
+
+  .weight-chart-controls {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .weight-chart-controls label {
+    display: inline-block;
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .weight-chart-controls select {
+    display: inline-block;
+    width: auto;
+    max-width: 150px;
+    margin-bottom: 10px;
+  }
+
+  .period-control, .display-mode-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+
+  .weight-save-controls {
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .weight-save-controls label {
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  .weight-save-controls input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .weight-save-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .weight-calendar-modal {
+    width: 90%;
+    max-width: 350px;
+    padding: 15px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .weight-chart-wrapper {
+    height: 250px;
+  }
+
+  .weight-chart-controls label {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  .weight-chart-controls select {
+    font-size: 16px;
+    max-width: 140px;
+  }
+
+  .weight-save-controls label {
+    font-size: 16px;
+    text-align: center;
+    display: block;
+  }
+
+  .weight-save-controls input,
+  .weight-save-button {
+    font-size: 16px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+
+  .goal-info-target-weight,
+  .goal-info-target {
+    font-size: 16px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
 }
