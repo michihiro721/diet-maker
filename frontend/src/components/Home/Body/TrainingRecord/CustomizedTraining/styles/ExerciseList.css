@@ -1,6 +1,6 @@
 /* 種目リストのコンテナスタイル */
 .exercise-list {
-    max-height: 450px; /* 高さを450pxに設定 */
+    max-height: 400px;
     overflow-y: auto; /* 縦スクロールを有効に */
     display: flex; /* フレックスボックスを使用 */
     flex-direction: column; /* 縦方向に配置 */
