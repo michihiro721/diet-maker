@@ -39,43 +39,87 @@
     
     <!-- オーバースクロール防止のためのスタイル -->
     <style>
-      html, body {
-        overscroll-behavior: none;
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        position: relative;
+      /* 最小限の修正でオーバースクロールを防止 */
+      html {
+        overscroll-behavior: none !important;
+      }
+      
+      body {
+        overscroll-behavior: none !important;
         -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
-        background-color: #fff;
       }
       
       #root {
-        height: 100%;
-        overscroll-behavior: none;
+        overscroll-behavior: none !important;
       }
     </style>
     
-    <!-- ズームコントロール用のスクリプト -->
+    <!-- 上下のオーバースクロールも防止するスクリプト -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // タッチ操作によるズームを制御
+        // タッチ操作によるズームとオーバースクロールを制御
         document.addEventListener('touchmove', function(e) {
+          // ズーム操作を防止
           if (e.touches.length > 1) {
             e.preventDefault();
           }
+          
+          // 上下のオーバースクロールチェック
+          var target = e.target;
+          while (target !== document.body && target !== null) {
+            var styles = window.getComputedStyle(target);
+            var overflowY = styles.getPropertyValue('overflow-y');
+            
+            if (overflowY === 'auto' || overflowY === 'scroll') {
+              // スクロール可能な要素が見つかった場合
+              var atTop = target.scrollTop <= 0;
+              var atBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 1;
+              
+              // 上下の境界でのスクロールを防止
+              if ((atTop && e.touches[0].screenY > e.touches[0].screenY) || 
+                  (atBottom && e.touches[0].screenY < e.touches[0].screenY)) {
+                e.preventDefault();
+                return;
+              }
+              
+              break;
+            }
+            
+            target = target.parentElement;
+          }
         }, { passive: false });
         
-        // ページ表示時にズームをリセット
-        document.addEventListener('visibilitychange', function() {
-          if (!document.hidden) {
-            window.scrollTo(0, 0);
+        // ページの境界でのタッチスタート・終了も捕捉
+        document.addEventListener('touchstart', function(e) {
+          this.startY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', function(e) {
+          // iOSでのダブルタップズームを防止
+          var now = Date.now();
+          var timeDiff = now - (this.lastTouchEnd || 0);
+          
+          if (timeDiff < 300 && e.touches.length === 0) {
+            e.preventDefault();
           }
-        });
+          
+          this.lastTouchEnd = now;
+        }, { passive: false });
       });
     </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
