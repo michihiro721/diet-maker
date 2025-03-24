@@ -37,46 +37,70 @@
     -->
     <title>ダイエットメーカー</title>
     
-    <!-- オーバースクロール防止のためのスタイル -->
+    <!-- 横スクロール禁止のためのスタイル -->
     <style>
+      /* 横方向のスクロールのみを禁止 */
       html {
-        overscroll-behavior: none !important;
+        overflow-x: hidden;
+        overscroll-behavior-x: none !important;
       }
       
       body {
-        overscroll-behavior: none !important;
+        overflow-x: hidden;
+        overscroll-behavior-x: none !important;
         -webkit-overflow-scrolling: touch;
-        overflow-x: hidden !important; /* 横スクロール防止 */
-        width: 100%;
       }
       
       #root {
-        overscroll-behavior: none !important;
-        overflow-x: hidden !important; /* 横スクロール防止 */
-        width: 100%;
+        overflow-x: hidden;
+        overscroll-behavior-x: none !important;
       }
     </style>
     
-    <!-- 横スクロールのみを防止するスクリプト -->
+    <!-- 横スクロールを防止するスクリプト -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // タッチ操作によるズームとオーバースクロールを制御
+        // タッチ操作によるズームと横スクロールを制御
         document.addEventListener('touchmove', function(e) {
           // ズーム操作を防止
           if (e.touches.length > 1) {
             e.preventDefault();
           }
           
-          // 横方向のスクロールのみを禁止（縦スクロールは許可）
-          if (Math.abs(e.touches[0].clientX - this.startX) > Math.abs(e.touches[0].clientY - this.startY) * 2) {
-            e.preventDefault();
+          // 横方向のスクロールチェック
+          if (e.touches.length === 1) {
+            var target = e.target;
+            var startX = this.startX || 0;
+            var currentX = e.touches[0].clientX;
+            var deltaX = currentX - startX;
+            
+            // 横スクロールの検出
+            if (Math.abs(deltaX) > 10) {
+              // 横スクロール可能な要素かチェック
+              while (target !== document.body && target !== null) {
+                var styles = window.getComputedStyle(target);
+                var overflowX = styles.getPropertyValue('overflow-x');
+                
+                if (overflowX === 'auto' || overflowX === 'scroll') {
+                  // スクロール可能な要素内なら許可
+                  return;
+                }
+                
+                target = target.parentElement;
+              }
+              
+              // 明示的に横スクロール可能な要素でない場合は防止
+              if (Math.abs(deltaX) > Math.abs(e.touches[0].clientY - (this.startY || 0))) {
+                e.preventDefault();
+              }
+            }
           }
         }, { passive: false });
         
-        // タッチスタート位置を記録
+        // タッチ開始位置を記録
         document.addEventListener('touchstart', function(e) {
-          this.startY = e.touches[0].clientY;
           this.startX = e.touches[0].clientX;
+          this.startY = e.touches[0].clientY;
         }, { passive: true });
         
         document.addEventListener('touchend', function(e) {
