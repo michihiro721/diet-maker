@@ -9,10 +9,9 @@
   height: 100vh;
   /* オーバースクロール対策 - 横と縦両方を制御 */
   overscroll-behavior: none;
-  overflow-y: auto; /* 縦スクロールを許可しつつコンテナ内に制限 */
-  position: relative; /* 子要素の配置の基準点 */
+  overflow-y: auto; 
+  position: relative;
 }
-
 
 .weight-chart-wrapper {
   position: relative;
@@ -112,6 +111,7 @@
   align-items: center;
   text-align: center;
   font-weight: bold;
+  width: 100%;
 }
 
 .goal-info-target-weight {
@@ -122,6 +122,12 @@
   border-radius: 8px;
   padding: 5px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 5px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .goal-info-target {
@@ -132,6 +138,12 @@
   border-radius: 8px;
   padding: 5px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 5px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .weight-save-button {
@@ -171,6 +183,7 @@
   /* オーバースクロール対策 */
   overscroll-behavior: none;
   touch-action: none;
+  /* 追加: スクロール無効化 */
   overflow: hidden;
 }
 
@@ -181,7 +194,7 @@
   text-align: center;
   /* モーダル内のオーバースクロール対策 */
   overscroll-behavior: contain;
-  position: relative;
+  position: relative; /* モーダルの位置固定 */
 }
 
 .weight-error-message {
@@ -193,6 +206,8 @@
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .weight-success-message {
@@ -204,39 +219,54 @@
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* 全体のスクロール制御をページレベルで追加 */
 html, body {
   overscroll-behavior-y: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
   .weight-chart-container {
     justify-content: flex-start;
     height: auto;
-    padding: 20px 10px;
-    margin-top: 100px;
-    margin-bottom: 150px;
+    padding: 10px;
+    margin-top: 60px; /* ヘッダー分のスペース確保 */
+    margin-bottom: 80px; /* フッター分のスペース確保 */
     /* スマホ対応のオーバースクロール対策 */
     overscroll-behavior: none;
     overflow-x: hidden;
     max-width: 100%;
+    width: 100%;
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
-    max-height: calc(100vh - 250px);
+    /* 縦スクロールを制御する */
+    max-height: calc(100vh - 140px); /* マージンを考慮した高さ制限 */
     overflow-y: auto;
+    /* 左右の余白をなくす */
+    left: 0;
   }
 
   .weight-chart-wrapper {
     height: 300px;
+    width: 100%;
+  }
+
+  .weight-chart {
+    width: 100%;
   }
 
   .weight-chart-controls {
     flex-direction: column;
     align-items: center;
     margin-bottom: 15px;
+    width: 100%;
   }
 
   .weight-chart-controls label {
@@ -267,6 +297,7 @@ html, body {
     flex-wrap: wrap;
     text-align: center;
     justify-content: center;
+    width: 100%;
   }
 
   .weight-save-controls label {
@@ -296,10 +327,33 @@ html, body {
     max-width: 350px;
     padding: 15px;
   }
+  
+  /* 目標情報のテキスト切れ防止 */
+  .goal-info {
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  
+  .goal-info-target-weight,
+  .goal-info-target {
+    font-size: 16px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    /* テキスト処理の改善 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 480px) {
+  /* スマホ表示全体の改善 */
   body {
+    margin: 0;
+    padding: 0;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -312,17 +366,20 @@ html, body {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: none;
+    margin: 0;
+    padding: 0;
   }
   
   .weight-chart-container {
     justify-content: flex-start;
     height: auto;
-    padding: 20px 10px;
-    margin-top: 50px;
-    margin-bottom: 100px;
+    padding: 10px;
+    margin-top: 60px; /* ヘッダー分のスペース確保 */
+    margin-bottom: 80px; /* フッター分のスペース確保 */
     /* スマホ対応の追加スタイル */
     overflow-x: hidden;
     max-width: 100%;
+    width: 100%;
     box-sizing: border-box;
     overscroll-behavior-y: none;
     overscroll-behavior-x: none;
@@ -332,6 +389,8 @@ html, body {
     -webkit-tap-highlight-color: transparent;
     /* スクロールバウンス防止 */
     position: relative;
+    /* 左右の余白をなくす */
+    left: 0;
   }
 
   /* 要素内のスクロールを滑らかに */
@@ -348,6 +407,14 @@ html, body {
 
   .weight-chart-wrapper {
     height: 250px;
+    width: 100%; 
+  }
+  
+  .weight-chart {
+    width: 100%;
+    /* 横スクロール防止 */
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .weight-chart-controls label {
@@ -371,6 +438,9 @@ html, body {
     margin: 0 auto 10px;
     display: block;
     width: 70%;
+    /* テキスト切れを防止 */
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .weight-save-button {
@@ -380,16 +450,42 @@ html, body {
     width: 50%;
   }
 
-  .goal-info-target-weight,
-  .goal-info-target {
-    font-size: 16px;
-    padding: 8px;
+  /* 目標情報のテキスト切れ防止 - スマホサイズ専用 */
+  .goal-info {
     width: 100%;
+    padding: 0;
     box-sizing: border-box;
-    margin-bottom: 10px;
   }
   
+  .goal-info-target-weight,
+  .goal-info-target {
+    font-size: 15px;
+    padding: 8px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 5px 0;
+    /* テキスト処理の改善 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* モバイルでの余分なスクロールを防止 */
   .react-calendar {
     overscroll-behavior: none;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* エラーメッセージと成功メッセージの幅調整 */
+  .weight-error-message,
+  .weight-success-message {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 8px;
   }
 }
