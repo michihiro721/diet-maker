@@ -37,10 +37,11 @@
     -->
     <title>ダイエットメーカー</title>
     
-    <!-- オーバースクロール防止のためのスタイル -->
+    <!-- オーバースクロール防止と柔らかいスクロール効果のためのスタイル -->
     <style>
       html, body {
-        overscroll-behavior: none;
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
         overflow-x: hidden;
         margin: 0;
         padding: 0;
@@ -50,11 +51,29 @@
         -webkit-overflow-scrolling: touch;
         touch-action: pan-y;
         background-color: #fff;
+        scroll-behavior: smooth;
       }
       
       #root {
         height: 100%;
-        overscroll-behavior: none;
+        /* 横方向のみオーバースクロール防止 */
+        overscroll-behavior-x: none;
+        overscroll-behavior-y: auto;
+      }
+
+      /* 柔らかいスクロール効果を適用 */
+      .calorie-info-container,
+      .weight-container,
+      .home-container,
+      .achievement-container,
+      .post-container,
+      .settings-container,
+      .profile-container,
+
+      [class$="-container"] {
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: auto;
+        overflow-y: auto;
       }
     </style>
     
