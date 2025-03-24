@@ -6,25 +6,9 @@ html, body {
     font-family: Arial, sans-serif;
     height: 100%; /* 高さを100%に設定 */
     overflow-y: auto; /* 縦方向のスクロールを有効にする */
-    overflow-x: hidden; /* 横方向のスクロールを無効化 */
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    
-    /* オーバースクロール防止のためのプロパティ */
-    overscroll-behavior: none; /* モダンブラウザ用 */
-    -webkit-overflow-scrolling: touch; /* iOS用 */
-    touch-action: pan-y; /* 縦方向のみのスクロールを許可 */
 }
 
 /* ルート要素の高さを100%に設定 */
 #root {
     height: 100%;
-    overscroll-behavior: none; /* ルート要素にも適用 */
-}
-
-/* アプリ全体のコンテナにも適用（もし存在する場合） */
-.app-container, #app {
-    overscroll-behavior: none;
-    overflow-x: hidden;
 }
