@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  /* オーバースクロール対策 */
+  overscroll-behavior: none;
 }
 
 
@@ -164,6 +166,9 @@
   align-items: center;
   z-index: 1000;
   text-align: center;
+  /* オーバースクロール対策 */
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 .weight-calendar-modal {
@@ -171,6 +176,8 @@
   padding: 20px;
   border-radius: 4px;
   text-align: center;
+  /* モーダル内のオーバースクロール対策 */
+  overscroll-behavior: contain;
 }
 
 .weight-error-message {
@@ -202,6 +209,13 @@
     padding: 20px 10px;
     margin-top: 100px;
     margin-bottom: 150px;
+    /* スマホ対応のオーバースクロール対策 */
+    overscroll-behavior: none;
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 
   .weight-chart-wrapper {
@@ -280,9 +294,22 @@
     padding: 20px 10px;
     margin-top: 50px;
     margin-bottom: 100px;
+    /* スマホ対応の追加スタイル */
     overflow-x: hidden;
     max-width: 100%;
     box-sizing: border-box;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* カレンダーモーダル用のスタイル */
+  .weight-calendar-modal-overlay {
+    overscroll-behavior: none;
+    touch-action: none;
   }
 
   .weight-chart-wrapper {
