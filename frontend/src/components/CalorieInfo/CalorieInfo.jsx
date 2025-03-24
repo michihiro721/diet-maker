@@ -40,11 +40,12 @@ ChartJS.register(
 const CalorieInfo = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [steps, setSteps] = useState(0);
-  const [trainingCalories, setTrainingCalories] = useState(0);
+  const [activityLevel, setActivityLevel] = useState(""); // 活動量レベル
   const [basalMetabolism, setBasalMetabolism] = useState(0);
   const [intakeCalories, setIntakeCalories] = useState(0);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
+  const [isActivityModalOpen, setIsActivityModalOpen] = useState(false); // 活動量モーダル用
   const [currentInput, setCurrentInput] = useState("");
   const [error, setError] = useState("");
   const [period, setPeriod] = useState('7days');
@@ -106,6 +107,15 @@ const CalorieInfo = () => {
       },
     ],
   });
+
+  // 活動レベル係数
+  const activityLevelFactors = {
+    "活動量が低い人": 1.2,
+    "活動量がやや低い人": 1.375,
+    "活動量が標準の人": 1.55,
+    "活動量が高い人": 1.725,
+    "活動量がかなり高い人": 1.9
+  };
 
   // ユーザーIDをローカルストレージから取得
   useEffect(() => {
@@ -338,13 +348,18 @@ const CalorieInfo = () => {
   }, [period, userId]);
 
   const handleStepsChange = (value) => setSteps(value);
-  const handleTrainingCaloriesChange = (value) => setTrainingCalories(value);
+  const handleActivityLevelChange = (value) => setActivityLevel(value);
   const handleBasalMetabolismChange = (value) => setBasalMetabolism(value);
   const handleIntakeCaloriesChange = (value) => setIntakeCalories(value);
 
-  const calculateStepCalories = () => steps * 0.04;
-  const totalCaloriesBurned = () => calculateStepCalories() + parseFloat(trainingCalories || 0) + parseFloat(basalMetabolism || 0);
-  const calorieDifference = () => parseFloat(intakeCalories || 0) - totalCaloriesBurned();
+  // 活動レベルに基づいた消費カロリーを計算
+  const calculateTotalCalories = () => {
+    const factor = activityLevelFactors[activityLevel] || 1;
+    return Math.round(parseFloat(basalMetabolism || 0) * factor);
+  };
+  
+  // カロリー差分を計算
+  const calorieDifference = () => parseFloat(intakeCalories || 0) - calculateTotalCalories();
 
   const openCalendarModal = () => setIsCalendarOpen(true);
   const closeCalendarModal = () => setIsCalendarOpen(false);
@@ -356,13 +371,20 @@ const CalorieInfo = () => {
 
   const closeWeightModal = () => setIsWeightModalOpen(false);
 
+  // 活動量選択モーダルを開く
+  const openActivityModal = () => {
+    setIsActivityModalOpen(true);
+  };
+
+  // 活動量選択モーダルを閉じる
+  const closeActivityModal = () => {
+    setIsActivityModalOpen(false);
+  };
+
   const handleWeightModalSave = (value) => {
     switch (currentInput) {
       case "steps":
         handleStepsChange(value);
-        break;
-      case "trainingCalories":
-        handleTrainingCaloriesChange(value);
         break;
       case "basalMetabolism":
         handleBasalMetabolismChange(value);
@@ -374,6 +396,12 @@ const CalorieInfo = () => {
         break;
     }
     setIsWeightModalOpen(false);
+  };
+
+  // 活動量を選択する処理
+  const selectActivityLevel = (level) => {
+    setActivityLevel(level);
+    setIsActivityModalOpen(false);
   };
 
   const handleDateChange = (date) => {
@@ -388,7 +416,7 @@ const CalorieInfo = () => {
       return;
     }
 
-    if (!selectedDate || !steps || !trainingCalories || !basalMetabolism || !intakeCalories) {
+    if (!selectedDate || !steps || !activityLevel || !basalMetabolism || !intakeCalories) {
       setError('全ての項目を入力してください');
       return;
     }
@@ -399,7 +427,7 @@ const CalorieInfo = () => {
       ? selectedDate.toISOString().split('T')[0]
       : selectedDate;
       
-    const totalCalories = parseFloat(trainingCalories) + parseFloat(basalMetabolism) + (parseFloat(steps) * 0.04);
+    const totalCalories = calculateTotalCalories();
 
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
@@ -409,7 +437,7 @@ const CalorieInfo = () => {
           user_id: userId,
           date: formattedDate,
           steps: steps,
-          calories_burned: parseFloat(steps) * 0.04,
+          calories_burned: 0, // 歩数からのカロリー計算は使用しない
         }
       });
 
@@ -437,9 +465,8 @@ const CalorieInfo = () => {
         
         // 入力フィールドをクリア
         setSteps(0);
-        setTrainingCalories(0);
         setIntakeCalories(0);
-        // 基礎代謝はクリアしない（ユーザー情報から計算された値を維持）
+        // 基礎代謝と活動レベルはクリアしない
       } else {
         console.error("Error saving data:", stepsResponse.data, dailyCaloriesResponse.data, intakeCaloriesResponse.data);
         setError('データの保存に失敗しました');
@@ -518,6 +545,77 @@ const CalorieInfo = () => {
     },
   };
 
+  // 活動量モーダル
+  const ActivityLevelModal = () => (
+    <div className="calorie-calendar-modal-overlay" onClick={closeActivityModal}>
+      <div className="calorie-activity-modal" onClick={(e) => e.stopPropagation()}>
+        <h3>活動レベルを選択</h3>
+        <div className="activity-options">
+          <div className="activity-option" onClick={() => selectActivityLevel("活動量が低い人")}>
+            <input 
+              type="radio" 
+              checked={activityLevel === "活動量が低い人"} 
+              readOnly 
+            />
+            <div className="activity-content">
+              <h4>活動量が低い人</h4>
+              <p>デスクワーク中心で座っていることが多く、<br/>1日の運動は通勤・通学や近所のお買い物程度</p>
+            </div>
+          </div>
+          
+          <div className="activity-option" onClick={() => selectActivityLevel("活動量がやや低い人")}>
+            <input 
+              type="radio" 
+              checked={activityLevel === "活動量がやや低い人"} 
+              readOnly 
+            />
+            <div className="activity-content">
+              <h4>活動量がやや低い人</h4>
+              <p>上記の活動量が低い人＋1週間に1，2回程度軽い運動や筋トレをする</p>
+            </div>
+          </div>
+          
+          <div className="activity-option" onClick={() => selectActivityLevel("活動量が標準の人")}>
+            <input 
+              type="radio" 
+              checked={activityLevel === "活動量が標準の人"} 
+              readOnly 
+            />
+            <div className="activity-content">
+              <h4>活動量が標準の人</h4>
+              <p>営業の外回りや肉体労働で1日中よく動いている<br/>または1週間に2，3回程度強度の高い運動や筋トレをする</p>
+            </div>
+          </div>
+          
+          <div className="activity-option" onClick={() => selectActivityLevel("活動量が高い人")}>
+            <input 
+              type="radio" 
+              checked={activityLevel === "活動量が高い人"} 
+              readOnly 
+            />
+            <div className="activity-content">
+              <h4>活動量が高い人</h4>
+              <p>上記の標準の人＋1週間に4，5回程度強度の高い運動や筋トレをする</p>
+            </div>
+          </div>
+          
+          <div className="activity-option" onClick={() => selectActivityLevel("活動量がかなり高い人")}>
+            <input 
+              type="radio" 
+              checked={activityLevel === "活動量がかなり高い人"} 
+              readOnly 
+            />
+            <div className="activity-content">
+              <h4>活動量がかなり高い人</h4>
+              <p>スポーツ選手・アスリート</p>
+            </div>
+          </div>
+        </div>
+        <button className="calorie-modal-close-button" onClick={closeActivityModal}>閉じる</button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="calorie-info-container">
       <div className="calorie-chart-controls">
@@ -556,8 +654,14 @@ const CalorieInfo = () => {
         <input type="text" value={steps ? `${steps} 歩` : ''} readOnly onClick={() => openWeightModal("steps")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
-        <label className="calorie-label">トレーニングの消費カロリー:</label>
-        <input type="text" value={trainingCalories ? `${trainingCalories} kcal` : ''} readOnly onClick={() => openWeightModal("trainingCalories")} className="calorie-input" />
+        <label className="calorie-label">活動量:</label>
+        <input 
+          type="text" 
+          value={activityLevel || '活動量を選択してください'} 
+          readOnly 
+          onClick={openActivityModal} 
+          className="calorie-input" 
+        />
       </div>
       <div className="calorie-input-group">
         <label className="calorie-label">基礎代謝:</label>
@@ -569,8 +673,7 @@ const CalorieInfo = () => {
       </div>
       {error && <p className="calorie-error-message">{error}</p>}
       <div className="calorie-summary">
-        <p>歩数から計算した消費カロリー: {Math.round(calculateStepCalories() * 10) / 10} kcal</p>
-        <p>合計消費カロリー: {Math.round(totalCaloriesBurned() * 10) / 10} kcal</p>
+        <p>合計消費カロリー: {calculateTotalCalories()} kcal</p>
         <p>1日の摂取カロリー: {intakeCalories} kcal</p>
         <p>カロリー差分: {Math.round(calorieDifference() * 10) / 10} kcal</p>
       </div>
@@ -595,6 +698,7 @@ const CalorieInfo = () => {
           onSave={handleWeightModalSave}
         />
       )}
+      {isActivityModalOpen && <ActivityLevelModal />}
     </div>
   );
 };

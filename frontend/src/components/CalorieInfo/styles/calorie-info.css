@@ -201,6 +201,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    z-index: 100;
 }
 
 /* カロリーカレンダーモーダル自体 */
@@ -255,4 +256,92 @@
 
 .total-calorie-difference .negative {
     color: #0366d6;
+}
+
+/* 活動量モーダル */
+.calorie-activity-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.calorie-activity-modal h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+}
+
+.activity-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.activity-option {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+}
+
+.activity-option:hover {
+    background-color: #f0f8ff;
+    border-color: #87CEFA;
+}
+
+.activity-option input[type="radio"] {
+    margin-right: 15px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.activity-content {
+    flex: 1;
+    text-align: left;
+}
+
+.activity-content h4 {
+    margin: 0 0 5px;
+    font-size: 16px;
+    color: #0366d6;
+}
+
+.activity-content p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.calorie-modal-close-button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgba(135, 206, 250, 0.3);
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    border: 2px solid rgba(162, 217, 255, 1);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.calorie-modal-close-button:hover {
+    background-color: #4a8ad4;
+    color: white;
 }
