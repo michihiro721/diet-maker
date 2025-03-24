@@ -263,35 +263,37 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 500px;
     width: 90%;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
 }
 
 .calorie-activity-modal h3 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #333;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .activity-options {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
 }
 
 .activity-option {
     display: flex;
     align-items: flex-start;
-    padding: 15px;
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
+    margin-bottom: 5px;
 }
 
 .activity-option:hover {
@@ -311,16 +313,16 @@
 }
 
 .activity-content h4 {
-    margin: 0 0 8px;
-    font-size: 18px;
+    margin: 0 0 5px;
+    font-size: 16px;
     color: #0366d6;
 }
 
 .activity-content p {
     margin: 0;
     color: #555;
-    font-size: 16px;
-    line-height: 1.4;
+    font-size: 14px;
+    line-height: 1.3;
 }
 
 .calorie-modal-close-button {
