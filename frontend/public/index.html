@@ -40,17 +40,22 @@
     <!-- オーバースクロール防止のためのスタイル -->
     <style>
       /* 最小限の修正でオーバースクロールを防止 */
-      html {
+      html, body {
         overscroll-behavior: none !important;
-      }
-      
-      body {
-        overscroll-behavior: none !important;
+        overflow-x: hidden !important;
+        position: fixed !important;
+        width: 100% !important;
+        height: 100% !important;
         -webkit-overflow-scrolling: touch;
       }
       
       #root {
         overscroll-behavior: none !important;
+        overflow-x: hidden !important;
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow-y: auto !important;
       }
     </style>
     
@@ -62,6 +67,12 @@
           // ズーム操作を防止
           if (e.touches.length > 1) {
             e.preventDefault();
+          }
+          
+          // 横方向のスクロールを完全に禁止
+          if (Math.abs(e.touches[0].clientX - this.startX) > Math.abs(e.touches[0].clientY - this.startY)) {
+            e.preventDefault();
+            return;
           }
           
           // 上下のオーバースクロールチェック
@@ -76,8 +87,8 @@
               var atBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 1;
               
               // 上下の境界でのスクロールを防止
-              if ((atTop && e.touches[0].screenY > e.touches[0].screenY) || 
-                  (atBottom && e.touches[0].screenY < e.touches[0].screenY)) {
+              if ((atTop && e.touches[0].clientY > this.startY) || 
+                  (atBottom && e.touches[0].clientY < this.startY)) {
                 e.preventDefault();
                 return;
               }
@@ -92,6 +103,7 @@
         // ページの境界でのタッチスタート・終了も捕捉
         document.addEventListener('touchstart', function(e) {
           this.startY = e.touches[0].clientY;
+          this.startX = e.touches[0].clientX;
         }, { passive: true });
         
         document.addEventListener('touchend', function(e) {
