@@ -6,11 +6,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc(100vh - 7vh - 50px);
   /* オーバースクロール対策 - 横と縦両方を制御 */
   overscroll-behavior: none;
   overflow-y: auto; 
   position: relative;
+  margin-top: 7vh;
+  margin-bottom: 50px;
 }
 
 .weight-chart-wrapper {
@@ -236,9 +238,8 @@ html, body {
     justify-content: flex-start;
     height: auto;
     padding: 10px;
-    margin-top: 60px; /* ヘッダー分のスペース確保 */
-    margin-bottom: 80px; /* フッター分のスペース確保 */
-    /* スマホ対応のオーバースクロール対策 */
+    margin-top: 60px;
+    margin-bottom: 60px;
     overscroll-behavior: none;
     overflow-x: hidden;
     max-width: 100%;
@@ -246,10 +247,8 @@ html, body {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
-    /* 縦スクロールを制御する */
-    max-height: calc(100vh - 140px); /* マージンを考慮した高さ制限 */
+    max-height: calc(100vh - 120px);
     overflow-y: auto;
-    /* 左右の余白をなくす */
     left: 0;
   }
 
@@ -374,8 +373,10 @@ html, body {
     justify-content: flex-start;
     height: auto;
     padding: 10px;
-    margin-top: 60px; /* ヘッダー分のスペース確保 */
-    margin-bottom: 80px; /* フッター分のスペース確保 */
+    /* スマホサイズのヘッダー高さに合わせる (45px) */
+    margin-top: 45px;
+    /* スマホサイズのフッター高さを考慮 (約50px) */
+    margin-bottom: 50px;
     /* スマホ対応の追加スタイル */
     overflow-x: hidden;
     max-width: 100%;
@@ -391,6 +392,9 @@ html, body {
     position: relative;
     /* 左右の余白をなくす */
     left: 0;
+    /* ヘッダーとフッターの間の領域を確保 */
+    min-height: calc(100vh - 45px - 50px);
+    max-height: calc(100vh - 45px - 50px);
   }
 
   /* 要素内のスクロールを滑らかに */
