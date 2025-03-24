@@ -39,27 +39,25 @@
     
     <!-- オーバースクロール防止のためのスタイル -->
     <style>
-      /* 最小限の修正でオーバースクロールを防止 */
-      html, body {
+      html {
         overscroll-behavior: none !important;
-        overflow-x: hidden !important;
-        position: fixed !important;
-        width: 100% !important;
-        height: 100% !important;
+      }
+      
+      body {
+        overscroll-behavior: none !important;
         -webkit-overflow-scrolling: touch;
+        overflow-x: hidden !important; /* 横スクロール防止 */
+        width: 100%;
       }
       
       #root {
         overscroll-behavior: none !important;
-        overflow-x: hidden !important;
-        position: absolute !important;
-        width: 100% !important;
-        height: 100% !important;
-        overflow-y: auto !important;
+        overflow-x: hidden !important; /* 横スクロール防止 */
+        width: 100%;
       }
     </style>
     
-    <!-- 上下のオーバースクロールも防止するスクリプト -->
+    <!-- 横スクロールのみを防止するスクリプト -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         // タッチ操作によるズームとオーバースクロールを制御
@@ -69,38 +67,13 @@
             e.preventDefault();
           }
           
-          // 横方向のスクロールを完全に禁止
-          if (Math.abs(e.touches[0].clientX - this.startX) > Math.abs(e.touches[0].clientY - this.startY)) {
+          // 横方向のスクロールのみを禁止（縦スクロールは許可）
+          if (Math.abs(e.touches[0].clientX - this.startX) > Math.abs(e.touches[0].clientY - this.startY) * 2) {
             e.preventDefault();
-            return;
-          }
-          
-          // 上下のオーバースクロールチェック
-          var target = e.target;
-          while (target !== document.body && target !== null) {
-            var styles = window.getComputedStyle(target);
-            var overflowY = styles.getPropertyValue('overflow-y');
-            
-            if (overflowY === 'auto' || overflowY === 'scroll') {
-              // スクロール可能な要素が見つかった場合
-              var atTop = target.scrollTop <= 0;
-              var atBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 1;
-              
-              // 上下の境界でのスクロールを防止
-              if ((atTop && e.touches[0].clientY > this.startY) || 
-                  (atBottom && e.touches[0].clientY < this.startY)) {
-                e.preventDefault();
-                return;
-              }
-              
-              break;
-            }
-            
-            target = target.parentElement;
           }
         }, { passive: false });
         
-        // ページの境界でのタッチスタート・終了も捕捉
+        // タッチスタート位置を記録
         document.addEventListener('touchstart', function(e) {
           this.startY = e.touches[0].clientY;
           this.startX = e.touches[0].clientX;
