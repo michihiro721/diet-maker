@@ -37,62 +37,129 @@
     -->
     <title>ダイエットメーカー</title>
     
-    <!-- オーバースクロール防止と柔らかいスクロール効果のためのスタイル -->
+    <!-- 上下左右のオーバースクロールを完全に防止するスタイル -->
     <style>
-      html, body {
-        overscroll-behavior-x: none;
-        overscroll-behavior-y: auto;
-        overflow-x: hidden;
+      html {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: fixed;
+        overscroll-behavior: none;
+        background-color: #fff;
+      }
+      
+      body {
+        height: 100%;
+        width: 100%;
         margin: 0;
         padding: 0;
-        width: 100%;
-        height: 100%;
-        position: relative;
+        overflow: auto;
+        position: fixed;
+        overscroll-behavior: none;
         -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
+        touch-action: none;
         background-color: #fff;
-        scroll-behavior: smooth;
       }
       
       #root {
         height: 100%;
-        /* 横方向のみオーバースクロール防止 */
-        overscroll-behavior-x: none;
-        overscroll-behavior-y: auto;
+        width: 100%;
+        overflow: auto;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
       }
 
-      /* 柔らかいスクロール効果を適用 */
-      .calorie-info-container,
-      .weight-container,
-      .home-container,
-      .achievement-container,
-      .post-container,
-      .settings-container,
-      .profile-container,
-
+      /* コンテンツコンテナでスクロールを許可 */
       [class$="-container"] {
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-y: auto;
+        height: 100%;
         overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+        /* 縦スクロールのみ許可 */
+        touch-action: pan-y;
+      }
+      
+      /* iOS固有の修正 */
+      @supports (-webkit-touch-callout: none) {
+        body, #root, [class$="-container"] {
+          /* iOS用の高さ調整 */
+          height: -webkit-fill-available;
+        }
       }
     </style>
     
-    <!-- ズームコントロール用のスクリプト -->
+    <!-- タッチイベントを完全に制御するスクリプト -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // タッチ操作によるズームを制御
-        document.addEventListener('touchmove', function(e) {
-          if (e.touches.length > 1) {
+        // すべてのタッチイベントをキャプチャして制御
+        document.addEventListener('touchstart', function(e) {
+          // 境界でのタッチイベントをチェック
+          if (isAtBoundary(e)) {
             e.preventDefault();
           }
         }, { passive: false });
         
-        // ページ表示時にズームをリセット
-        document.addEventListener('visibilitychange', function() {
-          if (!document.hidden) {
-            window.scrollTo(0, 0);
+        document.addEventListener('touchmove', function(e) {
+          // 複数タッチ（ズーム）や境界でのスクロールを防止
+          if (e.touches.length > 1 || isAtBoundary(e)) {
+            e.preventDefault();
           }
-        });
+        }, { passive: false });
+        
+        // スクロール境界をチェックする関数
+        function isAtBoundary(e) {
+          const target = e.target;
+          const scrollableParent = findScrollableParent(target);
+          
+          if (!scrollableParent) return false;
+          
+          // 上端か下端にあるかチェック
+          const atTop = scrollableParent.scrollTop <= 0;
+          const atBottom = scrollableParent.scrollHeight - scrollableParent.scrollTop <= scrollableParent.clientHeight + 1;
+          
+          // 上または下の境界にいて、その方向へスクロールしようとしている場合
+          return (atTop && e.touches[0].clientY > e.touches[0].clientY) || 
+                 (atBottom && e.touches[0].clientY < e.touches[0].clientY);
+        }
+        
+        // スクロール可能な親要素を見つける関数
+        function findScrollableParent(element) {
+          if (!element) return null;
+          
+          if (element === document.body || element === document.documentElement) {
+            return document.body;
+          }
+          
+          const style = window.getComputedStyle(element);
+          const overflowY = style.getPropertyValue('overflow-y');
+          
+          if (overflowY === 'auto' || overflowY === 'scroll') {
+            return element;
+          }
+          
+          return findScrollableParent(element.parentElement);
+        }
+        
+        // iOSでの特別な処理
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+          // ダブルタップによるズームを防止
+          document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            const timeDiff = now - (this.lastTouchEnd || 0);
+            
+            if (timeDiff < 300 && e.touches.length === 0) {
+              e.preventDefault();
+            }
+            
+            this.lastTouchEnd = now;
+          }, { passive: false });
+          
+          // ピンチズームを明示的に防止
+          document.documentElement.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+          }, { passive: false });
+        }
       });
     </script>
   </head>
