@@ -37,144 +37,45 @@
     -->
     <title>ダイエットメーカー</title>
     
-    <!-- 上下左右のオーバースクロールを完全に防止するスタイル -->
+    <!-- オーバースクロール防止のためのスタイル -->
     <style>
-      html {
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        position: fixed;
+      html, body {
         overscroll-behavior: none;
-        background-color: #fff;
-      }
-      
-      body {
-        height: 100%;
-        width: 100%;
+        overflow-x: hidden;
         margin: 0;
         padding: 0;
-        overflow: auto;
-        position: fixed;
-        overscroll-behavior: none;
+        width: 100%;
+        height: 100%;
+        position: relative;
         -webkit-overflow-scrolling: touch;
-        touch-action: none;
+        touch-action: pan-y;
         background-color: #fff;
       }
       
       #root {
         height: 100%;
-        width: 100%;
-        overflow: auto;
         overscroll-behavior: none;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      /* コンテンツコンテナでスクロールを許可 */
-      [class$="-container"] {
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        overscroll-behavior: none;
-        -webkit-overflow-scrolling: touch;
-        /* 縦スクロールのみ許可 */
-        touch-action: pan-y;
-      }
-      
-      /* iOS固有の修正 */
-      @supports (-webkit-touch-callout: none) {
-        body, #root, [class$="-container"] {
-          /* iOS用の高さ調整 */
-          height: -webkit-fill-available;
-        }
       }
     </style>
     
-    <!-- タッチイベントを完全に制御するスクリプト -->
+    <!-- ズームコントロール用のスクリプト -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        // すべてのタッチイベントをキャプチャして制御
-        document.addEventListener('touchstart', function(e) {
-          // 境界でのタッチイベントをチェック
-          if (isAtBoundary(e)) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-        
+        // タッチ操作によるズームを制御
         document.addEventListener('touchmove', function(e) {
-          // 複数タッチ（ズーム）や境界でのスクロールを防止
-          if (e.touches.length > 1 || isAtBoundary(e)) {
+          if (e.touches.length > 1) {
             e.preventDefault();
           }
         }, { passive: false });
         
-        // スクロール境界をチェックする関数
-        function isAtBoundary(e) {
-          const target = e.target;
-          const scrollableParent = findScrollableParent(target);
-          
-          if (!scrollableParent) return false;
-          
-          // 上端か下端にあるかチェック
-          const atTop = scrollableParent.scrollTop <= 0;
-          const atBottom = scrollableParent.scrollHeight - scrollableParent.scrollTop <= scrollableParent.clientHeight + 1;
-          
-          // 上または下の境界にいて、その方向へスクロールしようとしている場合
-          return (atTop && e.touches[0].clientY > e.touches[0].clientY) || 
-                 (atBottom && e.touches[0].clientY < e.touches[0].clientY);
-        }
-        
-        // スクロール可能な親要素を見つける関数
-        function findScrollableParent(element) {
-          if (!element) return null;
-          
-          if (element === document.body || element === document.documentElement) {
-            return document.body;
+        // ページ表示時にズームをリセット
+        document.addEventListener('visibilitychange', function() {
+          if (!document.hidden) {
+            window.scrollTo(0, 0);
           }
-          
-          const style = window.getComputedStyle(element);
-          const overflowY = style.getPropertyValue('overflow-y');
-          
-          if (overflowY === 'auto' || overflowY === 'scroll') {
-            return element;
-          }
-          
-          return findScrollableParent(element.parentElement);
-        }
-        
-        // iOSでの特別な処理
-        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-          // ダブルタップによるズームを防止
-          document.addEventListener('touchend', function(e) {
-            const now = Date.now();
-            const timeDiff = now - (this.lastTouchEnd || 0);
-            
-            if (timeDiff < 300 && e.touches.length === 0) {
-              e.preventDefault();
-            }
-            
-            this.lastTouchEnd = now;
-          }, { passive: false });
-          
-          // ピンチズームを明示的に防止
-          document.documentElement.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-          }, { passive: false });
-        }
+        });
       });
     </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
-</html>
