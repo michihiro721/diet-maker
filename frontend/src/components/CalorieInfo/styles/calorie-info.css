@@ -345,3 +345,104 @@
     background-color: #4a8ad4;
     color: white;
 }
+
+
+
+@media (max-width: 480px) {
+    .calorie-info-container {
+        margin-top: 30px;
+        padding: 10px;
+        height: auto;
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+    
+    .calorie-chart {
+        height: 400px;
+    }
+    
+    .calorie-chart-controls label {
+        font-size: 14px;
+    }
+    
+    .calorie-chart-controls select {
+        font-size: 14px;
+    }
+    
+    .calorie-label {
+        font-size: 14px;
+    }
+    
+    .calorie-input {
+        width: 100%;
+        font-size: 14px;
+        height: 40px;
+    }
+    
+    .calorie-save-button {
+        width: 80%;
+        max-width: 200px;
+        font-size: 16px;
+        padding: 8px;
+        margin-bottom: 50px;
+    }
+    
+    .calorie-summary {
+        font-size: 15px;
+        width: 70%;
+    }
+    
+    .total-calorie-difference {
+        font-size: 14px;
+        padding: 10px;
+        width: 90%;
+    }
+    
+    .legend-instruction {
+        font-size: 12px;
+        padding: 8px;
+        width: 90%;
+    }
+    
+
+    .calorie-activity-modal {
+        padding: 12px;
+        max-width: 90%;
+    }
+    
+    .calorie-activity-modal h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .activity-option {
+        padding: 8px;
+    }
+    
+    .activity-content h4 {
+        font-size: 14px;
+    }
+    
+    .activity-content p {
+        font-size: 12px;
+    }
+    
+    .calorie-modal-close-button {
+        font-size: 14px;
+        padding: 8px;
+        max-width: 150px;
+    }
+
+    .calorie-calendar-modal {
+        padding: 15px;
+        width: 95%;
+        max-width: 350px;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+    
+    .react-calendar {
+        width: 100%;
+        font-size: 14px;
+    }
+}
