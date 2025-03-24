@@ -7,8 +7,10 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  /* オーバースクロール対策 */
+  /* オーバースクロール対策 - 横と縦両方を制御 */
   overscroll-behavior: none;
+  overflow-y: auto; /* 縦スクロールを許可しつつコンテナ内に制限 */
+  position: relative; /* 子要素の配置の基準点 */
 }
 
 
@@ -169,6 +171,7 @@
   /* オーバースクロール対策 */
   overscroll-behavior: none;
   touch-action: none;
+  overflow: hidden;
 }
 
 .weight-calendar-modal {
@@ -178,6 +181,7 @@
   text-align: center;
   /* モーダル内のオーバースクロール対策 */
   overscroll-behavior: contain;
+  position: relative;
 }
 
 .weight-error-message {
@@ -202,6 +206,11 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 全体のスクロール制御をページレベルで追加 */
+html, body {
+  overscroll-behavior-y: none;
+}
+
 @media (max-width: 768px) {
   .weight-chart-container {
     justify-content: flex-start;
@@ -216,6 +225,8 @@
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
   }
 
   .weight-chart-wrapper {
@@ -288,6 +299,21 @@
 }
 
 @media (max-width: 480px) {
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  #root {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
+  
   .weight-chart-container {
     justify-content: flex-start;
     height: auto;
@@ -304,12 +330,20 @@
     -webkit-touch-callout: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    /* スクロールバウンス防止 */
+    position: relative;
+  }
+
+  /* 要素内のスクロールを滑らかに */
+  .weight-chart-container::-webkit-scrollbar {
+    display: none; /* スクロールバーを非表示に */
   }
 
   /* カレンダーモーダル用のスタイル */
   .weight-calendar-modal-overlay {
     overscroll-behavior: none;
     touch-action: none;
+    position: fixed; /* 固定位置を確保 */
   }
 
   .weight-chart-wrapper {
@@ -353,5 +387,9 @@
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 10px;
+  }
+  
+  .react-calendar {
+    overscroll-behavior: none;
   }
 }
