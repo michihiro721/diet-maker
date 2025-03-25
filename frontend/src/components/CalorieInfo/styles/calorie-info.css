@@ -12,6 +12,7 @@
     padding: 20px;
     text-align: center;
     overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* カロリー入力フィールドのグループ */
@@ -23,6 +24,7 @@
     width: 100%;
     max-width: 400px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 /* カロリー入力グループ内のラベル */
@@ -55,6 +57,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    box-sizing: border-box;
 }
 
 /* カロリーサマリーセクション内の段落 */
@@ -75,6 +78,7 @@
     height: auto;
     min-height: 100vh;
     text-align: center;
+    box-sizing: border-box;
 }
 
 /* カロリーチャートセクションのヘッダー */
@@ -103,6 +107,8 @@
     max-width: 800px;
     margin-bottom: 20px;
     text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* カロリーチャートのタイトル */
@@ -161,6 +167,7 @@
     outline-offset: 2px;
     font-weight: bold;
     height: 45px;
+    box-sizing: border-box;
 }
 
 .calorie-input:hover {
@@ -183,6 +190,7 @@
     transition: background-color 0.3s, transform 0.3s;
     margin-bottom: 100px;
     margin-top: 20px;
+    box-sizing: border-box;
 }
 
 /* 保存ボタンのホバー効果 */
@@ -212,6 +220,8 @@
     padding: 20px;
     border-radius: 4px;
     text-align: center;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .calorie-error-message {
@@ -231,6 +241,7 @@
     font-weight: normal;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
 }
 
 /* カロリー差分合計の表示エリア */
@@ -245,6 +256,7 @@
     text-align: center;
     width: 90%;
     max-width: 600px;
+    box-sizing: border-box;
 }
 
 .total-calorie-difference p {
@@ -271,6 +283,7 @@
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     position: relative;
+    box-sizing: border-box;
 }
 
 .calorie-activity-modal h3 {
@@ -285,6 +298,7 @@
     flex-direction: column;
     gap: 8px;
     margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
 .activity-option {
@@ -296,6 +310,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     margin-bottom: 5px;
+    box-sizing: border-box;
 }
 
 .activity-option:hover {
@@ -307,17 +322,20 @@
     margin-right: 15px;
     margin-top: 5px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .activity-content {
     flex: 1;
     text-align: left;
+    min-width: 0;
 }
 
 .activity-content h4 {
     margin: 0 0 5px;
     font-size: 16px;
     color: #0366d6;
+    word-wrap: break-word;
 }
 
 .activity-content p {
@@ -325,6 +343,7 @@
     color: #555;
     font-size: 14px;
     line-height: 1.3;
+    word-wrap: break-word;
 }
 
 .calorie-modal-close-button {
@@ -341,6 +360,7 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
+    box-sizing: border-box;
 }
 
 .calorie-modal-close-button:hover {
@@ -364,11 +384,13 @@
         margin-bottom: 60px;
         overflow-x: hidden;
         width: 95%;
+        box-sizing: border-box;
     }
     
     .calorie-chart {
         height: 400px;
         width: 95%;
+        overflow: hidden;
     }
     
     .calorie-chart-controls label {
@@ -436,6 +458,7 @@
     
     .activity-content p {
         font-size: 12px;
+        word-wrap: break-word;
     }
     
     .calorie-modal-close-button {
