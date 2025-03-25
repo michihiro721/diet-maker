@@ -70,7 +70,7 @@ const Weight = () => {
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
     } else {
-      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
+      alert('ユーザーIDが見つかりません。ログインしてください。');
     }
   }, []);
 
@@ -173,6 +173,7 @@ const Weight = () => {
       }
     } catch (error) {
       console.error("Error fetching weight data:", error);
+      alert(`体重データの取得に失敗しました: ${error.message}`);
     }
   };
 
@@ -206,6 +207,7 @@ const Weight = () => {
         console.error("Error fetching goal data:", error);
         setGoalWeight(null);
         setGoalDate(null);
+        alert(`目標データの取得に失敗しました: ${error.message}`);
       }
     };
 
@@ -216,19 +218,16 @@ const Weight = () => {
 
   const handleSave = async () => {
     if (!userId) {
-      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
-      setSuccessMessage('');
+      alert('ユーザーIDが見つかりません。ログインしてください。');
       return;
     }
 
     if (!selectedDate || !weight) {
-      setErrorMessage('全ての項目を入力してください');
-      setSuccessMessage('');
+      alert('全ての項目を入力してください');
       return;
     }
 
     try {
-      // CalorieInfo.jsxと同様の方法で日付をフォーマット
       const formattedDate = selectedDate instanceof Date 
         ? selectedDate.toISOString().split('T')[0]
         : selectedDate;
@@ -245,18 +244,15 @@ const Weight = () => {
       if (response.status === 201) {
         console.log("Data saved successfully");
         fetchData();
-        setErrorMessage('');
-        setSuccessMessage('データの保存に成功しました');
+        alert('データの保存に成功しました');
         setWeight(''); // 入力フィールドをクリア
       } else {
         console.error("Error saving data:", response.data);
-        setErrorMessage('データの保存に失敗しました');
-        setSuccessMessage('');
+        alert('データの保存に失敗しました');
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      setErrorMessage(`データの保存に失敗しました: ${error.response?.data?.error || error.message}`);
-      setSuccessMessage('');
+      alert(`データの保存に失敗しました: ${error.response?.data?.error || error.message}`);
     }
   };
 
@@ -402,8 +398,6 @@ const Weight = () => {
         />
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
-      {errorMessage && <p className="weight-error-message">{errorMessage}</p>}
-      {successMessage && <p className="weight-success-message">{successMessage}</p>}
 
       <WeightModal
         isOpen={isWeightModalOpen}

@@ -199,32 +199,6 @@
   position: relative; /* モーダルの位置固定 */
 }
 
-.weight-error-message {
-  color: #ff4d4d;
-  font-size: 16px;
-  margin-top: 10px;
-  font-weight: bold;
-  background-color: #ffe6e6;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.weight-success-message {
-  color: #4d79ff;
-  font-size: 16px;
-  margin-top: 10px;
-  font-weight: bold;
-  background-color: #e6ecff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  box-sizing: border-box;
-}
-
 /* 全体のスクロール制御をページレベルで追加 */
 html, body {
   overscroll-behavior-y: none;
@@ -476,17 +450,6 @@ html, body {
     overscroll-behavior: none;
     width: 100%;
     max-width: 100%;
-  }
-  
-  /* エラーメッセージと成功メッセージの幅調整 */
-  .weight-error-message,
-  .weight-success-message {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    font-size: 14px;
-    margin: 5px 0;
-    padding: 8px;
   }
   
   /* iOS特有の問題への対応（ログイン直後のレイアウト崩れ防止） */
