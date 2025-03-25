@@ -246,7 +246,7 @@
 
 /* カロリー差分合計の表示エリア */
 .total-calorie-difference {
-    margin: 20px 0;
+    margin: 0;
     padding: 15px;
     background-color: #f0f8ff;
     border-radius: 8px;
@@ -389,7 +389,7 @@
     
     .calorie-chart {
         height: 400px;
-        width: 95%;
+        width: 100%;
         overflow: hidden;
     }
     

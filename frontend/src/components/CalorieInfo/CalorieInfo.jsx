@@ -640,7 +640,7 @@ const CalorieInfo = () => {
       </div>
       <p className="legend-instruction">凡例をクリックすると、グラフからデータセットを非表示にできます。</p>
       <div className="calorie-input-group">
-        <label className="calorie-label">日付を選択:</label>
+        <label className="calorie-label">日付を選択</label>
         <input
           type="text"
           value={selectedDate ? (selectedDate instanceof Date ? selectedDate.toLocaleDateString() : new Date(selectedDate).toLocaleDateString()) : ''}
@@ -650,11 +650,11 @@ const CalorieInfo = () => {
         />
       </div>
       <div className="calorie-input-group">
-        <label className="calorie-label">歩数:</label>
+        <label className="calorie-label">歩数</label>
         <input type="text" value={steps ? `${steps} 歩` : ''} readOnly onClick={() => openWeightModal("steps")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
-        <label className="calorie-label">活動量:</label>
+        <label className="calorie-label">活動量</label>
         <input 
           type="text" 
           value={activityLevel || '活動量を選択してください'} 
@@ -664,11 +664,11 @@ const CalorieInfo = () => {
         />
       </div>
       <div className="calorie-input-group">
-        <label className="calorie-label">基礎代謝:</label>
+        <label className="calorie-label">基礎代謝</label>
         <input type="text" value={basalMetabolism ? `${basalMetabolism} kcal` : ''} readOnly onClick={() => openWeightModal("basalMetabolism")} className="calorie-input" />
       </div>
       <div className="calorie-input-group">
-        <label className="calorie-label">1日の摂取カロリー:</label>
+        <label className="calorie-label">1日の摂取カロリー</label>
         <input type="text" value={intakeCalories ? `${intakeCalories} kcal` : ''} readOnly onClick={() => openWeightModal("intakeCalories")} className="calorie-input" />
       </div>
       {error && <p className="calorie-error-message">{error}</p>}
