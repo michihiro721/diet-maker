@@ -1,8 +1,13 @@
 .daily-stats-container {
-  width: 100%;
+  width: 95% !important;
+  max-width: 800px !important;
   margin-top: 30px;
   margin-bottom: 100px;
+  margin-left: auto !important;
+  margin-right: auto !important;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
 }
   
 .daily-stats-title {
@@ -31,14 +36,19 @@
 }
   
 .daily-stats-section {
+  width: 100% !important;
   border: none;
   border-radius: 16px;
   padding: 30px;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   background-color: white;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box !important;
+  animation: fadeInUp 0.6s ease-out forwards;
 }
   
 .daily-stats-section::after {
@@ -58,9 +68,11 @@
   
 /* PC表示では横並び4列 */
 .daily-stats-grid {
+  width: 100% !important;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  box-sizing: border-box !important;
 }
   
 .daily-stat-item {
@@ -262,10 +274,6 @@
   }
 }
   
-.daily-stats-section {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-  
 .daily-stat-item:nth-child(1) {
   animation: fadeInUp 0.4s 0.1s ease-out both;
 }
@@ -337,13 +345,16 @@
 }
 
 .share-modal {
+  width: 90% !important;
+  max-width: 500px !important;
   background-color: white;
   border-radius: 16px;
   padding: 16px; /* パディングを減らす */
-  width: 90%;
-  max-width: 550px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
   max-height: 70vh; /* 最大高さを70vhに減らす */
   overflow-y: auto;
+  overflow-x: hidden !important;
   position: relative;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -351,6 +362,7 @@
   align-items: center;
   text-align: center;
   margin: 10px 0; /* 上下にマージンを追加 */
+  box-sizing: border-box !important;
 }
 
 .share-modal h2 {
@@ -369,8 +381,9 @@
 }
 
 .share-form-group {
-  width: 92%; /* 幅を広げる */
+  width: 100% !important;
   margin-bottom: 14px; /* 余白減らす */
+  box-sizing: border-box !important;
 }
 
 .share-form-group label {
@@ -460,6 +473,7 @@
 
 /* シェアデータサマリーのスタイル */
 .share-data-summary {
+  width: 100% !important;
   background-color: #f8fafc;
   border-radius: 12px;
   padding: 10px; /* パディング減らす */
@@ -467,8 +481,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px; /* 余白減らす */
-  width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
+  box-sizing: border-box !important;
 }
 
 .share-data-item {
@@ -524,17 +538,23 @@
 
 /* モバイル対応 - スマホでの最適化 */
 @media (max-width: 768px) {
+  .daily-stats-container {
+    width: 98% !important;
+  }
+
   .daily-stats-title {
     font-size: 18px;
   }
   
   .daily-stats-section {
     padding: 20px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
   
   /* スマホでは縦並び（1列）に変更 */
   .daily-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 16px;
   }
   
@@ -690,84 +710,16 @@
   }
 }
 
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-  .daily-stats-title {
-    color: #e5e7eb;
-  }
-  
+/* さらに小さい画面向け調整 */
+@media (max-width: 480px) {
   .daily-stats-section {
-    background-color: #1f2937;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-  
-  .daily-stat-item {
-    background-color: #374151;
-    border-color: #4b5563;
-  }
-  
-  .daily-stat-item:hover {
-    background-color: #323a48;
-    border-color: #6b7280;
-  }
-  
-  .daily-stat-label {
-    color: #d1d5db;
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-  
-  .daily-stat-value {
-    color: #f3f4f6;
-  }
-  
-  .daily-stat-value:contains('データなし') {
-    color: #9ca3af;
-  }
-  
-  .daily-stats-loading {
-    background-color: #374151;
-    color: #d1d5db;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
   
   .share-modal {
-    background-color: #1f2937;
-  }
-  
-  .share-modal h2 {
-    color: #e5e7eb;
-  }
-  
-  .share-data-summary {
-    background-color: #1e293b;
-  }
-  
-  .share-data-item {
-    background-color: #334155;
-  }
-  
-  .share-data-label {
-    color: #94a3b8;
-  }
-  
-  .share-data-value {
-    color: #f1f5f9;
-  }
-  
-  .training-count {
-    color: #93c5fd;
-  }
-  
-  .share-form-note {
-    color: #cbd5e1;
-  }
-  
-  .share-form-textarea {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #f3f4f6;
-  }
-  
-  .share-form-group label {
-    color: #d1d5db;
+    width: 95% !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
 }
