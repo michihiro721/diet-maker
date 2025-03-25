@@ -223,6 +223,7 @@
   border-radius: 5px;
   cursor: pointer;
   width: 80px; /* ボタンを大きく */
+  color: rgba(0, 0, 255, 0.7);
 }
 
 .goal-setting-calculator-grid button:hover {

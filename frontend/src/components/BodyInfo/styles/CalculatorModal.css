@@ -1,78 +1,79 @@
 .body-info-calculator-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .body-info-calculator-modal {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-  .body-info-calculator-display {
-    font-size: 24px;
-    padding: 10px;
-    width: calc(100% - 20px);
-    margin-bottom: 20px;
-    text-align: center; /* 中央寄せ */
-    border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
-    border-radius: 10px; /* 角を丸く */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.body-info-calculator-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-  .fixed-size {
-    height: 4vh; /* 固定の高さを設定 */
-    overflow: hidden; /* 内容が溢れた場合に隠す */
-  }
-  
-  
-  .body-info-calculator-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3列に変更 */
-    gap: 5px; /* ボタンとボタンの間を狭く */
-    justify-items: center;
-  }
-  
-  .body-info-calculator-button {
-    background-color: rgba(162, 217, 255, 0.1);
-    border: 1px solid #a2d9ff;
-    border-radius: 5px;
-    padding: 20px; /* ボタンを大きく */
-    font-size: 24px; /* 文字を大きく */
-    margin: 0; /* ボタンの左右のスペースを無くす */
-    cursor: pointer;
-    width: 80px; /* ボタンを大きく */
-  }
-  
-  .body-info-calculator-button:hover {
-    background-color: #a2d9ff;
-  }
-  
-  .body-info-calculator-preservation-button {
-    background-color: #87CEFA; /* 薄い青色 */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-top: 10px;
-    grid-column: span 3; /* グリッドの3列を跨ぐ */
-    justify-self: center; /* 中央に配置 */
-  }
-  
-  .body-info-calculator-preservation-button:hover {
-    background-color: #00BFFF;
-  }
+.body-info-calculator-display {
+  font-size: 24px;
+  padding: 10px;
+  width: calc(100% - 20px);
+  margin-bottom: 20px;
+  text-align: center; /* 中央寄せ */
+  border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
+  border-radius: 10px; /* 角を丸く */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fixed-size {
+  height: 4vh; /* 固定の高さを設定 */
+  overflow: hidden; /* 内容が溢れた場合に隠す */
+}
+
+
+.body-info-calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3列に変更 */
+  gap: 5px; /* ボタンとボタンの間を狭く */
+  justify-items: center;
+}
+
+.body-info-calculator-button {
+  background-color: rgba(162, 217, 255, 0.1);
+  border: 1px solid #a2d9ff;
+  border-radius: 5px;
+  padding: 20px; /* ボタンを大きく */
+  font-size: 24px; /* 文字を大きく */
+  margin: 0; /* ボタンの左右のスペースを無くす */
+  cursor: pointer;
+  width: 80px; /* ボタンを大きく */
+  color: rgba(0, 0, 255, 0.7);
+}
+
+.body-info-calculator-button:hover {
+  background-color: #a2d9ff;
+}
+
+.body-info-calculator-preservation-button {
+  background-color: #87CEFA; /* 薄い青色 */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 10px;
+  grid-column: span 3; /* グリッドの3列を跨ぐ */
+  justify-self: center; /* 中央に配置 */
+}
+
+.body-info-calculator-preservation-button:hover {
+  background-color: #00BFFF;
+}
