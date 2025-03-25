@@ -5,23 +5,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  height: auto;
-  min-height: calc(100vh - 7vh - 50px); /* 最小高さを設定 */
+  justify-content: center;
+  height: calc(100vh - 7vh - 50px);
   /* オーバースクロール対策 - 横と縦両方を制御 */
   overscroll-behavior: none;
   overflow-y: auto; 
   position: relative;
   margin-top: 7vh;
-  padding-bottom: 50px; /* フッターの高さ分を下部パディングに */
-  box-sizing: border-box;
+  margin-bottom: 50px;
 }
 
 .weight-chart-wrapper {
   position: relative;
   width: 100%;
   height: 40%;
-  min-height: 250px; /* 最小高さを確保 */
 }
 
 .weight-chart {
@@ -234,19 +231,15 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%; /* 高さを100%に設定 */
 }
 
 @media (max-width: 768px) {
   .weight-chart-container {
     justify-content: flex-start;
     height: auto;
-    min-height: calc(100vh - 120px); /* 最小高さを設定 */
     padding: 10px;
-    padding-top: 70px; /* ヘッダーより少し大きめに設定 */
-    padding-bottom: 70px; /* フッターより少し大きめに設定 */
-    margin-top: 0; /* マージンをパディングに置き換え */
-    margin-bottom: 0; /* マージンをパディングに置き換え */
+    margin-top: 60px;
+    margin-bottom: 60px;
     overscroll-behavior: none;
     overflow-x: hidden;
     max-width: 100%;
@@ -254,6 +247,7 @@ html, body {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    max-height: calc(100vh - 120px);
     overflow-y: auto;
     left: 0;
   }
@@ -355,7 +349,7 @@ html, body {
 }
 
 @media (max-width: 480px) {
-  /* スマホ表示全体の改善 */
+  /* スマホ表示全体の改善 - iOS対応 */
   body {
     margin: 0;
     padding: 0;
@@ -383,7 +377,6 @@ html, body {
     padding-bottom: 60px; /* フッターより少し大きめに設定 */
     margin-top: 0; /* マージンをパディングに置き換え */
     margin-bottom: 0; /* マージンをパディングに置き換え */
-    /* スマホ対応の追加スタイル */
     overflow-x: hidden;
     max-width: 100%;
     width: 100%;
@@ -398,9 +391,6 @@ html, body {
     position: relative;
     /* 左右の余白をなくす */
     left: 0;
-    /* iOS特有の問題に対応 - 固定高さではなく最小高さを使用 */
-    min-height: 100%; /* コンテンツに応じて伸縮 */
-    max-height: none; /* 最大高さの制限を解除 */
   }
 
   /* 要素内のスクロールを滑らかに */
@@ -418,7 +408,6 @@ html, body {
   .weight-chart-wrapper {
     height: 250px;
     width: 100%; 
-    min-height: 200px; /* 最小高さを確保 */
   }
   
   .weight-chart {
@@ -503,8 +492,9 @@ html, body {
   /* iOS特有の問題への対応（ログイン直後のレイアウト崩れ防止） */
   @supports (-webkit-touch-callout: none) {
     .weight-chart-container {
-      padding-bottom: 70px; /* iOSにはさらに余裕を持たせる */
-      min-height: calc(100% - 45px); /* iOS用の高さ計算を調整 */
+      padding-bottom: 70px;
+      min-height: 100%;
+      max-height: none;
     }
     
     /* Safari/iOSレンダリングバグ対策 */
