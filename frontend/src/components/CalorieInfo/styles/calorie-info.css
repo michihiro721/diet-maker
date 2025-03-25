@@ -246,7 +246,7 @@
 
 /* カロリー差分合計の表示エリア */
 .total-calorie-difference {
-    margin: 20px 0;
+    margin: 0;
     padding: 15px;
     background-color: #f0f8ff;
     border-radius: 8px;
@@ -275,11 +275,11 @@
 /* 活動量モーダル */
 .calorie-activity-modal {
     background-color: #fff;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
     max-width: 500px;
     width: 90%;
-    max-height: 85vh;
+    max-height: 83vh;
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     position: relative;
@@ -389,7 +389,7 @@
     
     .calorie-chart {
         height: 400px;
-        width: 95%;
+        width: 100%;
         overflow: hidden;
     }
     
@@ -418,6 +418,10 @@
         padding: 8px;
         margin-bottom: 30px;
         margin-top: 15px;
+    }
+
+    .calorie-input-group {
+        width: 70%;
     }
     
     .calorie-summary {
