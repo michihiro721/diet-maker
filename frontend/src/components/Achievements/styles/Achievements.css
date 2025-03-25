@@ -419,11 +419,12 @@
   width: 80%;
 }
 
-/* モバイル対応 */
+
 @media (max-width: 768px) {
   .ach-container {
-    padding: 20px;
-    width: 90%;
+    width: 95%;
+    padding: 20px 10px;
+    overflow-x: hidden; /* 横スクロールを防止  */
   }
   
   .ach-date-selection-container label {
@@ -436,10 +437,26 @@
     padding: 10px 12px;
   }
   
+  .ach-training-records-table {
+    table-layout: fixed; /* テーブル幅を固定 (モバイルのみ) */
+    width: 100%;
+  }
+  
   .ach-training-records-table th,
   .ach-training-records-table td {
-    padding: 12px 8px;
-    font-size: 13px;
+    padding: 12px 5px; /* パディングを小さく */
+    font-size: 12px; /* フォントサイズを小さく */
+    word-wrap: break-word; /* 長いテキストを折り返す*/
+    overflow: hidden; /* はみ出しを防止*/
+  }
+  
+  /* テーブルのカラム幅をモバイル向けに調整 */
+  .ach-category-name {
+    width: 20%;
+  }
+  
+  .ach-exercise-name {
+    width: 30%;
   }
   
   .ach-category-badge {
@@ -456,77 +473,20 @@
   }
   
   .ach-category-section {
-    padding: 18px;
+    padding: 18px 10px;
   }
 }
 
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
+
+@media (max-width: 480px) {
   .ach-container {
-    color: #e2e8f0;
+    width: 98%;
+    padding: 15px 8px;
   }
   
-  .ach-title {
-    color: #f1f5f9;
-  }
-  
-  .ach-date-input {
-    background-color: #1e293b;
-    color: #f1f5f9;
-    border-color: #334155;
-  }
-  
-  .ach-date-selection-container label {
-    color: #cbd5e1;
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-  
-  .ach-category-section {
-    background-color: #1e293b;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  }
-  
-  .ach-training-records-table th {
-    background-color: #334155;
-    color: #cbd5e1;
-  }
-  
-  .ach-training-records-table tr:hover {
-    background-color: #2d3748;
-  }
-  
-  .ach-exercise-name {
-    background-color: rgba(51, 65, 85, 0.5);
-    color: #e2e8f0;
-  }
-  
-  .ach-exercise-name.aerobic {
-    background-color: rgba(6, 78, 59, 0.3);
-    color: #a7f3d0;
-  }
-  
-  .ach-category-name {
-    background-color: rgba(51, 65, 85, 0.7);
-    color: #93c5fd;
-  }
-  
-  .ach-category-name.aerobic {
-    background-color: rgba(6, 78, 59, 0.4);
-    color: #a7f3d0;
-  }
-  
-  .ach-no-data-message {
-    background-color: #334155;
-    color: #cbd5e1;
-    border-color: #475569;
-  }
-  
-  .ach-has-training {
-    background: linear-gradient(135deg, #2d3748 0%, #1e293b 100%) !important;
-    color: #93c5fd !important;
-  }
-  
-  .ach-calendar-modal {
-    background-color: #1e293b;
+  .ach-training-records-table th,
+  .ach-training-records-table td {
+    padding: 10px 3px;
+    font-size: 11px;
   }
 }
