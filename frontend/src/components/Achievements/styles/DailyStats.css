@@ -109,7 +109,7 @@
 }
   
 .daily-stat-label {
-  font-size: 14px;
+  font-size: 12px;
   color: #7b8794;
   margin-bottom: 12px;
   font-weight: 600;
@@ -122,7 +122,7 @@
 }
   
 .daily-stat-value {
-  font-size: 28px;
+  font-size: 24px;
   color: #1a2a47;
   font-weight: 700;
   text-align: center;
