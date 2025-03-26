@@ -1,7 +1,3 @@
-// このファイルは、トレーニング情報を表示するコンポーネントを定義しています。
-// ユーザーが選択したトレーニング種目とその対象部位を表示し、
-// モーダルウィンドウを通じて種目を変更できるインターフェースを提供します。
-
 import React, { useState, useEffect } from "react";
 import CustomizedTraining from '../CustomizedTraining/CustomizedTraining';
 import { calculateTotalCalories, aerobicExercises } from './CaloriesUtils';
@@ -12,7 +8,7 @@ const TrainingInfo = ({
   currentPart, 
   onExerciseChange, 
   maxWeight,
-  sets = [],  // トレーニングのセット情報
+  sets = [],
   userWeight = 70  // ユーザーの体重（デフォルト70kg）
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,15 +57,18 @@ const TrainingInfo = ({
     return `${value} kcal`;
   };
 
+  // 種目が選択されていない場合は「種目を選択してください」を表示
+  const displayExercise = currentExercise || "種目を選択してください";
+
   return (
     <div className="training-info">
       <p>
         種目：
         <span className="exercise-display clickable" onClick={openModal}>
-          {currentExercise}
+          {displayExercise}
         </span>
       </p>
-      <p className="target-part">対象部位：{currentPart}</p>
+      <p className="target-part">対象部位：{currentPart || "-"}</p>
       {!isAerobic && <p>MAX重量：{maxWeight || 'データなし'}</p>}
       <p className="calories-info">
         消費カロリー：
