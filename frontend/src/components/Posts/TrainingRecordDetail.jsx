@@ -234,7 +234,7 @@ const TrainingRecordDetail = () => {
   const calculateCalorieDifference = () => {
     const { consumedCalories, intakeCalories } = achievementData;
     if (consumedCalories && intakeCalories) {
-      return consumedCalories.total_calories - intakeCalories.calories;
+      return intakeCalories.calories - consumedCalories.total_calories;
     }
     return null;
   };
