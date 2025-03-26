@@ -56,10 +56,12 @@ const DietMindset = () => {
     <div className="diet-mindset-container">
       <header className="diet-mindset-header">
         <h1>ダイエット成功のための心構え</h1>
-        <p className="diet-mindset-intro">
-          ダイエットの継続は意外と難しいです。なのでダイエットを成功させるためには、適切なマインドセットを持つことが重要です。
-          このページでは、ダイエット継続の難しさと、成功させるためのマインドセットについて説明しています。
-        </p>
+        <div className="diet-mindset-intro">
+          <p>
+            ダイエットの継続は意外と難しいです。なのでダイエットを成功させるためには、適切なマインドセットを持つことが重要です。
+            このページでは、ダイエット継続の難しさと、成功させるためのマインドセットについて説明しています。
+          </p>
+        </div>
       </header>
 
       <section className="stats-section">
@@ -86,11 +88,13 @@ const DietMindset = () => {
             <p className="stat-value">約80%</p>
           </div>
         </div>
-        <p className="stats-conclusion">
-          ダイエットを成功させることは難しく、成功させても維持できる人も少ないのが現実です。
-          しかし、<strong>3ヶ月継続できた人の成功率は格段に高く</strong>なります。
-          まずは3ヶ月の継続を目指しましょう！
-        </p>
+        <div className="stats-conclusion">
+          <p>
+            ダイエットを成功させることは難しく、成功させても維持できる人も少ないのが現実です。
+            しかし、<strong>3ヶ月継続できた人の成功率は格段に高く</strong>なります。
+            まずは3ヶ月の継続を目指しましょう！
+          </p>
+        </div>
       </section>
 
       <section className="mindset-section">
@@ -146,7 +150,7 @@ const DietMindset = () => {
 
       <footer className="diet-mindset-footer">
         <p>自分のペースで進み、自分の体と心に耳を傾けることも忘れないでください。</p>
-        <p>体調不良や体に痛みがある場合には、休む勇気の大切です。</p>
+        <p>体調不良や体に痛みがある場合には、休む勇気も大切です。</p>
         <div className="footer-highlight">
           <p><strong>まずは3ヶ月続けることを目標にしましょう!</strong></p>
           <p><strong>「継続は力なり」</strong></p>
