@@ -200,14 +200,14 @@ const NotificationsModal = () => {
   // 通知が読み込み中の表示
   const renderLoadingContent = () => (
     <div className="notification-loading">
-      <p>通知を読み込み中...</p>
+      通知を読み込み中...
     </div>
   );
 
   // エラー表示
   const renderErrorContent = () => (
     <div className="notification-error">
-      <p>{error}</p>
+      {error}
     </div>
   );
 
