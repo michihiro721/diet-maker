@@ -410,6 +410,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
 }
 
 .training-copy-button:hover {
@@ -438,7 +439,7 @@
   }
   
   .posts-post-date, .posts-post-author {
-    font-size: 12px;
+    font-size: 11px;
   }
   
   .posts-post-date {
@@ -448,36 +449,37 @@
   }
   
   .posts-post-content {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.4;
   }
   
+  /* タイトルを小さくする */
   .posts-training-record-title,
   .posts-daily-stats-title {
-    font-size: 16px;
-    margin-bottom: 15px;
+    font-size: 15px;
+    margin-bottom: 12px;
   }
   
-  /* カテゴリーバッジのスタイル */
+  /* カテゴリーバッジをさらに小さく */
   .posts-ach-category-list {
-    gap: 6px;
-    margin: 15px 0;
+    gap: 5px;
+    margin: 12px 0;
     flex-wrap: wrap;
   }
   
   .posts-ach-category-badge {
-    padding: 4px 8px;
-    font-size: 11px;
+    padding: 3px 7px;
+    font-size: 10px;
   }
   
   /* カロリー情報を横一列に維持 */
   .posts-daily-stats-container {
-    margin-top: 30px;
+    margin-top: 25px;
   }
   
   .posts-daily-stats-section {
-    padding: 15px 10px;
-    margin-top: 20px;
+    padding: 12px 8px;
+    margin-top: 15px;
   }
   
   .posts-daily-stats-grid {
@@ -492,52 +494,52 @@
     flex: 1;
     flex-direction: column;
     justify-content: center;
-    padding: 6px 3px;
-    min-height: 80px;
+    padding: 5px 2px;
+    min-height: 70px;
   }
   
   .posts-daily-stat-icon {
-    font-size: 14px;
-    margin-bottom: 4px;
+    font-size: 12px;
+    margin-bottom: 3px;
   }
   
   .posts-daily-stat-label {
-    font-size: 10px;
-    margin-bottom: 2px;
+    font-size: 9px;
+    margin-bottom: 1px;
     text-align: center;
   }
   
   .posts-daily-stat-value {
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
     word-break: break-word;
   }
   
-  /* トレーニングテーブル */
+  /* トレーニングテーブル文字サイズ調整 */
   .posts-ach-training-records-table-container {
     margin-top: 10px;
   }
   
   .posts-ach-training-records-table th,
   .posts-ach-training-records-table td {
-    padding: 6px 4px;
-    font-size: 12px;
+    padding: 5px 3px;
+    font-size: 11px;
   }
   
   .posts-ach-training-records-table th {
-    font-size: 12px;
+    font-size: 11px;
   }
   
   /* 対象部位列の幅 */
   .posts-ach-training-records-table th:first-child,
   .posts-ach-training-records-table td:first-child {
-    width: 60px;
+    width: 50px;
   }
   
   /* 種目列の幅 */
   .posts-ach-training-records-table th:nth-child(2),
   .posts-ach-training-records-table td:nth-child(2) {
-    width: 120px;
+    width: 110px;
   }
   
   /* セット/重量/回数列の幅 */
@@ -547,7 +549,7 @@
   .posts-ach-training-records-table td:nth-child(3),
   .posts-ach-training-records-table td:nth-child(4),
   .posts-ach-training-records-table td:nth-child(5) {
-    width: 50px;
+    width: 45px;
   }
   
   /* シェアボタンのスタイル */
@@ -557,25 +559,25 @@
   
   .posts-twitter-share-button {
     width: 80%;
-    max-width: 250px;
-    padding: 10px 16px;
-    font-size: 14px;
+    max-width: 220px;
+    padding: 8px 14px;
+    font-size: 13px;
   }
   
   .posts-twitter-icon {
-    font-size: 16px;
+    font-size: 15px;
   }
   
   /* 戻るボタン */
   .posts-back-button {
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 11px;
     margin-bottom: 50px;
   }
   
   /* トレーニングコピーボタン */
   .training-copy-button {
-    padding: 8px 16px;
-    font-size: 12px;
+    padding: 7px 14px;
+    font-size: 11px;
   }
 }
