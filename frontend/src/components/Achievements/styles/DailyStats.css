@@ -536,7 +536,6 @@
   font-style: italic;
 }
 
-/* モバイル対応 - スマホでの最適化 */
 @media (max-width: 768px) {
   .daily-stats-container {
     width: 98% !important;
@@ -547,179 +546,145 @@
   }
   
   .daily-stats-section {
-    padding: 20px;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding: 15px 8px;
+    margin-top: 15px;
   }
   
-  /* スマホでは縦並び（1列）に変更 */
+  /* スマホでの横並びレイアウト改善 */
   .daily-stats-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+    justify-content: space-between;
+    align-items: stretch;
   }
   
   .daily-stat-item {
-    height: 100px; /* より小さくすっきりと */
-    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    min-height: 90px;
+    padding: 8px 3px;
   }
   
+  /* ラベルのスタイル調整 - 擬似要素をブロック表示に変更 */
   .daily-stat-label {
-    font-size: 12px;
-    margin-bottom: 8px;
+    font-size: 9px;
+    margin-bottom: 6px;
+    padding: 2px 0;
+    text-align: center;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border-radius: 0;
   }
   
+  /* アイコンのスタイル調整 - 上部に配置 */
+  .daily-stat-item:nth-child(1) .daily-stat-label::before,
+  .daily-stat-item:nth-child(2) .daily-stat-label::before,
+  .daily-stat-item:nth-child(3) .daily-stat-label::before,
+  .daily-stat-item:nth-child(4) .daily-stat-label::before {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-right: 0;
+  }
+  
+  /* 数値のスタイル調整 */
   .daily-stat-value {
-    font-size: 22px;
-  }
-  
-  /* カロリー差分のフォントサイズをスマホではさらに調整 */
-  .daily-stat-item:nth-child(4) .daily-stat-value {
-    font-size: 20px;
-  }
-  
-  .share-button-container {
-    margin-top: 25px;
-    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
     width: 100%;
-    position: relative;
-    z-index: 100;
-    display: block; /* Safari対応 */
+    display: block;
+    margin-top: auto;
   }
   
-  .share-button {
-    display: inline-block !important; /* Safari対応 */
-    width: 90%;
-    max-width: 280px;
+  /* カロリー差分の表示調整 */
+  .daily-stat-item:nth-child(4) .daily-stat-value {
     font-size: 15px;
-    padding: 10px;
+    white-space: nowrap;
   }
   
-  /* モーダル関連のスマホ最適化 */
-  .share-modal {
-    width: 94%;
-    padding: 12px 10px;
-    max-height: 65vh; /* スマホでは少し小さく */
-    border-radius: 14px;
-    margin: 15px 0; /* 上下のマージンを増やす */
+  /* カロリー差分のプラス/マイナス色調整 */
+  .daily-stat-value.positive {
+    color: #28a745;
+    padding: 3px 5px;
+    border-radius: 15px;
+    background-color: rgba(16, 185, 129, 0.1);
   }
   
-  .share-modal h2 {
-    font-size: 17px;
-    margin-bottom: 12px;
-    padding: 0 15px; /* 横スペース確保 */
-  }
-  
-  .share-form-group {
-    width: 94%;
-    margin-bottom: 12px;
-  }
-  
-  .share-form-textarea {
-    min-height: 70px; /* スマホでは高さを小さく */
-    font-size: 14px;
-    padding: 10px;
-  }
-  
-  .share-data-summary {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    padding: 8px;
-    margin-bottom: 12px;
-  }
-  
-  .share-data-item {
-    padding: 8px;
-  }
-  
-  .share-data-label {
-    font-size: 11px;
-  }
-  
-  .share-data-value {
-    font-size: 14px;
-  }
-  
-  .share-submit-button {
-    padding: 10px 0;
-    font-size: 15px;
-    max-width: 230px;
-    width: 94%;
-  }
-
-  .close-modal-button {
-    top: 8px;
-    right: 8px;
-    font-size: 22px;
-  }
-  
-  .share-form-note {
-    font-size: 11px;
-    width: 94%;
+  .daily-stat-value.negative {
+    color: #dc3545;
+    padding: 3px 5px;
+    border-radius: 15px;
+    background-color: rgba(239, 68, 68, 0.1);
   }
 }
 
 /* 小さいスマホ向け追加調整 */
-@media (max-width: 375px) {
-  .share-modal {
-    width: 96%;
-    padding: 12px 8px;
-    max-height: 60vh; /* 小さいスマホではさらに小さく */
-  }
-  
-  .share-modal h2 {
-    font-size: 16px;
-    margin-bottom: 10px;
+@media (max-width: 480px) {
+  .daily-stats-grid {
+    gap: 4px;
   }
   
   .daily-stat-item {
-    height: 90px;
-    padding: 12px 10px;
+    min-height: 85px;
+    padding: 6px 2px;
   }
   
-  .share-data-item {
-    padding: 8px;
+  .daily-stat-label {
+    font-size: 9px;
+    margin-bottom: 5px;
   }
   
-  .share-data-value {
+  /* アイコンサイズ調整 */
+  .daily-stat-item:nth-child(1) .daily-stat-label::before,
+  .daily-stat-item:nth-child(2) .daily-stat-label::before,
+  .daily-stat-item:nth-child(3) .daily-stat-label::before,
+  .daily-stat-item:nth-child(4) .daily-stat-label::before {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  
+  .daily-stat-value {
+    font-size: 14px;
+  }
+}
+
+/* 超小型スマホ向け追加調整 */
+@media (max-width: 375px) {
+  .daily-stats-grid {
+    gap: 3px;
+  }
+  
+  .daily-stat-item {
+    min-height: 80px;
+    padding: 5px 2px;
+  }
+  
+  .daily-stat-label {
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+  
+  /* アイコンサイズさらに調整 */
+  .daily-stat-item:nth-child(1) .daily-stat-label::before,
+  .daily-stat-item:nth-child(2) .daily-stat-label::before,
+  .daily-stat-item:nth-child(3) .daily-stat-label::before,
+  .daily-stat-item:nth-child(4) .daily-stat-label::before {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+  
+  .daily-stat-value {
     font-size: 13px;
-  }
-  
-  .share-form-textarea {
-    min-height: 60px;
-  }
-}
-
-/* 低い高さの画面への対応 */
-@media (max-height: 700px) {
-  .share-modal {
-    max-height: 60vh; /* 低い高さの画面ではさらに小さく */
-    padding: 12px 8px;
-    margin: 15px 0;
-  }
-  
-  .share-form-textarea {
-    min-height: 60px; /* テキストエリアをさらに小さく */
-  }
-  
-  .share-data-summary {
-    padding: 6px;
-  }
-  
-  .share-data-item {
-    padding: 6px;
-  }
-}
-
-/* さらに小さい画面向け調整 */
-@media (max-width: 480px) {
-  .daily-stats-section {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-  }
-  
-  .share-modal {
-    width: 95% !important;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
   }
 }
