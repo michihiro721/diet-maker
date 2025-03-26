@@ -2,41 +2,44 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f8f9fa;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
 .custom-signup-container h2 {
-    font-size: 35px;
+    font-size: 28px;
     color: #333;
-    margin-bottom: 0px;
-    margin-top: 0px;
+    margin: 0;
+    text-align: center;
 }
+
 .custom-signup-form {
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    margin: 50px 0;
+    margin: 20px 0;
+    box-sizing: border-box;
 }
 
 .custom-signup-form input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
     display: block;
-    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .custom-signup-form button {
-    width: 90%;
+    width: 100%;
     padding: 12px;
     background-color: #007bff;
     color: #fff;
@@ -45,28 +48,47 @@
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     display: block;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px 0 10px;
     font-size: 16px;
     font-weight: bold;
 }
 
 .custom-signup-form button:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .custom-signup-form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
 }
 
 .custom-signup-form p {
     color: red;
     font-size: 0.875em;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    text-align: center;
+    margin: 5px 0 10px;
+    text-align: left;
+}
+
+
+@media (max-width: 480px) {
+    .custom-signup-container h2 {
+        font-size: 24px;
+    }
+    
+    .custom-signup-form {
+        padding: 15px 10px;
+        margin: 15px 0;
+    }
+    
+    .custom-signup-form input {
+        padding: 10px;
+    }
+    
+    .custom-signup-form button {
+        padding: 10px;
+        font-size: 14px;
+    }
 }
