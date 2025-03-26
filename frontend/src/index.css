@@ -1,11 +1,6 @@
 /* html要素とbody要素のスタイルを設定 */
 html, body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    height: 100%;
-    overflow-y: auto;
+
 }
 
 /* ルート要素の高さを100%に設定 */
