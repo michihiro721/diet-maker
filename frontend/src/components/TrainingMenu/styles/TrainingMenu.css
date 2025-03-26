@@ -70,9 +70,7 @@
 .training-menu-menu-result {
   margin-top: 20px;
   padding: 15px;
-
   border-radius: 4px;
-
   text-align: center;
 }
 
@@ -258,7 +256,6 @@
   text-align: center;
 }
 
-
 @media screen and (max-width: 768px) {
   /* トレーニングメニューコンテナ */
   .training-menu-container {
@@ -315,6 +312,7 @@
   .training-menu-container {
     padding: 10px;
     margin: 70px auto 10px;
+    margin-bottom: 80px;
   }
 
   /* 日付入力*/
