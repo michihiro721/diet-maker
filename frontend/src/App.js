@@ -24,6 +24,7 @@ import Resources from './components/Resources';
 import Profile from './components/Profile/Profile';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
+import './index.css';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -34,36 +35,40 @@ function App() {
 
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/achievements" element={<Achievements />} />
-        <Route path="/goal-setting" element={<GoalSetting />} />
-        <Route path="/training-menu" element={<TrainingMenu />} />
-        <Route path="/body-info" element={<BodyInfo />} />
-        <Route path="/calorie-info" element={<CalorieInfo />} />
-        <Route path="/weight" element={<Weight />} />
-        <Route path="/diet-mindset" element={<DietMindset />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/training-details/:postId" element={<TrainingRecordDetail />} />
-        <Route path="/app-usage" element={<AppUsage />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/oauth/callback" element={<OAuthCallback />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/" element={
-          <>
-            <Calender onDateSelect={handleDateSelect} />
-            <TrainingRecord selectedDate={selectedDate} />
-          </>
-        } />
-      </Routes>
-      <Footer />
+      <div className="app-container" >
+        <Header />
+        <div className="content-container">
+          <Routes>
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/goal-setting" element={<GoalSetting />} />
+            <Route path="/training-menu" element={<TrainingMenu />} />
+            <Route path="/body-info" element={<BodyInfo />} />
+            <Route path="/calorie-info" element={<CalorieInfo />} />
+            <Route path="/weight" element={<Weight />} />
+            <Route path="/diet-mindset" element={<DietMindset />} />
+            <Route path="/posts" element={<Posts />} />
+            <Route path="/training-details/:postId" element={<TrainingRecordDetail />} />
+            <Route path="/app-usage" element={<AppUsage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/oauth/callback" element={<OAuthCallback />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/" element={
+              <>
+                <Calender onDateSelect={handleDateSelect} />
+                <TrainingRecord selectedDate={selectedDate} />
+              </>
+            } />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
     </Router>
   );
 }
