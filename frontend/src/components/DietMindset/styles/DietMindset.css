@@ -1,5 +1,5 @@
 .diet-mindset-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -9,42 +9,119 @@
     margin-bottom: 150px;
   }
   
+  /* ヘッダー部分 */
   .diet-mindset-header {
     text-align: center;
     margin-bottom: 40px;
+    padding-top: 10px; 
   }
   
   .diet-mindset-header h1 {
     color: #2c3e50;
     font-size: 28px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-weight: 700;
   }
   
   .diet-mindset-intro {
     font-style: italic;
     color: #2980b9;
-    font-size: 18px;
     position: relative;
-    padding: 20px 40px;
-    margin: 0;
+    padding: 20px;
     background-color: #eaf6fc;
     border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
-  .mindset-section, .motivation-section, .stats-section {
+  .diet-mindset-intro p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  /* セクション共通スタイル */
+  .mindset-section, .motivation-section, .stats-section, .three-month-section {
     margin-bottom: 40px;
+    border-radius: 10px;
+    overflow: hidden;
   }
   
-  .mindset-section h2, .motivation-section h2, .stats-section h2 {
+  .mindset-section h2, .motivation-section h2, .stats-section h2, .three-month-section h2 {
     color: #3498db;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
   }
   
+  /* 統計セクション */
+  .stats-section {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .stat-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .stat-item:hover {
+    transform: translateY(-3px);
+  }
+  
+  .stat-label {
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .highlight {
+    color: #e74c3c;
+  }
+  
+  .stats-conclusion {
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 3px 6px rgba(231, 76, 60, 0.2);
+  }
+  
+  .stats-conclusion p {
+    margin: 0;
+  }
+  
+ 
   .mindset-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
   }
   
@@ -53,19 +130,27 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .mindset-item:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
   
   .mindset-item h3 {
     color: #e74c3c;
     margin-bottom: 10px;
     font-size: 18px;
+    font-weight: 600;
   }
   
+  .mindset-item p, .motivation-tip-card p {
+    color: #555;
+    margin: 0;
+    font-size: 14px;
+  }
+
   .motivation-tips-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -91,64 +176,14 @@
     color: #2980b9;
     margin-bottom: 10px;
     font-size: 18px;
+    font-weight: 600;
   }
   
   .motivation-tip-card p {
     color: #555;
     margin: 0;
     line-height: 1.6;
-  }
-
-  .stats-section {
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stats-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-    margin: 20px 0;
-  }
-  
-  .stat-item {
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    text-align: center;
-  }
-  
-  .stat-label {
-    font-size: 15px;
-    margin-bottom: 10px;
-    color: #555;
-    font-weight: 500;
-  }
-  
-  .stat-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0;
-  }
-  
-  .highlight {
-    color: #e74c3c;
-  }
-  
-  .stats-conclusion {
-    text-align: center;
-    font-size: 16px;
-    line-height: 1.8;
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e74c3c;
-    color: white;
-    border-radius: 8px;
-    font-weight: 500;
+    font-size: 14px;
   }
   
   /* 3ヶ月継続セクション */
@@ -167,7 +202,7 @@
   }
   
   .three-month-image {
-    padding: 20px;
+    padding: 20px 0;
     display: flex;
     justify-content: center;
   }
@@ -187,6 +222,7 @@
     border-radius: 20px;
     font-weight: bold;
     font-size: 16px;
+    white-space: nowrap;
   }
   
   .milestone-marker.highlight {
@@ -213,6 +249,7 @@
     margin-bottom: 15px;
     line-height: 1.7;
     color: #333;
+    font-size: 14px;
   }
   
   .three-month-text h3 {
@@ -221,6 +258,7 @@
     font-size: 20px;
     border-left: 4px solid #3498db;
     padding-left: 10px;
+    font-weight: 600;
   }
   
   .three-month-tips {
@@ -233,22 +271,25 @@
   .three-month-tips li {
     margin-bottom: 10px;
     color: #444;
+    font-size: 14px;
   }
   
   .highlight-message {
     background-color: #e74c3c;
-    color: white !important;
+    color: white;
     padding: 15px;
     border-radius: 8px;
     font-weight: bold;
     text-align: center;
-    font-size: 16px;
+    font-size: 15px;
     box-shadow: 0 3px 10px rgba(231, 76, 60, 0.2);
+    margin-bottom: 0;
   }
   
+  /* フッター */
   .diet-mindset-footer {
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
     color: #555;
     margin-top: 40px;
     padding: 25px 25px 15px;
@@ -272,9 +313,190 @@
   
   .footer-highlight p {
     margin: 5px 0;
-    font-size: 16px;
+    font-size: 15px;
   }
   
   .footer-highlight strong {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .diet-mindset-container {
+      padding: 15px;
+      margin-top: 60px;
+      margin-bottom: 80px;
+    }
+  
+    .diet-mindset-header h1 {
+      font-size: 24px;
+    }
+  
+    .diet-mindset-intro {
+      padding: 15px;
+    }
+  
+    .diet-mindset-intro p {
+      font-size: 14px;
+    }
+  
+    .mindset-section h2, .motivation-section h2, .stats-section h2, .three-month-section h2 {
+      font-size: 20px;
+    }
+  
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .stat-value {
+      font-size: 22px;
+    }
+  
+    .stats-conclusion {
+      font-size: 14px;
+    }
+  
+    .mindset-items, .motivation-tips-container {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+  
+    .mindset-item, .motivation-tip-card {
+      padding: 15px;
+    }
+  
+    .mindset-item h3, .motivation-tip-card h3 {
+      font-size: 16px;
+    }
+  
+    .three-month-section {
+      padding: 20px;
+    }
+  
+    .milestone-marker {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  
+    .three-month-text {
+      padding: 15px;
+    }
+  
+    .three-month-text h3 {
+      font-size: 18px;
+    }
+  
+    .footer-highlight p {
+      font-size: 14px;
+    }
+  
+    .footer-highlight strong {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .diet-mindset-container {
+      margin-top: 50px;
+      margin-bottom: 70px;
+      padding: 10px;
+    }
+  
+    .diet-mindset-header h1 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+  
+    .diet-mindset-intro {
+      padding: 12px;
+    }
+  
+    .diet-mindset-intro p {
+      font-size: 13px;
+    }
+  
+    .stats-section, .mindset-section, .motivation-section, .three-month-section {
+      margin-bottom: 30px;
+    }
+  
+    .mindset-section h2, .motivation-section h2, .stats-section h2, .three-month-section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+  
+    .stat-label {
+      font-size: 13px;
+    }
+  
+    .stat-value {
+      font-size: 20px;
+    }
+  
+    .stats-conclusion {
+      font-size: 13px;
+      padding: 12px;
+    }
+  
+    .mindset-item, .motivation-tip-card {
+      padding: 12px;
+    }
+  
+    .mindset-item h3, .motivation-tip-card h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+  
+    .mindset-item p, .motivation-tip-card p {
+      font-size: 13px;
+    }
+  
+    .three-month-image {
+      padding: 10px 0;
+    }
+  
+    .milestone-marker {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+  
+    .three-month-text p {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+  
+    .three-month-text h3 {
+      font-size: 16px;
+      margin: 15px 0 10px;
+    }
+  
+    .three-month-tips {
+      padding: 12px 12px 12px 30px;
+    }
+  
+    .three-month-tips li {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+  
+    .highlight-message {
+      font-size: 13px;
+      padding: 12px;
+    }
+  
+    .diet-mindset-footer {
+      font-size: 13px;
+      padding: 20px 15px 10px;
+      margin-top: 30px;
+    }
+  
+    .footer-highlight {
+      padding: 10px;
+    }
+  
+    .footer-highlight p {
+      font-size: 13px;
+    }
+  
+    .footer-highlight strong {
+      font-size: 15px;
+    }
   }
