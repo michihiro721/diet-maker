@@ -90,3 +90,19 @@
   margin-top: 2px;
   font-weight: normal;
 }
+
+
+
+@media screen and (max-width: 600px) {
+  .training-info .exercise-display {
+    font-size: 16px;
+  }
+  
+  .training-info {
+    padding: 15px;
+  }
+  
+  .training-info p {
+    font-size: 18px;
+  }
+}
