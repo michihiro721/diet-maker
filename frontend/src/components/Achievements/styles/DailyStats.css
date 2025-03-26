@@ -352,7 +352,7 @@
   padding: 16px; /* パディングを減らす */
   padding-left: 10px !important;
   padding-right: 10px !important;
-  max-height: 70vh; /* 最大高さを70vhに減らす */
+  max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden !important;
   position: relative;
@@ -766,5 +766,8 @@
   .share-form-textarea {
     min-height: 60px;
   }
-}
 
+  .share-modal {
+    max-height: 110vh;
+  }
+}
