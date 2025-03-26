@@ -288,8 +288,8 @@ const TrainingRecord = () => {
           complete: false
         }
       : {
-          weight: lastSet ? lastSet.weight : 20,
-          reps: lastSet ? lastSet.reps : 5,
+          weight: lastSet ? lastSet.weight : 0,
+          reps: lastSet ? lastSet.reps : 0,
           timer: lastSet ? lastSet.timer : "02:00",
           complete: false
         };
@@ -353,7 +353,7 @@ const TrainingRecord = () => {
     // 有酸素運動の場合はminutesを設定、それ以外はweightとrepsを設定
     const initialSet = isAerobic 
       ? { minutes: 30, timer: "02:00", complete: false }
-      : { weight: 20, reps: 5, timer: "02:00", complete: false };
+      : { weight: 0, reps: 0, timer: "02:00", complete: false };
     
     // 新しいトレーニングにセットを追加
     const trainingWithSet = {
