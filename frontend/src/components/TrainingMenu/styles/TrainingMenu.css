@@ -259,27 +259,26 @@
 }
 
 
-/* スマホ画面用メディアクエリの修正版 */
 @media screen and (max-width: 768px) {
   /* トレーニングメニューコンテナ */
   .training-menu-container {
     max-width: 100%;
-    margin: 80px auto 20px; /* ヘッダーへののめり込みを修正 */
+    margin: 80px auto 20px;
     padding: 15px;
     border-width: 1px;
   }
 
-  /* 日付入力 - 横幅を狭く */
+  /* 日付入力*/
   .training-menu-date-input {
-    width: 70%; /* 横幅を狭く調整 */
+    width: 70%;
     font-size: 14px;
     margin-bottom: 10px;
     margin-top: 10px;
   }
 
-  /* 保存ボタン - 横幅を狭く */
+  /* 保存ボタン */
   .training-menu-save-button {
-    width: 60%; /* 横幅を狭く調整 */
+    width: 60%;
     font-size: 14px;
     padding: 8px 15px;
     height: 40px;
@@ -318,16 +317,16 @@
     margin: 70px auto 10px;
   }
 
-  /* 日付入力 - さらに幅を調整 */
+  /* 日付入力*/
   .training-menu-date-input {
-    width: 70%; /* 幅を70%に維持 */
+    width: 70%;
     margin-right: 0;
     margin-bottom: 10px;
   }
 
-  /* 保存ボタン - さらに幅を調整 */
+  /* 保存ボタン */
   .training-menu-save-button {
-    width: 50%; /* 幅を50%に縮小 */
+    width: 20%;
   }
 
   /* トレーニングメニューのリスト内容 */
