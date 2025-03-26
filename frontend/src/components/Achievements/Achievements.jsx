@@ -321,7 +321,7 @@ const Achievements = () => {
                 </div>
               </div>
             ) : (
-              <p className="ach-no-data-message">選択した日付のトレーニング記録はありません</p>
+              <p className="ach-no-data-message">トレーニング記録がありません</p>
             )}
           </div>
 
