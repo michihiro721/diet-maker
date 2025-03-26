@@ -200,8 +200,7 @@ const DailyStats = ({ userId, selectedDate }) => {
   // カロリー差分を計算する関数
   const calculateCalorieDifference = () => {
     if (consumedCalories && intakeCalories) {
-      // 消費カロリー - 摂取カロリー
-      return consumedCalories.total_calories - intakeCalories.calories;
+      return intakeCalories.calories - consumedCalories.total_calories;
     }
     return null;
   };
