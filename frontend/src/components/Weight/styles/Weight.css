@@ -1,5 +1,5 @@
 .weight-chart-container {
-  width: 95%;
+  width: 100%;
   max-width: 800px;
   margin: 0 auto;
   display: flex;
@@ -185,7 +185,7 @@
   /* オーバースクロール対策 */
   overscroll-behavior: none;
   touch-action: none;
-  /* 追加: スクロール無効化 */
+  /* スクロール無効化 */
   overflow: hidden;
 }
 
@@ -197,6 +197,12 @@
   /* モーダル内のオーバースクロール対策 */
   overscroll-behavior: contain;
   position: relative; /* モーダルの位置固定 */
+}
+
+/* カレンダーヘッダー用スタイル */
+.react-calendar__navigation__label__labelText {
+  font-size: 24px;
+  font-weight: bold;
 }
 
 /* 全体のスクロール制御をページレベルで追加 */
@@ -296,7 +302,7 @@ html, body {
   }
 
   .weight-calendar-modal {
-    width: 90%;
+    width: 100%;
     max-width: 350px;
     padding: 15px;
   }
@@ -322,7 +328,7 @@ html, body {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   /* スマホ表示全体の改善 - iOS対応 */
   body {
     margin: 0;
@@ -452,6 +458,11 @@ html, body {
     max-width: 100%;
   }
   
+  /* カレンダーヘッダーの年月表示を小さく */
+  .react-calendar__navigation__label__labelText {
+    font-size: 18px;
+  }
+
   /* iOS特有の問題への対応（ログイン直後のレイアウト崩れ防止） */
   @supports (-webkit-touch-callout: none) {
     .weight-chart-container {

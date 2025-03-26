@@ -473,8 +473,8 @@
 
     .calorie-calendar-modal {
         padding: 15px;
-        width: 90%;
-        max-width: 320px;
+        width: 100%; /* 幅を100%に変更 */
+        max-width: 100%; /* 最大幅も100%に変更 */
         max-height: 90vh;
         overflow-y: auto;
     }
