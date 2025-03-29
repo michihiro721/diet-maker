@@ -1,3 +1,8 @@
+# 目標設定機能のコントローラー部分をテストします。
+#  新規目標データ（現在体重、目標体重、目標達成予定日）の保存機能
+#  既存の目標データの更新機能
+
+
 require 'rails_helper'
 
 RSpec.describe GoalsController, type: :controller do
