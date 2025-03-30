@@ -170,6 +170,15 @@
   transform: scale(0.95);
 }
 
+.weight-error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px auto;
+  font-size: 16px;
+  width: 100%;
+}
+
 .weight-calendar-modal-overlay {
   position: fixed;
   top: 0;
@@ -477,5 +486,10 @@ html, body {
     .weight-save-controls {
       transform: translateZ(0);
     }
+  }
+
+  .weight-error-message {
+    font-size: 14px;
+    margin: 8px auto;
   }
 }

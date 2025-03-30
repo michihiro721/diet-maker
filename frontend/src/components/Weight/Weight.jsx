@@ -70,7 +70,7 @@ const Weight = () => {
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
     } else {
-      alert('ユーザーIDが見つかりません。ログインしてください。');
+      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
     }
   }, []);
 
@@ -218,12 +218,12 @@ const Weight = () => {
 
   const handleSave = async () => {
     if (!userId) {
-      alert('ユーザーIDが見つかりません。ログインしてください。');
+      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
       return;
     }
 
     if (!selectedDate || !weight) {
-      alert('全ての項目を入力してください');
+      setErrorMessage('全ての項目を入力してください');
       return;
     }
 
@@ -245,6 +245,7 @@ const Weight = () => {
         console.log("Data saved successfully");
         fetchData();
         alert('データの保存に成功しました');
+        setErrorMessage(''); // エラーメッセージをクリア
         setWeight(''); // 入力フィールドをクリア
       } else {
         console.error("Error saving data:", response.data);
@@ -398,6 +399,8 @@ const Weight = () => {
         />
         <button className="weight-save-button" onClick={handleSave}>保存</button>
       </div>
+
+      {errorMessage && <p className="weight-error-message">{errorMessage}</p>}
 
       <WeightModal
         isOpen={isWeightModalOpen}
