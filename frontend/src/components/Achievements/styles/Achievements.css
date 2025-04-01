@@ -527,4 +527,17 @@
   .ach-training-records-title {
     font-size: 16px !important;
   }
+
+  .ach-calendar-modal {
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .ach-calendar {
+    width: 100%;
+    font-size: 14px;
+  }
 }
