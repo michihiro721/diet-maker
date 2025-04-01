@@ -67,10 +67,9 @@
     font-size: 24px;
   }
 
+  /* スマホ表示ではバックボタンを非表示 */
   .header-back-button {
-    font-size: 30px;
-    margin-left: 10px;
-    top: 15px;
+    display: none !important; /* !importantで優先度を上げる */
   }
 }
 
@@ -83,10 +82,5 @@
 
   .header-title {
     font-size: 20px;
-  }
-  
-  .header-back-button {
-    font-size: 26px;
-    margin-left: 5px;
   }
 }
