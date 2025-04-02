@@ -9,6 +9,9 @@ const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
 });
 
+// 信頼性の高い外部画像URL
+const FALLBACK_IMAGE_URL = "https://i.imgur.com/jLFOKcw.png";
+
 const TrainingRecordDetail = () => {
   const { postId } = useParams();
   const location = useLocation();
@@ -351,8 +354,9 @@ ${recordDetailUrl}`;
   // OGP用のタイトルとdescriptionを作成
   const ogpTitle = `【${post.achievementDate}】のトレーニング記録 | ダイエットメーカー`;
   const ogpDescription = getCleanPostContent(post) || `${post.userName}さんのトレーニング記録`;
-  // 絶対URLを使用する
-  const ogpImageUrl = "https://diet-maker.jp/logo192.png";
+  
+  // 確実に動作する外部画像URLを使用する
+  const ogpImageUrl = FALLBACK_IMAGE_URL;
 
   // カテゴリー順序の定義
   const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
@@ -378,19 +382,18 @@ ${recordDetailUrl}`;
         <meta property="og:type" content="website" />
         <meta property="og:url" content={ogpUrl} />
         <meta property="og:image" content={ogpImageUrl} />
-        <meta property="og:image:width" content="500" />
-        <meta property="og:image:height" content="500" />
-        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="1024" />
+        <meta property="og:image:alt" content="ダイエットメーカーロゴ" />
         <meta property="og:site_name" content="ダイエットメーカー" />
         
         {/* Twitter Card  */}
         <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@diet_maker" />
         <meta name="twitter:title" content={ogpTitle} />
         <meta name="twitter:description" content={ogpDescription} />
         <meta name="twitter:image" content={ogpImageUrl} />
-        <meta name="twitter:domain" content="diet-maker.jp" />
-        <meta name="twitter:creator" content="@diet_maker" />
-        <meta name="twitter:site" content="@diet_maker" />
+        <meta name="twitter:image:alt" content="ダイエットメーカーロゴ" />
       </Helmet>
 
       {/* 投稿情報 */}
