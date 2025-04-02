@@ -52,9 +52,8 @@ const TrainingRecordDetail = () => {
           userName: response.data.user?.name || "ユーザー"
         });
         
-        // OGP用のURLを生成
-        const appUrl = window.location.origin;
-        setOgpUrl(`${appUrl}/training-details/${postId}?date=${date}`);
+        // OGP用のURLを生成（本番環境のドメインを直接指定）
+        setOgpUrl(`https://diet-maker.jp/training-details/${postId}?date=${date}`);
         
         // 成果データを取得
         await fetchAchievementData(response.data.user_id, date);
@@ -352,7 +351,8 @@ ${recordDetailUrl}`;
   // OGP用のタイトルとdescriptionを作成
   const ogpTitle = `【${post.achievementDate}】のトレーニング記録 | ダイエットメーカー`;
   const ogpDescription = getCleanPostContent(post) || `${post.userName}さんのトレーニング記録`;
-  const ogpImageUrl = `${window.location.origin}/logo192.png`; // 静的OGP画像のパス
+  // 絶対URLを使用する
+  const ogpImageUrl = "https://diet-maker.jp/logo192.png";
 
   // カテゴリー順序の定義
   const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
