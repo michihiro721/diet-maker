@@ -4,5 +4,4 @@ class DailyCalorie < ApplicationRecord
   validates :date, presence: true
 
   validates :total_calories, presence: true
-
 end

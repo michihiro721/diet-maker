@@ -39,13 +39,13 @@ RSpec.describe "目標設定機能", type: :request do
 
         # POSTリクエストを送信
         post "/goals", params: valid_goal_params
-        
+
         # レスポンスの確認
         expect(response).to have_http_status(201).or have_http_status(200)
-        
+
         # 目標が1件増えていることを確認
         expect(Goal.count).to eq(initial_count + 1)
-        
+
         # 作成された目標の内容を確認
         goal = Goal.last
         expect(goal.user_id).to eq(user.id)
@@ -78,14 +78,14 @@ RSpec.describe "目標設定機能", type: :request do
 
         # PUTリクエストを送信
         put "/goals/#{existing_goal.id}", params: update_params
-        
+
         # レスポンスの確認
         expect(response).to have_http_status(200).or have_http_status(204)
-        
+
         # 更新された目標の内容を確認
         existing_goal.reload
         expect(existing_goal.target_weight).to eq(62.5).or eq(update_params[:goal][:target_weight])
-        
+
         # 日付が文字列で返ってくる場合と日付オブジェクトで返ってくる場合の両方に対応
         if existing_goal.end_date.is_a?(String)
           expect(existing_goal.end_date).to eq(update_params[:goal][:end_date])

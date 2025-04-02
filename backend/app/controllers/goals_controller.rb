@@ -7,7 +7,7 @@ class GoalsController < ApplicationController
   def create
     # user_idとgoal_typeに基づいて既存の目標を検索
     existing_goal = Goal.find_by(user_id: goal_params[:user_id], goal_type: goal_params[:goal_type])
-    
+
     if existing_goal
       # 既存のレコードが見つかれば更新
       if existing_goal.update(goal_params)
@@ -28,7 +28,7 @@ class GoalsController < ApplicationController
 
   def update
     goal = Goal.find(params[:id])
-    
+
     if goal.update(goal_params)
       render json: goal
     else
@@ -43,7 +43,7 @@ class GoalsController < ApplicationController
     else
       goal = Goal.order(created_at: :desc).first
     end
-    
+
     if goal
       render json: goal
     else

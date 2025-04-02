@@ -31,7 +31,7 @@ class Users::PasswordsController < Devise::PasswordsController
   def validate_token
     reset_password_token = params[:token]
     user = User.with_reset_password_token(reset_password_token)
-    
+
     if user.present?
       render json: { valid: true }, status: :ok
     else

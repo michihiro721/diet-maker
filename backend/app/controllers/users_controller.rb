@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:show_by_id]
-  
+  before_action :authenticate_user!, except: [ :show_by_id ]
+
   # 認証済みユーザーの情報を返す
   def show
     # ユーザーがログインしていない場合
     unless current_user
-      render json: { error: 'User not authenticated' }, status: :unauthorized
+      render json: { error: "User not authenticated" }, status: :unauthorized
       return
     end
-    
+
     render json: {
       id: current_user.id,
       email: current_user.email,
@@ -24,11 +24,11 @@ class UsersController < ApplicationController
       updated_at: current_user.updated_at
     }
   end
-  
+
   # IDでユーザー情報を取得（認証なし）
   def show_by_id
     user = User.find_by(id: params[:id])
-    
+
     if user
       render json: {
         id: user.id,
@@ -36,14 +36,14 @@ class UsersController < ApplicationController
         image: user.image
       }
     else
-      render json: { error: 'User not found' }, status: :not_found
+      render json: { error: "User not found" }, status: :not_found
     end
   end
 
   def update
     if current_user.update(user_params)
       render json: {
-        message: 'Profile updated successfully.',
+        message: "Profile updated successfully.",
         user: {
           id: current_user.id,
           email: current_user.email,

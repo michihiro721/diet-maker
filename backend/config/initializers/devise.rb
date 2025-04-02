@@ -24,10 +24,10 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'ms.michihiro.0721@gmail.com'
+  config.mailer_sender = "ms.michihiro.0721@gmail.com"
 
   # Configure the class responsible to send e-mails.
-  config.mailer = 'Devise::Mailer'
+  config.mailer = "Devise::Mailer"
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -36,7 +36,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -58,12 +58,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [:email]
+  config.case_insensitive_keys = [ :email ]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [:email]
+  config.strip_whitespace_keys = [ :email ]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -97,7 +97,7 @@ Devise.setup do |config|
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  config.skip_session_storage = [:http_auth]
+  config.skip_session_storage = [ :http_auth ]
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -219,7 +219,7 @@ Devise.setup do |config|
   # ==> Configuration for :recoverable
   #
   # Defines which key will be used when recovering the password for an account
-  config.reset_password_keys = [:email]
+  config.reset_password_keys = [ :email ]
 
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
@@ -263,7 +263,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = [:json]
+  config.navigational_formats = [ :json ]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -275,20 +275,20 @@ Devise.setup do |config|
 
 
   config.omniauth :google_oauth2,
-  ENV['GOOGLE_CLIENT_ID'],
-  ENV['GOOGLE_CLIENT_SECRET'],
+  ENV["GOOGLE_CLIENT_ID"],
+  ENV["GOOGLE_CLIENT_SECRET"],
   {
-    scope: 'email,profile',
-    prompt: 'select_account',
-    access_type: 'offline',
+    scope: "email,profile",
+    prompt: "select_account",
+    access_type: "offline",
     provider_ignores_state: true,
     skip_jwt: true,
-    redirect_uri: ENV['GOOGLE_CALLBACK_URL'] || "https://diet-maker-d07eb3099e56.herokuapp.com/users/auth/google_oauth2/callback"
+    redirect_uri: ENV["GOOGLE_CALLBACK_URL"] || "https://diet-maker-d07eb3099e56.herokuapp.com/users/auth/google_oauth2/callback"
   }
 
-config.omniauth_path_prefix = '/users/auth'
+config.omniauth_path_prefix = "/users/auth"
 
-config.navigational_formats = ['*/*', :html, :json]
+config.navigational_formats = [ "*/*", :html, :json ]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -329,13 +329,13 @@ config.navigational_formats = ['*/*', :html, :json]
   # config.sign_in_after_change_password = true
 
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
-    jwt.dispatch_requests = [['POST', %r{^/auth/sign_in$}]]
-    jwt.revocation_requests = [['DELETE', %r{^/auth/sign_out$}]]
-    jwt.expiration_time = (ENV['DEVISE_JWT_EXPIRATION_TIME'] || 24).to_i.hours
-    jwt.request_formats = { user: [:json] }
+    jwt.secret = ENV["DEVISE_JWT_SECRET_KEY"]
+    jwt.dispatch_requests = [ [ "POST", %r{^/auth/sign_in$} ] ]
+    jwt.revocation_requests = [ [ "DELETE", %r{^/auth/sign_out$} ] ]
+    jwt.expiration_time = (ENV["DEVISE_JWT_EXPIRATION_TIME"] || 24).to_i.hours
+    jwt.request_formats = { user: [ :json ] }
   end
 
   # Deviseのパスワードリセットルートをカスタマイズ
-  ActionMailer::Base.default_url_options = { host: 'diet-maker-d07eb3099e56.herokuapp.com', protocol: 'https' }
+  ActionMailer::Base.default_url_options = { host: "diet-maker-d07eb3099e56.herokuapp.com", protocol: "https" }
 end

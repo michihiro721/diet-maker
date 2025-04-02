@@ -37,13 +37,13 @@ RSpec.describe GoalsController, type: :controller do
 
       # POSTリクエスト
       post :create, params: { goal: valid_attributes }
-      
+
       # ステータスコードの確認
       expect(response).to have_http_status(:created).or have_http_status(:ok)
-      
+
       # 目標が1件増えていることを確認
       expect(Goal.count).to eq(initial_count + 1)
-      
+
       # 作成された目標の内容を確認
       goal = Goal.last
       expect(goal.user_id).to eq(user.id)
@@ -56,7 +56,7 @@ RSpec.describe GoalsController, type: :controller do
 
   describe "PUT #update" do
     # 既存の目標を作成
-    let!(:goal) do 
+    let!(:goal) do
       Goal.create!(
         user_id: user.id,
         goal_type: 'weight_loss',
@@ -79,14 +79,14 @@ RSpec.describe GoalsController, type: :controller do
 
       # PUTリクエスト
       put :update, params: { id: goal.id, goal: new_attributes }
-      
+
       # ステータスコードの確認
       expect(response).to have_http_status(:ok).or have_http_status(:no_content)
-      
+
       # 更新された目標の内容を確認
       goal.reload
       expect(goal.target_weight).to eq(62.5)
-      
+
       # 日付が文字列で返ってくる場合と日付オブジェクトで返ってくる場合の両方に対応
       if goal.end_date.is_a?(String)
         expect(goal.end_date).to eq(new_attributes[:end_date])

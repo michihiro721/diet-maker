@@ -75,10 +75,10 @@ Rails.application.configure do
 
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins 'http://localhost:8000', 'https://diet-maker-mu.vercel.app', 'https://diet-maker.jp'
-      resource '*',
+      origins "http://localhost:8000", "https://diet-maker-mu.vercel.app", "https://diet-maker.jp"
+      resource "*",
         headers: :any,
-        methods: [:get, :post, :put, :patch, :delete, :options, :head],
+        methods: [ :get, :post, :put, :patch, :delete, :options, :head ],
         credentials: true
     end
   end

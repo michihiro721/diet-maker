@@ -37,62 +37,62 @@ class TrainingsController < ApplicationController
       end
     end
 
-    render json: { message: 'Training records saved successfully' }, status: :created
+    render json: { message: "Training records saved successfully" }, status: :created
   end
 
   def monthly
     start_date = params[:start_date]
     end_date = params[:end_date]
     user_id = params[:user_id]
-    
+
     # 指定された期間とユーザーIDに基づいてトレーニングデータを取得
     trainings = Training.where(
-      "date >= ? AND date <= ? AND user_id = ?", 
+      "date >= ? AND date <= ? AND user_id = ?",
       start_date, end_date, user_id
     )
-    
+
     # 日付ごとにグループ化
     result = trainings.select(:date).distinct
-    
+
     render json: result
   end
-  
+
   def destroy_by_date
     date = params[:date]
     user_id = params[:user_id]
-    
+
     trainings = Training.where(date: date, user_id: user_id)
-    
+
     if trainings.destroy_all
-      render json: { message: 'Training records successfully deleted' }, status: :ok
+      render json: { message: "Training records successfully deleted" }, status: :ok
     else
-      render json: { error: 'Failed to delete training records' }, status: :unprocessable_entity
+      render json: { error: "Failed to delete training records" }, status: :unprocessable_entity
     end
   end
 
   # ユーザーの種目ごとの最大重量を返すアクション
   def max_weights
     user_id = params[:user_id]
-    
+
     # ユーザーIDが必要
     unless user_id.present?
-      render json: { error: 'ユーザーIDが必要です' }, status: :bad_request
+      render json: { error: "ユーザーIDが必要です" }, status: :bad_request
       return
     end
-    
+
     # SQL文でワークアウトごとの最大重量を取得
-    max_weights_data = Training.select('workout_id, MAX(weight) as max_weight')
+    max_weights_data = Training.select("workout_id, MAX(weight) as max_weight")
                             .where(user_id: user_id)
-                            .where('weight > 0') # 重量が0より大きい記録だけ対象
-                            .where('workout_id IS NOT NULL')
+                            .where("weight > 0") # 重量が0より大きい記録だけ対象
+                            .where("workout_id IS NOT NULL")
                             .group(:workout_id)
-    
+
     # workout_idをキー、max_weightを値とするハッシュを作成
     result = {}
     max_weights_data.each do |record|
       result[record.workout_id] = record.max_weight
     end
-    
+
     render json: result
   end
 
