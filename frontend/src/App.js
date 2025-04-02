@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Home/Header/Header';
 import Footer from './components/Home/Footer/Footer';
 import Calender from './components/Home/Body/Calender/Calender';
@@ -34,42 +35,44 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="app-container" >
-        <Header />
-        <div className="content-container">
-          <Routes>
-            <Route path="/achievements" element={<Achievements />} />
-            <Route path="/goal-setting" element={<GoalSetting />} />
-            <Route path="/training-menu" element={<TrainingMenu />} />
-            <Route path="/body-info" element={<BodyInfo />} />
-            <Route path="/calorie-info" element={<CalorieInfo />} />
-            <Route path="/weight" element={<Weight />} />
-            <Route path="/diet-mindset" element={<DietMindset />} />
-            <Route path="/posts" element={<Posts />} />
-            <Route path="/training-details/:postId" element={<TrainingRecordDetail />} />
-            <Route path="/app-usage" element={<AppUsage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/oauth/callback" element={<OAuthCallback />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/" element={
-              <>
-                <Calender onDateSelect={handleDateSelect} />
-                <TrainingRecord selectedDate={selectedDate} />
-              </>
-            } />
-          </Routes>
+    <HelmetProvider>
+      <Router>
+        <div className="app-container" >
+          <Header />
+          <div className="content-container">
+            <Routes>
+              <Route path="/achievements" element={<Achievements />} />
+              <Route path="/goal-setting" element={<GoalSetting />} />
+              <Route path="/training-menu" element={<TrainingMenu />} />
+              <Route path="/body-info" element={<BodyInfo />} />
+              <Route path="/calorie-info" element={<CalorieInfo />} />
+              <Route path="/weight" element={<Weight />} />
+              <Route path="/diet-mindset" element={<DietMindset />} />
+              <Route path="/posts" element={<Posts />} />
+              <Route path="/training-details/:postId" element={<TrainingRecordDetail />} />
+              <Route path="/app-usage" element={<AppUsage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/oauth/callback" element={<OAuthCallback />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
+              <Route path="/" element={
+                <>
+                  <Calender onDateSelect={handleDateSelect} />
+                  <TrainingRecord selectedDate={selectedDate} />
+                </>
+              } />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </HelmetProvider>
   );
 }
 

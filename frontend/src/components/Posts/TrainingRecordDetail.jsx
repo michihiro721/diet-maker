@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
 import axios from "axios";
 import "./styles/TrainingRecordDetail.css";
 import TrainingCopyModal from "./TrainingCopyModal";
@@ -29,6 +30,8 @@ const TrainingRecordDetail = () => {
   const [error, setError] = useState(null);
   // トレーニングコピーモーダル用の状態
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
+  // OGP関連の状態
+  const [ogpUrl, setOgpUrl] = useState('');
 
   // 投稿データの取得
   useEffect(() => {
@@ -48,6 +51,10 @@ const TrainingRecordDetail = () => {
           achievementDate: date,
           userName: response.data.user?.name || "ユーザー"
         });
+        
+        // OGP用のURLを生成
+        const appUrl = window.location.origin;
+        setOgpUrl(`${appUrl}/training-details/${postId}?date=${date}`);
         
         // 成果データを取得
         await fetchAchievementData(response.data.user_id, date);
@@ -342,6 +349,11 @@ ${recordDetailUrl}`;
   if (error) return <div className="posts-error">{error}</div>;
   if (!post) return <div className="posts-error">投稿が見つかりません</div>;
 
+  // OGP用のタイトルとdescriptionを作成
+  const ogpTitle = `【${post.achievementDate}】のトレーニング記録 | ダイエットメーカー`;
+  const ogpDescription = getCleanPostContent(post) || `${post.userName}さんのトレーニング記録`;
+  const ogpImageUrl = `${window.location.origin}/logo192.png`; // 静的OGP画像のパス
+
   // カテゴリー順序の定義
   const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
   
@@ -355,6 +367,26 @@ ${recordDetailUrl}`;
 
   return (
     <div className="posts-training-record-container">
+      {/* OGPメタタグ */}
+      <Helmet>
+        <title>{ogpTitle}</title>
+        <meta name="description" content={ogpDescription} />
+        
+        {/* OGP基本タグ */}
+        <meta property="og:title" content={ogpTitle} />
+        <meta property="og:description" content={ogpDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={ogpUrl} />
+        <meta property="og:image" content={ogpImageUrl} />
+        <meta property="og:site_name" content="ダイエットメーカー" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={ogpTitle} />
+        <meta name="twitter:description" content={ogpDescription} />
+        <meta name="twitter:image" content={ogpImageUrl} />
+      </Helmet>
+
       {/* 投稿情報 */}
       <div className="posts-post-content-card">
         <div className="posts-post-info">
