@@ -378,13 +378,19 @@ ${recordDetailUrl}`;
         <meta property="og:type" content="website" />
         <meta property="og:url" content={ogpUrl} />
         <meta property="og:image" content={ogpImageUrl} />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="500" />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:site_name" content="ダイエットメーカー" />
         
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
+        {/* Twitter Card  */}
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={ogpTitle} />
         <meta name="twitter:description" content={ogpDescription} />
         <meta name="twitter:image" content={ogpImageUrl} />
+        <meta name="twitter:domain" content="diet-maker.jp" />
+        <meta name="twitter:creator" content="@diet_maker" />
+        <meta name="twitter:site" content="@diet_maker" />
       </Helmet>
 
       {/* 投稿情報 */}
