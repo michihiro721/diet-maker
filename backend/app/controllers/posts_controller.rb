@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :set_post, only: [ :show, :update, :destroy ]
 
 
   def index
     @posts = Post.includes(:user, :likes).order(created_at: :desc)
     render json: @posts, include: [
-      :user, 
+      :user,
       likes: { include: :user }
     ]
   end
@@ -14,8 +14,8 @@ class PostsController < ApplicationController
 
   def show
     render json: @post, include: [
-      :user, 
-      comments: { include: :user }, 
+      :user,
+      comments: { include: :user },
       likes: { include: :user }
     ]
   end
@@ -25,7 +25,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
-      render json: @post, include: [:user], status: :created
+      render json: @post, include: [ :user ], status: :created
     else
       render json: @post.errors, status: :unprocessable_entity
     end

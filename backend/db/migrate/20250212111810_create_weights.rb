@@ -8,6 +8,6 @@ class CreateWeights < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :weights, [:user_id, :date], unique: true
+    add_index :weights, [ :user_id, :date ], unique: true
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe TrainingsController, type: :controller do
   describe '#create' do
     it 'トレーニングデータを保存できる' do
       # テスト用のパラメータ
-      training_params = { 
+      training_params = {
         training: [
           {
             date: '2025-03-29',
@@ -17,15 +17,15 @@ RSpec.describe TrainingsController, type: :controller do
           }
         ]
       }
-      
+
       # モックの準備
       training = instance_double(Training)
       allow(Training).to receive(:new).and_return(training)
       allow(training).to receive(:save).and_return(true)
-      
+
       # 実行
       post :create, params: training_params
-      
+
       # 検証
       expect(response).to have_http_status(:created)
       expect(JSON.parse(response.body)['message']).to eq('Training records saved successfully')

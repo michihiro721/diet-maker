@@ -1,7 +1,7 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
-require 'dotenv/load'
+require "rails/all"
+require "dotenv/load"
 
 
 
@@ -11,7 +11,7 @@ require 'dotenv/load'
 Bundler.require(*Rails.groups)
 
 # dotenv-railsを読み込む
-require 'dotenv/rails'
+require "dotenv/rails"
 
 module DietMaker
   class Application < Rails::Application
@@ -28,7 +28,7 @@ module DietMaker
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = 'Tokyo'
+    config.time_zone = "Tokyo"
     config.active_record.default_timezone = :local
 
     # config.time_zone = "Central Time (US & Canada)"
