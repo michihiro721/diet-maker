@@ -321,8 +321,7 @@ const TrainingRecordDetail = () => {
       contentText = `\n${cleanContent}`;
     }
     
-    // テキスト全体を組み立てる（ハッシュタグを最初に、URLを最後に）
-    const fullText = `#ダイエットメーカー
+    const fullText = `#ダイエット #ダイエットメーカー
 
 【${trainingDate}のトレーニング記録】${contentText}
 
