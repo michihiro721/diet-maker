@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { Helmet } from 'react-helmet-async';
 import axios from "axios";
 import "./styles/TrainingRecordDetail.css";
 import TrainingCopyModal from "./TrainingCopyModal";
@@ -8,9 +7,6 @@ import TrainingCopyModal from "./TrainingCopyModal";
 const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
 });
-
-// 信頼性の高い外部画像URL
-const FALLBACK_IMAGE_URL = "https://i.imgur.com/jLFOKcw.png";
 
 const TrainingRecordDetail = () => {
   const { postId } = useParams();
@@ -33,8 +29,6 @@ const TrainingRecordDetail = () => {
   const [error, setError] = useState(null);
   // トレーニングコピーモーダル用の状態
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
-  // OGP関連の状態
-  const [ogpUrl, setOgpUrl] = useState('');
 
   // 投稿データの取得
   useEffect(() => {
@@ -54,9 +48,6 @@ const TrainingRecordDetail = () => {
           achievementDate: date,
           userName: response.data.user?.name || "ユーザー"
         });
-        
-        // OGP用のURLを生成（本番環境のドメインを直接指定）
-        setOgpUrl(`https://diet-maker.jp/training-details/${postId}?date=${date}`);
         
         // 成果データを取得
         await fetchAchievementData(response.data.user_id, date);
@@ -351,13 +342,6 @@ ${recordDetailUrl}`;
   if (error) return <div className="posts-error">{error}</div>;
   if (!post) return <div className="posts-error">投稿が見つかりません</div>;
 
-  // OGP用のタイトルとdescriptionを作成
-  const ogpTitle = `【${post.achievementDate}】のトレーニング記録 | ダイエットメーカー`;
-  const ogpDescription = getCleanPostContent(post) || `${post.userName}さんのトレーニング記録`;
-  
-  // 確実に動作する外部画像URLを使用する
-  const ogpImageUrl = FALLBACK_IMAGE_URL;
-
   // カテゴリー順序の定義
   const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
   
@@ -371,31 +355,6 @@ ${recordDetailUrl}`;
 
   return (
     <div className="posts-training-record-container">
-      {/* OGPメタタグ */}
-      <Helmet>
-        <title>{ogpTitle}</title>
-        <meta name="description" content={ogpDescription} />
-        
-        {/* OGP基本タグ */}
-        <meta property="og:title" content={ogpTitle} />
-        <meta property="og:description" content={ogpDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={ogpUrl} />
-        <meta property="og:image" content={ogpImageUrl} />
-        <meta property="og:image:width" content="1024" />
-        <meta property="og:image:height" content="1024" />
-        <meta property="og:image:alt" content="ダイエットメーカーロゴ" />
-        <meta property="og:site_name" content="ダイエットメーカー" />
-        
-        {/* Twitter Card  */}
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@diet_maker" />
-        <meta name="twitter:title" content={ogpTitle} />
-        <meta name="twitter:description" content={ogpDescription} />
-        <meta name="twitter:image" content={ogpImageUrl} />
-        <meta name="twitter:image:alt" content="ダイエットメーカーロゴ" />
-      </Helmet>
-
       {/* 投稿情報 */}
       <div className="posts-post-content-card">
         <div className="posts-post-info">
