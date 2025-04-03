@@ -1,30 +1,29 @@
 /* メニューボタンのスタイル */
 .header-menu-button {
-    background: white; /* 背景色を白に設定 */
-    border: none; /* 枠線をなしに設定 */
-    border-radius: 50%; /* ボタンを円形にする */
-    width: 60px; /* ボタンの幅を設定 */
-    height: 60px; /* ボタンの高さを設定 */
-    cursor: pointer; /* カーソルをポインターに設定 */
-    display: flex; /* フレックスボックスレイアウトを使用 */
-    justify-content: center; /* 子要素を中央に配置 */
-    align-items: center; /* 子要素を中央に配置 */
-    transition: background-color 0.3s, transform 0.3s; /* 背景色と拡大の変化をスムーズに */
-    position: absolute; /* 絶対位置に配置 */
-    right: 70px; /* 右端からの距離を設定 */
-
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.3s;
+    position: absolute;
+    right: 70px;
   }
   
   /* メニューボタン内のアイコンのスタイル */
   .header-menu-button .fa-bars {
-    font-size: 4vh; /* アイコンのサイズを設定 */
-    color: #5d9cec; /* アイコンの色を設定 */
+    font-size: 4vh;
+    color: #5d9cec;
   }
   
   /* メニューボタンのホバー時のスタイル */
   .header-menu-button:hover {
-    background-color: #d3f2ff; /* ホバー時の背景色を設定 */
-    transform: scale(1.1); /* ホバー時にボタンを少し拡大 */
+    background-color: #d3f2ff;
+    transform: scale(1.1);
   }
 
 
@@ -46,7 +45,7 @@
     .header-menu-button {
       width: 40px;
       height: 40px;
-      right: 30px; /* 小さい画面でも余白を確保 */
+      right: 30px;
     }
     
     .header-menu-button .fa-bars {

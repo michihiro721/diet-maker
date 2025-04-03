@@ -1,21 +1,21 @@
 /* テーブルヘッダーとセルのスタイル */
 .training-table th,
 .training-table td {
-    text-align: center; /* テキストを中央揃え */
-    padding: 10px; /* パディングを大きく */
+    text-align: center;
+    padding: 10px;
 }
 
 /* テーブルヘッダーのスタイル */
 .training-table th {
-    font-weight: bold; /* フォントを太字に */
-    font-size: 20px; /* ヘッダーのフォントサイズを大きく */
+    font-weight: bold;
+    font-size: 20px;
 }
 
 /* 各列の幅を指定 */
 .training-table th:nth-child(1),
 .training-table td:nth-child(1) {
-    width: 70px; /* セット列 */
-    font-weight: bold; /* 太字 */
+    width: 70px;
+    font-weight: bold;
 }
 
 .training-table th:nth-child(2),

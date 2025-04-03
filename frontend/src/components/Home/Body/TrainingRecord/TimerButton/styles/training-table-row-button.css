@@ -1,48 +1,48 @@
 /* ボタンのスタイル */
 .training-table button {
-    border: none; /* 境界線をなしに */
-    border-radius: 5px; /* 角を丸く */
-    padding: 10px 15px; /* パディングを大きく */
-    width: 80px; /* ボタンの幅を広く */
-    height: 40px; /* ボタンの高さを広く */
-    font-size: 16px; /* フォントサイズを大きく */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
 }
 
 /* 完了ボタンのスタイル */
 .training-table .complete-button {
-    background-color: rgba(162, 217, 255, 0.2); /* 背景色を透過 */
-    color: black; /* 文字色を黒に */
-    cursor: pointer; /* ホバー時にポインターを表示 */
+    background-color: rgba(162, 217, 255, 0.2);
+    color: black;
+    cursor: pointer;
 }
 
 /* 未完了ボタンのスタイル */
 .training-table .incomplete-button {
-    background-color: white; /* 背景色を白に */
-    color: white; /* 文字色を白に */
-    border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い青色の枠線 */
-    cursor: pointer; /* ホバー時にポインターを表示 */
+    background-color: white;
+    color: white;
+    border: 2px solid rgba(162, 217, 255, 0.5);
+    cursor: pointer;
 }
 
 
 @media screen and (max-width: 768px) {
     .training-table button {
-        width: 50px !important; /* ボタンの幅を50pxに */
-        padding: 8px 5px; /* パディングを小さく */
-        font-size: 14px; /* フォントサイズを小さく */
+        width: 50px !important;
+        padding: 8px 5px;
+        font-size: 14px;
     }
     
     .training-table .complete-button,
     .training-table .incomplete-button {
-        width: 50px !important; /* 完了ボタンの幅を50pxに */
+        width: 50px !important;
     }
 }
 
 
 @media screen and (max-width: 480px) {
     .training-table button {
-        width: 50px !important; /* ボタンの幅を50pxに維持 */
-        height: 35px; /* 高さを小さく */
-        padding: 5px 3px; /* パディングをさらに小さく */
-        font-size: 12px; /* フォントサイズをさらに小さく */
+        width: 50px !important;
+        height: 35px;
+        padding: 5px 3px;
+        font-size: 12px;
     }
 }

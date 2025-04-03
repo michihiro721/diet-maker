@@ -82,7 +82,7 @@
   border: 1px solid #f0f0f0;
   display: flex;
   flex-direction: column;
-  overflow: visible; /* 削除ボタンが隠れないように */
+  overflow: visible;
 }
 
 .post-card:hover {
@@ -110,7 +110,7 @@
   font-weight: 500;
 }
 
-/* 日付情報を横並びにするためのスタイル調整 */
+/* 日付情報を横並び */
 .post-date {
   display: flex;
   flex-wrap: wrap;
@@ -229,86 +229,6 @@
   color: white;
   text-decoration: none;
 }
-
-/* 以下のモーダル関連のコードはコメントアウト（新しいページコンポーネントを使用するため）*/
-/*
-.achievement-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(2px);
-}
-
-.achievement-modal {
-  background-color: white;
-  border-radius: 12px;
-  padding: 25px;
-  width: 90%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  animation: modalFadeIn 0.3s ease;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.achievement-modal-title {
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 1.6rem;
-  color: #2c3e50;
-  font-weight: 600;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #ecf0f1;
-}
-
-.achievement-modal-content {
-  padding: 10px;
-}
-
-.achievement-loading {
-  text-align: center;
-  padding: 30px;
-  font-style: italic;
-  color: #7f8c8d;
-}
-
-.close-modal-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #95a5a6;
-  z-index: 10;
-  transition: color 0.3s, transform 0.2s;
-}
-
-.close-modal-button:hover {
-  color: #34495e;
-  transform: rotate(90deg);
-}
-*/
 
 /* ページネーション */
 .pagination {
@@ -449,34 +369,7 @@
   }
 }
 
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-  .loading {
-    color: #93c5fd;
-  }
-  
-  .error {
-    color: #f87171;
-  }
-}
 
-.error {
-  color: #e74c3c;
-  border-left: 4px solid #e74c3c;
-}
-
-.no-posts {
-  text-align: center;
-  padding: 40px;
-  font-size: 16px;
-  color: #7f8c8d;
-  background-color: #f8fafc;
-  border-radius: 10px;
-  margin: 30px 0;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-}
-
-/* スマホ表示での調整 */
 @media (max-width: 768px) {
   .post-date {
     flex-direction: column;

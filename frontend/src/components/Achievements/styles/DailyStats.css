@@ -349,7 +349,7 @@
   max-width: 500px !important;
   background-color: white;
   border-radius: 16px;
-  padding: 16px; /* パディングを減らす */
+  padding: 16px;
   padding-left: 10px !important;
   padding-right: 10px !important;
   max-height: 70vh;
@@ -361,14 +361,14 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin: 10px 0; /* 上下にマージンを追加 */
+  margin: 10px 0;
   box-sizing: border-box !important;
 }
 
 .share-modal h2 {
-  font-size: 20px; /* サイズ縮小 */
+  font-size: 20px;
   color: #2c3e50;
-  margin-bottom: 16px; /* 余白調整 */
+  margin-bottom: 16px;
   width: 100%;
   text-align: center;
 }
@@ -382,13 +382,13 @@
 
 .share-form-group {
   width: 100% !important;
-  margin-bottom: 14px; /* 余白減らす */
+  margin-bottom: 14px;
   box-sizing: border-box !important;
 }
 
 .share-form-group label {
   display: block;
-  margin-bottom: 8px; /* 余白減らす */
+  margin-bottom: 8px;
   font-weight: 600;
   color: #2c3e50;
   text-align: center;
@@ -396,7 +396,7 @@
 
 .share-form-textarea {
   width: 100%;
-  min-height: 80px; /* 高さを小さく */
+  min-height: 80px;
   padding: 12px;
   border: 1px solid #dcdfe6;
   border-radius: 8px;
@@ -415,19 +415,19 @@
 }
 
 .share-submit-button {
-  display: inline-block; /* 表示方法を明示 */
+  display: inline-block;
   background-color: #4a7dff;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 0; /* パディング減らす */
+  padding: 10px 0;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  width: 92%; /* 幅を広げる */
-  max-width: 280px; /* 少し小さく */
-  margin-top: 5px; /* 余白減らす */
+  width: 92%;
+  max-width: 280px;
+  margin-top: 5px;
   -webkit-appearance: none; /* Safari対応 */
   appearance: none;
 }
@@ -459,10 +459,10 @@
   transition: color 0.3s;
   -webkit-appearance: none; /* Safari対応 */
   appearance: none;
-  padding: 0; /* 余分なパディングをなくす */
-  width: 28px; /* タップ領域を確保 */
+  padding: 0;
+  width: 28px;
   height: 28px;
-  display: flex; /* 中央揃え */
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -476,11 +476,11 @@
   width: 100% !important;
   background-color: #f8fafc;
   border-radius: 12px;
-  padding: 10px; /* パディング減らす */
-  margin-bottom: 14px; /* 余白減らす */
+  padding: 10px;
+  margin-bottom: 14px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px; /* 余白減らす */
+  gap: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) inset;
   box-sizing: border-box !important;
 }
@@ -488,7 +488,7 @@
 .share-data-item {
   display: flex;
   flex-direction: column;
-  padding: 10px; /* パディング減らす */
+  padding: 10px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -502,12 +502,12 @@
 .share-data-label {
   font-size: 12px;
   color: #64748b;
-  margin-bottom: 4px; /* 余白減らす */
+  margin-bottom: 4px;
   font-weight: 500;
 }
 
 .share-data-value {
-  font-size: 15px; /* サイズ小さく */
+  font-size: 15px;
   font-weight: 600;
   color: #334155;
 }
@@ -558,7 +558,6 @@
     margin-top: 15px;
   }
   
-  /* スマホでの横並びレイアウト改善 */
   .daily-stats-grid {
     display: flex;
     flex-direction: row;
@@ -579,7 +578,7 @@
     padding: 8px 3px;
   }
   
-  /* ラベルのスタイル調整 - 擬似要素をブロック表示に変更 */
+  /* ラベルのスタイル */
   .daily-stat-label {
     font-size: 9px;
     margin-bottom: 6px;

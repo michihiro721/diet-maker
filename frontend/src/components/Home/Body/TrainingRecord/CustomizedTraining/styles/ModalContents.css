@@ -1,37 +1,37 @@
 /* モーダルのコンテンツ部分のスタイル */
 .modal-contents {
-  background: #fff; /* 背景色を白に設定 */
-  padding: 20px; /* 内側の余白を設定 */
-  border-radius: 10px; /* 角を丸くする */
-  width: 500px; /* 横幅を設定 */
-  max-width: 90%; /* 最大幅を90%に設定 */
-  max-height: 80%; /* 最大高さを80%に設定 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 軽い影を追加 */
-  border: 2px solid rgba(162, 217, 255, 0.5); /* 薄い水色の枠線 */
-  animation: fadeIn 0.3s ease; /* アニメーションを適用 */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  max-width: 90%;
+  max-height: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(162, 217, 255, 0.5);
+  animation: fadeIn 0.3s ease;
   overflow-y: auto; /* 高さがコンテンツより小さい場合はスクロール可能に */
-  position: relative; /* 子要素の位置決めの基準にする */
-  display: flex; /* フレックスボックスを使用 */
-  flex-direction: column; /* 縦方向に並べる */
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-/* スマートフォン向けのスタイル */
+
 @media screen and (max-width: 768px) {
   .modal-contents {
-    max-height: 70%; /* スマホでは高さを制限 */
-    padding: 15px; /* パディングも少し小さく */
-    padding-bottom: 30px; /* 閉じるボタン用のスペースを確保 */
+    max-height: 70%;
+    padding: 15px;
+    padding-bottom: 30px;
   }
 }
 
 /* フェードインアニメーションの定義 */
 @keyframes fadeIn {
   from {
-    opacity: 0; /* 透明から */
-    transform: scale(0.9); /* 少し小さい状態から */
+    opacity: 0;
+    transform: scale(0.9);
   }
   to {
-    opacity: 1; /* 不透明に */
-    transform: scale(1); /* 通常のサイズに */
+    opacity: 1;
+    transform: scale(1);
   }
 }

@@ -1,24 +1,23 @@
 /* テーブル全体のスタイル */
 .training-table {
-    width: auto; /* テーブルの幅を自動調整 */
-    margin: 20px auto; /* 上下の余白を20px、左右の余白を自動調整 */
-    border-collapse: collapse; /* 境界線を重ねて表示 */
-    font-size: 18px; /* フォントサイズを大きく */
+    width: auto;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 18px;
 }
 
 .training-delete-button {
-    background-color: rgba(255, 0, 0, 0.5); /* 背景色を透過50%に */
-    color: white; /* 文字色を白に */
-    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
+    background-color: rgba(255, 0, 0, 0.5);
+    color: white;
+    transition: background-color 0.3s ease;
   }
   
   .training-delete-button:hover {
-    background-color: red; /* ホバー時の背景色 */
-    cursor: pointer; /* ホバー時にポインターを表示 */
+    background-color: red;
+    cursor: pointer;
   }
 
 
-/* レスポンシブ対応 */
 @media screen and (max-width: 768px) {
   .training-table {
     width: 100%;

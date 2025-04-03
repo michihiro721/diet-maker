@@ -1,24 +1,24 @@
 /* セット追加ボタンのコンテナスタイル */
 .add-set-button-container {
-    text-align: center; /* テキストを中央揃え */
-    margin-top: 20px; /* 上に余白を追加 */
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* セット追加ボタンのスタイル */
 .add-set-button {
-    background-color: rgba(162, 217, 255, 0.2); /* ベースカラーを透過50%に */
-    border: 2px solid rgba(162, 217, 255, 0.2); /* 薄い青色の枠線を透過20%に */
-    border-radius: 5px; /* 角を丸く */
-    padding: 15px 30px; /* パディングを大きく */
-    cursor: pointer; /* カーソルをポインターに */
-    font-weight: bold; /* 文字を太く */
-    color: black; /* 文字色を黒に */
-    transition: background-color 0.3s ease; /* 背景色の変化をスムーズに */
-    font-size: 18px; /* フォントサイズを大きく */
-    border: 2px solid rgba(162, 217, 255, 0.8); /* 薄い青色の枠線 */
+    background-color: rgba(162, 217, 255, 0.2);
+    border: 2px solid rgba(162, 217, 255, 0.2);
+    border-radius: 5px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    border: 2px solid rgba(162, 217, 255, 0.8);
 }
 
 /* セット追加ボタンのホバー時のスタイル */
 .add-set-button:hover {
-    background-color: rgba(130, 192, 255, 0.5); /* ホバー時の背景色を透過50%に */
+    background-color: rgba(130, 192, 255, 0.5);
 }

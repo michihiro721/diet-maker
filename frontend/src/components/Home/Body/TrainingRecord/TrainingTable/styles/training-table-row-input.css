@@ -1,33 +1,32 @@
 /* 入力フィールドのスタイル */
 .training-table input[type="number"],
 .training-table input[type="text"] {
-    width: 70px; /* 横幅を広く */
-    text-align: center; /* 中央寄せ */
-    border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
-    border-radius: 10px; /* 角を丸く */
-    padding: 10px; /* 内側の余白を大きく */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側の影 */
-    transition: border-color 0.3s ease; /* 枠線の色の変化をスムーズに */
-    font-size: 18px; /* フォントサイズを大きく */
-    cursor: pointer; /* ホバー時にポインターを表示 */
+    width: 70px;
+    text-align: center;
+    border: 1px solid #a2d9ff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 /* 入力フィールドのフォーカス時のスタイル */
 .training-table input[type="number"]:focus,
 .training-table input[type="text"]:focus {
-    border-color: #a2d9ff; /* フォーカス時の枠線の色 */
+    border-color: #a2d9ff;
 }
 
 /* 入力フィールドのスピンボタンを非表示に */
 .training-table input[type="number"]::-webkit-outer-spin-button,
 .training-table input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none; /* Chrome, Safari, Edge用 */
+    -webkit-appearance: none;
     margin: 0;
 }
 
 
 
-/* レスポンシブ対応 */
 @media screen and (max-width: 768px) {
   .training-table input[type="number"],
   .training-table input[type="text"] {

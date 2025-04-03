@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 画面全体の高さに設定 */
+  height: 100vh;
 }
 
 /* コンテナのスタイル */
@@ -30,7 +30,7 @@
   font-weight: bold;
   margin-bottom: 15px;
   display: flex;
-  flex-direction: column; /* ラベルと入力フィールドを縦に並べる */
+  flex-direction: column;
 }
 
 /* セレクトボックスと入力フィールドのスタイル */

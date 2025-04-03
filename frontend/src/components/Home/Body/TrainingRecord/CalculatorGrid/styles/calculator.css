@@ -3,11 +3,11 @@
     background-color: rgba(162, 217, 255, 0.1);
     border: 1px solid #a2d9ff;
     border-radius: 5px;
-    padding: 20px; /* ボタンを大きく */
-    font-size: 24px; /* 文字を大きく */
-    margin: 0; /* ボタンの左右のスペースを無くす */
+    padding: 20px;
+    font-size: 24px;
+    margin: 0;
     cursor: pointer;
-    width: 80px; /* ボタンを大きく */
+    width: 80px;
     color: rgba(0, 0, 255, 0.7);
   }
   
@@ -18,15 +18,15 @@
   /* 電卓のボタン配置 */
   .calculator-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3列に変更 */
-    gap: 5px; /* ボタンとボタンの間を狭く */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
     justify-items: center;
   }
   
   .calculator-grid-extended {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
-    gap: 5px; /* 文字と文字の間を狭く */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
     justify-items: center;
-    margin-top: 10px; /* 上下の隙間を無くす */
+    margin-top: 10px;
   }

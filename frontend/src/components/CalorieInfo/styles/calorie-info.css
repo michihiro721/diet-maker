@@ -118,7 +118,7 @@
     text-align: center;
 }
 
-/* カロリーチャートのコントロール（例：ドロップダウン、ボタン） */
+/* カロリーチャートのコントロール */
 .calorie-chart-controls {
     margin-bottom: 20px;
     display: flex;
@@ -473,8 +473,8 @@
 
     .calorie-calendar-modal {
         padding: 15px;
-        width: 100%; /* 幅を100%に変更 */
-        max-width: 100%; /* 最大幅も100%に変更 */
+        width: 100%;
+        max-width: 100%;
         max-height: 90vh;
         overflow-y: auto;
     }

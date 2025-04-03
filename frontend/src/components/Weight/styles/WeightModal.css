@@ -24,23 +24,23 @@
     padding: 10px;
     width: calc(100% - 20px);
     margin-bottom: 20px;
-    text-align: center; /* 中央寄せ */
-    border: 1px solid #a2d9ff; /* 薄い青色の枠線 */
-    border-radius: 10px; /* 角を丸く */
+    text-align: center;
+    border: 1px solid #a2d9ff;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .fixed-size {
-    height: 4vh; /* 固定の高さを設定 */
-    overflow: hidden; /* 内容が溢れた場合に隠す */
+    height: 4vh;
+    overflow: hidden;
   }
   
   .weight-modal-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3列に変更 */
-    gap: 5px; /* ボタンとボタンの間を狭く */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
     justify-items: center;
   }
   
@@ -48,11 +48,11 @@
     background-color: rgba(162, 217, 255, 0.1);
     border: 1px solid #a2d9ff;
     border-radius: 5px;
-    padding: 20px; /* ボタンを大きく */
-    font-size: 24px; /* 文字を大きく */
-    margin: 0; /* ボタンの左右のスペースを無くす */
+    padding: 20px;
+    font-size: 24px;
+    margin: 0;
     cursor: pointer;
-    width: 80px; /* ボタンを大きく */
+    width: 80px;
     color: rgba(0, 0, 255, 0.7);
   }
 
@@ -61,7 +61,7 @@
   }
   
   .weight-modal-preservation-button {
-    background-color: #87CEFA; /* 薄い青色 */
+    background-color: #87CEFA;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -69,8 +69,8 @@
     cursor: pointer;
     font-size: 18px;
     margin-top: 10px;
-    grid-column: span 3; /* グリッドの3列を跨ぐ */
-    justify-self: center; /* 中央に配置 */
+    grid-column: span 3;
+    justify-self: center;
   }
 
   .weight-modal-preservation-button:hover {

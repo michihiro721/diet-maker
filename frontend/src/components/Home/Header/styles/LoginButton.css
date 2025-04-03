@@ -16,12 +16,12 @@
 
 /* アイコンの色をログイン状態で変更 */
 .header-login-button .user-logged-in {
-  color: #fff; /* ログインしている場合は薄い青色 */
+  color: #fff;
   animation: flame 1s infinite;
 }
 
 .header-login-button:hover .fa-user {
-  color: #87cefa; /* ホバー時のアイコン色を薄い青色に */
+  color: #87cefa;
 }
 
 @keyframes flame {

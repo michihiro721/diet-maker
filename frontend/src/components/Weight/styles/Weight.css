@@ -7,7 +7,6 @@
   align-items: center;
   justify-content: center;
   height: calc(100vh - 7vh - 50px);
-  /* オーバースクロール対策 - 横と縦両方を制御 */
   overscroll-behavior: none;
   overflow-y: auto; 
   position: relative;
@@ -203,9 +202,8 @@
   padding: 20px;
   border-radius: 4px;
   text-align: center;
-  /* モーダル内のオーバースクロール対策 */
   overscroll-behavior: contain;
-  position: relative; /* モーダルの位置固定 */
+  position: relative;
 }
 
 /* カレンダーヘッダー用スタイル */
@@ -214,7 +212,7 @@
   font-weight: bold;
 }
 
-/* 全体のスクロール制御をページレベルで追加 */
+/* 全体のスクロール制御 */
 html, body {
   overscroll-behavior-y: none;
   margin: 0;
@@ -316,7 +314,6 @@ html, body {
     padding: 15px;
   }
   
-  /* 目標情報のテキスト切れ防止 */
   .goal-info {
     width: 100%;
     padding: 0 10px;
@@ -330,7 +327,6 @@ html, body {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 10px;
-    /* テキスト処理の改善 */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -362,10 +358,10 @@ html, body {
     justify-content: flex-start;
     height: auto;
     padding: 10px;
-    padding-top: 55px; /* ヘッダーより少し大きめに設定 */
-    padding-bottom: 60px; /* フッターより少し大きめに設定 */
-    margin-top: 0; /* マージンをパディングに置き換え */
-    margin-bottom: 0; /* マージンをパディングに置き換え */
+    padding-top: 55px;
+    padding-bottom: 60px;
+    margin-top: 0;
+    margin-bottom: 0;
     overflow-x: hidden;
     max-width: 100%;
     width: 100%;
@@ -376,9 +372,7 @@ html, body {
     -webkit-touch-callout: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    /* スクロールバウンス防止 */
     position: relative;
-    /* 左右の余白をなくす */
     left: 0;
   }
 
@@ -391,12 +385,12 @@ html, body {
   .weight-calendar-modal-overlay {
     overscroll-behavior: none;
     touch-action: none;
-    position: fixed; /* 固定位置を確保 */
+    position: fixed;
   }
 
   .weight-chart-wrapper {
     height: 250px;
-    width: 100%; 
+    width: 100%;
   }
   
   .weight-chart {
@@ -427,7 +421,6 @@ html, body {
     margin: 0 auto 10px;
     display: block;
     width: 70%;
-    /* テキスト切れを防止 */
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -439,7 +432,6 @@ html, body {
     width: 50%;
   }
 
-  /* 目標情報のテキスト切れ防止 - スマホサイズ専用 */
   .goal-info {
     width: 100%;
     padding: 0;
@@ -454,25 +446,23 @@ html, body {
     width: 100%;
     box-sizing: border-box;
     margin: 5px 0;
-    /* テキスト処理の改善 */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   
-  /* モバイルでの余分なスクロールを防止 */
   .react-calendar {
     overscroll-behavior: none;
     width: 100%;
     max-width: 100%;
   }
   
-  /* カレンダーヘッダーの年月表示を小さく */
+  /* カレンダーヘッダーの年月表示 */
   .react-calendar__navigation__label__labelText {
     font-size: 18px;
   }
 
-  /* iOS特有の問題への対応（ログイン直後のレイアウト崩れ防止） */
+  /* iOS特有の問題への対応 */
   @supports (-webkit-touch-callout: none) {
     .weight-chart-container {
       padding-bottom: 70px;

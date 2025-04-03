@@ -65,12 +65,12 @@
 
 /* 日曜日の日付のスタイル */
 .react-calendar__tile--sunday {
-    color: red; /* 日曜日は赤色 */
+    color: red;
 }
 
 /* 土曜日の日付のスタイル */
 .react-calendar__tile--saturday {
-    color: blue; /* 土曜日は青色 */
+    color: blue;
 }
 
 /* 選択された日付のスタイル */

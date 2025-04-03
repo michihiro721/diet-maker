@@ -1,10 +1,10 @@
 /* 検索入力フィールドのスタイル */
 .search-input {
     width: 90%;
-    padding: 8px 12px; /* 内側の余白を設定 */
-    margin-bottom: 10px; /* 下に余白を追加 */
-    border: 1px solid #ccc; /* 枠線を設定 */
-    border-radius: 20px; /* 角を丸くする */
-    box-sizing: border-box; /* ボックスのサイズを調整 */
-    font-size: 14px; /* フォントサイズを設定 */
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+    font-size: 14px;
   }

@@ -140,7 +140,6 @@
     color: white;
   }
   
-  /* モバイル対応 */
   @media (max-width: 768px) {
     .training-copy-modal {
       width: 95%;

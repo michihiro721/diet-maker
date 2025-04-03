@@ -1,31 +1,31 @@
 /* 部位選択ボタンのコンテナスタイル */
 .part-selector {
-    display: flex; /* フレックスボックスを使用 */
-    justify-content: space-evenly; /* 均等に配置 */
-    margin-bottom: 10px; /* 下に余白を追加 */
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
   }
   
   /* 部位選択ボタンのスタイル */
   .part-button {
-    padding: 10px 15px; /* 内側の余白を設定 */
-    border: none; /* 枠線をなしに設定 */
-    border-radius: 20px; /* 角を丸くする */
-    background: rgba(162, 217, 255, 0.5); /* 背景色を薄い水色に設定 */
-    color: #000; /* 文字色を黒に設定 */
-    font-size: 16px; /* フォントサイズを設定 */
-    font-weight: bold; /* フォントを太字に設定 */
-    cursor: pointer; /* カーソルをポインターに設定 */
-    transition: background-color 0.3s ease, color 0.3s ease; /* 背景色と文字色の変化をスムーズに */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background: rgba(162, 217, 255, 0.5);
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   /* 部位選択ボタンのホバースタイル */
   .part-button:hover {
-    background: #b2ebf2; /* 背景色を変更 */
-    color: #0056b3; /* 文字色を変更 */
+    background: #b2ebf2;
+    color: #0056b3;
   }
   
   /* アクティブな部位選択ボタンのスタイル */
   .part-button.active {
-    background: #007bff; /* 背景色を青に設定 */
-    color: white; /* 文字色を白に設定 */
+    background: #007bff;
+    color: white;
   }
