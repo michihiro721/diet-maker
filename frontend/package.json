@@ -27,7 +27,9 @@
     "start": "react-scripts start",
     "build": "REACT_APP_API_URL=$REACT_APP_API_URL react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.{js,jsx}",
+    "lint:fix": "eslint src/**/*.{js,jsx} --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -49,8 +51,13 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@eslint/js": "^9.23.0",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.10",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.0.0",
     "postcss": "^8.4.40"
   }
 }
