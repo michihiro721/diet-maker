@@ -168,26 +168,30 @@
 
 .or-divider {
   text-align: center;
-  margin: 15px 0;
+  margin: 15px 0px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .or-divider:before,
 .or-divider:after {
   content: '';
-  position: absolute;
-  top: 50%;
-  width: 45%;
+  position: relative;
+  width: 40%;
   height: 1px;
   background-color: #ccc;
+  flex-shrink: 1;
 }
 
 .or-divider:before {
-  left: 0;
+  margin-right: 15px;
 }
 
 .or-divider:after {
-  right: 0;
+  margin-left: 15px;
 }
 
 .forgot-password-link {
