@@ -110,17 +110,16 @@
   background-color: white;
   color: #757575;
   border: 1px solid #ddd;
-  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   width: 100%;
   margin: 10px auto;
   max-width: 300px;
 }
 
 .google-login-button:hover {
-  background-color: #f5f5f5;
+  transform: scale(1.02);
 }
 
 .google-icon {
