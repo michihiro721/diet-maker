@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    errors:
+      messages:
+        blank: を入力してください
+        taken: はすでに存在します
+        invalid: は不正な値です
+
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
