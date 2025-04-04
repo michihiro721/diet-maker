@@ -19,9 +19,8 @@ import '../Home/Body/Calender/styles/CalenderWeekdays.css';
 import '../Home/Body/Calender/styles/CalenderNavigation.css';
 import '../Home/Body/Calender/styles/CalenderDays.css';
 import '../Home/Body/Calender/styles/CalenderCommon.css';
-import CalenderFormatShortWeekday from "../Home/Body/Calender/CalenderFormatShortWeekday";
-import CalenderTileClassName from "../Home/Body/Calender/CalenderTileClassName";
-import CalenderTileContent from "../Home/Body/Calender/CalenderTileContent";
+import { CalenderFormatShortWeekday, CalenderTileClassName, CalenderTileContent } from "../Home/Body/Calender/Calender";
+
 
 const TrainingMenu = () => {
   const [gender, setGender] = useState("");
