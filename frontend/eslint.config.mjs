@@ -5,7 +5,15 @@ import reactHooksPlugin from "eslint-plugin-react-hooks";
 
 export default [
   { files: ["**/*.{js,mjs,cjs,jsx}"] },
-  { files: ["**/*.{js,mjs,cjs,jsx}"], languageOptions: { globals: globals.browser } },
+  { 
+    files: ["**/*.{js,mjs,cjs,jsx}"], 
+    languageOptions: { 
+      globals: {
+        ...globals.browser,
+        ...globals.node  // Node.jsのグローバル変数を追加（processを含む）
+      } 
+    }
+  },
   js.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
