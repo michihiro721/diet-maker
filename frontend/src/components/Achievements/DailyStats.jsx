@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import axios from "axios";
 import "./styles/DailyStats.css";
 
@@ -7,14 +8,11 @@ const DailyStats = ({ userId, selectedDate }) => {
   const [consumedCalories, setConsumedCalories] = useState(null);
   const [intakeCalories, setIntakeCalories] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const [postSuccess, setPostSuccess] = useState(false);
-  // トレーニングデータの状態を追加
   const [trainingData, setTrainingData] = useState([]);
-  const [workouts, setWorkouts] = useState([]);
 
   // 日付が変わったらデータをリセットする
   useEffect(() => {
@@ -23,7 +21,6 @@ const DailyStats = ({ userId, selectedDate }) => {
     setIntakeCalories(null);
     setTrainingData([]);
     setLoading(true);
-    setError("");
   }, [selectedDate]);
 
   // トレーニングデータを取得
@@ -45,21 +42,9 @@ const DailyStats = ({ userId, selectedDate }) => {
         console.error("Error fetching training data:", error);
       }
     };
-
-    // 種目データを取得
-    const fetchWorkouts = async () => {
-      try {
-        const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
-        const response = await axios.get(`${apiUrl}/workouts`);
-        setWorkouts(response.data);
-      } catch (error) {
-        console.error("Error fetching workouts:", error);
-      }
-    };
-
+    // ユーザーIDと選択した日付が存在する場合にトレーニングデータを取得
     if (userId && selectedDate) {
       fetchTrainingData();
-      fetchWorkouts();
     }
   }, [userId, selectedDate]);
 
@@ -95,7 +80,6 @@ const DailyStats = ({ userId, selectedDate }) => {
         } else {
           setStepData(null);
         }
-        setError("");
       } catch (error) {
         console.error(`Error fetching step data for ${selectedDate}:`, error);
         setStepData(null);
@@ -440,6 +424,12 @@ const DailyStats = ({ userId, selectedDate }) => {
       )}
     </div>
   );
+};
+
+
+DailyStats.propTypes = {
+  userId: PropTypes.string.isRequired,
+  selectedDate: PropTypes.string.isRequired
 };
 
 export default DailyStats;
