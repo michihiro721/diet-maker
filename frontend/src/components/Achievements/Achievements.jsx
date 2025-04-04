@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../Home/Body/Calender/styles/CalenderWeekdays.css';
-import '../Home/Body/Calender/styles/CalenderNavigation.css';
-import '../Home/Body/Calender/styles/CalenderDays.css';
-import '../Home/Body/Calender/styles/CalenderCommon.css';
+
 import { CalenderFormatShortWeekday, CalenderTileContent } from "../Home/Body/Calender/Calender";
 import './styles/Achievements.css';
 import DailyStats from './DailyStats';
