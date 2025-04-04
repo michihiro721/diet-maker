@@ -125,7 +125,6 @@ const Weight = () => {
         // データセットを作成
         const datasets = [];
 
-        // 棒グラフは常に非表示か表示かを決定
         if (displayMode === 'bar' || displayMode === 'both') {
           datasets.push({
             label: "体重(棒グラフ)",
@@ -138,7 +137,6 @@ const Weight = () => {
           });
         }
 
-        // 折れ線グラフは常に非表示か表示かを決定
         if (displayMode === 'line' || displayMode === 'both') {
           datasets.push({
             label: "体重(折れ線)",
@@ -239,8 +237,8 @@ const Weight = () => {
         console.log("Data saved successfully");
         fetchData();
         alert('データの保存に成功しました');
-        setErrorMessage(''); // エラーメッセージをクリア
-        setWeight(''); // 入力フィールドをクリア
+        setErrorMessage('');
+        setWeight('');
       } else {
         console.error("Error saving data:", response.data);
         alert('データの保存に失敗しました');
@@ -290,7 +288,7 @@ const Weight = () => {
     },
     plugins: {
       legend: {
-        display: displayMode === 'both', // 両方表示の場合のみ凡例を表示
+        display: displayMode === 'both',
         position: 'top',
         labels: {
           font: {

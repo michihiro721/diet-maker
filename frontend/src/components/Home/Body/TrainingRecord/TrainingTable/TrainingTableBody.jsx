@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録のテーブルボディを表示するためのコンポーネントです。
-// 各行には、セット情報が表示されます。
-
 import React from "react";
 import TrainingTableRow from './TrainingTableRow';
 

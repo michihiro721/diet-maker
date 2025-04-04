@@ -6,7 +6,7 @@ const WeightModal = ({ isOpen, onClose, onSave }) => {
 
   useEffect(() => {
     if (isOpen) {
-      setValue(""); // モーダルが開かれるたびに入力値をリセット
+      setValue("");
     }
   }, [isOpen]);
 

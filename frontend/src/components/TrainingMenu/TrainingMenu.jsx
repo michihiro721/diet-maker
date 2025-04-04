@@ -117,8 +117,8 @@ const TrainingMenu = () => {
               date: selectedDate,
               goal_id: 1,
               workout_id: exercise.workout_id,
-              sets: 1, // 有酸素運動は1セットとして扱う
-              reps: 0, // 回数は0
+              sets: 1,
+              reps: 0,
               weight: isNaN(durationMinutes) ? 30 : durationMinutes, // 分数を重量として保存（パース失敗時は30分）
             });
           } else {
@@ -138,7 +138,6 @@ const TrainingMenu = () => {
         });
       });
 
-      // デバッグのために送信するデータをコンソールに出力
       console.log("Sending training data:", trainingData);
 
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/trainings`, {

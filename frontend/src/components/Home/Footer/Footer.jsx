@@ -1,12 +1,8 @@
-// このコードは、ウェブサイトのフッターを表示するためのコンポーネントです。
-// フッターには、ホーム画面、体重、カロリー関係、成果、みんなの投稿のリンクが含まれています。
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaHome, FaWeight, FaFire, FaTrophy, FaUsers } from 'react-icons/fa';
 import './Footer.css';
 
-// Footerコンポーネントを定義
 function Footer() {
   return (
     <footer className="footer">

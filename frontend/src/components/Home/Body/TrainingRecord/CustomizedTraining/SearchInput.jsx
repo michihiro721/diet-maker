@@ -1,9 +1,6 @@
-// Reactをインポート
 import React from "react";
-// SearchInput用のCSSファイルをインポート
 import './styles/SearchInput.css';
 
-// SearchInputコンポーネントの定義
 const SearchInput = ({ searchTerm, setSearchTerm }) => {
   return (
     // 検索入力フィールド
@@ -19,5 +16,4 @@ const SearchInput = ({ searchTerm, setSearchTerm }) => {
   );
 };
 
-// SearchInputコンポーネントをエクスポート
 export default SearchInput;

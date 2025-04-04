@@ -66,7 +66,7 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
       setErrorMessage("");
       setSuccessMessage("");
 
-      // 日付をYYYY-MM-DD形式に変換（タイムゾーンを考慮）
+      // 日付をYYYY-MM-DD形式に変換
       const year = selectedDate.getFullYear();
       const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
       const day = String(selectedDate.getDate()).padStart(2, '0');
@@ -83,12 +83,12 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
       // 全てのトレーニングデータを配列にまとめる
       const trainingsArray = trainingData.map(training => {
         return {
-          user_id: loggedInUserId, // 必ずJWTから取得したログインユーザーIDを使用
+          user_id: loggedInUserId,
           workout_id: training.workout_id,
           date: formattedDate,
           sets: training.sets,
           weight: training.weight,
-          reps: training.reps || 0 // レップ数がない場合は0を設定
+          reps: training.reps || 0
         };
       });
 

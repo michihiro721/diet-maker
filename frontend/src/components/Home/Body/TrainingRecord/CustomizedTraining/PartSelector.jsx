@@ -1,9 +1,6 @@
-// Reactをインポート
 import React from "react";
-// PartSelector用のCSSファイルをインポート
 import './styles/PartSelector.css';
 
-// PartSelectorコンポーネントの定義
 const PartSelector = ({ selectedPart, handlePartChange, exercises }) => {
   return (
     // 部位選択ボタンのコンテナ
@@ -23,5 +20,4 @@ const PartSelector = ({ selectedPart, handlePartChange, exercises }) => {
   );
 };
 
-// PartSelectorコンポーネントをエクスポート
 export default PartSelector;

@@ -90,6 +90,5 @@ const TrainingInfo = ({
   );
 };
 
-// 有酸素運動の種目リストをエクスポート
 export { aerobicExercises };
 export default TrainingInfo;

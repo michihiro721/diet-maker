@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録の各行に表示されるボタンを管理するためのコンポーネントです。
-// 完了ボタンと削除ボタンが含まれ、完了ボタンはタイマーの開始またはリセットを行います。
-
 import React, { useState } from "react";
 import AlertFunction from '../AlertFunction/AlertFunction';
 

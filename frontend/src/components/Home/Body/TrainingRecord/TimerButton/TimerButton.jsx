@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録の各行に表示されるタイマーボタンを管理するためのコンポーネントです。
-// タイマーボタンは、完了ボタンとして機能し、クリックするとタイマーが開始またはリセットされます。
-
 import React, { useState } from "react";
 import AlertFunction from '../AlertFunction/AlertFunction';
 import './styles/training-table-row-button.css';

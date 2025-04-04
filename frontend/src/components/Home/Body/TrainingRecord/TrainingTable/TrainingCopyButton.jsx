@@ -1,4 +1,3 @@
-// frontend/src/components/Home/Body/TrainingRecord/TrainingTable/TrainingCopyButton.jsx
 import React, { useState } from "react";
 import TrainingCopyModal from "../../../../Posts/TrainingCopyModal";
 import "./styles/TrainingCopyButton.css";

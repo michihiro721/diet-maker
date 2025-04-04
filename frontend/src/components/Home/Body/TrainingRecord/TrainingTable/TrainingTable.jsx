@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録のテーブルを表示するためのコンポーネントです。
-// テーブルには、トレーニングのセット情報が含まれ、セットの追加、更新、削除が可能です。
-
 import React, { useEffect, useState } from "react";
 import TrainingTableHeader from './TrainingTableHeader';
 import TrainingTableBody from './TrainingTableBody';

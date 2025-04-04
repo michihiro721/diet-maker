@@ -1,10 +1,7 @@
-// ReactとLinkコンポーネントをインポート
 import React from "react";
 import { Link } from "react-router-dom";
-// MenuModal用のCSSファイルをインポート
 import "./styles/MenuModal.css";
 
-// MenuModalコンポーネントの定義
 const MenuModal = ({ closeMenu }) => {
   return (
     // モーダルのオーバーレイをクリックするとメニューを閉じる
@@ -28,5 +25,4 @@ const MenuModal = ({ closeMenu }) => {
   );
 };
 
-// MenuModalコンポーネントをエクスポート
 export default MenuModal;

@@ -1,12 +1,5 @@
-// このコードは、トレーニング記録の入力に使用する電卓のグリッドを提供するためのコンポーネントです。
-// ユーザーがボタンをクリックすると、対応する数字や記号が入力されます。
-
 import React from "react";
 import './styles/calculator.css';
-
-// CalculatorGridコンポーネントは、電卓のボタンを表示します。
-// handleCalculatorClickプロパティは、ボタンがクリックされたときに呼び出される関数です。
-// handleBackspaceプロパティは、バックスペースボタンがクリックされたときに呼び出される関数です。
 const CalculatorGrid = ({ handleCalculatorClick, handleBackspace }) => (
   <div className="calculator-grid">
     {/* 数字ボタンを表示します */}

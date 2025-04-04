@@ -27,7 +27,6 @@ const TrainingRecordDetail = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // トレーニングコピーモーダル用の状態
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
 
   // 投稿データの取得
@@ -133,10 +132,8 @@ const TrainingRecordDetail = () => {
         return groups;
       }, {});
 
-      // 種目ごとにソートされたデータを作成
       let sortedTrainingData = [];
       
-      // 各グループから最初のアイテムを取り出して、カテゴリでソート
       const categories = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
       
       // カテゴリでグループ化
@@ -186,19 +183,16 @@ const TrainingRecordDetail = () => {
     }
   };
 
-  // 投稿日付から実際の日付文字列を取得する関数
   const getPostDate = (post) => {
     if (!post || !post.content) return '';
     
-    // 新フォーマット: 【YYYY-MM-DD】
     const newDateRegex = /【(\d{4}-\d{2}-\d{2})】/;
     const newDateMatch = post.content.match(newDateRegex);
     
     if (newDateMatch) {
       return newDateMatch[1];
     }
-    
-    // 旧フォーマットその1: YYYY-MM-DD のトレーニング成果
+
     const oldDateRegex1 = /(\d{4}-\d{2}-\d{2})のトレーニング成果/;
     const oldDateMatch1 = post.content.match(oldDateRegex1);
     
@@ -206,7 +200,6 @@ const TrainingRecordDetail = () => {
       return oldDateMatch1[1];
     }
     
-    // 旧フォーマットその2: 単純なYYYY-MM-DD形式
     const oldDateRegex2 = /(\d{4}-\d{2}-\d{2})/;
     const oldDateMatch2 = post.content.match(oldDateRegex2);
     
@@ -224,7 +217,6 @@ const TrainingRecordDetail = () => {
     
     let content = post.content;
     
-    // 日付マーカーを削除 (【YYYY-MM-DD】 形式)
     content = content.replace(/【\d{4}-\d{2}-\d{2}】\s*/, '');
     
     return content.trim();
@@ -328,7 +320,7 @@ const TrainingRecordDetail = () => {
 トレーニングの記録はこちら👇
 ${recordDetailUrl}`;
     
-    // URLエンコードせずそのままTwitterの共有URLに渡す
+    // Twitterの共有URLに渡す
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(fullText)}`, '_blank');
   };
 
@@ -341,7 +333,6 @@ ${recordDetailUrl}`;
   if (error) return <div className="posts-error">{error}</div>;
   if (!post) return <div className="posts-error">投稿が見つかりません</div>;
 
-  // カテゴリー順序の定義
   const categoryOrder = ['胸', '背中', '肩', '腕', '脚', '腹筋', '有酸素'];
   
   // トレーニングデータのカテゴリーごとのグループ

@@ -1,7 +1,3 @@
-// このコードは、トレーニング記録のタイマー機能を提供するためのコンポーネントです。
-// タイマーがカウントダウンし、0になったときに音声を再生し、タイマーが完了したことを通知します。
-// CSSはfrontend/src/components/Home/Body/TrainingRecord/TrainingTable/styles/training-table-row-input.cssファイルを参照されて、frontend/src/components/Home/Body/TrainingRecord/TrainingTable/TrainingTableRow.jsxファイルと一緒
-
 import { useState, useEffect } from 'react';
 
 const AlertFunction = ({ timer, onComplete, updateTimer, reset }) => {
@@ -36,9 +32,9 @@ const AlertFunction = ({ timer, onComplete, updateTimer, reset }) => {
       onComplete(); // タイマー完了時のコールバックを呼び出す
       setHasCompleted(true); // タイマーが完了したことを状態に設定
     }
-  }, [timeLeft, onComplete, updateTimer, originalTime, reset, hasCompleted]); // 依存配列により副作用を制御
+  }, [timeLeft, onComplete, updateTimer, originalTime, reset, hasCompleted]);
 
-  return null; // このコンポーネントはUIを持たない
+  return null;
 };
 
 export default AlertFunction;

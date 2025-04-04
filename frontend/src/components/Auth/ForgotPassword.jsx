@@ -1,4 +1,3 @@
-// frontend/src/components/Auth/ForgotPassword.jsx
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';

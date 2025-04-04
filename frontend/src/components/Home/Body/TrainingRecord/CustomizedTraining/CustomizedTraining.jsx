@@ -1,4 +1,3 @@
-// Reactと必要なフック、コンポーネントをインポート
 import React, { useState, useEffect, useMemo } from "react";
 import PartSelector from "./PartSelector";
 import SearchInput from "./SearchInput";
@@ -66,5 +65,4 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
   );
 };
 
-// CustomizedTrainingコンポーネントをエクスポート
 export default CustomizedTraining;

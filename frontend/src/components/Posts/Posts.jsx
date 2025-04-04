@@ -162,7 +162,6 @@ const Posts = () => {
       return newDateMatch[1];
     }
     
-    // 旧フォーマットその1: YYYY-MM-DD のトレーニング成果
     const oldDateRegex1 = /(\d{4}-\d{2}-\d{2})のトレーニング成果/;
     const oldDateMatch1 = post.content.match(oldDateRegex1);
     
@@ -170,7 +169,6 @@ const Posts = () => {
       return oldDateMatch1[1];
     }
     
-    // 旧フォーマットその2: 単純なYYYY-MM-DD形式
     const oldDateRegex2 = /(\d{4}-\d{2}-\d{2})/;
     const oldDateMatch2 = post.content.match(oldDateRegex2);
     
@@ -201,7 +199,7 @@ const Posts = () => {
     
     if (!isLoggedIn) {
       alert("いいねするにはログインが必要です");
-      window.location.href = '/login'; // ログインページへリダイレクト
+      window.location.href = '/login';
       return;
     }
     

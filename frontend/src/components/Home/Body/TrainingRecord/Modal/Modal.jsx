@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録の入力を補助するためのモーダルコンポーネントです。
-// ユーザーが特定のフィールドをクリックすると、モーダルが表示され、タイマーや電卓の入力が可能になります。
-
 import React from "react";
 import './styles/modal.css';
 import TimerOptions from '../TimerOptions/TimerOptions';
@@ -32,7 +29,6 @@ const Modal = ({ currentField, currentValue, setCurrentValue, handleModalSave, h
           value={currentValue}
           readOnly
         />
-        {/* currentFieldがタイマーの場合はタイマーオプションを表示、それ以外の場合は電卓を表示 */}
         {currentField === "timer" ? (
           <TimerOptions handleTimerSelect={handleTimerSelect} />
         ) : (

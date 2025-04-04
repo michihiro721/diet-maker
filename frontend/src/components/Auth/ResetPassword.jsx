@@ -1,4 +1,3 @@
-// frontend/src/components/Auth/ResetPassword.jsx
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';

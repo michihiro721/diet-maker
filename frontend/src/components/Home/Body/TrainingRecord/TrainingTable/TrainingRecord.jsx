@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Calendar from 'react-calendar'; // カレンダーコンポーネントを直接インポート
-import 'react-calendar/dist/Calendar.css'; // カレンダーのスタイルをインポート
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import './styles/training-record-container.css';
 import TrainingInfo from '../TrainingInfo/TrainingInfo';
 import TrainingTable from './TrainingTable';
@@ -13,7 +13,7 @@ import { aerobicExercises, calculateTotalSessionCalories } from '../TrainingInfo
 
 const TrainingRecord = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [trainings, setTrainings] = useState([]); // 初期値を空の配列に設定
+  const [trainings, setTrainings] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [confirmEndModalVisible, setConfirmEndModalVisible] = useState(false);
@@ -27,15 +27,15 @@ const TrainingRecord = () => {
   const [trainingDates, setTrainingDates] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginErrorModalVisible, setLoginErrorModalVisible] = useState(false);
-  const [deleteRecordModalVisible, setDeleteRecordModalVisible] = useState(false); // 記録削除モーダル表示状態
-  const [maxWeights, setMaxWeights] = useState({}); // MAX重量を保持するステートを追加
-  const [userWeight, setUserWeight] = useState(70); // ユーザーの体重情報、デフォルト値は70kg
+  const [deleteRecordModalVisible, setDeleteRecordModalVisible] = useState(false);
+  const [maxWeights, setMaxWeights] = useState({});
+  const [userWeight, setUserWeight] = useState(70);
   const [totalSessionCalories, setTotalSessionCalories] = useState(0);
 
   // ログイン状態の確認
   useEffect(() => {
     const userId = localStorage.getItem('userId');
-    setIsLoggedIn(!!userId); // userIdがnullまたはundefinedでない場合はtrueに
+    setIsLoggedIn(!!userId);
   }, []);
 
   // ユーザープロファイル情報（体重）を取得するuseEffect
@@ -133,7 +133,7 @@ const TrainingRecord = () => {
       const firstDayStr = firstDay.toLocaleDateString('en-CA');
       const lastDayStr = lastDay.toLocaleDateString('en-CA');
       
-      // 月のトレーニングデータを取得するAPI (バックエンドに実装が必要)
+      // 月のトレーニングデータを取得するAPI
       const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
       
       if (response.data && Array.isArray(response.data)) {
@@ -156,7 +156,7 @@ const TrainingRecord = () => {
     // 選択された日付に基づいてトレーニングデータを取得
     const fetchTrainings = async () => {
       try {
-        const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
+        const formattedDate = selectedDate.toLocaleDateString('en-CA');
         const userId = localStorage.getItem('userId');
         
         // ユーザーIDが存在しない場合は何もしない
@@ -180,7 +180,7 @@ const TrainingRecord = () => {
           
           // 有酸素運動とそれ以外で保存する項目を変える
           const set = isAerobic ? {
-            minutes: training.weight || 30, // weightフィールドを分として使用
+            minutes: training.weight || 30,
             timer: "02:00"
           } : {
             weight: training.weight,
@@ -203,7 +203,7 @@ const TrainingRecord = () => {
         setTrainings(formattedTrainings);
       } catch (error) {
         console.error('Error fetching trainings:', error);
-        setTrainings([]); // エラーが発生した場合は空の配列を設定
+        setTrainings([]);
       }
     };
 
@@ -295,7 +295,7 @@ const TrainingRecord = () => {
     
     const updatedTrainings = trainings.map((training, index) =>
       index === trainingIndex
-        ? { ...training, sets: [...(training.sets || []), newSet] } // setsが未定義の場合は空の配列を設定
+        ? { ...training, sets: [...(training.sets || []), newSet] }
         : training
     );
     setTrainings(updatedTrainings);
@@ -628,17 +628,17 @@ const TrainingRecord = () => {
               currentPart={training.targetArea}
               onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
               maxWeight={getMaxWeightForExercise(training.exercise)}
-              sets={training.sets} // セット情報を渡す
-              userWeight={userWeight} // ユーザーの体重情報を渡す
+              sets={training.sets}
+              userWeight={userWeight}
             />
             <TrainingTable
-              sets={Array.isArray(training.sets) ? training.sets : []} // setsが配列であることを確認
+              sets={Array.isArray(training.sets) ? training.sets : []}
               openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
               handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
               handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
               handleAddSet={() => handleAddSet(trainingIndex)}
-              currentExercise={training.exercise} // 現在の種目名を渡す
-              isAerobic={aerobicExercises.includes(training.exercise)} // 有酸素運動かどうかを判定して渡す
+              currentExercise={training.exercise}
+              isAerobic={aerobicExercises.includes(training.exercise)}
             />
             <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
           </div>

@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import './styles/CalculatorModal.css';
 
-// CalculatorModalコンポーネントは、電卓のボタンを表示します。
-// handleCalculatorClickプロパティは、ボタンがクリックされたときに呼び出される関数です。
-// handleBackspaceプロパティは、バックスペースボタンがクリックされたときに呼び出される関数です。
+
 const CalculatorModal = ({ isOpen, onClose, onSave }) => {
   const [value, setValue] = useState("");
 

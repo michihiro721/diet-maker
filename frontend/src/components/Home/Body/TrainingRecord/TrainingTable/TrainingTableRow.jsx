@@ -1,6 +1,3 @@
-// このコードは、トレーニング記録の各行を表示するためのコンポーネントです。
-// 有酸素運動かそれ以外かによって表示項目が変わります。
-
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import TimerButton from '../TimerButton/TimerButton';
