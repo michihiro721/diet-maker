@@ -128,7 +128,6 @@ const CalorieInfo = () => {
     return bmrValue;
   };
 
-  // ESLintエラー修正: useCallbackを使用してfetchUserData関数をメモ化
   const fetchUserData = useCallback(async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
@@ -176,7 +175,6 @@ const CalorieInfo = () => {
     }
   }, [fetchUserData]);
 
-  // ESLintエラー修正: useCallbackを使用してfetchData関数をメモ化
   const fetchData = useCallback(async () => {
     if (!userId) return;
 
@@ -340,7 +338,6 @@ const CalorieInfo = () => {
 
   const handleStepsChange = (value) => setSteps(value);
   
-  // ESLintエラー修正: handleActivityLevelChangeは使用されているので残す
   const handleActivityLevelChange = (value) => setActivityLevel(value);
   
   const handleBasalMetabolismChange = (value) => setBasalMetabolism(value);
