@@ -20,7 +20,7 @@ const BodyInfo = () => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
-      fetchUserData(storedUserId);
+      fetchUserData();
     } else {
       setError("ユーザーIDが見つかりません。ログインしてください。");
       setLoading(false);
@@ -28,7 +28,7 @@ const BodyInfo = () => {
   }, []);
 
   // ユーザーデータを取得する関数
-  const fetchUserData = async (userId) => {
+  const fetchUserData = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const token = localStorage.getItem('jwt');
