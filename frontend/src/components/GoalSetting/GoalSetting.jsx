@@ -4,10 +4,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Header from "../Home/Header/Header";
 import "./styles/GoalSetting.css";
-import "../Home/Body/Calender/styles/CalenderWeekdays.css";
-import "../Home/Body/Calender/styles/CalenderNavigation.css";
-import "../Home/Body/Calender/styles/CalenderDays.css";
-import "../Home/Body/Calender/styles/CalenderCommon.css";
 import { CalenderFormatShortWeekday, CalenderTileClassName, CalenderTileContent } from "../Home/Body/Calender/Calender";
 
 

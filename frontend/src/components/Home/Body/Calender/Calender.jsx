@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './styles/CalenderCommon.css';
-import './styles/CalenderNavigation.css';
-import './styles/CalenderWeekdays.css';
-import './styles/CalenderDays.css';
+import './styles/Calendar.css';
 
 // カレンダーの曜日の表示をカスタマイズするための関数
 export const CalenderFormatShortWeekday = (locale, date) => {
