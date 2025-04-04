@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
+import React from 'react';
 import 'react-calendar/dist/Calendar.css';
 import './styles/Calendar.css';
+import PropTypes from 'prop-types';
 
 // カレンダーの曜日の表示をカスタマイズするための関数
 export const CalenderFormatShortWeekday = (locale, date) => {
@@ -30,18 +30,21 @@ export const CalenderTileContent = ({ date, view }) => {
   return null;
 };
 
-function Calender({ onDateSelect }) {
-  const [date, setDate] = useState(new Date());
-
-  const onChange = (newDate) => {
-    setDate(newDate);
-    if (onDateSelect) {
-      onDateSelect(newDate);
-    }
-  };
-
+function Calender() {
   // カレンダーを非表示にするためにnullを返す
   return null;
 }
+
+CalenderTileClassName.propTypes = {
+  date: PropTypes.instanceOf(Date).isRequired,
+  view: PropTypes.string.isRequired
+};
+
+CalenderTileContent.propTypes = {
+  date: PropTypes.instanceOf(Date).isRequired,
+  view: PropTypes.string.isRequired
+};
+
+Calender.propTypes = {};
 
 export default Calender;
