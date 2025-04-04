@@ -8,8 +8,7 @@ import TrainingTable from './TrainingTable';
 import Modal from '../Modal/Modal';
 import TrainingAdder from './TrainingAdder';
 import TrainingCopyButton from './TrainingCopyButton';
-import CalenderFormatShortWeekday from '../../Calender/CalenderFormatShortWeekday';
-import CalenderTileContent from '../../Calender/CalenderTileContent';
+import { CalenderFormatShortWeekday, CalenderTileContent } from '../../Calender/Calender';
 import { aerobicExercises, calculateTotalSessionCalories } from '../TrainingInfo/CaloriesUtils';
 
 const TrainingRecord = () => {
