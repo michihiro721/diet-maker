@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Line } from "react-chartjs-2";
 import axios from 'axios';
 import {
@@ -51,11 +51,7 @@ const CalorieInfo = () => {
   const [period, setPeriod] = useState('7days');
   const [userId, setUserId] = useState(null);
   const [totalCalorieDifference, setTotalCalorieDifference] = useState(0);
-
-  const [userGender, setUserGender] = useState("");
-  const [userHeight, setUserHeight] = useState(0);
-  const [userWeight, setUserWeight] = useState(0);
-  const [userAge, setUserAge] = useState(0);
+  
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -117,19 +113,23 @@ const CalorieInfo = () => {
     "活動量がかなり高い人": 1.9
   };
 
-  // ユーザーIDをローカルストレージから取得
-  useEffect(() => {
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) {
-      setUserId(parseInt(storedUserId, 10));
-      fetchUserData(storedUserId);
-    } else {
-      setError('ユーザーIDが見つかりません。ログインしてください。');
+  // 基礎代謝を計算する関数
+  const calculateBMR = (gender, height, weight, age) => {
+    const heightValue = parseFloat(height);
+    const weightValue = parseFloat(weight);
+    const ageValue = parseFloat(age);
+    
+    let bmrValue = 0;
+    if (gender === "男性") {
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
+    } else if (gender === "女性") {
+      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
     }
-  }, []);
+    return bmrValue;
+  };
 
-  // ユーザーデータを取得する関数
-  const fetchUserData = async (userId) => {
+  // ESLintエラー修正: useCallbackを使用してfetchUserData関数をメモ化
+  const fetchUserData = useCallback(async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const token = localStorage.getItem('jwt');
@@ -148,13 +148,7 @@ const CalorieInfo = () => {
       
       const userData = response.data;
       
-      // 取得したデータをセット (データが存在する場合のみ)
-      if (userData.gender) setUserGender(userData.gender);
-      if (userData.height) setUserHeight(userData.height);
-      if (userData.weight) setUserWeight(userData.weight);
-      if (userData.age) setUserAge(userData.age);
-      
-      // 基礎代謝を計算
+      // 基礎代謝を計算（データが存在する場合のみ）
       if (userData.gender && userData.height && userData.weight && userData.age) {
         const calculatedBMR = calculateBMR(
           userData.gender,
@@ -169,24 +163,21 @@ const CalorieInfo = () => {
       console.error("ユーザーデータの取得に失敗しました:", error);
       setError("ユーザーデータの取得に失敗しました。");
     }
-  };
+  }, []);
 
-  // 基礎代謝を計算する関数
-  const calculateBMR = (gender, height, weight, age) => {
-    const heightValue = parseFloat(height);
-    const weightValue = parseFloat(weight);
-    const ageValue = parseFloat(age);
-    
-    let bmrValue = 0;
-    if (gender === "男性") {
-      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
-    } else if (gender === "女性") {
-      bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) - 161;
+  // ユーザーIDをローカルストレージから取得
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10));
+      fetchUserData();
+    } else {
+      setError('ユーザーIDが見つかりません。ログインしてください。');
     }
-    return bmrValue;
-  };
+  }, [fetchUserData]);
 
-  const fetchData = async () => {
+  // ESLintエラー修正: useCallbackを使用してfetchData関数をメモ化
+  const fetchData = useCallback(async () => {
     if (!userId) return;
 
     try {
@@ -303,52 +294,55 @@ const CalorieInfo = () => {
         return aMonth !== bMonth ? aMonth - bMonth : aDay - bDay;
       });
 
-      setChartData({
+      setChartData(prevChartData => ({
         labels: allDates,
         datasets: [
           {
-            ...chartData.datasets[0],
+            ...prevChartData.datasets[0],
             data: allDates.map(date => {
               const found = filteredDailyCaloriesData.find(item => item.date === date);
               return found ? found.value : null;
             }),
           },
           {
-            ...chartData.datasets[1],
+            ...prevChartData.datasets[1],
             data: allDates.map(date => {
               const found = filteredIntakeCaloriesData.find(item => item.date === date);
               return found ? found.value : null;
             }),
           },
           {
-            ...chartData.datasets[2],
+            ...prevChartData.datasets[2],
             data: allDates.map(date => {
               const found = filteredStepsData.find(item => item.date === date);
               return found ? found.value : null;
             }),
           },
           {
-            ...chartData.datasets[3],
+            ...prevChartData.datasets[3],
             data: allDates.map(date => {
               const found = filteredCalorieDifferenceData.find(item => item.date === date);
               return found ? found.value : null;
             }),
           },
         ],
-      });
+      }));
     } catch (error) {
       console.error('データの取得に失敗しました:', error);
     }
-  };
+  }, [period, userId]);
 
   useEffect(() => {
     if (userId) {
       fetchData();
     }
-  }, [period, userId]);
+  }, [userId, fetchData]);
 
   const handleStepsChange = (value) => setSteps(value);
+  
+  // ESLintエラー修正: handleActivityLevelChangeは使用されているので残す
   const handleActivityLevelChange = (value) => setActivityLevel(value);
+  
   const handleBasalMetabolismChange = (value) => setBasalMetabolism(value);
   const handleIntakeCaloriesChange = (value) => setIntakeCalories(value);
 
@@ -400,7 +394,7 @@ const CalorieInfo = () => {
 
   // 活動量を選択する処理
   const selectActivityLevel = (level) => {
-    setActivityLevel(level);
+    handleActivityLevelChange(level);
     setIsActivityModalOpen(false);
   };
 
