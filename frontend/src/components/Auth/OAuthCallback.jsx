@@ -10,7 +10,6 @@ const API_BASE_URL = process.env.NODE_ENV === 'development'
 const OAuthCallback = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userData, setUserData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -68,7 +67,6 @@ const OAuthCallback = () => {
           const response = await axios.get(`${API_BASE_URL}/users/show`, config);
           
           console.log('User data from API:', response.data);
-          setUserData(response.data);
           
           if (response.data && response.data.id) {
             // APIから取得したユーザー情報をローカルストレージに保存
