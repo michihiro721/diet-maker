@@ -16,7 +16,6 @@ const Achievements = () => {
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [trainingData, setTrainingData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [userId, setUserId] = useState(null);
   const [workouts, setWorkouts] = useState([]);
   const [trainingDates, setTrainingDates] = useState([]);
@@ -239,7 +238,6 @@ const Achievements = () => {
       </div>
 
       {errorMessage && <p className="ach-error-message">{errorMessage}</p>}
-      {successMessage && <p className="ach-success-message">{successMessage}</p>}
 
       {isLoading ? (
         <div className="ach-loading-spinner">データを読み込み中...</div>
