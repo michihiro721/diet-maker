@@ -208,27 +208,86 @@
 }
 
 
-@media (max-width: 480px) {
-  .custom-login-container h2 {
-      font-size: 24px;
+@media (max-width: 768px) {
+  .custom-login-container {
+    min-height: auto;
+    height: 100%;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    justify-content: flex-start;
   }
-  
+
   .custom-login-form {
-      padding: 15px 10px;
-      margin: 15px 0;
+    max-width: 90%;
+    padding: 15px 10px;
+    margin: 15px 0;
   }
   
-  .custom-login-form input {
-      padding: 10px;
+  .social-login {
+    max-width: 90%;
   }
   
-  .custom-login-form button,
   .signup-button {
-      padding: 10px;
-      font-size: 14px;
+    max-width: 90%;
   }
   
   .google-login-button {
-      font-size: 14px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .custom-login-container {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .custom-login-container h2 {
+    font-size: 22px;
+    margin-bottom: 5px;
+  }
+  
+  .custom-login-form {
+    padding: 12px 8px;
+    margin: 10px 0;
+  }
+  
+  .custom-login-form input {
+    padding: 8px;
+    margin: 6px 0;
+  }
+  
+  .custom-login-form button {
+    padding: 8px;
+    margin: 15px 0 8px;
+    font-size: 14px;
+  }
+  
+  .signup-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .or-divider {
+    margin: 10px 0;
+  }
+  
+  .or-divider:before,
+  .or-divider:after {
+    width: 35%;
+  }
+  
+  .or-divider:before {
+    margin-right: 10px;
+  }
+  
+  .or-divider:after {
+    margin-left: 10px;
+  }
+  
+  .forgot-password-link {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
   }
 }
