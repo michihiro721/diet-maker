@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Header from "../Home/Header/Header";
 import "./styles/GoalSetting.css";
 import { CalenderFormatShortWeekday, CalenderTileClassName, CalenderTileContent } from "../Home/Body/Calender/Calender";
-
+import { useNavigate } from "react-router-dom";
 
 const GoalSetting = () => {
   const [currentWeight, setCurrentWeight] = useState("");
@@ -21,9 +21,10 @@ const GoalSetting = () => {
   const [userId, setUserId] = useState(null);
   const [existingGoal, setExistingGoal] = useState(null);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const alertShownRef = useRef(false);
 
-  // コンポーネントマウント時にローカルストレージからユーザーIDを取得し、
-  // 既存の目標があるか確認する
+  // コンポーネントマウント時にローカルストレージからユーザーIDを取得し、既存の目標があるか確認する
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -33,9 +34,14 @@ const GoalSetting = () => {
       // ユーザーの既存の目標を取得
       fetchUserGoal(parsedUserId);
     } else {
-      setInputWarning("ユーザーIDが見つかりません。ログインしてください。");
+      // ユーザーIDが見つからない場合、アラート表示
+      if (!alertShownRef.current) {
+        alertShownRef.current = true;
+        alert('目標設定を行うにはログインが必要です');
+        navigate('/login');
+      }
     }
-  }, []);
+  }, [navigate]);
 
   // ユーザーの既存の目標を取得する関数
   const fetchUserGoal = async (userId) => {
@@ -66,7 +72,12 @@ const GoalSetting = () => {
 
     // ユーザーIDチェック
     if (!userId) {
-      setInputWarning("ユーザーIDが見つかりません。ログインしてください。");
+      // アラートが表示されていなければ表示
+      if (!alertShownRef.current) {
+        alertShownRef.current = true;
+        alert('目標設定を行うにはログインが必要です');
+        navigate('/login');
+      }
       return;
     }
 
@@ -141,7 +152,7 @@ const GoalSetting = () => {
         try {
           response = await axios.post(
             `${apiUrl}/goals`, 
-            { goal: goalData }, // 注意: Rails の慣習に合わせてネストする
+            { goal: goalData },
             {
               headers: {
                 'Content-Type': 'application/json',
@@ -196,7 +207,7 @@ const GoalSetting = () => {
     const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
     setModalValue(offsetDate);
     setTargetDate(offsetDate.toISOString().split('T')[0]);
-    setIsCalendarModalOpen(false); // カレンダーモーダルを閉じる
+    setIsCalendarModalOpen(false);
   };
 
   const handleCalculatorClick = (value) => {
