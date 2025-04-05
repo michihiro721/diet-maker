@@ -82,7 +82,8 @@ workouts = [
   { name: "ストレッチ", category: "有酸素" },
   { name: "水中ウォーキング", category: "有酸素" },
   { name: "縄跳び", category: "有酸素" },
-  { name: "階段", category: "有酸素" }
+  { name: "階段", category: "有酸素" },
+  { name: "バーピージャンプ", category: "有酸素" }
 ]
 
 workouts.each do |workout|
