@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./styles/BodyInfo.css";
 import CalculatorModal from "./CalculatorModal";
+import { useNavigate } from "react-router-dom";
 
 const BodyInfo = () => {
   const [gender, setGender] = useState("");
@@ -14,6 +15,8 @@ const BodyInfo = () => {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const alertShownRef = useRef(false);
 
   // ユーザーIDを取得し、既存のデータがあれば読み込む
   useEffect(() => {
@@ -22,10 +25,15 @@ const BodyInfo = () => {
       setUserId(parseInt(storedUserId, 10));
       fetchUserData();
     } else {
-      setError("ユーザーIDが見つかりません。ログインしてください。");
+      // ユーザーIDが見つからない場合、アラートを表示してからログイン画面に遷移
+      if (!alertShownRef.current) {
+        alertShownRef.current = true;
+        alert('身体情報を設定するにはログインが必要です');
+        navigate('/login');
+      }
       setLoading(false);
     }
-  }, []);
+  }, [navigate]);
 
   // ユーザーデータを取得する関数
   const fetchUserData = async () => {
@@ -100,7 +108,12 @@ const BodyInfo = () => {
     e.preventDefault();
     
     if (!userId) {
-      setError("ユーザーIDが見つかりません。ログインしてください。");
+      // ユーザーIDが見つからない場合、アラートを表示してからログイン画面に遷移
+      if (!alertShownRef.current) {
+        alertShownRef.current = true;
+        alert('身体情報を設定するにはログインが必要です');
+        navigate('/login');
+      }
       return;
     }
     
