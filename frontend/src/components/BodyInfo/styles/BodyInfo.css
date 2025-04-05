@@ -102,3 +102,93 @@
     font-weight: bold;
     text-align: center;
   }
+
+
+@media screen and (max-width: 768px) {
+  .body-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    min-height: initial;
+    padding-top: 70px;
+    padding-bottom: 75px;
+    overflow: hidden;
+  }
+
+  /* コンテナのスタイル修正 */
+  .body-info-container {
+    max-width: 85%;
+    padding: 15px;
+    margin: 0 auto;
+  }
+
+  /* 各フォームグループの間隔 */
+  .body-info-form-group {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  /* セレクトボックスと入力フィールド */
+  .body-info-select,
+  .body-info-input {
+    width: 75%;
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  /* ボタンのサイズ */
+  .body-info-button {
+    width: 40%;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+
+  /* BMR結果の文字サイズと余白 */
+  .body-info-bmr-result {
+    font-size: 18px;
+    margin-top: 15px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  /* ラッパーの上部余白 */
+  .body-info-wrapper {
+    padding-top: 65px;
+    padding-bottom: 70px;
+  }
+  
+  /* コンテナ */
+  .body-info-container {
+    max-width: 80%;
+    padding: 12px;
+  }
+  
+  /* フォームグループの文字サイズ */
+  .body-info-form-group {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  /* 入力要素のサイズ */
+  .body-info-select,
+  .body-info-input {
+    width: 85%;
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  /* ボタンサイズ */
+  .body-info-button {
+    width: 50%;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+
+  /* BMR結果の文字サイズ */
+  .body-info-bmr-result {
+    font-size: 16px;
+    margin-top: 12px;
+  }
+}
