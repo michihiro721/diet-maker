@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/add-set-button.css';
 
 const AddSetButton = ({ handleAddSet }) => (
@@ -11,5 +12,9 @@ const AddSetButton = ({ handleAddSet }) => (
     </button>
   </div>
 );
+
+AddSetButton.propTypes = {
+  handleAddSet: PropTypes.func.isRequired
+};
 
 export default AddSetButton;
