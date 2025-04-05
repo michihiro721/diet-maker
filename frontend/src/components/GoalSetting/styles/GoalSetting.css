@@ -270,3 +270,72 @@
   text-align: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
+
+@media screen and (max-width: 768px) {
+  .goal-setting-container {
+    height: auto;
+    min-height: 100vh;
+    justify-content: flex-start;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  /* ラベルの文字サイズ */
+  .goal-setting-label {
+    font-size: 20px;
+  }
+
+  /* 入力フィールドの文字サイズ */
+  .goal-setting-input {
+    font-size: 18px;
+  }
+
+  /* ボタンの文字サイズ */
+  .goal-setting-button {
+    font-size: 18px;
+  }
+
+  /* 提出データの見出しサイズ */
+  .submitted-data h2 {
+    font-size: 22px;
+  }
+
+  /* 提出データの文字サイズ */
+  .submitted-data p {
+    font-size: 18px;
+  }
+
+  /* 提出データが画面下部でも見えるようマージン確保 */
+  .submitted-data {
+    margin-bottom: 60px;
+  }
+  
+  /* 警告メッセージのスタイル調整 */
+  .input-warning {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .goal-setting-container {
+    padding-top: 70px;
+  }
+  
+  .goal-setting-label {
+    font-size: 18px;
+  }
+
+  .goal-setting-input {
+    font-size: 16px;
+  }
+
+  .submitted-data h2 {
+    font-size: 20px;
+  }
+
+  .submitted-data p {
+    font-size: 16px;
+  }
+}
