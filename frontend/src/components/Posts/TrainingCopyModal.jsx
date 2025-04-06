@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -9,7 +10,8 @@ const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
 });
 
-const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
+
+const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -176,6 +178,20 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData, userId }) => {
       </div>
     </div>
   );
+};
+
+
+TrainingCopyModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  trainingData: PropTypes.arrayOf(
+    PropTypes.shape({
+      workout_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      sets: PropTypes.oneOfType([PropTypes.array, PropTypes.number, PropTypes.string]),
+      weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      reps: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    })
+  ).isRequired
 };
 
 export default TrainingCopyModal;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import TrainingCopyModal from "../../../../Posts/TrainingCopyModal";
 import "./styles/TrainingCopyButton.css";
 
@@ -25,7 +26,7 @@ const TrainingCopyButton = ({ trainings, workouts, onTrainingCopied }) => {
       // 各セットごとにデータを作成
       return training.sets.map((set, index) => {
         // 有酸素運動かどうかを判断
-        const isAerobic = !set.hasOwnProperty('reps');
+        const isAerobic = Object.prototype.hasOwnProperty.call(set, 'reps') === false;
         
         return {
           workout_id: workout.id,
@@ -83,6 +84,23 @@ const TrainingCopyButton = ({ trainings, workouts, onTrainingCopied }) => {
       )}
     </>
   );
+};
+
+
+TrainingCopyButton.propTypes = {
+  trainings: PropTypes.arrayOf(
+    PropTypes.shape({
+      exercise: PropTypes.string,
+      sets: PropTypes.array.isRequired
+    })
+  ),
+  workouts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      name: PropTypes.string.isRequired
+    })
+  ),
+  onTrainingCopied: PropTypes.func
 };
 
 export default TrainingCopyButton;

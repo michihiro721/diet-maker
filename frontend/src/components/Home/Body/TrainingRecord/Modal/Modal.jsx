@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/modal.css';
 import TimerOptions from '../TimerOptions/TimerOptions';
 import CalculatorGrid from '../CalculatorGrid/CalculatorGrid';
@@ -42,6 +43,18 @@ const Modal = ({ currentField, currentValue, setCurrentValue, handleModalSave, h
       </div>
     </div>
   );
+};
+
+
+Modal.propTypes = {
+  currentField: PropTypes.string.isRequired,
+  currentValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  setCurrentValue: PropTypes.func.isRequired,
+  handleModalSave: PropTypes.func.isRequired,
+  handleClickOutside: PropTypes.func.isRequired
 };
 
 export default Modal;

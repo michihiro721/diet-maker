@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import AlertFunction from '../AlertFunction/AlertFunction';
 import './styles/training-table-row-button.css';
 
@@ -52,6 +53,16 @@ const TimerButton = ({ index, set, handleUpdateSet }) => {
       )}
     </>
   );
+};
+
+
+TimerButton.propTypes = {
+  index: PropTypes.number.isRequired,
+  set: PropTypes.shape({
+    complete: PropTypes.bool.isRequired,
+    timer: PropTypes.string.isRequired
+  }).isRequired,
+  handleUpdateSet: PropTypes.func.isRequired
 };
 
 export default TimerButton;

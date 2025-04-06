@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import "./styles/MenuModal.css";
 
@@ -23,6 +24,11 @@ const MenuModal = ({ closeMenu }) => {
       </div>
     </div>
   );
+};
+
+
+MenuModal.propTypes = {
+  closeMenu: PropTypes.func.isRequired
 };
 
 export default MenuModal;

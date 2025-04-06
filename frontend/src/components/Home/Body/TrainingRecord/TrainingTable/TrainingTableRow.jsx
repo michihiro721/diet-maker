@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { FaTrashAlt } from "react-icons/fa";
 import TimerButton from '../TimerButton/TimerButton';
 import './styles/training-table-row-input.css';
@@ -51,6 +52,22 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
       </td>
     </tr>
   );
+};
+
+// PropTypes でプロパティの型を定義
+TrainingTableRow.propTypes = {
+  index: PropTypes.number.isRequired,
+  set: PropTypes.shape({
+    minutes: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    weight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    reps: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    timer: PropTypes.string,
+    complete: PropTypes.bool
+  }).isRequired,
+  openModal: PropTypes.func.isRequired,
+  handleUpdateSet: PropTypes.func.isRequired,
+  handleRemoveSet: PropTypes.func.isRequired,
+  isAerobic: PropTypes.bool.isRequired
 };
 
 export default TrainingTableRow;

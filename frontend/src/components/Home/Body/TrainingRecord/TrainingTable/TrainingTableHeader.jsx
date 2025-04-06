@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/training-table-header.css';
 
 const TrainingTableHeader = ({ isAerobic }) => (
@@ -13,5 +14,10 @@ const TrainingTableHeader = ({ isAerobic }) => (
     </tr>
   </thead>
 );
+
+
+TrainingTableHeader.propTypes = {
+  isAerobic: PropTypes.bool
+};
 
 export default TrainingTableHeader;
