@@ -1,7 +1,6 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import AlertFunction from '../AlertFunction/AlertFunction';
-
-
 
 const TrainingTableRowButton = ({ index, set, handleUpdateSet, handleRemoveSet }) => {
   const [showAlert, setShowAlert] = useState(false);
@@ -59,6 +58,17 @@ const TrainingTableRowButton = ({ index, set, handleUpdateSet, handleRemoveSet }
       </button>
     </>
   );
+};
+
+
+TrainingTableRowButton.propTypes = {
+  index: PropTypes.number.isRequired,
+  set: PropTypes.shape({
+    complete: PropTypes.bool,
+    timer: PropTypes.string,
+  }).isRequired,
+  handleUpdateSet: PropTypes.func.isRequired,
+  handleRemoveSet: PropTypes.func.isRequired
 };
 
 export default TrainingTableRowButton;
