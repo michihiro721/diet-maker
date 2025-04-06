@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 import CustomizedTraining from '../CustomizedTraining/CustomizedTraining';
 import { calculateTotalCalories, aerobicExercises } from './CaloriesUtils';
 import './styles/training-info.css';
@@ -88,6 +89,19 @@ const TrainingInfo = ({
       )}
     </div>
   );
+};
+
+
+TrainingInfo.propTypes = {
+  currentExercise: PropTypes.string,
+  currentPart: PropTypes.string,
+  onExerciseChange: PropTypes.func.isRequired,
+  maxWeight: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  sets: PropTypes.array,
+  userWeight: PropTypes.number
 };
 
 export { aerobicExercises };
