@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'; // PropTypes をインポート
 
 
 const TrainingTableRowInput = ({ index, set, openModal }) => (
@@ -32,5 +33,16 @@ const TrainingTableRowInput = ({ index, set, openModal }) => (
     </td>
   </>
 );
+
+
+TrainingTableRowInput.propTypes = {
+  index: PropTypes.number.isRequired,
+  set: PropTypes.shape({
+    weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    reps: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    timer: PropTypes.string
+  }).isRequired,
+  openModal: PropTypes.func.isRequired
+};
 
 export default TrainingTableRowInput;
