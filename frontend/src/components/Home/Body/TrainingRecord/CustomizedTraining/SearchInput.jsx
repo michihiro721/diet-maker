@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/SearchInput.css';
 
 const SearchInput = ({ searchTerm, setSearchTerm }) => {
@@ -14,6 +15,11 @@ const SearchInput = ({ searchTerm, setSearchTerm }) => {
       className="search-input"
     />
   );
+};
+
+SearchInput.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  setSearchTerm: PropTypes.func.isRequired
 };
 
 export default SearchInput;
