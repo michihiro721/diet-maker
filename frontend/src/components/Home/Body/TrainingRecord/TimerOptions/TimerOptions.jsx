@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/timer.css';
 
 const TimerOptions = ({ handleTimerSelect }) => (
@@ -14,5 +15,10 @@ const TimerOptions = ({ handleTimerSelect }) => (
     ))}
   </div>
 );
+
+
+TimerOptions.propTypes = {
+  handleTimerSelect: PropTypes.func.isRequired
+};
 
 export default TimerOptions;
