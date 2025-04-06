@@ -1,17 +1,12 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import './styles/training-adder.css';
 
 const TrainingAdder = ({ addTraining, deleteTraining }) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [trainingToDelete, setTrainingToDelete] = useState(null);
-
-  const confirmDeleteTraining = (trainingIndex) => {
-    setTrainingToDelete(trainingIndex);
-    setDeleteModalVisible(true);
-  };
 
   const handleDeleteTraining = () => {
-    deleteTraining(trainingToDelete);
+    deleteTraining();
     setDeleteModalVisible(false);
   };
 
@@ -42,6 +37,12 @@ const TrainingAdder = ({ addTraining, deleteTraining }) => {
       )}
     </div>
   );
+};
+
+
+TrainingAdder.propTypes = {
+  addTraining: PropTypes.func.isRequired,
+  deleteTraining: PropTypes.func.isRequired
 };
 
 export default TrainingAdder;
