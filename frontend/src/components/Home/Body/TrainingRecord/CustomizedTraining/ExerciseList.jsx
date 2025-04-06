@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/ExerciseList.css';
 
 const ExerciseList = ({ filteredExercises, handleExerciseSelect }) => {
@@ -18,6 +19,11 @@ const ExerciseList = ({ filteredExercises, handleExerciseSelect }) => {
       ))}
     </div>
   );
+};
+
+ExerciseList.propTypes = {
+  filteredExercises: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleExerciseSelect: PropTypes.func.isRequired
 };
 
 export default ExerciseList;
