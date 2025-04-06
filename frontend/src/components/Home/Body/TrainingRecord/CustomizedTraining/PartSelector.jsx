@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import './styles/PartSelector.css';
 
 const PartSelector = ({ selectedPart, handlePartChange, exercises }) => {
@@ -18,6 +19,15 @@ const PartSelector = ({ selectedPart, handlePartChange, exercises }) => {
       ))}
     </div>
   );
+};
+
+
+PartSelector.propTypes = {
+  selectedPart: PropTypes.string.isRequired,
+  handlePartChange: PropTypes.func.isRequired,
+  exercises: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ).isRequired
 };
 
 export default PartSelector;
