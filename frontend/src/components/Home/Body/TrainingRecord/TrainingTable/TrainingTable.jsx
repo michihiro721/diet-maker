@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import TrainingTableHeader from './TrainingTableHeader';
 import TrainingTableBody from './TrainingTableBody';
 import AddSetButton from '../AddSetButton/AddSetButton';
@@ -31,6 +32,16 @@ const TrainingTable = ({ sets, openModal, handleUpdateSet, handleRemoveSet, hand
       <AddSetButton handleAddSet={handleAddSet} />
     </>
   );
+};
+
+
+TrainingTable.propTypes = {
+  sets: PropTypes.array.isRequired,
+  openModal: PropTypes.func.isRequired,
+  handleUpdateSet: PropTypes.func.isRequired,
+  handleRemoveSet: PropTypes.func.isRequired,
+  handleAddSet: PropTypes.func.isRequired,
+  currentExercise: PropTypes.string
 };
 
 export default TrainingTable;
