@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const AlertFunction = ({ timer, onComplete, updateTimer, reset }) => {
   const [timeLeft, setTimeLeft] = useState(timer); // タイマーの残り時間を管理する状態
@@ -35,6 +36,14 @@ const AlertFunction = ({ timer, onComplete, updateTimer, reset }) => {
   }, [timeLeft, onComplete, updateTimer, originalTime, reset, hasCompleted]);
 
   return null;
+};
+
+
+AlertFunction.propTypes = {
+  timer: PropTypes.number.isRequired,
+  onComplete: PropTypes.func.isRequired,
+  updateTimer: PropTypes.func.isRequired,
+  reset: PropTypes.bool
 };
 
 export default AlertFunction;
