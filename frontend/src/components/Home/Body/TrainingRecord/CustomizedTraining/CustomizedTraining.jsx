@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import PropTypes from 'prop-types'; // PropTypesをインポート
 import PartSelector from "./PartSelector";
 import SearchInput from "./SearchInput";
 import ExerciseList from "./ExerciseList";
@@ -7,7 +8,7 @@ import './styles/ModalOverlay.css';
 import './styles/ModalContents.css';
 
 // CustomizedTrainingコンポーネントの定義
-const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) => {
+const CustomizedTraining = ({ onExerciseChange, closeModal }) => {
   // 部位選択の状態を管理するためのuseStateフック
   const [selectedPart, setSelectedPart] = useState("胸");
   // 検索語の状態を管理するためのuseStateフック
@@ -63,6 +64,11 @@ const CustomizedTraining = ({ currentExercise, onExerciseChange, closeModal }) =
       </div>
     </div>
   );
+};
+
+CustomizedTraining.propTypes = {
+  onExerciseChange: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 export default CustomizedTraining;
