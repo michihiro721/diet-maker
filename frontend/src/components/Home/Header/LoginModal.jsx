@@ -1,6 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
-import { FaSquareXTwitter, FaGithub } from 'react-icons/fa6';
 import "./styles/LoginMenuModal.css";
 
 const LoginModal = ({ closeMenu }) => {
@@ -79,6 +79,11 @@ const LoginModal = ({ closeMenu }) => {
       </div>
     </div>
   );
+};
+
+
+LoginModal.propTypes = {
+  closeMenu: PropTypes.func.isRequired
 };
 
 export default LoginModal;
