@@ -1,14 +1,89 @@
 #root {
-    height: 100%;
+  height: 100%;
 }
 
 .app-container {
-    background-color: rgba(226, 236, 252, 0.4);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  background-color: rgba(226, 236, 252, 0.4);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  flex: 1;
+}
+
+/* 画面の向きが横向きの場合のスタイル */
+@media screen and (orientation: landscape) and (max-width: 1024px) {
+  body {
+      /* 回転を促すメッセージのための準備 */
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
   }
   
-  .content-container {
-    flex: 1;
+  body::before {
+      content: "縦向きで表示することをお勧めします";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
   }
+  
+  /* 縦向きにするための回転アイコン */
+  body::after {
+      content: "📱";
+      position: fixed;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      color: white;
+      z-index: 10000;
+      animation: rotate 2s infinite;
+  }
+  
+  @keyframes rotate {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      25% { transform: translateX(-50%) rotate(90deg); }
+      100% { transform: translateX(-50%) rotate(90deg); }
+  }
+
+  #root {
+      height: 100%;
+      opacity: 0.1;
+  }
+  
+  .app-container {
+      min-height: 100vh;
+  }
+}
+
+/* 実際のモバイルデバイスでのみ適用 */
+@media screen and (max-width: 768px) {
+  html, body {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+  }
+  
+  #root {
+      overflow-y: auto;
+      height: 100%;
+      width: 100%;
+  }
+  
+  .app-container {
+      min-height: 100%;
+  }
+}
