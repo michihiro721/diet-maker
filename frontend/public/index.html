@@ -3,17 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover, orientation=portrait" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="トレーニングの管理と記録をサポートする「ダイエットメーカー」"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <style>
+      /* 横向きになった場合、コンテンツを強制的に縦向きに表示 */
+      @media screen and (orientation: landscape) {
+        #root {
+          transform: rotate(-90deg);
+          transform-origin: left top;
+          width: 100vh;
+          height: 100vw;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          overflow-x: hidden;
+        }
+      }
+    </style>
     <script>
-      // 画面を縦向きに固定
-      screen.orientation.lock('portrait').catch(function(error) {
-        console.log("画面の向きをロックできませんでした: " + error);
+      // 画面の向きをロックする - DOMが読み込まれた後に実行
+      document.addEventListener('DOMContentLoaded', function() {
+        try {
+          // Screen Orientation APIが利用可能かチェック
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock('portrait')
+              .catch(function(error) {
+                console.log('画面ロックエラー:', error);
+              });
+          }
+        } catch (e) {
+          console.log('向き固定エラー:', e);
+        }
       });
     </script>
     <!-- Google tag (gtag.js) -->
@@ -22,7 +47,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-W5KQHY7KT0');
     </script>
     <!--
@@ -35,7 +59,6 @@
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
-
       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
@@ -48,10 +71,8 @@
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
-
       You can add webfonts, meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
-
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
