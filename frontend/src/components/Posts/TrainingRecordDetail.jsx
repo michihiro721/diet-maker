@@ -208,7 +208,7 @@ const TrainingRecordDetail = () => {
     }
     
     // 投稿内容に日付がない場合は、投稿の作成日を使用
-    return new Date(post.created_at).toLocaleDateString('en-CA'); // YYYY-MM-DD形式
+    return new Date(post.created_at).toLocaleDateString('en-CA');
   };
 
   // 投稿内容から日付マーカーと不要なテキストを削除する関数
@@ -298,10 +298,9 @@ const TrainingRecordDetail = () => {
     if (!post) return;
     
     const cleanContent = getCleanPostContent(post);
-    const userName = post.userName || "ユーザー";
     const trainingDate = post.achievementDate || "";
     
-    // アプリのベースURL
+
     const appUrl = "https://diet-maker.jp";
     
     // 詳細ページへのURL
