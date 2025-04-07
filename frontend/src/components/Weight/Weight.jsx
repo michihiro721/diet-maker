@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
 import {
@@ -54,7 +54,6 @@ const Weight = () => {
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [userId, setUserId] = useState(null);
   const [displayMode, setDisplayMode] = useState('both');
 
@@ -68,7 +67,7 @@ const Weight = () => {
     }
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!userId) return;
 
     try {
@@ -167,13 +166,13 @@ const Weight = () => {
       console.error("Error fetching weight data:", error);
       alert(`体重データの取得に失敗しました: ${error.message}`);
     }
-  };
+  }, [userId, period, displayMode]);
 
   useEffect(() => {
     if (userId) {
       fetchData();
     }
-  }, [period, userId, displayMode]);
+  }, [period, userId, displayMode, fetchData]);
 
   useEffect(() => {
     const fetchGoalData = async () => {
