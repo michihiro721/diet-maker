@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -11,49 +11,20 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <style>
-      /* 画面を完全に固定 */
-      body {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+      /* 横向きを防止 */
+      @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+        html {
+          transform: rotate(-90deg);
+          transform-origin: left top;
+          width: 100vh;
+          height: 100vw;
+          overflow-x: hidden;
+          position: absolute;
+          top: 100%;
+          left: 0;
+        }
       }
     </style>
-    <script>
-      // アプリケーション起動時に向きをロック
-      window.addEventListener('load', function() {
-        try {
-          // フルスクリーンモードでのロック
-          if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen()
-              .then(function() {
-                if (screen.orientation && screen.orientation.lock) {
-                  return screen.orientation.lock('portrait');
-                }
-              })
-              .catch(function() {
-                // フルスクリーンが失敗しても向きだけロックを試みる
-                if (screen.orientation && screen.orientation.lock) {
-                  screen.orientation.lock('portrait');
-                }
-              });
-          } else if (screen.orientation && screen.orientation.lock) {
-            // フルスクリーンがサポートされていない場合は直接ロック
-            screen.orientation.lock('portrait');
-          }
-        } catch (e) {
-          console.log('向き固定エラー:', e);
-        }
-        
-        // 向きの変更を検知して強制的に戻す処理 
-        window.addEventListener('orientationchange', function() {
-          // ボディ要素のスタイルを調整して縦向きに強制
-          document.body.style.transform = 'none';
-          document.body.style.width = '100%';
-          document.body.style.height = '100%';
-        });
-      });
-    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5KQHY7KT0"></script>
     <script>
