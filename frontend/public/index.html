@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover, orientation=portrait" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="トレーニングの管理と記録をサポートする「ダイエットメーカー」"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <script>
+      // 画面を縦向きに固定
+      screen.orientation.lock('portrait').catch(function(error) {
+        console.log("画面の向きをロックできませんでした: " + error);
+      });
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5KQHY7KT0"></script>
     <script>
