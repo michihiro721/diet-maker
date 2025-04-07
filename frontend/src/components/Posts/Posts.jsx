@@ -13,7 +13,7 @@ const Posts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [likesCount, setLikesCount] = useState({});
+  const [, setLikesCount] = useState({});
   const [totalLikesCount, setTotalLikesCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [userId, setUserId] = useState(null);
@@ -23,7 +23,7 @@ const Posts = () => {
   
   const postsPerPage = 6;
 
-  // ログイン状態の確認
+
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     const jwt = localStorage.getItem('jwt');
@@ -69,7 +69,7 @@ const Posts = () => {
     fetchPosts();
   }, []);
   
-  // いいねの合計を計算するための useEffect
+  // いいねの合計を計算
   useEffect(() => {
     const calculateTotalLikes = () => {
       // ログインしていない場合は0を表示
@@ -78,10 +78,10 @@ const Posts = () => {
         return;
       }
       
-      // ユーザーIDを数値に変換
+
       const userIdNum = Number(userId);
       
-      // 自分の投稿のみ抽出（直接投稿のuser_idと比較）
+
       const myPosts = posts.filter(post => post.user_id === userIdNum);
       
       // 自分の投稿に対するいいね数を合計
@@ -98,7 +98,7 @@ const Posts = () => {
   
   // 投稿を削除する関数
   const handleDeletePost = async (postId, e) => {
-    // イベント伝播を停止
+
     if (e) e.stopPropagation();
     
     if (!isLoggedIn) {
@@ -115,7 +115,7 @@ const Posts = () => {
       setIsDeleting(true);
       setDeleteError(null);
       
-      // トークンを取得
+
       const jwt = localStorage.getItem('jwt');
       if (!jwt) {
         alert("認証情報が見つかりません。再ログインしてください。");
@@ -127,10 +127,10 @@ const Posts = () => {
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
       
-      // 削除リクエスト送信
+
       await api.delete(`/posts/${postId}`, config);
       
-      // 投稿リストから削除した投稿を除外
+
       setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
       
       console.log(`投稿ID ${postId} を削除しました`);
@@ -152,9 +152,9 @@ const Posts = () => {
     }
   };
 
-  // 投稿日付から実際の日付文字列を取得する関数
+
   const getPostDate = (post) => {
-    // 新フォーマット: 【YYYY-MM-DD】
+
     const newDateRegex = /【(\d{4}-\d{2}-\d{2})】/;
     const newDateMatch = post.content.match(newDateRegex);
     
@@ -176,8 +176,8 @@ const Posts = () => {
       return oldDateMatch2[1];
     }
     
-    // 投稿内容に日付がない場合は、投稿の作成日を使用
-    return new Date(post.created_at).toLocaleDateString('en-CA'); // YYYY-MM-DD形式
+
+    return new Date(post.created_at).toLocaleDateString('en-CA');
   };
 
   // 投稿内容から日付マーカーと不要なテキストを削除する関数
@@ -186,15 +186,15 @@ const Posts = () => {
     
     let content = post.content;
     
-    // 日付マーカーを削除 (【YYYY-MM-DD】 形式)
+
     content = content.replace(/【\d{4}-\d{2}-\d{2}】\s*/, '');
     
     return content.trim();
   };
 
-  // いいね機能の処理
+
   const handleLike = async (postId, e) => {
-    // イベント伝播を停止
+
     if (e) e.stopPropagation();
     
     if (!isLoggedIn) {
@@ -206,7 +206,7 @@ const Posts = () => {
     try {
       console.log("いいねリクエスト送信中...");
       
-      // トークンを取得
+
       const jwt = localStorage.getItem('jwt');
       if (!jwt) {
         alert("認証情報が見つかりません。再ログインしてください。");
@@ -217,16 +217,16 @@ const Posts = () => {
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
       
-      // リクエスト送信
+
       const response = await api.post(`/posts/${postId}/likes`, {}, config);
       console.log("いいねレスポンス:", response.data);
       
-      // レスポンスデータから必要な情報を取得
+
       const liked = response.data.liked;
       const likesCount = response.data.likes_count || 0;
       const userIdNum = Number(userId);
       
-      // 投稿の状態を更新
+      // いいねの状態を更新
       setPosts(prevPosts => 
         prevPosts.map(post => {
           if (post.id === postId) {
@@ -271,12 +271,12 @@ const Posts = () => {
   // 検索機能
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // 検索時は1ページ目に戻す
+    setCurrentPage(1);
   };
   
   // フィルタリングされた投稿
   const filteredPosts = posts.filter(post => {
-    // userがundefinedの場合も考慮
+
     const userName = post.user?.name || '';
     return userName.toLowerCase().includes(searchTerm.toLowerCase());
   });
@@ -287,7 +287,7 @@ const Posts = () => {
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   
-  // ページ変更ハンドラー
+
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -296,19 +296,19 @@ const Posts = () => {
   
   // ページネーションの表示範囲を計算する
   const getPaginationRange = () => {
-    // 表示数の制限 (スマホの場合はさらに少なくなる)
+    // 表示数の制限 (スマホの場合)
     const isSmallScreen = window.innerWidth < 768;
     const maxDisplayCount = isSmallScreen ? 5 : 9;
     
     let startPage = Math.max(1, currentPage - Math.floor(maxDisplayCount / 2));
     let endPage = Math.min(totalPages, startPage + maxDisplayCount - 1);
     
-    // startPageの調整（endPageが最大値に達している場合）
+
     if (endPage === totalPages) {
       startPage = Math.max(1, endPage - maxDisplayCount + 1);
     }
     
-    // 範囲を配列として返す
+  
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   };
   
@@ -326,14 +326,14 @@ const Posts = () => {
   };
 
   // すべての投稿にトレーニング記録ボタンを表示するためにtrueを返す
-  const hasAchievementData = (post) => {
+  const hasAchievementData = () => {
     return true;
   };
 
   if (loading) return <div className="loading">読み込み中...</div>;
   if (error) return <div className="error">{error}</div>;
   
-  // ページネーションの表示範囲
+
   const paginationRange = getPaginationRange();
   
   return (
@@ -380,7 +380,7 @@ const Posts = () => {
               )}
 
               {/* トレーニング記録ボタン */}
-              {hasAchievementData(post) && (
+              {hasAchievementData() && (
                 <div className="training-record-button-container">
                   <Link 
                     to={`/training-details/${post.id}?date=${getPostDate(post)}`}

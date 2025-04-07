@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -119,7 +119,7 @@ const TrainingRecord = () => {
   }, [isLoggedIn]);
 
   // 月が変わった時に、その月のトレーニングデータがある日付を全て取得
-  const fetchMonthlyTrainings = async () => {
+  const fetchMonthlyTrainings = useCallback(async () => {
     try {
       const userId = localStorage.getItem('userId'); // ユーザーIDを取得
       if (!userId) return;
@@ -146,11 +146,12 @@ const TrainingRecord = () => {
     } catch (error) {
       console.error('Error fetching monthly trainings:', error);
     }
-  };
+  }, [selectedDate]);
+
 
   useEffect(() => {
     fetchMonthlyTrainings();
-  }, [selectedDate.getFullYear(), selectedDate.getMonth()]);
+  }, [fetchMonthlyTrainings]);
 
   useEffect(() => {
     // 選択された日付に基づいてトレーニングデータを取得
@@ -708,6 +709,7 @@ const TrainingRecord = () => {
           </div>
         </div>
       )}
+
       {/* トレーニング記録削除確認モーダル */}
       {deleteRecordModalVisible && (
         <div className="delete-modal">
