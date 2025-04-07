@@ -16,7 +16,6 @@
 /* 画面の向きが横向きの場合のスタイル */
 @media screen and (orientation: landscape) and (max-width: 1024px) {
   body {
-      /* 回転を促すメッセージのための準備 */
       position: relative;
       overflow: hidden;
       height: 100vh;
@@ -68,7 +67,6 @@
   }
 }
 
-/* 実際のモバイルデバイスでのみ適用 */
 @media screen and (max-width: 768px) {
   html, body {
       overflow: hidden;

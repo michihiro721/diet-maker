@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -35,6 +35,63 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>ダイエットメーカー</title>
+    <script>
+      // タッチ操作の制限を設定
+      document.addEventListener('DOMContentLoaded', function() {
+        // ピンチズームを防止
+        document.addEventListener('touchmove', function(event) {
+          if (event.scale !== 1) {
+            event.preventDefault();
+          }
+        }, { passive: false });
+        
+        document.addEventListener('gesturestart', function(event) {
+          event.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('gesturechange', function(event) {
+          event.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('gestureend', function(event) {
+          event.preventDefault();
+        }, { passive: false });
+        
+        // ダブルタップによるズームを防止
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+          const now = Date.now();
+          if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        }, { passive: false });
+      });
+    </script>
+    <style>
+      /* タッチ操作に関連するスタイル */
+      html, body {
+        /* オーバースクロールを防止 */
+        overscroll-behavior: none;
+        /* タッチアクションの制限 */
+        touch-action: manipulation;
+        /* ユーザー選択を無効化 */
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      
+      /* iOSのハイライトを無効化 */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      /* イメージのドラッグを無効化 */
+      img {
+        pointer-events: none;
+        -webkit-user-drag: none;
+        user-drag: none;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
