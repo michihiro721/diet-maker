@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -33,6 +33,33 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>ダイエットメーカー</title>
+    <script>
+      // スマホ画面を縦画面に固定する
+      window.addEventListener('load', function() {
+        // モバイルデバイスの場合のみ向きの固定
+        if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          try {
+            // Screen Orientation APIを使用して縦向きに固定
+            if (screen.orientation && screen.orientation.lock) {
+              screen.orientation.lock('portrait').catch(function(error) {
+                console.log('画面の向きを固定できませんでした:', error);
+              });
+            } else if (screen.lockOrientation) {
+              // 古いAPI用
+              screen.lockOrientation('portrait');
+            } else if (screen.mozLockOrientation) {
+              // Firefox用
+              screen.mozLockOrientation('portrait');
+            } else if (screen.msLockOrientation) {
+              // IE用
+              screen.msLockOrientation('portrait');
+            }
+          } catch (e) {
+            console.log('画面の向きの固定に失敗しました:', e);
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
