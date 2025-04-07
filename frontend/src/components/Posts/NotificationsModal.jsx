@@ -229,7 +229,7 @@ const NotificationsModal = () => {
                 </span>
                 さんが投稿に「いいね」しました
               </p>
-              <p className="notification-post-content">"{notification.post_content}"</p>
+              <p className="notification-post-content">&ldquo;{notification.post_content}&rdquo;</p>
               <p className="notification-time">{formatDate(notification.created_at)}</p>
             </div>
           </li>
