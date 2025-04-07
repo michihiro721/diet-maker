@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -37,8 +37,20 @@
       html, body {
         touch-action: manipulation;
         overscroll-behavior: none;
+        -webkit-text-size-adjust: 100%;
+        -webkit-touch-callout: none;
+      }
+      /* iOSのダブルタップズームを防止 */
+      * { 
+        touch-action: pan-x pan-y;
       }
     </style>
+    <!-- iOS向けの追加対策 -->
+    <script>
+      document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
