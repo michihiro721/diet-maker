@@ -16,7 +16,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-W5KQHY7KT0');
     </script>
     <!--
@@ -29,67 +28,15 @@
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
-
       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>ダイエットメーカー</title>
-    <script>
-      // タッチ操作の制限を設定
-      document.addEventListener('DOMContentLoaded', function() {
-        // ピンチズームを防止
-        document.addEventListener('touchmove', function(event) {
-          if (event.scale !== 1) {
-            event.preventDefault();
-          }
-        }, { passive: false });
-        
-        document.addEventListener('gesturestart', function(event) {
-          event.preventDefault();
-        }, { passive: false });
-        
-        document.addEventListener('gesturechange', function(event) {
-          event.preventDefault();
-        }, { passive: false });
-        
-        document.addEventListener('gestureend', function(event) {
-          event.preventDefault();
-        }, { passive: false });
-        
-        // ダブルタップによるズームを防止
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-          const now = Date.now();
-          if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-          }
-          lastTouchEnd = now;
-        }, { passive: false });
-      });
-    </script>
     <style>
-      /* タッチ操作に関連するスタイル */
       html, body {
-        /* オーバースクロールを防止 */
-        overscroll-behavior: none;
-        /* タッチアクションの制限 */
         touch-action: manipulation;
-        /* ユーザー選択を無効化 */
-        user-select: none;
-        -webkit-user-select: none;
-      }
-      
-      /* iOSのハイライトを無効化 */
-      * {
-        -webkit-tap-highlight-color: transparent;
-      }
-      
-      /* イメージのドラッグを無効化 */
-      img {
-        pointer-events: none;
-        -webkit-user-drag: none;
-        user-drag: none;
+        overscroll-behavior: none;
       }
     </style>
   </head>
@@ -99,10 +46,8 @@
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
-
       You can add webfonts, meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
-
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
