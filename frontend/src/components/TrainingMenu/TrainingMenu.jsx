@@ -25,7 +25,6 @@ const TrainingMenu = () => {
   const [volume, setVolume] = useState("");
   const [menu, setMenu] = useState(null);
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [selectedDates, setSelectedDates] = useState({});
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [currentDayMenuIndex, setCurrentDayMenuIndex] = useState(null);
@@ -238,14 +237,14 @@ const TrainingMenu = () => {
                   <li key={itemIndex} className="training-menu-list-item">
                     <span className="training-menu-day">{item.day}:</span>
                     <ul>
-                    {item.exercises.map((exercise, exerciseIndex) => (
+                    {item.exercises.map((exercise) => (
                       <li key={exercise.key}>
                         {exercise.name} 
                         {exercise.duration ? 
                           ` - ${exercise.duration}` : 
                           ` - ${exercise.sets}セット x ${exercise.reps}回`}
                       </li>
-))}
+                    ))}
                     </ul>
                   </li>
                 ))}
@@ -274,7 +273,6 @@ const TrainingMenu = () => {
             </div>
           ))}
           {error && <div className="training-menu-error-message">{error}</div>}
-          {successMessage && <div className="training-menu-success-message">{successMessage}</div>}
         </div>
       )}
       {isCalendarModalOpen && (
