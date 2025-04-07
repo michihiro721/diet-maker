@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover, orientation=portrait" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -11,34 +11,47 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <style>
-      /* 横向きになった場合、コンテンツを強制的に縦向きに表示 */
-      @media screen and (orientation: landscape) {
-        #root {
-          transform: rotate(-90deg);
-          transform-origin: left top;
-          width: 100vh;
-          height: 100vw;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          overflow-x: hidden;
-        }
+      /* 画面を完全に固定 */
+      body {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
       }
     </style>
     <script>
-      // 画面の向きをロックする - DOMが読み込まれた後に実行
-      document.addEventListener('DOMContentLoaded', function() {
+      // アプリケーション起動時に向きをロック
+      window.addEventListener('load', function() {
         try {
-          // Screen Orientation APIが利用可能かチェック
-          if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('portrait')
-              .catch(function(error) {
-                console.log('画面ロックエラー:', error);
+          // フルスクリーンモードでのロック
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen()
+              .then(function() {
+                if (screen.orientation && screen.orientation.lock) {
+                  return screen.orientation.lock('portrait');
+                }
+              })
+              .catch(function() {
+                // フルスクリーンが失敗しても向きだけロックを試みる
+                if (screen.orientation && screen.orientation.lock) {
+                  screen.orientation.lock('portrait');
+                }
               });
+          } else if (screen.orientation && screen.orientation.lock) {
+            // フルスクリーンがサポートされていない場合は直接ロック
+            screen.orientation.lock('portrait');
           }
         } catch (e) {
           console.log('向き固定エラー:', e);
         }
+        
+        // 向きの変更を検知して強制的に戻す処理 
+        window.addEventListener('orientationchange', function() {
+          // ボディ要素のスタイルを調整して縦向きに強制
+          document.body.style.transform = 'none';
+          document.body.style.width = '100%';
+          document.body.style.height = '100%';
+        });
       });
     </script>
     <!-- Google tag (gtag.js) -->
