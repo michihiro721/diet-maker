@@ -54,7 +54,7 @@ const TrainingTableRow = ({ index, set, openModal, handleUpdateSet, handleRemove
   );
 };
 
-// PropTypes でプロパティの型を定義
+
 TrainingTableRow.propTypes = {
   index: PropTypes.number.isRequired,
   set: PropTypes.shape({

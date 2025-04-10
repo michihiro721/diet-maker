@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types'; // PropTypes をインポート
+import PropTypes from 'prop-types';
 
 
 const TrainingTableRowInput = ({ index, set, openModal }) => (
