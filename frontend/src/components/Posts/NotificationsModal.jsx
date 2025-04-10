@@ -85,7 +85,7 @@ const NotificationsModal = () => {
 
       // 各投稿のいいね情報を処理
       for (const post of userPosts) {
-        if (post.likes && post.likes.length > 0) {
+        if (post.user_id === userId && post.likes && post.likes.length > 0) {
           console.log(`投稿ID: ${post.id} には ${post.likes.length} 件のいいねがあります`);
 
           // 各いいねを処理
@@ -121,7 +121,7 @@ const NotificationsModal = () => {
                   // APIレスポンスにnameプロパティがあれば使用
                   if (userResponse.data && userResponse.data.name) {
                     userName = userResponse.data.name;
-                    allUsers[likeUserId] = userName; // キャッシュに保存
+                    allUsers[likeUserId] = userName;
                   }
                 } catch (userErr) {
                   console.error(`ユーザーID ${likeUserId} の情報取得に失敗:`, userErr);
@@ -227,7 +227,7 @@ const NotificationsModal = () => {
                 <span className="notification-user">
                   {notification.user_name || "ユーザー"}
                 </span>
-                さんが投稿に「いいね」しました
+                さんがあなたの投稿に「いいね」しました
               </p>
               <p className="notification-post-content">&ldquo;{notification.post_content}&rdquo;</p>
               <p className="notification-time">{formatDate(notification.created_at)}</p>
