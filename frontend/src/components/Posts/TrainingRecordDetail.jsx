@@ -12,8 +12,7 @@ const TrainingRecordDetail = () => {
   const { postId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // URLからクエリパラメータを取得
+
   const queryParams = new URLSearchParams(location.search);
   const dateParam = queryParams.get('date');
 
@@ -28,6 +27,25 @@ const TrainingRecordDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
+  
+  const [currentUserId, setCurrentUserId] = useState(null);
+  
+  // 編集モード関連
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    steps: "",
+    consumedCalories: "",
+    intakeCalories: ""
+  });
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
+
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId') || null;
+    setCurrentUserId(userId ? parseInt(userId, 10) : null);
+  }, []);
 
   // 投稿データの取得
   useEffect(() => {
@@ -165,7 +183,15 @@ const TrainingRecordDetail = () => {
         consumedCalories,
         intakeCalories,
         date,
-        workouts: workoutsData
+        workouts: workoutsData,
+        userId: userId
+      });
+      
+
+      setEditFormData({
+        steps: stepData?.steps || "",
+        consumedCalories: consumedCalories?.total_calories || "",
+        intakeCalories: intakeCalories?.calories || ""
       });
       
       console.log('成果データ設定完了:', { 
@@ -181,6 +207,12 @@ const TrainingRecordDetail = () => {
       setError(`成果データの取得に失敗しました: ${error.message}`);
       setLoading(false);
     }
+  };
+
+  // 現在のユーザーが投稿の所有者かどうかを確認
+  const isCurrentUserOwner = () => {
+    if (!currentUserId || !achievementData.userId) return false;
+    return currentUserId === achievementData.userId;
   };
 
   const getPostDate = (post) => {
@@ -300,7 +332,6 @@ const TrainingRecordDetail = () => {
     const cleanContent = getCleanPostContent(post);
     const trainingDate = post.achievementDate || "";
     
-
     const appUrl = "https://diet-maker.jp";
     
     // 詳細ページへのURL
@@ -326,6 +357,124 @@ ${recordDetailUrl}`;
   // 投稿一覧に戻る
   const handleBack = () => {
     navigate('/posts');
+  };
+
+  // 編集モード
+  const toggleEditMode = () => {
+
+    if (!isCurrentUserOwner() && !isEditMode) return;
+    
+    if (isEditMode) {
+      setEditFormData({
+        steps: achievementData.stepData?.steps || "",
+        consumedCalories: achievementData.consumedCalories?.total_calories || "",
+        intakeCalories: achievementData.intakeCalories?.calories || ""
+      });
+      setUpdateSuccess(false);
+      setUpdateError(null);
+    }
+    setIsEditMode(!isEditMode);
+  };
+
+  // 編集フォーム
+  const handleEditFormChange = (e) => {
+    const { name, value } = e.target;
+    
+    // 空文字または数値のみ許可
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      setEditFormData({
+        ...editFormData,
+        [name]: value
+      });
+    }
+  };
+
+  // データの更新処理
+  const handleUpdateData = async () => {
+    // 自分の投稿でない場合は更新を許可しない
+    if (!isCurrentUserOwner()) {
+      setUpdateError("自分の投稿のみ編集できます");
+      return;
+    }
+    
+    if (!post || !post.user_id || !post.achievementDate) return;
+
+    const userId = post.user_id;
+    const date = post.achievementDate;
+    
+    try {
+      setUpdateLoading(true);
+      setUpdateError(null);
+      
+      // 歩数データの更新
+      if (editFormData.steps !== "") {
+        const stepsData = {
+          step: {
+            user_id: userId,
+            date: date,
+            steps: parseFloat(editFormData.steps) || 0
+          }
+        };
+        
+        console.log('歩数データ保存リクエスト: /steps', stepsData);
+        await api.post('/steps', stepsData);
+      }
+      
+      // 消費カロリーデータの更新
+      if (editFormData.consumedCalories !== "") {
+        const consumedCaloriesData = {
+          daily_calorie: {
+            user_id: userId,
+            date: date,
+            total_calories: parseFloat(editFormData.consumedCalories) || 0
+          }
+        };
+        
+        console.log('消費カロリーデータ保存リクエスト: /daily_calories', consumedCaloriesData);
+        await api.post('/daily_calories', consumedCaloriesData);
+      }
+      
+      // 摂取カロリーデータの更新
+      if (editFormData.intakeCalories !== "") {
+        const intakeCaloriesData = {
+          intake_calorie: {
+            user_id: userId,
+            date: date,
+            calories: parseFloat(editFormData.intakeCalories) || 0
+          }
+        };
+        
+        console.log('摂取カロリーデータ保存リクエスト: /intake_calories', intakeCaloriesData);
+        await api.post('/intake_calories', intakeCaloriesData);
+      }
+      
+      // データを再取得
+      await fetchAchievementData(userId, date);
+      
+      setUpdateSuccess(true);
+      setUpdateLoading(false);
+      
+      // 3秒後に成功メッセージを消す
+      setTimeout(() => {
+        setUpdateSuccess(false);
+      }, 3000);
+      
+      // 編集モードを終了
+      setIsEditMode(false);
+      
+    } catch (error) {
+      console.error("データの更新に失敗しました:", error);
+      console.error("エラーの詳細:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url,
+        method: error.config?.method,
+        data: JSON.stringify(error.config?.data)
+      });
+      setUpdateError(`データの更新に失敗しました: ${error.message}. ステータス: ${error.response?.status || 'N/A'}`);
+      setUpdateLoading(false);
+    }
   };
 
   if (loading) return <div className="posts-loading">読み込み中...</div>;
@@ -451,41 +600,127 @@ ${recordDetailUrl}`;
       <div className="posts-daily-stats-container">
         <div className="posts-daily-stats-title-area">
           <h2 className="posts-daily-stats-title">カロリー関係の記録</h2>
+          
+          {/* 編集ボタン - 自分の投稿の場合のみ表示 */}
+          {isCurrentUserOwner() && (
+            <button 
+              className={`posts-daily-stats-edit-button ${isEditMode ? 'active' : ''}`}
+              onClick={toggleEditMode}
+            >
+              {isEditMode ? 'キャンセル' : '編集'}
+            </button>
+          )}
         </div>
-        <div className="posts-daily-stats-section">
-          <div className="posts-daily-stats-grid">
-            <div className="posts-daily-stat-item">
-              <div className="posts-daily-stat-icon">👣</div>
-              <div className="posts-daily-stat-label">歩数</div>
-              <div className="posts-daily-stat-value">
-                {achievementData.stepData ? `${achievementData.stepData.steps.toLocaleString()} 歩` : 'データなし'}
+        
+        {/* 編集モード */}
+        {isEditMode && isCurrentUserOwner() ? (
+          <div className="posts-daily-stats-edit-form">
+            <div className="posts-daily-stats-edit-row">
+              <div className="posts-daily-stats-edit-field">
+                <label htmlFor="steps">歩数</label>
+                <div className="posts-daily-stats-edit-input-group">
+                  <input
+                    type="text"
+                    id="steps"
+                    name="steps"
+                    value={editFormData.steps}
+                    onChange={handleEditFormChange}
+                    placeholder="歩数を入力"
+                  />
+                  <span className="posts-daily-stats-edit-unit">歩</span>
+                </div>
+              </div>
+              
+              <div className="posts-daily-stats-edit-field">
+                <label htmlFor="consumedCalories">消費カロリー</label>
+                <div className="posts-daily-stats-edit-input-group">
+                  <input
+                    type="text"
+                    id="consumedCalories"
+                    name="consumedCalories"
+                    value={editFormData.consumedCalories}
+                    onChange={handleEditFormChange}
+                    placeholder="消費カロリーを入力"
+                  />
+                  <span className="posts-daily-stats-edit-unit">kcal</span>
+                </div>
+              </div>
+              
+              <div className="posts-daily-stats-edit-field">
+                <label htmlFor="intakeCalories">摂取カロリー</label>
+                <div className="posts-daily-stats-edit-input-group">
+                  <input
+                    type="text"
+                    id="intakeCalories"
+                    name="intakeCalories"
+                    value={editFormData.intakeCalories}
+                    onChange={handleEditFormChange}
+                    placeholder="摂取カロリーを入力"
+                  />
+                  <span className="posts-daily-stats-edit-unit">kcal</span>
+                </div>
               </div>
             </div>
-            <div className="posts-daily-stat-item">
-              <div className="posts-daily-stat-icon">🔥</div>
-              <div className="posts-daily-stat-label">消費カロリー</div>
-              <div className="posts-daily-stat-value">
-                {achievementData.consumedCalories ? formatCalories(achievementData.consumedCalories.total_calories) : 'データなし'}
-              </div>
+            
+            <div className="posts-daily-stats-edit-actions">
+              <button 
+                className="posts-daily-stats-save-button"
+                onClick={handleUpdateData}
+                disabled={updateLoading}
+              >
+                {updateLoading ? '保存中...' : '保存する'}
+              </button>
             </div>
-            <div className="posts-daily-stat-item">
-              <div className="posts-daily-stat-icon">🍖</div>
-              <div className="posts-daily-stat-label">摂取カロリー</div>
-              <div className="posts-daily-stat-value">
-              {achievementData.intakeCalories ? formatCalories(achievementData.intakeCalories.calories) : 'データなし'}
+            
+            {updateError && (
+              <div className="posts-daily-stats-update-error">
+                {updateError}
               </div>
-            </div>
-            <div className="posts-daily-stat-item">
-              <div className="posts-daily-stat-icon">⚖️</div>
-              <div className="posts-daily-stat-label">カロリー差分</div>
-              <div className={`posts-daily-stat-value ${calculateCalorieDifference() > 0 ? 'posts-positive' : calculateCalorieDifference() < 0 ? 'posts-negative' : ''}`}>
-                {calculateCalorieDifference() !== null 
-                  ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
-                  : 'データなし'}
+            )}
+          </div>
+        ) : (
+
+          <div className="posts-daily-stats-section">
+            {updateSuccess && (
+              <div className="posts-daily-stats-update-success">
+                データを更新しました！
+              </div>
+            )}
+            
+            <div className="posts-daily-stats-grid">
+              <div className="posts-daily-stat-item">
+                <div className="posts-daily-stat-icon">👣</div>
+                <div className="posts-daily-stat-label">歩数</div>
+                <div className="posts-daily-stat-value">
+                  {achievementData.stepData ? `${achievementData.stepData.steps.toLocaleString()} 歩` : 'データなし'}
+                </div>
+              </div>
+              <div className="posts-daily-stat-item">
+                <div className="posts-daily-stat-icon">🔥</div>
+                <div className="posts-daily-stat-label">消費カロリー</div>
+                <div className="posts-daily-stat-value">
+                  {achievementData.consumedCalories ? formatCalories(achievementData.consumedCalories.total_calories) : 'データなし'}
+                </div>
+              </div>
+              <div className="posts-daily-stat-item">
+                <div className="posts-daily-stat-icon">🍖</div>
+                <div className="posts-daily-stat-label">摂取カロリー</div>
+                <div className="posts-daily-stat-value">
+                {achievementData.intakeCalories ? formatCalories(achievementData.intakeCalories.calories) : 'データなし'}
+                </div>
+              </div>
+              <div className="posts-daily-stat-item">
+                <div className="posts-daily-stat-icon">⚖️</div>
+                <div className="posts-daily-stat-label">カロリー差分</div>
+                <div className={`posts-daily-stat-value ${calculateCalorieDifference() > 0 ? 'posts-positive' : calculateCalorieDifference() < 0 ? 'posts-negative' : ''}`}>
+                  {calculateCalorieDifference() !== null 
+                    ? `${calculateCalorieDifference() > 0 ? '+' : ''}${formatCalories(calculateCalorieDifference())}` 
+                    : 'データなし'}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       
       {/* シェアボタン */}
