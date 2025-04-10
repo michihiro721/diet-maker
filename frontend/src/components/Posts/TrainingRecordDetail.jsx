@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/TrainingRecordDetail.css";
 import TrainingCopyModal from "./TrainingCopyModal";
+import TrainingCalculatorModal from "./TrainingCalculatorModal";
 
 const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
@@ -41,6 +42,9 @@ const TrainingRecordDetail = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [updateError, setUpdateError] = useState(null);
 
+  // 電卓モーダル関連
+  const [calculatorModalOpen, setCalculatorModalOpen] = useState(false);
+  const [activeField, setActiveField] = useState(null);
 
   useEffect(() => {
     const userId = localStorage.getItem('userId') || null;
@@ -361,7 +365,6 @@ ${recordDetailUrl}`;
 
   // 編集モード
   const toggleEditMode = () => {
-
     if (!isCurrentUserOwner() && !isEditMode) return;
     
     if (isEditMode) {
@@ -374,6 +377,24 @@ ${recordDetailUrl}`;
       setUpdateError(null);
     }
     setIsEditMode(!isEditMode);
+  };
+
+  // 電卓モーダルを開く
+  const openCalculatorModal = (fieldName) => {
+    if (!isEditMode) return;
+    
+    setActiveField(fieldName);
+    setCalculatorModalOpen(true);
+  };
+
+  // 電卓モーダルからの値を保存
+  const handleCalculatorSave = (value) => {
+    if (!activeField) return;
+    
+    setEditFormData({
+      ...editFormData,
+      [activeField]: value
+    });
   };
 
   // 編集フォーム
@@ -626,6 +647,8 @@ ${recordDetailUrl}`;
                     value={editFormData.steps}
                     onChange={handleEditFormChange}
                     placeholder="歩数を入力"
+                    onClick={() => openCalculatorModal('steps')}
+                    readOnly
                   />
                   <span className="posts-daily-stats-edit-unit">歩</span>
                 </div>
@@ -641,6 +664,8 @@ ${recordDetailUrl}`;
                     value={editFormData.consumedCalories}
                     onChange={handleEditFormChange}
                     placeholder="消費カロリーを入力"
+                    onClick={() => openCalculatorModal('consumedCalories')}
+                    readOnly
                   />
                   <span className="posts-daily-stats-edit-unit">kcal</span>
                 </div>
@@ -656,6 +681,8 @@ ${recordDetailUrl}`;
                     value={editFormData.intakeCalories}
                     onChange={handleEditFormChange}
                     placeholder="摂取カロリーを入力"
+                    onClick={() => openCalculatorModal('intakeCalories')}
+                    readOnly
                   />
                   <span className="posts-daily-stats-edit-unit">kcal</span>
                 </div>
@@ -679,7 +706,6 @@ ${recordDetailUrl}`;
             )}
           </div>
         ) : (
-
           <div className="posts-daily-stats-section">
             {updateSuccess && (
               <div className="posts-daily-stats-update-success">
@@ -750,6 +776,14 @@ ${recordDetailUrl}`;
         onClose={() => setIsCopyModalOpen(false)}
         trainingData={achievementData.trainingData}
         userId={post.user_id}
+      />
+
+      {/* 電卓モーダル */}
+      <TrainingCalculatorModal
+        isOpen={calculatorModalOpen}
+        onClose={() => setCalculatorModalOpen(false)}
+        onSave={handleCalculatorSave}
+        initialValue={activeField ? editFormData[activeField] : ""}
       />
     </div>
   );
