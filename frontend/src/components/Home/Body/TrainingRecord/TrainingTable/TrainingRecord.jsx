@@ -327,7 +327,7 @@ const TrainingRecord = () => {
   const openModal = (trainingIndex, setIndex, field, value) => {
     setCurrentSet({ trainingIndex, setIndex });
     setCurrentField(field);
-    setCurrentValue(value);
+    setCurrentValue(value === 0 ? "" : value);
     setModalVisible(true);
   };
 
