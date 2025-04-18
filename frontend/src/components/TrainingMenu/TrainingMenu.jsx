@@ -33,7 +33,6 @@ const TrainingMenu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
 
-  // コンポーネントのマウント時にログイン状態を確認
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -85,7 +84,6 @@ const TrainingMenu = () => {
   };
 
   const handleSaveMenu = async () => {
-    // ログインしていない場合は保存できないようにする
     if (!isLoggedIn) {
       alert("ログインしていない状態ではトレーニングメニューを保存できません。ログインしてください。");
       setIsConfirmModalOpen(false);
@@ -93,7 +91,6 @@ const TrainingMenu = () => {
     }
 
     try {
-      // ローカルストレージからユーザーIDを取得
       const userId = localStorage.getItem('userId');
       if (!userId) {
         alert("ユーザー情報が見つかりません。再度ログインしてください。");
@@ -104,12 +101,9 @@ const TrainingMenu = () => {
       const trainingData = [];
       const selectedDate = selectedDates[currentDayMenuIndex];
 
-      // 各エクササイズをtrainingDataに追加
       currentDayMenu.items.forEach((item) => {
         item.exercises.forEach((exercise) => {
-          // 有酸素運動（durationあり）とそれ以外で処理を分ける
           if (exercise.duration) {
-            // 有酸素運動の場合、1セットのみ保存し、重量フィールドに時間（分）を数値として保存
             const durationMinutes = parseInt(exercise.duration);
             trainingData.push({
               user_id: userId,
@@ -118,10 +112,9 @@ const TrainingMenu = () => {
               workout_id: exercise.workout_id,
               sets: 1,
               reps: 0,
-              weight: isNaN(durationMinutes) ? 30 : durationMinutes, // 分数を重量として保存（パース失敗時は30分）
+              weight: isNaN(durationMinutes) ? 30 : durationMinutes,
             });
           } else {
-            // 通常のトレーニングの場合、セット数分のデータを作成
             for (let setIndex = 0; setIndex < exercise.sets; setIndex++) {
               trainingData.push({
                 user_id: userId,
@@ -137,8 +130,6 @@ const TrainingMenu = () => {
         });
       });
 
-      console.log("Sending training data:", trainingData);
-
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/trainings`, {
         training: trainingData,
       });
@@ -149,7 +140,6 @@ const TrainingMenu = () => {
         alert("トレーニングメニューの保存に失敗しました");
       }
     } catch (error) {
-      console.error("Error saving training menu:", error);
       alert("トレーニングメニューの保存に失敗しました");
     } finally {
       setIsConfirmModalOpen(false);
@@ -166,7 +156,6 @@ const TrainingMenu = () => {
   };
 
   const openConfirmModal = (dayMenu, index) => {
-    // ログインしていない場合は保存ボタンを押せなくする
     if (!isLoggedIn) {
       alert("ログインしていない状態ではトレーニングメニューを保存できません。ログインしてください。");
       return;
@@ -239,9 +228,9 @@ const TrainingMenu = () => {
                     <ul>
                     {item.exercises.map((exercise) => (
                       <li key={exercise.key}>
-                        {exercise.name} 
-                        {exercise.duration ? 
-                          ` - ${exercise.duration}` : 
+                        {exercise.name}
+                        {exercise.duration ?
+                          ` - ${exercise.duration}` :
                           ` - ${exercise.sets}セット x ${exercise.reps}回`}
                       </li>
                     ))}
@@ -263,8 +252,8 @@ const TrainingMenu = () => {
                 readOnly
                 className="training-menu-date-input"
               />
-              <button 
-                onClick={() => openConfirmModal(dayMenu, index)} 
+              <button
+                onClick={() => openConfirmModal(dayMenu, index)}
                 className={`training-menu-save-button ${!isLoggedIn ? 'training-menu-save-button-disabled' : ''}`}
                 disabled={!isLoggedIn}
               >

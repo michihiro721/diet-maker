@@ -24,17 +24,14 @@ const GoalSetting = () => {
   const navigate = useNavigate();
   const alertShownRef = useRef(false);
 
-  // コンポーネントマウント時にローカルストレージからユーザーIDを取得し、既存の目標があるか確認する
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       const parsedUserId = parseInt(storedUserId, 10);
       setUserId(parsedUserId);
-      
-      // ユーザーの既存の目標を取得
+
       fetchUserGoal(parsedUserId);
     } else {
-      // ユーザーIDが見つからない場合、アラート表示
       if (!alertShownRef.current) {
         alertShownRef.current = true;
         alert('目標設定を行うにはログインが必要です');
@@ -43,18 +40,15 @@ const GoalSetting = () => {
     }
   }, [navigate]);
 
-  // ユーザーの既存の目標を取得する関数
   const fetchUserGoal = async (userId) => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const response = await axios.get(`${apiUrl}/goals/latest`, {
         params: { user_id: userId }
       });
-      
+
       if (response.data && Object.keys(response.data).length > 0) {
-        console.log('Fetched user goal:', response.data);
         setExistingGoal(response.data);
-        // 既存の目標データがあれば、フォームに設定
         if (response.data.target_weight) {
           setTargetWeight(response.data.target_weight.toString());
         }
@@ -63,16 +57,13 @@ const GoalSetting = () => {
         }
       }
     } catch (error) {
-      console.error('Failed to fetch user goal:', error);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ユーザーIDチェック
     if (!userId) {
-      // アラートが表示されていなければ表示
       if (!alertShownRef.current) {
         alertShownRef.current = true;
         alert('目標設定を行うにはログインが必要です');
@@ -81,7 +72,6 @@ const GoalSetting = () => {
       return;
     }
 
-    // 入力チェック
     if (!currentWeight || !targetWeight || !targetDate) {
       setInputWarning("全ての項目を入力してください。");
       return;
@@ -121,19 +111,15 @@ const GoalSetting = () => {
         start_date: today,
         end_date: targetDate,
       };
-      
-      console.log('Sending goal data:', goalData);
-      
+
       let response;
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
-      
-      // 既存の目標があり、そのユーザーIDがローカルストレージのIDと一致する場合は更新
+
       if (existingGoal && existingGoal.user_id === userId) {
-        console.log(`Updating goal with ID ${existingGoal.id}`);
         try {
           response = await axios.put(
             `${apiUrl}/goals/${existingGoal.id}`, 
-            { goal: goalData }, // 注意: Rails の慣習に合わせてネストする
+            { goal: goalData },
             {
               headers: {
                 'Content-Type': 'application/json',
@@ -141,14 +127,10 @@ const GoalSetting = () => {
               }
             }
           );
-          console.log('Goal update response:', response);
         } catch (updateError) {
-          console.error('Goal update error:', updateError.response?.data || updateError);
           throw updateError;
         }
       } else {
-        // 既存の目標がない、またはユーザーIDが一致しない場合は新規作成
-        console.log('Creating new goal');
         try {
           response = await axios.post(
             `${apiUrl}/goals`, 
@@ -160,24 +142,17 @@ const GoalSetting = () => {
               }
             }
           );
-          console.log('New goal response:', response);
         } catch (createError) {
-          console.error('Goal creation error:', createError.response?.data || createError);
           throw createError;
         }
       }
 
       if (response.status >= 200 && response.status < 300) {
-        console.log('Goal operation successful:', response.data);
-        // 成功したら最新の目標情報を再取得
         fetchUserGoal(userId);
-        // 成功メッセージを表示
+
         alert(existingGoal && existingGoal.user_id === userId ? '目標を更新しました' : '新しい目標を設定しました');
-      } else {
-        console.error('Error with goal operation:', response.status, response.data);
       }
     } catch (error) {
-      console.error('Error during fetch:', error);
       alert('操作に失敗しました：' + (error.response?.data?.error || error.message || 'Unknown error'));
     }
   };

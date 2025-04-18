@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
 import { CalenderFormatShortWeekday, CalenderTileContent } from "../Home/Body/Calender/Calender";
 import './styles/Achievements.css';
 import DailyStats from './DailyStats';
@@ -16,14 +15,12 @@ const Achievements = () => {
   const [workouts, setWorkouts] = useState([]);
   const [trainingDates, setTrainingDates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
-  // 有酸素運動のリスト
+
   const aerobicExercises = [
     "トレッドミル", "ランニング", "ウォーキング", "エアロバイク", 
     "ストレッチ", "水中ウォーキング", "縄跳び", "階段", "バーピージャンプ"
   ];
 
-  // ユーザーIDをローカルストレージから取得
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -33,7 +30,7 @@ const Achievements = () => {
     }
   }, []);
 
-  // 種目データを取得
+
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
@@ -43,7 +40,6 @@ const Achievements = () => {
         setWorkouts(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching workouts:", error);
         setErrorMessage('種目データの取得に失敗しました');
         setIsLoading(false);
       }
@@ -56,44 +52,32 @@ const Achievements = () => {
   useEffect(() => {
     const fetchMonthlyTrainings = async () => {
       try {
-        const userId = localStorage.getItem('userId'); // ユーザーIDを取得
+        const userId = localStorage.getItem('userId');
         if (!userId) return;
 
-        // 現在表示されている月の最初と最後の日を計算
         const now = new Date();
         const year = now.getFullYear();
         const month = now.getMonth();
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
-        
         const firstDayStr = firstDay.toLocaleDateString('en-CA');
         const lastDayStr = lastDay.toLocaleDateString('en-CA');
-        
-        console.log(`Fetching training data from ${firstDayStr} to ${lastDayStr}`);
-        
-        // 月のトレーニングデータを取得するAPI
+
         const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
         const response = await axios.get(`${apiUrl}/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
-        
-        console.log("Monthly trainings response:", response.data);
-        
+
         if (response.data && Array.isArray(response.data)) {
-          // トレーニングがある日付の配列を作成
           const dates = response.data.map(training => training.date);
-          // 重複を削除
           const uniqueDates = [...new Set(dates)];
-          console.log("Unique training dates:", uniqueDates);
           setTrainingDates(uniqueDates);
         }
       } catch (error) {
-        console.error('Error fetching monthly trainings:', error);
       }
     };
 
     fetchMonthlyTrainings();
   }, []);
 
-  // 選択した日付のトレーニングデータを取得
   useEffect(() => {
     const fetchTrainingData = async () => {
       if (!userId || !selectedDate) return;
@@ -102,17 +86,16 @@ const Achievements = () => {
         setIsLoading(true);
         const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
         const response = await axios.get(`${apiUrl}/trainings`, {
-          params: { 
+          params: {
             user_id: userId,
             date: selectedDate
           }
         });
-        
+
         setTrainingData(response.data);
         setErrorMessage('');
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching training data:", error);
         setErrorMessage('トレーニングデータの取得に失敗しました');
         setTrainingData([]);
         setIsLoading(false);
@@ -130,28 +113,23 @@ const Achievements = () => {
     setIsCalendarModalOpen(false);
   };
 
-  // 種目名を取得する関数
   const getWorkoutName = (workoutId) => {
     const workout = workouts.find(w => w.id === workoutId);
     return workout ? workout.name : `種目ID: ${workoutId}`;
   };
 
-  // 種目のカテゴリーを取得する関数
   const getWorkoutCategory = (workoutId) => {
     const workout = workouts.find(w => w.id === workoutId);
     return workout ? workout.category : '';
   };
-  
-  // 種目が有酸素運動かどうかを判定する関数
+
   const isAerobicExercise = (workoutId) => {
     const workoutName = getWorkoutName(workoutId);
     const category = getWorkoutCategory(workoutId);
-    
-    // 種目名または種目カテゴリーで判定
+
     return aerobicExercises.includes(workoutName) || category === "有酸素";
   };
 
-  // トレーニングデータをカテゴリーごとにグループ化
   const groupedTrainingData = trainingData.reduce((groups, training) => {
     const category = getWorkoutCategory(training.workout_id);
     if (!groups[category]) {
@@ -161,7 +139,6 @@ const Achievements = () => {
     return groups;
   }, {});
 
-  // 種目ごとにトレーニングデータをグループ化
   const getGroupedExerciseData = (trainings) => {
     const exerciseGroups = {};
     
@@ -189,13 +166,11 @@ const Achievements = () => {
     return exerciseGroups;
   };
 
-  // トレーニングデータがある日付かどうかをチェックする関数
   const hasTrainingData = (date) => {
     const dateStr = date.toLocaleDateString('en-CA');
     return trainingDates.includes(dateStr);
   };
 
-  // カレンダータイルのクラス名を決定する関数
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
       const day = date.getDay();
@@ -244,9 +219,9 @@ const Achievements = () => {
             
             {trainingData.length > 0 ? (
               <div className="ach-training-records-by-category">
-                {/* すべてのカテゴリーを一つのコンテナで表示 */}
+
                 <div className="ach-category-section">
-                  {/* カテゴリー名をリストとして表示 */}
+
                   <div className="ach-category-list">
                     {Object.keys(groupedTrainingData).map(category => (
                       <span 
@@ -258,7 +233,7 @@ const Achievements = () => {
                     ))}
                   </div>
 
-                  {/* すべてのトレーニングを一つのテーブルにまとめる */}
+
                   <table className="ach-training-records-table">
                     <thead>
                       <tr>
@@ -276,25 +251,22 @@ const Achievements = () => {
                         return Object.entries(exerciseGroups).map(([exerciseName, exerciseData], exerciseIndex) => {
                           const isAerobic = isAerobicExercise(exerciseData.workoutId);
                           const setsCount = exerciseData.sets.length;
-                          // カテゴリー名（有酸素運動の場合は「有酸素」と表示）
                           const categoryName = isAerobic ? "有酸素" : category;
                           
                           return (
                             <React.Fragment key={`exercise-${exerciseIndex}`}>
-                              {/* 各セットを別々の行で表示 */}
                               {exerciseData.sets.map((set, setIndex) => (
                                 <tr key={`set-${set.id}`} className={setIndex === 0 ? 'ach-exercise-first-row' : ''}>
-                                  {/* 最初のセットの場合のみカテゴリー名と種目名を表示して行を結合 */}
                                   {setIndex === 0 ? (
                                     <>
-                                      <td 
-                                        rowSpan={setsCount} 
+                                      <td
+                                        rowSpan={setsCount}
                                         className={`ach-category-name ${isAerobic ? 'aerobic' : ''}`}
                                       >
                                         {categoryName}
                                       </td>
-                                      <td 
-                                        rowSpan={setsCount} 
+                                      <td
+                                        rowSpan={setsCount}
                                         className={`ach-exercise-name ${isAerobic ? 'aerobic' : ''}`}
                                       >
                                         {exerciseName}
@@ -319,7 +291,6 @@ const Achievements = () => {
             )}
           </div>
 
-          {/* 歩数とカロリー情報を表示するコンポーネント */}
           <DailyStats userId={userId} selectedDate={selectedDate} />
         </>
       )}

@@ -32,13 +32,11 @@ const TrainingRecord = () => {
   const [userWeight, setUserWeight] = useState(70);
   const [totalSessionCalories, setTotalSessionCalories] = useState(0);
 
-  // ログイン状態の確認
   useEffect(() => {
     const userId = localStorage.getItem('userId');
     setIsLoggedIn(!!userId);
   }, []);
 
-  // ユーザープロファイル情報（体重）を取得するuseEffect
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -46,14 +44,10 @@ const TrainingRecord = () => {
 
         const token = localStorage.getItem('jwt');
 
-        // console.log('UserId:', userId);
-        // console.log('Token:', token);
-
         if (!userId) return;
 
         if (!token) {
-          console.log('トークンが存在しないため、デフォルトの体重を使用します');
-          return; // デフォルトの体重（70kg）を使用
+          return;
         }
 
         try {
@@ -68,10 +62,8 @@ const TrainingRecord = () => {
             setUserWeight(response.data.weight);
           }
         } catch (profileError) {
-          console.error('ユーザープロファイル取得エラー:', profileError);
         }
       } catch (error) {
-        console.error('fetchUserProfile関数エラー:', error);
       }
     };
   
@@ -87,7 +79,6 @@ const TrainingRecord = () => {
         const response = await axios.get('https://diet-maker-d07eb3099e56.herokuapp.com/workouts');
         setWorkouts(response.data);
       } catch (error) {
-        console.error('Error fetching workouts:', error);
       }
     };
 
@@ -101,50 +92,40 @@ const TrainingRecord = () => {
         const userId = localStorage.getItem('userId');
         if (!userId) return;
 
-        // 最大重量を取得するAPI呼び出し
         const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/max_weights?user_id=${userId}`);
-        
         if (response.status === 200) {
           setMaxWeights(response.data);
         }
       } catch (error) {
-        console.error('Error fetching max weights:', error);
       }
     };
 
-    // ログイン中の場合のみ実行
     if (isLoggedIn) {
       fetchMaxWeights();
     }
   }, [isLoggedIn]);
 
-  // 月が変わった時に、その月のトレーニングデータがある日付を全て取得
   const fetchMonthlyTrainings = useCallback(async () => {
     try {
-      const userId = localStorage.getItem('userId'); // ユーザーIDを取得
+      const userId = localStorage.getItem('userId');
       if (!userId) return;
 
-      // 現在表示されている月の最初と最後の日を計算
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth();
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
-      
+
       const firstDayStr = firstDay.toLocaleDateString('en-CA');
       const lastDayStr = lastDay.toLocaleDateString('en-CA');
-      
-      // 月のトレーニングデータを取得するAPI
+
       const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
-      
+
       if (response.data && Array.isArray(response.data)) {
-        // トレーニングがある日付の配列を作成
         const dates = response.data.map(training => training.date);
-        // 重複を削除
         const uniqueDates = [...new Set(dates)];
         setTrainingDates(uniqueDates);
       }
     } catch (error) {
-      console.error('Error fetching monthly trainings:', error);
     }
   }, [selectedDate]);
 
@@ -154,32 +135,29 @@ const TrainingRecord = () => {
   }, [fetchMonthlyTrainings]);
 
   useEffect(() => {
-    // 選択された日付に基づいてトレーニングデータを取得
     const fetchTrainings = async () => {
       try {
         const formattedDate = selectedDate.toLocaleDateString('en-CA');
         const userId = localStorage.getItem('userId');
-        
-        // ユーザーIDが存在しない場合は何もしない
+
         if (!userId) {
           setTrainings([]);
           return;
         }
-        
+
         const response = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings?date=${formattedDate}&user_id=${userId}`);
         const data = Array.isArray(response.data) ? response.data : [];
-        
-        // トレーニングデータを種目ごとにまとめる
+
+
         const trainingMap = new Map();
         data.forEach(training => {
           const workout = workouts.find(w => w.id === training.workout_id);
           const exercise = workout ? workout.name : "不明な種目";
           const targetArea = workout ? workout.category : "不明な部位";
-          
+
           // 有酸素運動かどうか判定
           const isAerobic = aerobicExercises.includes(exercise);
-          
-          // 有酸素運動とそれ以外で保存する項目を変える
+
           const set = isAerobic ? {
             minutes: training.weight || 30,
             timer: "02:00"
@@ -203,7 +181,6 @@ const TrainingRecord = () => {
         const formattedTrainings = Array.from(trainingMap.values());
         setTrainings(formattedTrainings);
       } catch (error) {
-        console.error('Error fetching trainings:', error);
         setTrainings([]);
       }
     };
@@ -213,45 +190,36 @@ const TrainingRecord = () => {
 
 
   useEffect(() => {
-    // トレーニング全体の消費カロリーを計算
     const totalCalories = calculateTotalSessionCalories(trainings, userWeight);
     setTotalSessionCalories(totalCalories);
   }, [trainings, userWeight]);
 
-  // トレーニングコピー後のデータ更新
   const handleTrainingCopied = () => {
-    // 月のトレーニングデータを更新する
     fetchMonthlyTrainings();
   };
 
-  // 特定の種目の最大重量を取得する関数
   const getMaxWeightForExercise = (exerciseName) => {
-    // 有酸素運動の場合は表示しない
     if (aerobicExercises.includes(exerciseName)) {
       return null;
     }
-    
-    // workoutのIDを見つける
+
     const workout = workouts.find(w => w.name === exerciseName);
     if (!workout) return null;
-    
-    // このworkout_idのMAX重量があるか確認
+
     const maxWeight = maxWeights[workout.id];
     return maxWeight ? `${maxWeight}kg` : null;
   };
 
-  // トレーニングデータがある日付かどうかをチェックする関数
   const hasTrainingData = (date) => {
     const dateStr = date.toLocaleDateString('en-CA');
     return trainingDates.includes(dateStr);
   };
 
-  // カレンダータイルのクラス名を決定する関数
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
       const day = date.getDay();
       let classNames = [];
-      
+
       // 土日の色
       if (day === 0) {
         classNames.push('react-calendar__tile--sunday');
@@ -269,7 +237,6 @@ const TrainingRecord = () => {
     return null;
   };
 
-  // カロリー表示用のフォーマット関数
   const formatTotalCalories = (value) => {
     if (value <= 0) return 'データなし';
     return `${value} kcal`;
@@ -279,8 +246,7 @@ const TrainingRecord = () => {
     const training = trainings[trainingIndex];
     const isAerobic = aerobicExercises.includes(training.exercise);
     const lastSet = training.sets && training.sets.length > 0 ? training.sets[training.sets.length - 1] : null;
-    
-    // 有酸素運動かそれ以外かで新しいセットの内容を変える
+
     const newSet = isAerobic 
       ? {
           minutes: lastSet ? lastSet.minutes : 30,
@@ -293,7 +259,7 @@ const TrainingRecord = () => {
           timer: lastSet ? lastSet.timer : "02:00",
           complete: false
         };
-    
+
     const updatedTrainings = trainings.map((training, index) =>
       index === trainingIndex
         ? { ...training, sets: [...(training.sets || []), newSet] }
@@ -347,20 +313,17 @@ const TrainingRecord = () => {
   };
 
   const addTraining = (newTraining) => {
-    // 有酸素運動かどうかを判定
     const isAerobic = aerobicExercises.includes(newTraining.exercise);
-    
-    // 有酸素運動の場合はminutesを設定、それ以外はweightとrepsを設定
+
     const initialSet = isAerobic 
       ? { minutes: 30, timer: "02:00", complete: false }
       : { weight: 0, reps: 0, timer: "02:00", complete: false };
-    
-    // 新しいトレーニングにセットを追加
+
     const trainingWithSet = {
       ...newTraining,
       sets: [initialSet]
     };
-    
+
     setTrainings([...trainings, trainingWithSet]);
   };
 
@@ -376,27 +339,22 @@ const TrainingRecord = () => {
   };
 
   const handleExerciseChange = (trainingIndex, exercise, part) => {
-    // 現在の種目と新しい種目の有酸素状態をチェック
     const currentExercise = trainings[trainingIndex].exercise;
     const wasAerobic = aerobicExercises.includes(currentExercise);
     const isAerobic = aerobicExercises.includes(exercise);
-    
-    // 有酸素運動からそれ以外、またはその逆に変わる場合
+
     if (wasAerobic !== isAerobic) {
-      // セットの形式を変換
       const convertedSets = trainings[trainingIndex].sets.map(set => {
         if (isAerobic) {
-          // 有酸素運動に変更: weightを分に変換
           return {
             minutes: set.weight || 30,
             timer: set.timer || "02:00",
             complete: set.complete || false
           };
         } else {
-          // 有酸素運動から通常トレーニングに変更
           return {
             weight: set.minutes || 20,
-            reps: 5, // デフォルトの回数
+            reps: 5,
             timer: set.timer || "02:00",
             complete: set.complete || false
           };
@@ -410,7 +368,6 @@ const TrainingRecord = () => {
       );
       setTrainings(updatedTrainings);
     } else {
-      // 有酸素状態が変わらない場合は、単に種目と部位だけ更新
       const updatedTrainings = trainings.map((training, index) =>
         index === trainingIndex
           ? { ...training, exercise, targetArea: part }
@@ -421,7 +378,6 @@ const TrainingRecord = () => {
   };
 
   const confirmEndTraining = () => {
-    // ログインしていない場合はエラーモーダルを表示
     if (!isLoggedIn) {
       setLoginErrorModalVisible(true);
       return;
@@ -435,31 +391,26 @@ const TrainingRecord = () => {
     saveTrainingRecord();
   };
 
-  // トレーニング記録削除の確認モーダルを表示
   const confirmDeleteRecord = () => {
-    // ログインしていない場合はエラーモーダルを表示
     if (!isLoggedIn) {
       setLoginErrorModalVisible(true);
       return;
     }
-    
-    // 記録が存在しない場合は確認なしで終了
+
     if (!hasTrainingData(selectedDate)) {
       alert('この日付のトレーニング記録は存在しません');
       return;
     }
-    
+
     setDeleteRecordModalVisible(true);
   };
 
-  // トレーニング記録削除の実行
   const deleteTrainingRecord = async () => {
     setDeleteRecordModalVisible(false);
-    
+
     try {
       const userId = localStorage.getItem('userId');
       const formattedDate = selectedDate.toLocaleDateString('en-CA');
-      
 
       const response = await axios.delete(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/destroy_by_date`, {
         params: {
@@ -467,97 +418,85 @@ const TrainingRecord = () => {
           user_id: userId
         }
       });
-      
+
       if (response.status === 200) {
-        // 削除成功
         setTrainings([]);
-        
-        // 月のトレーニングデータを更新
         const year = selectedDate.getFullYear();
         const month = selectedDate.getMonth();
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         const firstDayStr = firstDay.toLocaleDateString('en-CA');
         const lastDayStr = lastDay.toLocaleDateString('en-CA');
-        
+
         const monthlyResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
-        
+
         if (monthlyResponse.data && Array.isArray(monthlyResponse.data)) {
-          // 削除した日付のデータを除外
           const dates = monthlyResponse.data
             .filter(training => training.date !== formattedDate)
             .map(training => training.date);
           const uniqueDates = [...new Set(dates)];
           setTrainingDates(uniqueDates);
         }
-        
+
         alert('トレーニング記録の削除に成功しました');
       } else {
         throw new Error('Training data could not be deleted');
       }
     } catch (error) {
-      console.error('Error deleting training record:', error);
       alert('トレーニング記録の削除に失敗しました');
     }
   };
 
   const saveTrainingRecord = async () => {
     const userId = localStorage.getItem('userId');
-    
-    // ユーザーIDが存在しない場合は早期リターン
+
     if (!userId) {
       setMessage('ログインしていないため、トレーニングデータを保存できません');
       setMessageClass('save-error-message');
       return;
     }
-    
-    const formattedDate = selectedDate.toLocaleDateString('en-CA'); // 日付を正しくフォーマット
-  
+
+    const formattedDate = selectedDate.toLocaleDateString('en-CA');
+
     const trainingData = trainings.map(training => {
       const workout = Array.isArray(workouts) ? workouts.find(w => w.name === training.exercise) : null;
       const isAerobic = aerobicExercises.includes(training.exercise);
-      
-      // 各セットごとに正しいセット番号（インデックス+1）を設定する
+
+
       return training.sets.map((set, setIndex) => ({
         date: formattedDate,
         user_id: userId,
         goal_id: null,
         workout_id: workout ? workout.id : null,
-        // 各セットの番号を1から始まる番号に変更
         sets: setIndex + 1,
-        // 有酸素運動の場合はminutesをweightに保存、repsは0または省略
         weight: isAerobic ? (set.minutes || 30) : (set.weight || 0),
         reps: isAerobic ? 0 : (set.reps || 0)
       }));
     }).flat();
-  
+
     try {
-      // 新しいデータを保存
       const response = await axios.post('https://diet-maker-d07eb3099e56.herokuapp.com/trainings', { training: trainingData });
-  
+
       if (response.status !== 201) {
         throw new Error('Training data could not be saved');
       }
       setMessageClass('save-success-message');
       alert('トレーニングデータの保存に成功しました');
-      
-      // 月のトレーニングデータを更新
+
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth();
       const firstDay = new Date(year, month, 1);
       const lastDay = new Date(year, month + 1, 0);
       const firstDayStr = firstDay.toLocaleDateString('en-CA');
       const lastDayStr = lastDay.toLocaleDateString('en-CA');
-      
       const monthlyResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/monthly?start_date=${firstDayStr}&end_date=${lastDayStr}&user_id=${userId}`);
-      
+
       if (monthlyResponse.data && Array.isArray(monthlyResponse.data)) {
         const dates = monthlyResponse.data.map(training => training.date);
         const uniqueDates = [...new Set(dates)];
         setTrainingDates(uniqueDates);
       }
-      
-      // データ保存後に最大重量を再取得
+
       const maxWeightsResponse = await axios.get(`https://diet-maker-d07eb3099e56.herokuapp.com/trainings/max_weights?user_id=${userId}`);
       if (maxWeightsResponse.status === 200) {
         setMaxWeights(maxWeightsResponse.data);
@@ -575,10 +514,8 @@ const TrainingRecord = () => {
     weekday: 'short'
   }) : '日付が選択されていません';
 
-  // 現在選択中の日付にトレーニングデータがあるかをチェック
   const currentDateHasTrainingData = hasTrainingData(selectedDate);
 
-  // トレーニングデータが存在するか確認
   const hasAnyTrainingData = Array.isArray(trainings) && trainings.length > 0;
 
   return (
@@ -591,20 +528,18 @@ const TrainingRecord = () => {
         tileContent={CalenderTileContent}
       />
       <h2 className="training-record-titles">トレーニング記録 : {formattedDateDisplay}</h2>
-      
+
       {/* メニューをコピーボタンと記録削除ボタン */}
       <div className="training-buttons-container">
-        {/* メニューをコピーボタン - 常に表示 */}
-        <TrainingCopyButton 
-          trainings={trainings} 
-          workouts={workouts} 
-          onTrainingCopied={handleTrainingCopied} 
+        <TrainingCopyButton
+          trainings={trainings}
+          workouts={workouts}
+          onTrainingCopied={handleTrainingCopied}
         />
-        
-        {/* トレーニング記録削除ボタンはトレーニングデータがある場合のみ表示 */}
+
         {currentDateHasTrainingData && (
           <div className="delete-record-button-container">
-            <button 
+            <button
               className={`delete-record-button ${!isLoggedIn ? 'delete-record-button-disabled' : ''}`}
               onClick={confirmDeleteRecord}
             >
@@ -613,14 +548,14 @@ const TrainingRecord = () => {
           </div>
         )}
       </div>
-      
+
       {!isLoggedIn && (
         <div className="login-warning-message">
           ログインしないとトレーニングデータを保存できません。<br />
           <a href="/login" className="login-link">ログインする</a>
         </div>
       )}
-      
+
       {hasAnyTrainingData ? (
         trainings.map((training, trainingIndex) => (
           <div key={trainingIndex} className="training-section">
@@ -649,8 +584,8 @@ const TrainingRecord = () => {
       )}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
-      
-      {/* トレーニング合計消費カロリーを表示 - トレーニングデータが存在する場合のみ表示 */}
+
+
       {hasAnyTrainingData && totalSessionCalories > 0 && (
         <div className="total-calories-container">
           <p className="total-calories-info">
@@ -662,17 +597,16 @@ const TrainingRecord = () => {
           </p>
         </div>
       )}
-      
-      {/* トレーニング終了ボタンのみ表示 */}
+
       <div className="training-end-button-container">
-        <button 
-          className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`} 
+        <button
+          className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`}
           onClick={confirmEndTraining}
         >
           トレーニング終了
         </button>
       </div>
-      
+
       {modalVisible && (
         <Modal
           currentField={currentField}
@@ -710,7 +644,6 @@ const TrainingRecord = () => {
         </div>
       )}
 
-      {/* トレーニング記録削除確認モーダル */}
       {deleteRecordModalVisible && (
         <div className="delete-modal">
           <div className="delete-modal-content">

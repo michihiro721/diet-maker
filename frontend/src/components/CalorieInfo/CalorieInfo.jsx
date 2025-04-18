@@ -108,12 +108,12 @@ const CalorieInfo = () => {
     "活動量がかなり高い人": 1.9
   };
 
-  // 基礎代謝を計算する関数
+  // 基礎代謝計算
   const calculateBMR = (gender, height, weight, age) => {
     const heightValue = parseFloat(height);
     const weightValue = parseFloat(weight);
     const ageValue = parseFloat(age);
-    
+
     let bmrValue = 0;
     if (gender === "男性") {
       bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
@@ -127,7 +127,7 @@ const CalorieInfo = () => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const token = localStorage.getItem('jwt');
-      
+
       if (!token) {
         setError("認証情報が見つかりません。再度ログインしてください。");
         return;
@@ -139,10 +139,9 @@ const CalorieInfo = () => {
           'Content-Type': 'application/json'
         }
       });
-      
+
       const userData = response.data;
-      
-      // 基礎代謝を計算（データが存在する場合のみ）
+
       if (userData.gender && userData.height && userData.weight && userData.age) {
         const calculatedBMR = calculateBMR(
           userData.gender,
@@ -154,12 +153,10 @@ const CalorieInfo = () => {
       }
       
     } catch (error) {
-      console.error("ユーザーデータの取得に失敗しました:", error);
       setError("ユーザーデータの取得に失敗しました。");
     }
   }, []);
 
-  // ユーザーIDをローカルストレージから取得
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -175,15 +172,15 @@ const CalorieInfo = () => {
 
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
-      
+
       const stepsResponse = await axios.get(`${apiUrl}/steps`, {
         params: { user_id: userId }
       });
-      
+
       const dailyCaloriesResponse = await axios.get(`${apiUrl}/daily_calories`, {
         params: { user_id: userId }
       });
-      
+
       const intakeCaloriesResponse = await axios.get(`${apiUrl}/intake_calories`, {
         params: { user_id: userId }
       });
@@ -203,18 +200,17 @@ const CalorieInfo = () => {
         value: item.calories,
       }));
 
-      // カロリー差分データを計算
-      // 日付をキーとした辞書を作成して、同じ日付のデータを結合
+
       const dateMap = new Map();
-      
+
       dailyCaloriesData.forEach(item => {
         dateMap.set(item.date, { ...dateMap.get(item.date) || {}, dailyCalories: item.value });
       });
-      
+
       intakeCaloriesData.forEach(item => {
         dateMap.set(item.date, { ...dateMap.get(item.date) || {}, intakeCalories: item.value });
       });
-      
+
       const calorieDifferenceData = Array.from(dateMap.entries()).map(([date, values]) => ({
         date,
         value: (values.intakeCalories || 0) - (values.dailyCalories || 0),
@@ -272,11 +268,11 @@ const CalorieInfo = () => {
           filteredCalorieDifferenceData = filterDataByDays(calorieDifferenceData, 7);
       }
 
-      // カロリー差分の合計を計算
+
       const totalDifference = filteredCalorieDifferenceData.reduce((sum, item) => sum + item.value, 0);
       setTotalCalorieDifference(Math.round(totalDifference * 10) / 10);
 
-      // 日付順にソート
+
       const allDates = [...new Set([
         ...filteredStepsData.map(item => item.date),
         ...filteredDailyCaloriesData.map(item => item.date),
@@ -321,7 +317,6 @@ const CalorieInfo = () => {
         ],
       }));
     } catch (error) {
-      console.error('データの取得に失敗しました:', error);
     }
   }, [period, userId]);
 
@@ -332,19 +327,17 @@ const CalorieInfo = () => {
   }, [userId, fetchData]);
 
   const handleStepsChange = (value) => setSteps(value);
-  
+
   const handleActivityLevelChange = (value) => setActivityLevel(value);
-  
+
   const handleBasalMetabolismChange = (value) => setBasalMetabolism(value);
   const handleIntakeCaloriesChange = (value) => setIntakeCalories(value);
 
-  // 活動レベルに基づいた消費カロリーを計算
   const calculateTotalCalories = () => {
     const factor = activityLevelFactors[activityLevel] || 1;
     return Math.round(parseFloat(basalMetabolism || 0) * factor);
   };
-  
-  // カロリー差分を計算
+
   const calorieDifference = () => parseFloat(intakeCalories || 0) - calculateTotalCalories();
 
   const openCalendarModal = () => setIsCalendarOpen(true);
@@ -357,12 +350,10 @@ const CalorieInfo = () => {
 
   const closeWeightModal = () => setIsWeightModalOpen(false);
 
-  // 活動量選択モーダルを開く
   const openActivityModal = () => {
     setIsActivityModalOpen(true);
   };
 
-  // 活動量選択モーダルを閉じる
   const closeActivityModal = () => {
     setIsActivityModalOpen(false);
   };
@@ -384,7 +375,6 @@ const CalorieInfo = () => {
     setIsWeightModalOpen(false);
   };
 
-  // 活動量を選択する処理
   const selectActivityLevel = (level) => {
     handleActivityLevelChange(level);
     setIsActivityModalOpen(false);
@@ -423,7 +413,7 @@ const CalorieInfo = () => {
           user_id: userId,
           date: formattedDate,
           steps: steps,
-          calories_burned: 0, // 歩数からのカロリー計算は使用しない
+          calories_burned: 0,
         }
       });
 
@@ -444,21 +434,16 @@ const CalorieInfo = () => {
       });
 
       if (stepsResponse.status === 201 && dailyCaloriesResponse.status === 201 && intakeCaloriesResponse.status === 201) {
-        console.log("Data saved successfully");
         fetchData();
         setError('');
         alert('データの保存に成功しました');
-        
-        // 入力フィールドをクリア
+
         setSteps(0);
         setIntakeCalories(0);
-        // 基礎代謝と活動レベルはクリアしない
       } else {
-        console.error("Error saving data:", stepsResponse.data, dailyCaloriesResponse.data, intakeCaloriesResponse.data);
         setError('データの保存に失敗しました');
       }
     } catch (error) {
-      console.error("Error saving data:", error);
       setError(`データの保存に失敗しました: ${error.response?.data?.error || error.message}`);
     }
   };
@@ -531,65 +516,64 @@ const CalorieInfo = () => {
     },
   };
 
-  // 活動量モーダル
   const ActivityLevelModal = () => (
     <div className="calorie-calendar-modal-overlay" onClick={closeActivityModal}>
       <div className="calorie-activity-modal" onClick={(e) => e.stopPropagation()}>
         <h3>活動レベルを選択</h3>
         <div className="activity-options">
           <div className="activity-option" onClick={() => selectActivityLevel("活動量が低い人")}>
-            <input 
-              type="radio" 
-              checked={activityLevel === "活動量が低い人"} 
-              readOnly 
+            <input
+              type="radio"
+              checked={activityLevel === "活動量が低い人"}
+              readOnly
             />
             <div className="activity-content">
               <h4>活動量が低い人</h4>
               <p>デスクワーク中心で座っていることが多く、<br/>1日の運動は通勤・通学や近所のお買い物程度</p>
             </div>
           </div>
-          
+
           <div className="activity-option" onClick={() => selectActivityLevel("活動量がやや低い人")}>
-            <input 
-              type="radio" 
-              checked={activityLevel === "活動量がやや低い人"} 
-              readOnly 
+            <input
+              type="radio"
+              checked={activityLevel === "活動量がやや低い人"}
+              readOnly
             />
             <div className="activity-content">
               <h4>活動量がやや低い人</h4>
               <p>上記の活動量が低い人＋1週間に1，2回程度軽い運動や筋トレをする</p>
             </div>
           </div>
-          
+
           <div className="activity-option" onClick={() => selectActivityLevel("活動量が標準の人")}>
-            <input 
-              type="radio" 
-              checked={activityLevel === "活動量が標準の人"} 
-              readOnly 
+            <input
+              type="radio"
+              checked={activityLevel === "活動量が標準の人"}
+              readOnly
             />
             <div className="activity-content">
               <h4>活動量が標準の人</h4>
               <p>営業の外回りや肉体労働で1日中よく動いている<br/>または1週間に2，3回程度強度の高い運動や筋トレをする</p>
             </div>
           </div>
-          
+
           <div className="activity-option" onClick={() => selectActivityLevel("活動量が高い人")}>
-            <input 
-              type="radio" 
-              checked={activityLevel === "活動量が高い人"} 
-              readOnly 
+            <input
+              type="radio"
+              checked={activityLevel === "活動量が高い人"}
+              readOnly
             />
             <div className="activity-content">
               <h4>活動量が高い人</h4>
               <p>上記の標準の人＋1週間に4，5回程度強度の高い運動や筋トレをする</p>
             </div>
           </div>
-          
+
           <div className="activity-option" onClick={() => selectActivityLevel("活動量がかなり高い人")}>
-            <input 
-              type="radio" 
-              checked={activityLevel === "活動量がかなり高い人"} 
-              readOnly 
+            <input
+              type="radio"
+              checked={activityLevel === "活動量がかなり高い人"}
+              readOnly
             />
             <div className="activity-content">
               <h4>活動量がかなり高い人</h4>
@@ -641,12 +625,12 @@ const CalorieInfo = () => {
       </div>
       <div className="calorie-input-group">
         <label className="calorie-label">活動量</label>
-        <input 
-          type="text" 
-          value={activityLevel || '活動量を選択してください'} 
-          readOnly 
-          onClick={openActivityModal} 
-          className="calorie-input" 
+        <input
+          type="text"
+          value={activityLevel || '活動量を選択してください'}
+          readOnly
+          onClick={openActivityModal}
+          className="calorie-input"
         />
       </div>
       <div className="calorie-input-group">

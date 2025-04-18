@@ -14,7 +14,6 @@ const DailyStats = ({ userId, selectedDate }) => {
   const [postSuccess, setPostSuccess] = useState(false);
   const [trainingData, setTrainingData] = useState([]);
 
-  // 日付が変わったらデータをリセットする
   useEffect(() => {
     setStepData(null);
     setConsumedCalories(null);
@@ -23,7 +22,6 @@ const DailyStats = ({ userId, selectedDate }) => {
     setLoading(true);
   }, [selectedDate]);
 
-  // トレーニングデータを取得
   useEffect(() => {
     const fetchTrainingData = async () => {
       if (!userId || !selectedDate) return;
@@ -31,7 +29,7 @@ const DailyStats = ({ userId, selectedDate }) => {
       try {
         const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
         const response = await axios.get(`${apiUrl}/trainings`, {
-          params: { 
+          params: {
             user_id: userId,
             date: selectedDate
           }
@@ -39,16 +37,13 @@ const DailyStats = ({ userId, selectedDate }) => {
         
         setTrainingData(response.data);
       } catch (error) {
-        console.error("Error fetching training data:", error);
       }
     };
-    // ユーザーIDと選択した日付が存在する場合にトレーニングデータを取得
     if (userId && selectedDate) {
       fetchTrainingData();
     }
   }, [userId, selectedDate]);
 
-  // 選択した日付の歩数データを取得
   useEffect(() => {
     const fetchStepData = async () => {
       if (!userId || !selectedDate) {
@@ -59,19 +54,15 @@ const DailyStats = ({ userId, selectedDate }) => {
       try {
         const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
         const response = await axios.get(`${apiUrl}/steps`, {
-          params: { 
+          params: {
             user_id: userId,
             date: selectedDate
           }
         });
-        
-        console.log(`Steps data for ${selectedDate}:`, response.data);
-        
-        // APIがすべての日付のデータを返している場合は、選択した日付のデータをフィルタリングする
+
         if (response.data && response.data.length > 0) {
-          // 選択した日付のデータのみをフィルタリング
           const filteredData = response.data.filter(item => item.date === selectedDate);
-          
+
           if (filteredData.length > 0) {
             setStepData(filteredData[0]);
           } else {
@@ -81,7 +72,6 @@ const DailyStats = ({ userId, selectedDate }) => {
           setStepData(null);
         }
       } catch (error) {
-        console.error(`Error fetching step data for ${selectedDate}:`, error);
         setStepData(null);
       }
     };
@@ -91,7 +81,6 @@ const DailyStats = ({ userId, selectedDate }) => {
     }
   }, [userId, selectedDate]);
 
-  // 選択した日付の消費カロリーデータを取得
   useEffect(() => {
     const fetchConsumedCalories = async () => {
       if (!userId || !selectedDate) {
@@ -107,14 +96,10 @@ const DailyStats = ({ userId, selectedDate }) => {
             date: selectedDate
           }
         });
-        
-        console.log(`Daily calories data for ${selectedDate}:`, response.data);
-        
-        // APIがすべての日付のデータを返している場合は、選択した日付のデータをフィルタリングする
+
         if (response.data && response.data.length > 0) {
-          // 選択した日付のデータのみをフィルタリング
           const filteredData = response.data.filter(item => item.date === selectedDate);
-          
+
           if (filteredData.length > 0) {
             setConsumedCalories(filteredData[0]);
           } else {
@@ -124,7 +109,6 @@ const DailyStats = ({ userId, selectedDate }) => {
           setConsumedCalories(null);
         }
       } catch (error) {
-        console.error(`Error fetching consumed calories data for ${selectedDate}:`, error);
         setConsumedCalories(null);
       }
     };
@@ -134,7 +118,6 @@ const DailyStats = ({ userId, selectedDate }) => {
     }
   }, [userId, selectedDate]);
 
-  // 選択した日付の摂取カロリーデータを取得
   useEffect(() => {
     const fetchIntakeCalories = async () => {
       if (!userId || !selectedDate) {
@@ -146,18 +129,15 @@ const DailyStats = ({ userId, selectedDate }) => {
       try {
         const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
         const response = await axios.get(`${apiUrl}/intake_calories`, {
-          params: { 
+          params: {
             user_id: userId,
             date: selectedDate
           }
         });
-        
-        console.log(`Intake calories data for ${selectedDate}:`, response.data);
 
         if (response.data && response.data.length > 0) {
-          // 選択した日付のデータのみをフィルタリング
           const filteredData = response.data.filter(item => item.date === selectedDate);
-          
+
           if (filteredData.length > 0) {
             setIntakeCalories(filteredData[0]);
           } else {
@@ -167,7 +147,6 @@ const DailyStats = ({ userId, selectedDate }) => {
           setIntakeCalories(null);
         }
       } catch (error) {
-        console.error(`Error fetching intake calories data for ${selectedDate}:`, error);
         setIntakeCalories(null);
       } finally {
         setLoading(false);
@@ -181,7 +160,6 @@ const DailyStats = ({ userId, selectedDate }) => {
     }
   }, [userId, selectedDate]);
 
-  // カロリー差分を計算する関数
   const calculateCalorieDifference = () => {
     if (consumedCalories && intakeCalories) {
       return intakeCalories.calories - consumedCalories.total_calories;
@@ -189,34 +167,29 @@ const DailyStats = ({ userId, selectedDate }) => {
     return null;
   };
 
-  // 数値を少数第一位で四捨五入して整数として表示するフォーマット関数
   const formatCalories = (value) => {
     if (value === null || value === undefined) return 'データなし';
-    
-    // 数値を少数第一位で四捨五入し、整数に変換
+
     const roundedValue = Math.round(value);
-    
-    // 整数にカンマを挿入
+
     const formattedValue = roundedValue.toLocaleString();
-    
+
     return `${formattedValue} kcal`;
   };
 
-  // シェアモーダルを開く
+
   const openShareModal = () => {
-    // 投稿内容の初期値はユーザー入力用に空にする
-    setPostContent(""); 
+    setPostContent("");
     setIsShareModalOpen(true);
   };
 
-  // モーダルを閉じる
+
   const closeShareModal = () => {
     setIsShareModalOpen(false);
     setPostContent("");
     setPostSuccess(false);
   };
 
-  // 投稿を送信する関数
   const handleSubmitPost = async () => {
     if (!userId) {
       alert("ログインが必要です");
@@ -225,18 +198,17 @@ const DailyStats = ({ userId, selectedDate }) => {
 
     try {
       setIsPosting(true);
-      
-      // トークンを取得
+
+
       const jwt = localStorage.getItem('jwt');
       if (!jwt) {
         alert("認証情報が見つかりません。再ログインしてください。");
         setIsPosting(false);
         return;
       }
-      
-      // 日付情報を含める
+
       let finalContent = `【${selectedDate}】 ${postContent.trim()}`;
-      
+
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const response = await axios.post(`${apiUrl}/posts`, {
         post: {
@@ -245,18 +217,15 @@ const DailyStats = ({ userId, selectedDate }) => {
       }, {
         headers: { 'Authorization': `Bearer ${jwt}` }
       });
-      
-      console.log("投稿成功:", response.data);
+
       setIsPosting(false);
       setPostSuccess(true);
-      
-      // 3秒後にモーダルを閉じる
+
       setTimeout(() => {
         closeShareModal();
       }, 3000);
-      
+
     } catch (error) {
-      console.error("投稿に失敗しました:", error);
       setIsPosting(false);
       alert(`投稿に失敗しました: ${error.response?.data?.error || error.message}`);
     }
@@ -299,7 +268,7 @@ const DailyStats = ({ userId, selectedDate }) => {
               </div>
             </div>
           </div>
-          
+
           {/* シェアボタン Safari対応のために記載 */}
           <div style={{
             marginTop: '20px',
@@ -342,7 +311,7 @@ const DailyStats = ({ userId, selectedDate }) => {
           <div className="share-modal" onClick={(e) => e.stopPropagation()}>
             <button className="close-modal-button" onClick={closeShareModal} type="button">×</button>
             <h2>{selectedDate} のトレーニング成果をシェア</h2>
-            
+
             <div className="share-form">
               <div className="share-data-summary">
                 {trainingData.length > 0 && (
