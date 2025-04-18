@@ -12,21 +12,18 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // URLからトークンを取得する処理（Google認証コールバック用）
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const token = query.get('token');
     
     if (token) {
-      // Google認証からのトークンがある場合
       localStorage.setItem('jwt', token);
       
-      // ユーザー情報を取得
       fetchUserInfo(token);
     }
   }, [location]);
 
-  // トークンを使ってユーザー情報を取得
+
   const fetchUserInfo = async (token) => {
     try {
       const res = await axios.get(`${API_BASE_URL}/users/show`, {
@@ -41,7 +38,6 @@ const Login = () => {
         window.location.href = '/';
       }
     } catch (error) {
-      console.error('ユーザー情報取得エラー:', error);
       alert('ログイン中にエラーが発生しました');
     }
   };
@@ -57,20 +53,13 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("レスポンスヘッダー:", res.headers);
-
       if (res.status === 200) {
-        // トークンをlocalStorageに保存
         const token = res.headers['authorization'];
-        console.log("取得したトークン:", token);
         if (token) {
           const cleanToken = token.replace('Bearer ', '');
           localStorage.setItem('jwt', cleanToken);
-          
-          console.log("保存されたトークン:", cleanToken);
         }
 
-        // ユーザーIDをlocalStorageに保存
         const userId = res.data.user.id;
         localStorage.setItem('userId', userId);
 
@@ -82,7 +71,6 @@ const Login = () => {
         alert('ログインに失敗しました');
       }
     } catch (error) {
-      console.error('ログインエラー:', error);
       if (error.response && error.response.data && error.response.data.errors) {
         alert(`ログイン中にエラーが発生しました: ${error.response.data.errors.join(', ')}`);
       } else {
