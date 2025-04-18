@@ -57,7 +57,7 @@ const Weight = () => {
   const [userId, setUserId] = useState(null);
   const [displayMode, setDisplayMode] = useState('both');
 
-  // ユーザーIDをローカルストレージから取得
+
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -77,10 +77,7 @@ const Weight = () => {
       });
       const weights = response.data;
 
-      console.log("Fetched weights data:", weights);
-
       if (weights && weights.length > 0) {
-        // 日付でソート
         weights.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         let filteredWeights;
@@ -121,7 +118,6 @@ const Weight = () => {
         });
         const weightValues = filteredWeights.map(weight => weight.weight);
 
-        // データセットを作成
         const datasets = [];
 
         if (displayMode === 'bar' || displayMode === 'both') {
@@ -159,11 +155,8 @@ const Weight = () => {
           labels: dates,
           datasets: datasets,
         });
-      } else {
-        console.warn("No weight data available");
       }
     } catch (error) {
-      console.error("Error fetching weight data:", error);
       alert(`体重データの取得に失敗しました: ${error.message}`);
     }
   }, [userId, period, displayMode]);
@@ -185,8 +178,6 @@ const Weight = () => {
         });
         const goal = response.data;
 
-        console.log("Fetched goal data:", goal);
-
         if (goal && Object.keys(goal).length > 0) {
           setGoalWeight(goal.target_weight);
           setGoalDate(new Date(goal.end_date));
@@ -195,7 +186,6 @@ const Weight = () => {
           setGoalDate(null);
         }
       } catch (error) {
-        console.error("Error fetching goal data:", error);
         setGoalWeight(null);
         setGoalDate(null);
         alert(`目標データの取得に失敗しました: ${error.message}`);
@@ -233,17 +223,14 @@ const Weight = () => {
       });
 
       if (response.status === 201) {
-        console.log("Data saved successfully");
         fetchData();
         alert('データの保存に成功しました');
         setErrorMessage('');
         setWeight('');
       } else {
-        console.error("Error saving data:", response.data);
         alert('データの保存に失敗しました');
       }
     } catch (error) {
-      console.error("Error saving data:", error);
       alert(`データの保存に失敗しました: ${error.response?.data?.error || error.message}`);
     }
   };
@@ -312,7 +299,7 @@ const Weight = () => {
     },
   };
 
-  // 目標達成予定日までの残り日数を計算
+  // 目標達成予定日までの残り日数計算
   const remainingDays = goalDate ? Math.ceil((goalDate - new Date()) / (1000 * 60 * 60 * 24)) : null;
 
   const handleDateChange = (date) => {
@@ -361,7 +348,6 @@ const Weight = () => {
         </div>
       </div>
 
-      {/* 目標情報は目標が設定されている場合のみ表示 */}
       {goalWeight && goalDate && (
         <div className="goal-info">
           <p className="goal-info-target-weight">目標体重: {goalWeight} kg</p>

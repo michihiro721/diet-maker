@@ -15,17 +15,14 @@ const Profile = () => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('jwt');
       const userId = localStorage.getItem('userId');
-      
+
       if (!token || !userId) {
         alert('ログインしてください');
         navigate('/login');
         return;
       }
-  
+
       try {
-        console.log('Token:', token);
-        console.log('UserID:', userId);
-        
         const res = await axios.get(`${API_BASE_URL}/users/show`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -33,20 +30,14 @@ const Profile = () => {
             'Accept': 'application/json'
           },
         });
-        
-        console.log('API Response:', res.data);
-        
+
         setEmail(res.data.email);
         setNickname(res.data.name);
       } catch (error) {
-        console.error('プロフィール取得エラー:', error);
-        console.error('エラーレスポンス:', error.response?.data);
-        console.error('エラーステータス:', error.response?.status);
-        
-        // トークン期限切れの場合
-        if (error.response?.status === 401 && 
+
+        if (error.response?.status === 401 &&
             error.response?.data?.error === 'Signature has expired') {
-          localStorage.removeItem('jwt'); // 期限切れトークンを削除
+          localStorage.removeItem('jwt');
           localStorage.removeItem('userId');
           alert('セッションの有効期限が切れました。再度ログインしてください。');
           navigate('/login');
@@ -55,20 +46,20 @@ const Profile = () => {
         }
       }
     };
-  
+
     fetchProfile();
   }, [navigate]);
 
   const handleNicknameChange = async () => {
     const token = localStorage.getItem('jwt');
     const userId = localStorage.getItem('userId');
-    
+
     if (!token || !userId) {
       alert('ログインしてください');
       navigate('/login');
       return;
     }
-    
+
     if (!newNickname.trim()) {
       alert('ニックネームを入力してください');
       return;
@@ -86,16 +77,11 @@ const Profile = () => {
           'Accept': 'application/json'
         },
       });
-      
-      // デバッグログ
-      console.log('Update response:', res.data);
-      
+
       setNickname(newNickname);
-      setNewNickname(''); // 入力フィールドをクリア
+      setNewNickname('');
       alert('ニックネームが更新されました');
     } catch (error) {
-      console.error('ニックネーム更新エラー:', error);
-      console.error('エラーレスポンス:', error.response?.data);
       alert('ニックネームの更新に失敗しました');
     }
   };
@@ -115,7 +101,7 @@ const Profile = () => {
           placeholder="新しいニックネーム"
           className="profile-input"
         />
-        <button 
+        <button
           onClick={handleNicknameChange}
           className="profile-button"
         >

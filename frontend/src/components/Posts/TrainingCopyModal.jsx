@@ -10,7 +10,6 @@ const api = axios.create({
   baseURL: "https://diet-maker-d07eb3099e56.herokuapp.com"
 });
 
-
 const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSaving, setIsSaving] = useState(false);
@@ -24,7 +23,6 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
   };
 
   const handleCopyTrainings = async () => {
-    // ローカルストレージからログインユーザーのIDを取得
     const parseJwt = (token) => {
       try {
         const base64Url = token.split('.')[1];
@@ -34,29 +32,23 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
         }).join(''));
         return JSON.parse(jsonPayload);
       } catch(e) {
-        console.error("JWTの解析に失敗:", e);
         return null;
       }
     };
 
-    // トークンを取得
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
       setErrorMessage("認証情報が見つかりません。再ログインしてください。");
       return;
     }
 
-    // JWTからユーザーIDを取得
     const decodedToken = parseJwt(jwt);
     const loggedInUserId = decodedToken && decodedToken.sub ? decodedToken.sub : null;
 
-    // ログインユーザーIDを確認
     if (!loggedInUserId) {
       setErrorMessage("ユーザーIDが見つかりません。ログインしてください。");
       return;
     }
-
-    console.log("現在ログインしているユーザーID:", loggedInUserId);
 
     if (trainingData.length === 0) {
       setErrorMessage("コピーするトレーニングデータがありません。");
@@ -68,7 +60,6 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
       setErrorMessage("");
       setSuccessMessage("");
 
-      // 日付をYYYY-MM-DD形式に変換
       const year = selectedDate.getFullYear();
       const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
       const day = String(selectedDate.getDate()).padStart(2, '0');
@@ -78,11 +69,6 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
         headers: { 'Authorization': `Bearer ${jwt}` }
       };
 
-      // デバッグ
-      console.log("保存するユーザーID:", loggedInUserId);
-      console.log("コピー元トレーニングデータ:", trainingData);
-
-      // 全てのトレーニングデータを配列にまとめる
       const trainingsArray = trainingData.map(training => {
         return {
           user_id: loggedInUserId,
@@ -94,35 +80,28 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
         };
       });
 
-      console.log("送信するデータ:", { training: trainingsArray });
-
-      // バックエンドが期待する形式で送信
       const response = await api.post('/trainings', { training: trainingsArray }, config);
-      console.log("APIレスポンス:", response.data);
-      
+
       setSuccessMessage(`${formattedDate}にトレーニングメニューを保存しました`);
       setIsSaving(false);
-      
-      // 3秒後にモーダルを閉じる
+
       setTimeout(() => {
         onClose();
       }, 3000);
-      
+
     } catch (error) {
-      console.error("トレーニングのコピーに失敗しました:", error);
       setErrorMessage(`エラー: ${error.response?.data?.error || error.message}`);
       setIsSaving(false);
     }
   };
 
-  // 選択した日付を日本語形式で表示
   const formatSelectedDate = () => {
     if (!selectedDate) return '';
-    
+
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth() + 1;
     const day = selectedDate.getDate();
-    
+
     return `${year}年${month}月${day}日`;
   };
 
@@ -130,7 +109,7 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
     <div className="training-copy-modal-overlay" onClick={onClose}>
       <div className="training-copy-modal" onClick={(e) => e.stopPropagation()}>
         <h3 className="training-copy-modal-title">トレーニングメニューをコピー</h3>
-        
+
         <div className="training-copy-modal-content">
           <div className="training-copy-modal-calendar-container">
             <Calendar
@@ -141,33 +120,33 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
               tileContent={CalenderTileContent}
             />
           </div>
-          
+
           <div className="training-copy-modal-selected-date">
             選択した日付: {formatSelectedDate()}
           </div>
-          
+
           {errorMessage && (
             <div className="training-copy-modal-error">
               {errorMessage}
             </div>
           )}
-          
+
           {successMessage && (
             <div className="training-copy-modal-success">
               {successMessage}
             </div>
           )}
-          
+
           <div className="training-copy-modal-buttons">
-            <button 
-              className="training-copy-modal-cancel-button" 
+            <button
+              className="training-copy-modal-cancel-button"
               onClick={onClose}
               disabled={isSaving}
             >
               キャンセル
             </button>
-            <button 
-              className="training-copy-modal-save-button" 
+            <button
+              className="training-copy-modal-save-button"
               onClick={handleCopyTrainings}
               disabled={isSaving}
             >
@@ -179,7 +158,6 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
     </div>
   );
 };
-
 
 TrainingCopyModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,

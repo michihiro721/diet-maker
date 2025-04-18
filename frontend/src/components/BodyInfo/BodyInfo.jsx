@@ -18,14 +18,12 @@ const BodyInfo = () => {
   const navigate = useNavigate();
   const alertShownRef = useRef(false);
 
-  // ユーザーIDを取得し、既存のデータがあれば読み込む
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
       fetchUserData();
     } else {
-      // ユーザーIDが見つからない場合、アラートを表示してからログイン画面に遷移
       if (!alertShownRef.current) {
         alertShownRef.current = true;
         alert('身体情報を設定するにはログインが必要です');
@@ -35,12 +33,11 @@ const BodyInfo = () => {
     }
   }, [navigate]);
 
-  // ユーザーデータを取得する関数
   const fetchUserData = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const token = localStorage.getItem('jwt');
-      
+
       if (!token) {
         setError("認証情報が見つかりません。再度ログインしてください。");
         setLoading(false);
@@ -53,22 +50,20 @@ const BodyInfo = () => {
           'Content-Type': 'application/json'
         }
       });
-      
-      console.log('取得したユーザーデータ:', response.data);
+
       const userData = response.data;
-      
-      // 取得したデータをセット (データが存在する場合のみ)
+
       if (userData.gender) setGender(userData.gender);
       if (userData.height) setHeight(`${userData.height} cm`);
       if (userData.weight) setWeight(`${userData.weight} kg`);
       if (userData.age) setAge(`${userData.age} 歳`);
-      
-      // 計算
+
+
       if (userData.gender && userData.height && userData.weight && userData.age) {
         const heightValue = parseFloat(userData.height);
         const weightValue = parseFloat(userData.weight);
         const ageValue = parseFloat(userData.age);
-        
+
         let bmrValue;
         if (userData.gender === "男性") {
           bmrValue = (10 * weightValue) + (6.25 * heightValue) - (5 * ageValue) + 5;
@@ -79,11 +74,9 @@ const BodyInfo = () => {
           setBmr(bmrValue);
         }
       }
-      
+
       setLoading(false);
     } catch (error) {
-      console.error("ユーザーデータの取得に失敗しました:", error);
-      console.error("エラーの詳細:", error.response?.data);
       setError("ユーザーデータの取得に失敗しました。");
       setLoading(false);
     }
@@ -106,9 +99,8 @@ const BodyInfo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!userId) {
-      // ユーザーIDが見つからない場合、アラートを表示してからログイン画面に遷移
       if (!alertShownRef.current) {
         alertShownRef.current = true;
         alert('身体情報を設定するにはログインが必要です');
@@ -116,29 +108,28 @@ const BodyInfo = () => {
       }
       return;
     }
-    
+
     if (!gender || !height || !weight || !age) {
       setError("全ての項目を入力してください");
       return;
     }
-    
+
     setError("");
     const bmrValue = calculateBMR();
-    
-    // データをサーバーに保存
+
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
       const token = localStorage.getItem('jwt');
-      
+
       if (!token) {
         setError("認証情報が見つかりません。再度ログインしてください。");
         return;
       }
-      
+
       const heightValue = parseFloat(height.replace(" cm", ""));
       const weightValue = parseFloat(weight.replace(" kg", ""));
       const ageValue = parseFloat(age.replace(" 歳", ""));
-      
+
       const response = await axios.put(`${apiUrl}/users/${userId}`, {
         user: {
           height: heightValue,
@@ -152,13 +143,12 @@ const BodyInfo = () => {
           'Content-Type': 'application/json'
         }
       });
-      
+
       if (response.status === 200) {
         setBmr(bmrValue);
         alert("身体情報が正常に保存されました。");
       }
     } catch (error) {
-      console.error("データの保存に失敗しました:", error);
       setError("データの保存に失敗しました: " + (error.response?.data?.errors?.join(", ") || error.message));
     }
   };
