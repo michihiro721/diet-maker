@@ -11,7 +11,6 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        console.log('Form data:', data);
         try {
             const res = await axios.post(`${API_BASE_URL}/auth`, {
                 user: {
@@ -24,7 +23,7 @@ const SignUp = () => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true
             });
-            console.log('Response:', res);
+            
             if (res.status === 201 || res.status === 200) {
                 alert('新規登録に成功しました');
                 navigate('/login');
@@ -32,7 +31,6 @@ const SignUp = () => {
                 alert('新規登録に失敗しました');
             }
         } catch (error) {
-            console.error('新規登録エラー:', error);
             if (error.response && error.response.data && error.response.data.errors) {
                 alert(`新規登録中にエラーが発生しました: ${error.response.data.errors.join(', ')}`);
             } else {

@@ -1,25 +1,16 @@
 import React from 'react';
 
-// 環境に応じたベースURL
 const API_BASE_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:3000'
   : 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    // セッションストレージに現在の時刻を保存（認証セッションの識別用）
+
     sessionStorage.setItem('auth_started', new Date().getTime());
-    
-    // Googleログイン処理を開始
-    console.log('Starting Google OAuth flow');
-    
-    // Googleの認証エンドポイントにリダイレクト
+
     const googleAuthUrl = `${API_BASE_URL}/users/auth/google_oauth2?origin=${encodeURIComponent(window.location.origin)}&ts=${Date.now()}`;
-    
-    // デバッグ用ログ
-    console.log('Redirecting to:', googleAuthUrl);
-    
-    // Google認証ページにリダイレクト
+
     window.location.href = googleAuthUrl;
   };
 
@@ -44,13 +35,13 @@ const GoogleLoginButton = () => {
         marginRight: 'auto'
       }}
     >
-      <img 
+      <img
         src="https://developers.google.com/identity/images/g-logo.png" 
         alt="Google logo"
-        style={{ 
-          width: '18px', 
-          height: '18px', 
-          marginRight: '10px' 
+        style={{
+          width: '18px',
+          height: '18px',
+          marginRight: '10px'
         }}
       />
       Googleでログイン
