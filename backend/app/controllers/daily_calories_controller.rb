@@ -9,7 +9,6 @@ class DailyCaloriesController < ApplicationController
   end
 
   def create
-    Rails.logger.info("Received params: #{params.inspect}")
     daily_calorie = DailyCalorie.find_or_initialize_by(user_id: daily_calorie_params[:user_id], date: daily_calorie_params[:date])
     daily_calorie.assign_attributes(daily_calorie_params)
 

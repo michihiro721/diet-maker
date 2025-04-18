@@ -9,7 +9,6 @@ class StepsController < ApplicationController
   end
 
   def create
-    Rails.logger.info("Received params: #{params.inspect}")
     step = Step.find_or_initialize_by(user_id: step_params[:user_id], date: step_params[:date])
     step.assign_attributes(step_params)
 
