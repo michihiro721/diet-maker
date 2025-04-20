@@ -63,7 +63,7 @@ const Weight = () => {
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
     } else {
-      setErrorMessage('ユーザーIDが見つかりません。ログインしてください。');
+      setErrorMessage('この機能を使用するには、ログインが必要です。');
     }
   }, []);
 

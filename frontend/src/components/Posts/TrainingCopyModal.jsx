@@ -38,7 +38,7 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
 
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-      setErrorMessage("認証情報が見つかりません。再ログインしてください。");
+      setErrorMessage("この機能を使用するには、ログインが必要です。");
       return;
     }
 

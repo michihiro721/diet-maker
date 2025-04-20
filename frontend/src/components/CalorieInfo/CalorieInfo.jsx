@@ -163,7 +163,7 @@ const CalorieInfo = () => {
       setUserId(parseInt(storedUserId, 10));
       fetchUserData();
     } else {
-      setError('ユーザーIDが見つかりません。ログインしてください。');
+      setError('この機能を使用するには、ログインが必要です。');
     }
   }, [fetchUserData]);
 
