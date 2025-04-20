@@ -3,13 +3,13 @@ import 'react-calendar/dist/Calendar.css';
 import './styles/Calendar.css';
 import PropTypes from 'prop-types';
 
-// カレンダーの曜日の表示をカスタマイズするための関数
+
 export const CalenderFormatShortWeekday = (locale, date) => {
   const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
   return weekdays[date.getDay()];
 };
 
-// カレンダーのタイルにカスタムクラス名を付けるための関数
+
 export const CalenderTileClassName = ({ date, view }) => {
   if (view === 'month') {
     const day = date.getDay();
@@ -22,7 +22,7 @@ export const CalenderTileClassName = ({ date, view }) => {
   return null;
 };
 
-// カレンダーの日付の表示をカスタマイズするための関数
+
 export const CalenderTileContent = ({ date, view }) => {
   if (view === 'month') {
     return <span>{date.getDate()}</span>;
@@ -31,7 +31,6 @@ export const CalenderTileContent = ({ date, view }) => {
 };
 
 function Calender() {
-  // カレンダーを非表示にするためにnullを返す
   return null;
 }
 

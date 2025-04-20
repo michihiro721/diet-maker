@@ -22,7 +22,6 @@ class User < ApplicationRecord
     if user
       if user.provider == auth.provider && user.uid == auth.uid
       else
-        # プロバイダとUIDを更新
         user.update(
           provider: auth.provider,
           uid: auth.uid

@@ -40,7 +40,6 @@ class PostsController < ApplicationController
     end
   end
 
-  # DELETE /posts/1
   def destroy
     if @post.user_id == current_user.id
       @post.destroy

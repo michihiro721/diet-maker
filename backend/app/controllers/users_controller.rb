@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [ :show_by_id ]
 
-  # 認証済みユーザーの情報を返す
   def show
-    # ユーザーがログインしていない場合
     unless current_user
       render json: { error: "User not authenticated" }, status: :unauthorized
       return
@@ -25,7 +23,6 @@ class UsersController < ApplicationController
     }
   end
 
-  # IDでユーザー情報を取得（認証なし）
   def show_by_id
     user = User.find_by(id: params[:id])
 

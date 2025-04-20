@@ -73,7 +73,6 @@ const TrainingRecord = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    // ワークアウトデータを取得
     const fetchWorkouts = async () => {
       try {
         const response = await axios.get('https://diet-maker-d07eb3099e56.herokuapp.com/workouts');
@@ -85,7 +84,7 @@ const TrainingRecord = () => {
     fetchWorkouts();
   }, []);
 
-  // ユーザーの最大重量データを取得
+
   useEffect(() => {
     const fetchMaxWeights = async () => {
       try {
@@ -226,12 +225,12 @@ const TrainingRecord = () => {
       } else if (day === 6) {
         classNames.push('react-calendar__tile--saturday');
       }
-      
+
       // トレーニングデータがある日付の色
       if (hasTrainingData(date)) {
         classNames.push('react-calendar__tile--has-training');
       }
-      
+
       return classNames.join(' ');
     }
     return null;
@@ -360,7 +359,7 @@ const TrainingRecord = () => {
           };
         }
       });
-      
+
       const updatedTrainings = trainings.map((training, index) =>
         index === trainingIndex
           ? { ...training, exercise, targetArea: part, sets: convertedSets }
@@ -382,7 +381,7 @@ const TrainingRecord = () => {
       setLoginErrorModalVisible(true);
       return;
     }
-    
+
     setConfirmEndModalVisible(true);
   };
 
@@ -529,7 +528,6 @@ const TrainingRecord = () => {
       />
       <h2 className="training-record-titles">トレーニング記録 : {formattedDateDisplay}</h2>
 
-      {/* メニューをコピーボタンと記録削除ボタン */}
       <div className="training-buttons-container">
         <TrainingCopyButton
           trainings={trainings}

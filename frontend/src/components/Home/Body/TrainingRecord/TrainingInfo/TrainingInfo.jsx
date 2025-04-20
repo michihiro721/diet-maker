@@ -10,7 +10,7 @@ const TrainingInfo = ({
   onExerciseChange, 
   maxWeight,
   sets = [],
-  userWeight = 70  // ユーザーの体重（デフォルト70kg）
+  userWeight = 70
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isAerobic, setIsAerobic] = useState(false);
@@ -52,13 +52,13 @@ const TrainingInfo = ({
     closeModal();
   };
 
-  // カロリー表示用のフォーマット関数
+
   const formatCalories = (value) => {
     if (value <= 0) return 'データなし';
     return `${value} kcal`;
   };
 
-  // 種目が選択されていない場合は「種目を選択してください」を表示
+
   const displayExercise = currentExercise || "種目を選択してください";
 
   return (

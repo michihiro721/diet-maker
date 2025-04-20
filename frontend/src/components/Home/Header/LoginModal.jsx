@@ -9,24 +9,17 @@ const LoginModal = ({ closeMenu }) => {
   const handleLogout = (e) => {
     e.preventDefault();
 
-    // ローカルストレージからユーザー情報を削除
+
     localStorage.removeItem('userId');
     localStorage.removeItem('jwt');
-
-    // ユーザーにログアウトを通知
     alert('ログアウトしました');
-
-    // メニューを閉じる
     closeMenu();
-
-    // ホームページにリダイレクト
     navigate('/');
 
-    // ページをリロードして全てのユーザー依存のデータを更新
     window.location.reload();
   };
 
-  // ログイン状態の確認
+
   const isLoggedIn = localStorage.getItem('userId') !== null;
 
   // インラインSVGとして直接定義（Safariでの表示問題対策）react-iconsだとSafariで表示されなかったため
@@ -48,7 +41,6 @@ const LoginModal = ({ closeMenu }) => {
       <div className="header-login-menu-modal" onClick={(e) => e.stopPropagation()}>
         <ul className="header-login-menu-list">
           {isLoggedIn ? (
-            // ログイン済みの場合に表示するメニュー
             <>
               <li><Link to="/profile" onClick={closeMenu}>プロフィール</Link></li>
               <li><a href="#" onClick={handleLogout}>ログアウト</a></li>
