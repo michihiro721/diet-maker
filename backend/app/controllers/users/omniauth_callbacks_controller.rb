@@ -38,7 +38,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def generate_jwt_token(user)
     payload = {
       sub: user.id,
-      exp: (Time.now + 24.hours).to_i,
       email: user.email,
       jti: SecureRandom.uuid
     }
