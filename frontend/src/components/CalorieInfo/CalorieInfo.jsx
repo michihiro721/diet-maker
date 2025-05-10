@@ -317,6 +317,7 @@ const CalorieInfo = () => {
         ],
       }));
     } catch (error) {
+      console.error('データの取得中にエラーが発生しました:', error);
     }
   }, [period, userId]);
 
