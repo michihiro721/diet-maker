@@ -62,8 +62,10 @@ const TrainingRecord = () => {
             setUserWeight(response.data.weight);
           }
         } catch (profileError) {
+          console.error('ユーザープロフィールの取得中にエラーが発生しました:', profileError);
         }
       } catch (error) {
+        console.error('ユーザープロフィール取得処理でエラーが発生しました:', error);
       }
     };
   
@@ -78,6 +80,7 @@ const TrainingRecord = () => {
         const response = await axios.get('https://diet-maker-d07eb3099e56.herokuapp.com/workouts');
         setWorkouts(response.data);
       } catch (error) {
+        console.error('トレーニング種目の取得中にエラーが発生しました:', error);
       }
     };
 
@@ -96,6 +99,7 @@ const TrainingRecord = () => {
           setMaxWeights(response.data);
         }
       } catch (error) {
+        console.error('最大重量の取得中にエラーが発生しました:', error);
       }
     };
 
@@ -125,6 +129,7 @@ const TrainingRecord = () => {
         setTrainingDates(uniqueDates);
       }
     } catch (error) {
+      console.error('月間トレーニングデータの取得中にエラーが発生しました:', error);
     }
   }, [selectedDate]);
 
