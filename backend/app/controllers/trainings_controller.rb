@@ -8,7 +8,7 @@ class TrainingsController < ApplicationController
 
   def create
     result = Training.create_trainings(training_params)
-    
+
     if result == true
       render json: { message: "Training records saved successfully" }, status: :created
     else
@@ -20,7 +20,7 @@ class TrainingsController < ApplicationController
     start_date = params[:start_date]
     end_date = params[:end_date]
     user_id = params[:user_id]
-    
+
     result = Training.monthly_training_dates(start_date, end_date, user_id)
     render json: result
   end
@@ -28,7 +28,7 @@ class TrainingsController < ApplicationController
   def destroy_by_date
     date = params[:date]
     user_id = params[:user_id]
-    
+
     if Training.destroy_trainings_by_date(date, user_id)
       render json: { message: "Training records successfully deleted" }, status: :ok
     else
@@ -38,12 +38,12 @@ class TrainingsController < ApplicationController
 
   def max_weights
     user_id = params[:user_id]
-    
+
     unless user_id.present?
       render json: { error: "ユーザーIDが必要です" }, status: :bad_request
       return
     end
-    
+
     result = Training.max_weights_for_user(user_id)
     render json: result
   end

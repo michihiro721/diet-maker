@@ -50,7 +50,6 @@ class Training < ApplicationRecord
     user_id = training_params.first[:user_id]
 
     transaction do
-
       where(date: date, user_id: user_id).destroy_all
 
       # 新しいトレーニングを作成
