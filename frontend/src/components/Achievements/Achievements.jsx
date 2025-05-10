@@ -72,6 +72,7 @@ const Achievements = () => {
           setTrainingDates(uniqueDates);
         }
       } catch (error) {
+        console.error('月間トレーニングデータの取得中にエラーが発生しました:', error);
       }
     };
 
