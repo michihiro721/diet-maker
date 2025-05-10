@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -11,18 +11,31 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
+  const [flashMessage, setFlashMessage] = useState(null);
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const token = query.get('token');
-    
+
     if (token) {
       localStorage.setItem('jwt', token);
-      
       fetchUserInfo(token);
     }
   }, [location]);
 
+
+  const showFlashMessage = (message, type) => {
+    setFlashMessage(null);
+    // 遅延を入れることで、アニメーションが正しく再生されるようにした
+    setTimeout(() => {
+      setFlashMessage({ message, type });
+    }, 50);
+
+    // 6秒後にメッセージを消す
+    setTimeout(() => {
+      setFlashMessage(null);
+    }, 6000);
+  };
 
   const fetchUserInfo = async (token) => {
     try {
@@ -31,14 +44,17 @@ const Login = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (res.data) {
         localStorage.setItem('userId', res.data.id);
-        alert('Googleアカウントでログインしました');
-        window.location.href = '/';
+        showFlashMessage('Googleアカウントでログインしました', 'success');
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
       }
     } catch (error) {
-      alert('ログイン中にエラーが発生しました');
+      showFlashMessage('パスワードを再入力してください', 'error');
     }
   };
 
@@ -63,18 +79,19 @@ const Login = () => {
         const userId = res.data.user.id;
         localStorage.setItem('userId', userId);
 
-        alert('ログインに成功しました');
-        
-        // ホームページへのリダイレクトとリロードの処理(アイコンの色を変更するため)
-        window.location.href = '/';
+        showFlashMessage('ログインに成功しました', 'success');
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
       } else {
-        alert('ログインに失敗しました');
+        showFlashMessage('ログインに失敗しました', 'error');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
-        alert(`ログイン中にエラーが発生しました: ${error.response.data.errors.join(', ')}`);
+        showFlashMessage(`ログインに失敗しました: ${error.response.data.errors.join(', ')}`, 'error');
       } else {
-        alert('ログイン中にエラーが発生しました');
+        showFlashMessage('パスワードを再入力してください', 'error');
       }
     }
   };
@@ -85,6 +102,11 @@ const Login = () => {
 
   return (
     <div className="custom-login-container">
+      {flashMessage && (
+        <div className={`flash-message ${flashMessage.type}`}>
+          {flashMessage.message}
+        </div>
+      )}
       <h2>ログイン</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="custom-login-form">
         <div>
@@ -105,13 +127,13 @@ const Login = () => {
         </div>
         <button type="submit">ログイン</button>
       </form>
-      
+
       {/* Googleログインボタン */}
       <div className="social-login">
         <p className="or-divider">または</p>
         <GoogleLoginButton />
       </div>
-      
+
       <button onClick={goToSignUp} className="signup-button">新規登録</button>
       <div className="forgot-password-link">
         <a href="/forgot-password">パスワードをお忘れですか？</a>
