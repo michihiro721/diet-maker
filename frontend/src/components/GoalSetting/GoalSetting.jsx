@@ -57,6 +57,7 @@ const GoalSetting = () => {
         }
       }
     } catch (error) {
+      console.error('目標データの取得中にエラーが発生しました:', error);
     }
   };
 
@@ -116,35 +117,27 @@ const GoalSetting = () => {
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
 
       if (existingGoal && existingGoal.user_id === userId) {
-        try {
-          response = await axios.put(
-            `${apiUrl}/goals/${existingGoal.id}`, 
-            { goal: goalData },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              }
+        response = await axios.put(
+          `${apiUrl}/goals/${existingGoal.id}`,
+          { goal: goalData },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
             }
-          );
-        } catch (updateError) {
-          throw updateError;
-        }
+          }
+        );
       } else {
-        try {
-          response = await axios.post(
-            `${apiUrl}/goals`, 
-            { goal: goalData },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              }
+        response = await axios.post(
+          `${apiUrl}/goals`,
+          { goal: goalData },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
             }
-          );
-        } catch (createError) {
-          throw createError;
-        }
+          }
+        );
       }
 
       if (response.status >= 200 && response.status < 300) {
