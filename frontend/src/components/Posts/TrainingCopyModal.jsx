@@ -80,7 +80,7 @@ const TrainingCopyModal = ({ isOpen, onClose, trainingData }) => {
         };
       });
 
-      const response = await api.post('/trainings', { training: trainingsArray }, config);
+      await api.post('/trainings', { training: trainingsArray }, config);
 
       setSuccessMessage(`${formattedDate}にトレーニングメニューを保存しました`);
       setIsSaving(false);
