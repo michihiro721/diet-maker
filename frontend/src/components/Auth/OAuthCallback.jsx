@@ -15,7 +15,7 @@ const OAuthCallback = () => {
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        const authStarted = sessionStorage.getItem('auth_started');
+        sessionStorage.getItem('auth_started');
 
         const params = new URLSearchParams(location.search);
         const token = params.get('token');
@@ -57,14 +57,11 @@ const OAuthCallback = () => {
             localStorage.setItem('userId', userId);
           }
         } catch (apiError) {
-
           localStorage.setItem('jwt', token);
           localStorage.setItem('userId', userId);
         }
 
-
         setTimeout(() => {
-
           navigate('/', { replace: true });
         }, 1000);
       } catch (err) {

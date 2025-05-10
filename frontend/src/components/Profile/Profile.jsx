@@ -66,7 +66,7 @@ const Profile = () => {
     }
 
     try {
-      const res = await axios.put(`${API_BASE_URL}/users/${userId}`, {
+      await axios.put(`${API_BASE_URL}/users/${userId}`, {
         user: {
           name: newNickname
         }

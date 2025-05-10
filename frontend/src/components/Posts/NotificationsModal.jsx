@@ -105,6 +105,7 @@ const NotificationsModal = () => {
                     allUsers[likeUserId] = userName;
                   }
                 } catch (userErr) {
+                  console.error(`ユーザー情報の取得中にエラーが発生しました (ID: ${likeUserId}):`, userErr);
                 }
               }
 
@@ -123,6 +124,7 @@ const NotificationsModal = () => {
 
               allNotifications.push(notification);
             } catch (err) {
+              console.error('いいね通知の処理中にエラーが発生しました:', err);
             }
           }
         }

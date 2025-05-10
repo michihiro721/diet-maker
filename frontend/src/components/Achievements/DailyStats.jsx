@@ -34,9 +34,10 @@ const DailyStats = ({ userId, selectedDate }) => {
             date: selectedDate
           }
         });
-        
+
         setTrainingData(response.data);
       } catch (error) {
+        console.error('トレーニングデータの取得中にエラーが発生しました:', error);
       }
     };
     if (userId && selectedDate) {
@@ -210,7 +211,8 @@ const DailyStats = ({ userId, selectedDate }) => {
       let finalContent = `【${selectedDate}】 ${postContent.trim()}`;
 
       const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://diet-maker-d07eb3099e56.herokuapp.com';
-      const response = await axios.post(`${apiUrl}/posts`, {
+
+      await axios.post(`${apiUrl}/posts`, {
         post: {
           content: finalContent
         }
@@ -341,7 +343,7 @@ const DailyStats = ({ userId, selectedDate }) => {
                   </div>
                 )}
               </div>
-              
+
               <div className="share-form-group">
                 <label htmlFor="post-content">コメント (任意)</label>
                 <textarea
@@ -354,7 +356,7 @@ const DailyStats = ({ userId, selectedDate }) => {
                 />
                 <div className="share-form-note">※選択した日付のトレーニング記録が自動的に含まれます</div>
               </div>
-              
+
               {/* シェアボタンモーダル Safari対応のために記載 */}
               <div
                 onClick={!isPosting ? handleSubmitPost : undefined}
@@ -381,7 +383,7 @@ const DailyStats = ({ userId, selectedDate }) => {
               >
                 {isPosting ? '投稿中...' : '投稿'}
               </div>
-              
+
               {postSuccess && (
                 <div className="share-success-message">
                   {alert('投稿が完了しました！')}
