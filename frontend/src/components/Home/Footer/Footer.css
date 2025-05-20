@@ -400,12 +400,32 @@ color: #A7C7F7;
     align-items: center;
     gap: 15px;
   }
-  
+
   .modal-buttons button {
-    width: 85%;
+    width: 75%;
+    font-size: 14px;
+    padding: 10px 0;
   }
-  
+
   .btn-login {
-    width: 85%;
+    width: 75%;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .modal-content h2 {
+    font-size: 20px;
+  }
+
+  .modal-content h3 {
+    font-size: 17px;
+  }
+
+  .welcome-description {
+    font-size: 14px;
+  }
+
+  .footer-nav-item {
+    font-size: 11px;
   }
 }
