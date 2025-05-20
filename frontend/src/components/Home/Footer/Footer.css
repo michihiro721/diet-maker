@@ -8,7 +8,7 @@
     width: 100%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 .footer-content {
@@ -24,7 +24,7 @@
     align-items: center;
     color: white;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     padding: 5px 0;
     transition: color 0.3s ease;
     width: 20%;
