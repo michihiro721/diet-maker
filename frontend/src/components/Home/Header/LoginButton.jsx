@@ -9,16 +9,20 @@ const LoginButton = () => {
 
   const checkLoginStatus = () => {
     const userId = localStorage.getItem('userId');
-    setIsLoggedIn(userId !== null);
+    const googleToken = localStorage.getItem('googleToken') || sessionStorage.getItem('googleToken');
+    setIsLoggedIn(userId !== null || googleToken !== null);
   };
 
   useEffect(() => {
     checkLoginStatus();
     window.addEventListener('storage', checkLoginStatus);
     window.addEventListener('loginStateChanged', checkLoginStatus);
+    window.addEventListener('googleLoginStateChanged', checkLoginStatus);
+
     return () => {
       window.removeEventListener('storage', checkLoginStatus);
       window.removeEventListener('loginStateChanged', checkLoginStatus);
+      window.removeEventListener('googleLoginStateChanged', checkLoginStatus);
     };
   }, []);
 
@@ -37,7 +41,7 @@ const LoginButton = () => {
         onClick={toggleMenu}
       >
         {isLoggedIn
-          ? <i className={`fa-solid fa-user user-logged-in`}></i>
+          ? <i className="fa-solid fa-user user-logged-in"></i>
           : <FaSignInAlt className="fa-user" />}
       </button>
       {isMenuOpen && <LoginModal closeMenu={closeMenu} />}
