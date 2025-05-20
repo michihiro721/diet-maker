@@ -20,13 +20,12 @@ import Privacy from './components/Privacy/Privacy';
 import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
 import OAuthCallback from './components/Auth/OAuthCallback';
-import Resources from './components/Resources';
 import Profile from './components/Profile/Profile';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword';
 import './index.css';
 
-// トークンをチェックして、24時間以上経過している場合は強制ログアウト（セキュリティー）
+// トークンをチェックして、24時間以上経過している場合は強制ログアウト（セキュリティーの観点）
 const TokenChecker = () => {
   const navigate = useNavigate();
   const tokenCheckPerformed = useRef(false);
@@ -108,7 +107,6 @@ const AppWithTokenChecker = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/oauth/callback" element={<OAuthCallback />} />
-          <Route path="/resources" element={<Resources />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
