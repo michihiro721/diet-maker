@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaDumbbell, FaWeight, FaFire, FaTrophy, FaUsers, FaArrowRight, FaSignInAlt } from 'react-icons/fa';
+import {
+  FaDumbbell,
+  FaWeight,
+  FaTrophy,
+  FaUsers,
+  FaArrowRight,
+  FaSignInAlt,
+  FaAppleAlt,
+  FaRunning
+} from 'react-icons/fa';
 import './Footer.css';
 
 function Footer() {
@@ -9,13 +18,13 @@ function Footer() {
   const location = useLocation();
 
   useEffect(() => {
-  if (location.pathname === '/' && !localStorage.getItem('userId')) {
-    const timer = setTimeout(() => setShowModal(true), 500);
-    return () => clearTimeout(timer);
-  } else {
-    setShowModal(false);
-  }
-}, [location.pathname]);
+    if (location.pathname === '/' && !localStorage.getItem('userId')) {
+      const timer = setTimeout(() => setShowModal(true), 500);
+      return () => clearTimeout(timer);
+    } else {
+      setShowModal(false);
+    }
+  }, [location.pathname]);
 
   const handleNavigation = (path) => {
     setShowModal(false);
@@ -27,13 +36,26 @@ function Footer() {
       {showModal && (
         <div className="modal-overlay welcome-modal">
           <div className="modal-content">
-            <div className="welcome-icon">
-              <FaDumbbell className="pulse-animation" />
+            <div className="welcome-animation">
+              <div className="icon-circle">
+                {/* 体重アイコン */}
+                <FaWeight className="animated-icon weight-icon" />
+                {/* 食事アイコン */}
+                <FaAppleAlt className="animated-icon apple-icon" />
+                {/* トレーニングアイコン */}
+                <FaDumbbell className="animated-icon dumbbell-orbit-icon" />
+                {/* ランニングアイコン */}
+                <FaRunning className="animated-icon running-icon" />
+                {/* ダンベルのロゴ */}
+                <div className="diet-maker-logo">
+                  <FaDumbbell className="dumbbell-icon" />
+                </div>
+              </div>
             </div>
             <h2>この度はご利用頂き<br />ありがとうございます！</h2>
             <h3>アプリの使い方を確認しますか？</h3>
             <p className="welcome-description">
-              簡単な使い方ガイドを見て、<br />アプリの機能を最大限に活用しましょう🎉
+              簡単な使い方ガイドを見て、<br />アプリの機能を最大限に活用しましょう✨
             </p>
             <div className="modal-buttons">
               <button
@@ -71,7 +93,7 @@ function Footer() {
 
           {/* カロリー関係のリンク */}
           <Link to="/calorie-info" className="footer-nav-item">
-            <FaFire className="footer-icon" />
+            <FaAppleAlt className="footer-icon" />
             <span>カロリー</span>
           </Link>
 
