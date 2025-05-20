@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaWeight, FaFire, FaTrophy, FaUsers } from 'react-icons/fa';
+import { FaDumbbell, FaWeight, FaFire, FaTrophy, FaUsers } from 'react-icons/fa';
 import './Footer.css';
 
 function Footer() {
@@ -19,10 +19,10 @@ function Footer() {
           <span>カロリー</span>
         </Link>
         
-        {/* ホーム画面のリンク */}
+        {/* トレーニング画面のリンク */}
         <Link to="/" className="footer-nav-item">
-          <FaHome className="footer-icon" />
-          <span>ホーム</span>
+          <FaDumbbell className="footer-icon" />
+          <span>トレーニング</span>
         </Link>
         
         {/* 成果のリンク */}
