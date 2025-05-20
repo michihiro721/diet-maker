@@ -34,8 +34,8 @@ function Footer() {
   return (
     <>
       {showModal && (
-        <div className="modal-overlay welcome-modal">
-          <div className="modal-content">
+        <div className="welcome-modal-overlay welcome-modal">
+          <div className="welcome-modal-content">
             <div className="welcome-animation">
               <div className="icon-circle">
                 {/* 体重アイコン */}
@@ -52,12 +52,12 @@ function Footer() {
                 </div>
               </div>
             </div>
-            <h2>この度はご利用頂き<br />ありがとうございます！</h2>
+            <h2>「ダイエットメーカー」をご利用頂き<br />ありがとうございます！</h2>
             <h3>アプリの使い方を確認しますか？</h3>
             <p className="welcome-description">
               簡単な使い方ガイドを見て、<br />アプリの機能を最大限に活用しましょう✨
             </p>
-            <div className="modal-buttons">
+            <div className="welcome-modal-buttons">
               <button
                 onClick={() => handleNavigation('/app-usage')}
                 className="btn-primary"

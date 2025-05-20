@@ -40,7 +40,7 @@
 }
 
 /* ウェルカムモーダルのスタイル */
-.modal-overlay {
+.welcome-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -54,7 +54,7 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal-content {
+.welcome-modal-content {
   background-color: white;
   padding: 35px 25px;
   border-radius: 15px;
@@ -67,19 +67,20 @@
   animation: slideUp 0.4s ease-out;
 }
 
-.modal-content h2 {
+.welcome-modal-content h2 {
   font-size: 26px;
   margin: 0 0 20px 0;
   color: #5D9CEC;
   font-weight: bold;
 }
 
-.modal-content h3 {
+.welcome-modal-content h3 {
   font-size: 22px;
   margin: 0 0 15px 0;
   font-weight: normal;
   white-space: nowrap;
   letter-spacing: 0.5px;
+font-weight: bold;
 }
 
 .welcome-description {
@@ -92,14 +93,14 @@
   margin-right: auto;
 }
 
-.modal-buttons {
+.welcome-modal-buttons {
   display: flex;
   justify-content: center;
   gap: 25px;
   margin-top: 25px;
 }
 
-.modal-buttons button {
+.welcome-modal-buttons button {
   padding: 14px 0;
   width: 210px;
   border: none;
@@ -395,13 +396,13 @@ color: #A7C7F7;
 }
 
 @media screen and (max-width: 480px) {
-  .modal-buttons {
+  .welcome-modal-buttons {
     flex-direction: column;
     align-items: center;
     gap: 15px;
   }
 
-  .modal-buttons button {
+  .welcome-modal-buttons button {
     width: 75%;
     font-size: 14px;
     padding: 10px 0;
@@ -413,11 +414,11 @@ color: #A7C7F7;
     padding: 10px 0;
   }
 
-  .modal-content h2 {
+  .welcome-modal-content h2 {
     font-size: 20px;
   }
 
-  .modal-content h3 {
+  .welcome-modal-content h3 {
     font-size: 17px;
   }
 
