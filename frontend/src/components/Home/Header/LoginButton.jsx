@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
 import LoginModal from "./LoginModal";
-import { FaSignInAlt } from "react-icons/fa";
 import "./styles/LoginButton.css";
 
 const LoginButton = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+
   const checkLoginStatus = () => {
     const userId = localStorage.getItem('userId');
-    const googleToken = localStorage.getItem('googleToken') || sessionStorage.getItem('googleToken');
-    setIsLoggedIn(userId !== null || googleToken !== null);
+    setIsLoggedIn(userId !== null);
   };
 
   useEffect(() => {
     checkLoginStatus();
+
     window.addEventListener('storage', checkLoginStatus);
+
     window.addEventListener('loginStateChanged', checkLoginStatus);
-    window.addEventListener('googleLoginStateChanged', checkLoginStatus);
 
     return () => {
       window.removeEventListener('storage', checkLoginStatus);
       window.removeEventListener('loginStateChanged', checkLoginStatus);
-      window.removeEventListener('googleLoginStateChanged', checkLoginStatus);
     };
   }, []);
 
@@ -40,9 +39,7 @@ const LoginButton = () => {
         className="header-login-button"
         onClick={toggleMenu}
       >
-        {isLoggedIn
-          ? <i className="fa-solid fa-user user-logged-in"></i>
-          : <FaSignInAlt className="fa-user" />}
+        <i className={`fa-solid fa-user ${isLoggedIn ? 'user-logged-in' : ''}`}></i>
       </button>
       {isMenuOpen && <LoginModal closeMenu={closeMenu} />}
     </div>
