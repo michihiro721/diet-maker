@@ -579,7 +579,7 @@ const TrainingRecord = () => {
               currentExercise={training.exercise}
               isAerobic={aerobicExercises.includes(training.exercise)}
             />
-            <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>トレーニング削除</button>
+            <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>種目を削除</button>
           </div>
         ))
       ) : (
