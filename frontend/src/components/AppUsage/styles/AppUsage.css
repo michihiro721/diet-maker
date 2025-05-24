@@ -14,6 +14,7 @@
     font-size: 2.5rem;
     color: #3a86ff;
     margin-bottom: 10px;
+    margin-top: 0;
     line-height: 1.2;
   }
   
@@ -305,6 +306,21 @@
     background-color: #2a75e6;
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(58, 134, 255, 0.4);
+  }
+
+
+  .video-section {
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .usage-video {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   @media (max-width: 480px) {
