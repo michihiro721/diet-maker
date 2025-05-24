@@ -184,6 +184,19 @@ const AppUsage = () => {
       <header className="app-usage-header">
         <h1 className="app-usage-title">ダイエットメーカーの使い方</h1>
         <p className="app-usage-subtitle">アプリの使い方や機能についての説明</p>
+
+        {/* 動画 */}
+        <div className="video-section">
+          <video
+            className="usage-video"
+            controls
+            preload="metadata"
+          >
+            <source src="/videos/diet-maker-usage.mp4" type="video/mp4" />
+            お使いのブラウザは動画の再生に対応していません。
+          </video>
+        </div>
+
         <p className="app-usage-subtitle-recommendation">アプリへのアクセスを良くするために、スマホのホーム画面に追加することを強くお勧めします！</p>
       </header>
 
