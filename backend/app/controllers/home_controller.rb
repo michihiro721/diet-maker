@@ -3,11 +3,13 @@ class HomeController < ActionController::Base
   before_action :set_default_ogp
   
   def index
+    Rails.logger.info "HomeController#index called"
     set_default_ogp
     render layout: 'application'
   end
   
   def show_training
+    Rails.logger.info "HomeController#show_training called with id: #{params[:id]}, date: #{params[:date]}"
     @training_id = params[:id]
     @date = params[:date]
 
@@ -16,6 +18,7 @@ class HomeController < ActionController::Base
   end
   
   def show_post
+    Rails.logger.info "HomeController#show_post called with id: #{params[:id]}"
     @post_id = params[:id]
     
     begin
@@ -36,6 +39,7 @@ class HomeController < ActionController::Base
   private
   
   def set_default_ogp
+    Rails.logger.info "Setting default OGP"
     @page_title = "ダイエットメーカー"
     @og_title = "ダイエットメーカー"
     @og_description = "トレーニングメニューの提案や記録ができたり、ダイエットをサポートするアプリ"
@@ -46,6 +50,7 @@ class HomeController < ActionController::Base
   
   def set_training_ogp
     begin
+      Rails.logger.info "Setting training OGP for date: #{@date}"
       formatted_date = @date ? Date.parse(@date).strftime("%Y年%m月%d日") : "今日"
       @page_title = "#{formatted_date}のトレーニング記録 - ダイエットメーカー"
       @og_title = "#{formatted_date}のトレーニング記録"
@@ -53,6 +58,7 @@ class HomeController < ActionController::Base
       @og_image = "#{request.protocol}#{request.host_with_port}/post-ogp.jpg"
       @og_type = "article"
       @og_url = request.original_url
+      Rails.logger.info "Training OGP set: #{@og_title}"
     rescue => e
       Rails.logger.error "Date parse error: #{e.message}"
 
@@ -66,6 +72,7 @@ class HomeController < ActionController::Base
   end
   
   def set_post_ogp
+    Rails.logger.info "Setting post OGP"
     if @post && @post.user
       @page_title = "#{@post.user.name}さんの投稿 - ダイエットメーカー"
       @og_title = "#{@post.user.name}さんの投稿"
@@ -73,6 +80,7 @@ class HomeController < ActionController::Base
       @og_image = "#{request.protocol}#{request.host_with_port}/post-ogp.jpg"
       @og_type = "article"
       @og_url = request.original_url
+      Rails.logger.info "Post OGP set: #{@og_title}"
     else
       set_default_ogp
     end

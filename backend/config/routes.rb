@@ -58,7 +58,7 @@ Rails.application.routes.draw do
     resources :likes, only: [ :create ]
   end
 
-  # OGP設定
+  # OGP
   get "/training-details/:id", to: "home#show_training", constraints: ->(request) {
     request.format.html?
   }
@@ -70,11 +70,12 @@ Rails.application.routes.draw do
   # パスワードリセット用のルート
   get "reset-password/:token", to: "home#index"
 
+
+  root "home#index"
+
+
   get "*path", to: "home#index", constraints: ->(request) {
     !request.xhr? && request.format.html? &&
-    !request.path.start_with?("/auth/", "/users/auth/", "/cable")
+    !request.path.start_with?("/auth/", "/users/auth/", "/cable", "/training-details/", "/posts/")
   }
-
-  # ルートパスを設定
-  root "home#index"
 end
