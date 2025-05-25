@@ -12,14 +12,14 @@
     <meta property="og:title" content="ダイエットメーカー" />
     <meta property="og:description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
     <meta property="og:image" content="https://diet-maker.jp/post-ogp.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:url" content="https://diet-maker.jp/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ダイエットメーカー" />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@diet_maker" />
-    <meta name="twitter:creator" content="@diet_maker" />
     <meta name="twitter:title" content="ダイエットメーカー" />
     <meta name="twitter:description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
     <meta name="twitter:image" content="https://diet-maker.jp/post-ogp.jpg" />
@@ -56,7 +56,6 @@
 
     <!-- 動的OGP（ブラウザ用） -->
     <script>
-      // ページ読み込み時にOGPを動的に設定
       document.addEventListener('DOMContentLoaded', function() {
         const currentPath = window.location.pathname;
         const currentSearch = window.location.search;
@@ -67,7 +66,6 @@
         let image = 'https://diet-maker.jp/post-ogp.jpg';
         let type = 'website';
         
-        // トレーニング詳細ページの場合
         if (currentPath.includes('/training-details/')) {
           const urlParams = new URLSearchParams(currentSearch);
           const date = urlParams.get('date');
@@ -89,21 +87,12 @@
           type = 'article';
         }
         
-        // 投稿詳細ページの場合
         else if (currentPath.includes('/posts/')) {
           title = '投稿詳細 - ダイエットメーカー';
           description = 'ダイエットメーカーでの投稿をチェック！みんなのトレーニング記録を見てみよう。';
           type = 'article';
         }
         
-
-        else if (currentPath.includes('/profile/')) {
-          title = 'ユーザープロフィール - ダイエットメーカー';
-          description = 'ダイエットメーカーでのユーザープロフィールをチェック！';
-          type = 'profile';
-        }
-        
-
         function updateMetaTag(property, content) {
           const tag = document.querySelector(`meta[property="${property}"]`);
           if (tag) tag.setAttribute('content', content);
@@ -114,28 +103,23 @@
           if (tag) tag.setAttribute('content', content);
         }
         
-
         document.title = title;
         
-
         updateMetaTag('og:title', title);
         updateMetaTag('og:description', description);
         updateMetaTag('og:image', image);
         updateMetaTag('og:url', currentUrl);
         updateMetaTag('og:type', type);
         
-
         updateTwitterTag('twitter:title', title);
         updateTwitterTag('twitter:description', description);
         updateTwitterTag('twitter:image', image);
         
-
         const descTag = document.querySelector('meta[name="description"]');
         if (descTag) descTag.setAttribute('content', description);
       });
     </script>
 
-    <!-- iOS向けの追加対策 -->
     <script>
       document.addEventListener('gesturestart', function(e) {
         e.preventDefault();
