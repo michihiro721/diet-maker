@@ -52,11 +52,6 @@ Rails.application.routes.draw do
   resources :steps, only: [ :index, :create ]
   resources :intake_calories, only: [ :index, :create ]
 
-  # OGP用のルート
-  get "/posts/:id", to: "home#show_post", constraints: ->(request) {
-    request.format.html?
-  }
-
   # 投稿、コメント、いいね機能のルート
   resources :posts do
     resources :comments, only: [ :create, :destroy ]
