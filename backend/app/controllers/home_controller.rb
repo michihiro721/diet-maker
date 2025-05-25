@@ -11,18 +11,7 @@ class HomeController < ActionController::Base
     @training_id = params[:id]
     @date = params[:date]
 
-    begin
-      @training = Training.find_by(id: @training_id)
-      if @training
-        set_training_ogp
-      else
-        set_default_ogp
-      end
-    rescue => e
-      Rails.logger.error "Training not found: #{e.message}"
-      set_default_ogp
-    end
-    
+    set_training_ogp
     render layout: 'application'
   end
   
@@ -56,13 +45,24 @@ class HomeController < ActionController::Base
   end
   
   def set_training_ogp
-    formatted_date = @date ? Date.parse(@date).strftime("%Y年%m月%d日") : "今日"
-    @page_title = "#{formatted_date}のトレーニング記録 - ダイエットメーカー"
-    @og_title = "#{formatted_date}のトレーニング記録"
-    @og_description = "ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。"
-    @og_image = "#{request.protocol}#{request.host_with_port}/post-ogp.jpg"
-    @og_type = "article"
-    @og_url = request.original_url
+    begin
+      formatted_date = @date ? Date.parse(@date).strftime("%Y年%m月%d日") : "今日"
+      @page_title = "#{formatted_date}のトレーニング記録 - ダイエットメーカー"
+      @og_title = "#{formatted_date}のトレーニング記録"
+      @og_description = "ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。"
+      @og_image = "#{request.protocol}#{request.host_with_port}/post-ogp.jpg"
+      @og_type = "article"
+      @og_url = request.original_url
+    rescue => e
+      Rails.logger.error "Date parse error: #{e.message}"
+
+      @page_title = "トレーニング記録 - ダイエットメーカー"
+      @og_title = "トレーニング記録"
+      @og_description = "ダイエットメーカーでのトレーニング記録をチェック！"
+      @og_image = "#{request.protocol}#{request.host_with_port}/post-ogp.jpg"
+      @og_type = "article"
+      @og_url = request.original_url
+    end
   end
   
   def set_post_ogp
