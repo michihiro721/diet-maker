@@ -54,10 +54,13 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   
+  <% begin %>
+    <% index_content = File.read(Rails.root.join('public', 'index.html')) %>
+    <% script_tags = index_content.scan(/<script[^>]*src="[^"]*"[^>]*><\/script>/).join %>
+    <%= raw script_tags %>
+  <% rescue %>
 
-  <% index_content = File.read(Rails.root.join('public', 'index.html')) %>
-  <% script_tags = index_content.scan(/<script[^>]*src="[^"]*"[^>]*><\/script>/).join %>
-  <%= raw script_tags %>
+  <% end %>
   
   <script>
     document.addEventListener('gesturestart', function(e) {
