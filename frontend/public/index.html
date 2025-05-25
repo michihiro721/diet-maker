@@ -54,6 +54,77 @@
       }
     </style>
 
+    <!-- 動的OGP -->
+    <script>
+      // ページ読み込み時にOGPを動的に設定
+      document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const currentSearch = window.location.search;
+        const currentUrl = window.location.href;
+        
+        let title = 'ダイエットメーカー';
+        let description = 'トレーニングメニューの提案や記録ができたり、ダイエットをサポートするアプリ';
+        let image = 'https://diet-maker.jp/default-ogp.jpg';
+        let type = 'website';
+        
+        // トレーニング詳細ページの場合
+        if (currentPath.includes('/training-details/')) {
+          const urlParams = new URLSearchParams(currentSearch);
+          const date = urlParams.get('date');
+          
+          if (date) {
+            const dateObj = new Date(date);
+            const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+            title = `${formattedDate}のトレーニング記録 - ダイエットメーカー`;
+            description = `ダイエットメーカーでの${formattedDate}のトレーニング記録をチェック！継続的な健康管理をサポートします。`;
+          } else {
+            title = 'トレーニング記録 - ダイエットメーカー';
+            description = 'ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。';
+          }
+          image = 'https://diet-maker.jp/post-ogp.jpg';
+          type = 'article';
+        }
+        
+        // 投稿詳細ページの場合
+        else if (currentPath.includes('/posts/')) {
+          title = '投稿詳細 - ダイエットメーカー';
+          description = 'ダイエットメーカーでの投稿をチェック！みんなのトレーニング記録を見てみよう。';
+          image = 'https://diet-maker.jp/post-ogp.jpg';
+          type = 'article';
+        }
+        
+
+        function updateMetaTag(property, content) {
+          const tag = document.querySelector(`meta[property="${property}"]`);
+          if (tag) tag.setAttribute('content', content);
+        }
+        
+        function updateTwitterTag(name, content) {
+          const tag = document.querySelector(`meta[name="${name}"]`);
+          if (tag) tag.setAttribute('content', content);
+        }
+        
+
+        document.title = title;
+        
+        // OGP
+        updateMetaTag('og:title', title);
+        updateMetaTag('og:description', description);
+        updateMetaTag('og:image', image);
+        updateMetaTag('og:url', currentUrl);
+        updateMetaTag('og:type', type);
+        
+        // Twitter
+        updateTwitterTag('twitter:title', title);
+        updateTwitterTag('twitter:description', description);
+        updateTwitterTag('twitter:image', image);
+        
+
+        const descTag = document.querySelector('meta[name="description"]');
+        if (descTag) descTag.setAttribute('content', description);
+      });
+    </script>
+
     <!-- iOS向けの追加対策 -->
     <script>
       document.addEventListener('gesturestart', function(e) {
