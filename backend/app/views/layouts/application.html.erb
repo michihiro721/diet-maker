@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="theme-color" content="#000000">
+  
+  <title><%= @page_title || "ダイエットメーカー" %></title>
+  
+  <!-- 基本的なmeta -->
+  <meta name="description" content="<%= @og_description || "トレーニングの管理と記録をサポートする「ダイエットメーカー」" %>">
+  
+  <!-- OGPタグ -->
+  <meta property="og:title" content="<%= @og_title || "ダイエットメーカー" %>">
+  <meta property="og:description" content="<%= @og_description || "トレーニングの管理と記録をサポートする「ダイエットメーカー」" %>">
+  <meta property="og:image" content="<%= @og_image || "#{request.base_url}/default-ogp.jpg" %>">
+  <meta property="og:url" content="<%= request.original_url %>">
+  <meta property="og:type" content="<%= @og_type || "website" %>">
+  <meta property="og:site_name" content="ダイエットメーカー">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= @og_title || "ダイエットメーカー" %>">
+  <meta name="twitter:description" content="<%= @og_description || "トレーニングの管理と記録をサポートする「ダイエットメーカー」" %>">
+  <meta name="twitter:image" content="<%= @og_image || "#{request.base_url}/default-ogp.jpg" %>">
+  
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/logo192.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5KQHY7KT0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W5KQHY7KT0');
+  </script>
+  
+  <style>
+    html, body {
+      touch-action: manipulation;
+      overscroll-behavior: none;
+      -webkit-text-size-adjust: 100%;
+      -webkit-touch-callout: none;
+    }
+    * { 
+      touch-action: pan-x pan-y;
+    }
+  </style>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  
+
+  <% index_content = File.read(Rails.root.join('public', 'index.html')) %>
+  <% script_tags = index_content.scan(/<script[^>]*src="[^"]*"[^>]*><\/script>/).join %>
+  <%= raw script_tags %>
+  
+  <script>
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>
