@@ -10,19 +10,19 @@
     
     <!-- OGP -->
     <meta property="og:title" content="ダイエットメーカー" />
-    <meta property="og:description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
+    <meta property="og:description" content="ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。" />
     <meta property="og:image" content="https://diet-maker.jp/post-ogp-v2.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:url" content="https://diet-maker.jp/" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="article" />
     <meta property="og:site_name" content="ダイエットメーカー" />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ダイエットメーカー" />
-    <meta name="twitter:description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
+    <meta name="twitter:description" content="ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。" />
     <meta name="twitter:image" content="https://diet-maker.jp/post-ogp-v2.jpg" />
     <meta name="twitter:image:alt" content="ダイエットメーカーのロゴ" />
 
@@ -49,27 +49,18 @@
         -webkit-text-size-adjust: 100%;
         -webkit-touch-callout: none;
       }
-      /* iOSのダブルタップズームを防止 */
       * { 
         touch-action: pan-x pan-y;
       }
     </style>
 
-    <!-- 動的OGP -->
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const currentPath = window.location.pathname;
         const currentSearch = window.location.search;
-        const currentUrl = window.location.href;
-        
-        const urlHash = btoa(currentPath + currentSearch).slice(0, 8);
-        const timestamp = Math.floor(Date.now() / 86400000); // 日単位
         
         let title = 'ダイエットメーカー';
-        let description = 'トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。';
-        let image = `https://diet-maker.jp/post-ogp-v2.jpg?v=${timestamp}&h=${urlHash}`;
-        let ogUrl = `${currentUrl}${currentUrl.includes('?') ? '&' : '?'}ogp=${timestamp}`;
-        let type = 'website';
         
         if (currentPath.includes('/training-details/')) {
           const urlParams = new URLSearchParams(currentSearch);
@@ -80,78 +71,17 @@
               const dateObj = new Date(date);
               const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
               title = `${formattedDate}のトレーニング記録 - ダイエットメーカー`;
-              description = `ダイエットメーカーでの${formattedDate}のトレーニング記録をチェック！継続的な健康管理をサポートします。`;
             } catch (e) {
               title = 'トレーニング記録 - ダイエットメーカー';
-              description = 'ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。';
             }
           } else {
             title = 'トレーニング記録 - ダイエットメーカー';
-            description = 'ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。';
           }
-          type = 'article';
-        }
-        
-        else if (currentPath.includes('/posts/')) {
+        } else if (currentPath.includes('/posts/')) {
           title = '投稿詳細 - ダイエットメーカー';
-          description = 'ダイエットメーカーでの投稿をチェック！みんなのトレーニング記録を見てみよう。';
-          type = 'article';
         }
-        
-        function updateMetaTag(property, content) {
-          let tag = document.querySelector(`meta[property="${property}"]`);
-          if (tag) {
-            tag.setAttribute('content', content);
-          } else {
-
-            tag = document.createElement('meta');
-            tag.setAttribute('property', property);
-            tag.setAttribute('content', content);
-            document.head.appendChild(tag);
-          }
-        }
-        
-        function updateTwitterTag(name, content) {
-          let tag = document.querySelector(`meta[name="${name}"]`);
-          if (tag) {
-            tag.setAttribute('content', content);
-          } else {
-
-            tag = document.createElement('meta');
-            tag.setAttribute('name', name);
-            tag.setAttribute('content', content);
-            document.head.appendChild(tag);
-          }
-        }
-        
 
         document.title = title;
-        
-        // OGPタグを更新
-        updateMetaTag('og:title', title);
-        updateMetaTag('og:description', description);
-        updateMetaTag('og:image', image);
-        updateMetaTag('og:url', ogUrl);
-        updateMetaTag('og:type', type);
-        
-        // Twitterタグを更新
-        updateTwitterTag('twitter:title', title);
-        updateTwitterTag('twitter:description', description);
-        updateTwitterTag('twitter:image', image);
-        
-
-        let descTag = document.querySelector('meta[name="description"]');
-        if (descTag) {
-          descTag.setAttribute('content', description);
-        }
-        
-        // デバッグ用ログ
-        console.log('OGP Updated:', {
-          title: title,
-          image: image,
-          url: ogUrl,
-          type: type
-        });
       });
     </script>
 
