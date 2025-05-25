@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="theme-color" content="#000000" />
 
-    <meta name="description" content="トレーニングメニューの提案と記録をサポートする「ダイエットメーカー」" />
+    <meta name="description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
     
-    <!-- OGPタグ -->
+    <!-- OGP -->
     <meta property="og:title" content="ダイエットメーカー" />
-    <meta property="og:description" content="トレーニングメニューの提案や記録ができたり、ダイエットをサポートするアプリ" />
-    <meta property="og:image" content="https://diet-maker.jp/default-ogp.jpg" />
+    <meta property="og:description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
+    <meta property="og:image" content="https://diet-maker.jp/post-ogp.jpg" />
     <meta property="og:url" content="https://diet-maker.jp/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ダイエットメーカー" />
@@ -21,8 +21,8 @@
     <meta name="twitter:site" content="@diet_maker" />
     <meta name="twitter:creator" content="@diet_maker" />
     <meta name="twitter:title" content="ダイエットメーカー" />
-    <meta name="twitter:description" content="トレーニングメニューの提案と記録をサポートする「ダイエットメーカー」" />
-    <meta name="twitter:image" content="https://diet-maker.jp/default-ogp.jpg" />
+    <meta name="twitter:description" content="トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。" />
+    <meta name="twitter:image" content="https://diet-maker.jp/post-ogp.jpg" />
     <meta name="twitter:image:alt" content="ダイエットメーカーのロゴ" />
 
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
@@ -54,7 +54,7 @@
       }
     </style>
 
-    <!-- 動的OGP -->
+    <!-- 動的OGP（ブラウザ用） -->
     <script>
       // ページ読み込み時にOGPを動的に設定
       document.addEventListener('DOMContentLoaded', function() {
@@ -63,8 +63,8 @@
         const currentUrl = window.location.href;
         
         let title = 'ダイエットメーカー';
-        let description = 'トレーニングメニューの提案や記録ができたり、ダイエットをサポートするアプリ';
-        let image = 'https://diet-maker.jp/default-ogp.jpg';
+        let description = 'トレーニングの記録や投稿をチェック！継続的な健康管理をサポートします。';
+        let image = 'https://diet-maker.jp/post-ogp.jpg';
         let type = 'website';
         
         // トレーニング詳細ページの場合
@@ -73,15 +73,19 @@
           const date = urlParams.get('date');
           
           if (date) {
-            const dateObj = new Date(date);
-            const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
-            title = `${formattedDate}のトレーニング記録 - ダイエットメーカー`;
-            description = `ダイエットメーカーでの${formattedDate}のトレーニング記録をチェック！継続的な健康管理をサポートします。`;
+            try {
+              const dateObj = new Date(date);
+              const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+              title = `${formattedDate}のトレーニング記録 - ダイエットメーカー`;
+              description = `ダイエットメーカーでの${formattedDate}のトレーニング記録をチェック！継続的な健康管理をサポートします。`;
+            } catch (e) {
+              title = 'トレーニング記録 - ダイエットメーカー';
+              description = 'ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。';
+            }
           } else {
             title = 'トレーニング記録 - ダイエットメーカー';
             description = 'ダイエットメーカーでのトレーニング記録をチェック！継続的な健康管理をサポートします。';
           }
-          image = 'https://diet-maker.jp/post-ogp.jpg';
           type = 'article';
         }
         
@@ -89,8 +93,14 @@
         else if (currentPath.includes('/posts/')) {
           title = '投稿詳細 - ダイエットメーカー';
           description = 'ダイエットメーカーでの投稿をチェック！みんなのトレーニング記録を見てみよう。';
-          image = 'https://diet-maker.jp/post-ogp.jpg';
           type = 'article';
+        }
+        
+
+        else if (currentPath.includes('/profile/')) {
+          title = 'ユーザープロフィール - ダイエットメーカー';
+          description = 'ダイエットメーカーでのユーザープロフィールをチェック！';
+          type = 'profile';
         }
         
 
@@ -107,14 +117,14 @@
 
         document.title = title;
         
-        // OGP
+
         updateMetaTag('og:title', title);
         updateMetaTag('og:description', description);
         updateMetaTag('og:image', image);
         updateMetaTag('og:url', currentUrl);
         updateMetaTag('og:type', type);
         
-        // Twitter
+
         updateTwitterTag('twitter:title', title);
         updateTwitterTag('twitter:description', description);
         updateTwitterTag('twitter:image', image);
