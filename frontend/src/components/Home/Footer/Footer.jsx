@@ -55,7 +55,7 @@ function Footer() {
             <h2>「ダイエットメーカー」をご利用頂き<br />ありがとうございます！</h2>
             <h3>アプリの使い方を確認しますか？</h3>
             <p className="welcome-description">
-              簡単な使い方ガイドを見て、<br />アプリの機能を最大限に活用しましょう✨
+              新規ユーザーの方 ➡️「確認する」<br />既にご利用中の方 ➡️「ログインする」
             </p>
             <div className="welcome-modal-buttons">
               <button
