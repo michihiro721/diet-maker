@@ -6,7 +6,7 @@
 
 このサービスは、ユーザーの情報（質問）をもとに、ニーズにあった筋トレメニューを提案したり、体重やカロリーを記録して管理できたりと、ダイエットのサポートを目的としたサービス
 
-➡️ [アプリ使い方はこちら（動画あり）](https://diet-maker.jp/app-usage)
+<a href="https://diet-maker.jp/app-usage" target="_blank" rel="noopener noreferrer">➡️ アプリ使い方はこちら（動画あり）</a>
 
 
 ## **■このサービスへの思い・作りたい理由**
