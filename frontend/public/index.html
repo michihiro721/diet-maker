@@ -54,37 +54,6 @@
       }
     </style>
 
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const currentPath = window.location.pathname;
-        const currentSearch = window.location.search;
-        
-        let title = 'ダイエットメーカー';
-        
-        if (currentPath.includes('/training-details/')) {
-          const urlParams = new URLSearchParams(currentSearch);
-          const date = urlParams.get('date');
-          
-          if (date) {
-            try {
-              const dateObj = new Date(date);
-              const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
-              title = `${formattedDate}のトレーニング記録 - ダイエットメーカー`;
-            } catch (e) {
-              title = 'トレーニング記録 - ダイエットメーカー';
-            }
-          } else {
-            title = 'トレーニング記録 - ダイエットメーカー';
-          }
-        } else if (currentPath.includes('/posts/')) {
-          title = '投稿詳細 - ダイエットメーカー';
-        }
-
-        document.title = title;
-      });
-    </script>
-
     <script>
       document.addEventListener('gesturestart', function(e) {
         e.preventDefault();
