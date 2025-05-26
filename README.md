@@ -6,6 +6,11 @@
 
 このサービスは、ユーザーの情報（質問）をもとに、ニーズにあった筋トレメニューを提案したり、体重やカロリーを記録して管理できたりと、ダイエットのサポートを目的としたサービス
 
+<div align="center">
+  <video src="frontend/public/videos/diet-maker-usage.mp4" controls width="600">
+  </video>
+</div>
+
 
 ## **■このサービスへの思い・作りたい理由**
 
