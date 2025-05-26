@@ -60,6 +60,7 @@ const CalorieInfo = () => {
         pointStyle: 'circle',
         pointRadius: 3,
         type: 'bar',
+        hidden: true,
       },
       {
         label: '摂取カロリー',
@@ -71,6 +72,7 @@ const CalorieInfo = () => {
         pointStyle: 'circle',
         pointRadius: 3,
         type: 'bar',
+        hidden: true,
       },
       {
         label: '歩数',
@@ -95,6 +97,7 @@ const CalorieInfo = () => {
         fill: false,
         pointStyle: 'circle',
         pointRadius: 3,
+        hidden: false,
       },
     ],
   });
@@ -292,6 +295,7 @@ const CalorieInfo = () => {
               const found = filteredDailyCaloriesData.find(item => item.date === date);
               return found ? found.value : null;
             }),
+            hidden: true,
           },
           {
             ...prevChartData.datasets[1],
@@ -299,6 +303,7 @@ const CalorieInfo = () => {
               const found = filteredIntakeCaloriesData.find(item => item.date === date);
               return found ? found.value : null;
             }),
+            hidden: true,
           },
           {
             ...prevChartData.datasets[2],
@@ -306,6 +311,7 @@ const CalorieInfo = () => {
               const found = filteredStepsData.find(item => item.date === date);
               return found ? found.value : null;
             }),
+            hidden: true,
           },
           {
             ...prevChartData.datasets[3],
@@ -313,6 +319,7 @@ const CalorieInfo = () => {
               const found = filteredCalorieDifferenceData.find(item => item.date === date);
               return found ? found.value : null;
             }),
+            hidden: false,
           },
         ],
       }));
