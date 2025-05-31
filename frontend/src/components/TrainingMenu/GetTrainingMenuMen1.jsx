@@ -25,20 +25,26 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
         exercises: item.exercises.map((exercise, exerciseIndex) => {
           // 有酸素運動（durationあり）とそれ以外で処理を分ける
           if (exercise.duration) {
+            const exerciseInfo = getExerciseInfo(exercise.name, exercise.workout_id);
             return {
               key: `${itemIndex}-${exerciseIndex}`,
               name: exercise.name,
               duration: exercise.duration,
-              workout_id: exercise.workout_id
+              workout_id: exercise.workout_id,
+              icon: exerciseInfo.icon,
+              tutorialUrl: exerciseInfo.url
             };
           } else {
+            const exerciseInfo = getExerciseInfo(exercise.name, exercise.workout_id);
             return {
               key: `${itemIndex}-${exerciseIndex}`,
               name: exercise.name,
               sets: exercise.sets,
               reps: exercise.reps,
               weight: 0, // 重量は0で初期化
-              workout_id: exercise.workout_id
+              workout_id: exercise.workout_id,
+              icon: exerciseInfo.icon,
+              tutorialUrl: exerciseInfo.url
             };
           }
         })
@@ -46,7 +52,71 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
     });
   };
 
+  // 種目ごとにやり方が載っているサイトのURLを設定
+  const getExerciseInfo = (exerciseName, workoutId) => {
+    const exerciseConfig = {
+      "ベンチプレス": {
+        url: ""
+      },
+      "インクラインダンベルフライ": {
+        url: ""
+      },
+      "ペックフライ": {
+        url: ""
+      },
+      "デットリフト": {
+        url: ""
+      },
+      "ダンベルローイング": {
+        url: ""
+      },
+      "ラットプルダウン": {
+        url: ""
+      },
+      "バーベルスクワット": {
+        url: ""
+      },
+      "レッグプレス": {
+        url: ""
+      },
+      "レッグカール": {
+        url: ""
+      },
+      "ミリタリープレス": {
+        url: ""
+      },
+      "ダンベルショルダープレス": {
+        url: ""
+      },
+      "サイドレイズ": {
+        url: ""
+      },
+      "バーベルカール": {
+        url: ""
+      },
+      "インクラインダンベルカール": {
+        url: ""
+      },
+      "ケーブルプルオーバー": {
+        url: ""
+      },
+      "クランチ": {
+        url: ""
+      },
+      "レッグレイズ": {
+        url: ""
+      }
+    };
 
+    const config = exerciseConfig[exerciseName] || {
+      url: `https://example.com/exercise-tutorial/${workoutId}`
+    };
+
+    return {
+      icon: "FaQuestionCircle",
+      url: config.url
+    };
+  };
 
   // **条件ごとに適切なメニューを決定**
   if (gender === "男性") {

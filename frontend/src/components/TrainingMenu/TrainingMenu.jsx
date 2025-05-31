@@ -16,6 +16,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './styles/TrainingMenu.css';
 import { CalenderFormatShortWeekday, CalenderTileClassName, CalenderTileContent } from "../Home/Body/Calender/Calender";
+import { FaQuestionCircle } from "react-icons/fa";
 
 
 const TrainingMenu = () => {
@@ -81,6 +82,15 @@ const TrainingMenu = () => {
       }
     }
     setMenu(generatedMenu);
+  };
+
+
+  const handleExerciseIconClick = (exercise) => {
+    if (exercise.tutorialUrl) {
+      window.open(exercise.tutorialUrl, '_blank');
+    } else {
+      alert(`${exercise.name}のやり方ページは準備中です。`);
+    }
   };
 
   const handleSaveMenu = async () => {
@@ -226,14 +236,21 @@ const TrainingMenu = () => {
                   <li key={itemIndex} className="training-menu-list-item">
                     <span className="training-menu-day">{item.day}:</span>
                     <ul>
-                    {item.exercises.map((exercise) => (
-                      <li key={exercise.key}>
-                        {exercise.name}
-                        {exercise.duration ?
-                          ` - ${exercise.duration}` :
-                          ` - ${exercise.sets}セット x ${exercise.reps}回`}
-                      </li>
-                    ))}
+                      {item.exercises.map((exercise) => (
+                        <li key={exercise.key} className="training-menu-exercise-item">
+                          <FaQuestionCircle
+                            className="training-menu-exercise-icon"
+                            onClick={() => handleExerciseIconClick(exercise)}
+                            title={`${exercise.name}のやり方を見る`}
+                          />
+                          <span className="training-menu-exercise-details">
+                            {exercise.name}
+                            {exercise.duration ?
+                              ` - ${exercise.duration}` :
+                              ` - ${exercise.sets}セット x ${exercise.reps}回`}
+                          </span>
+                        </li>
+                      ))}
                     </ul>
                   </li>
                 ))}
