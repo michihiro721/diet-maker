@@ -25,25 +25,94 @@ export const getTrainingMenu5Woman = (gender, gymType, frequency, volume) => {
         exercises: item.exercises.map((exercise, exerciseIndex) => {
           // 有酸素運動（durationあり）とそれ以外で処理を分ける
           if (exercise.duration) {
+            const exerciseInfo = getExerciseInfo(exercise.name, exercise.workout_id);
             return {
               key: `${itemIndex}-${exerciseIndex}`,
               name: exercise.name,
               duration: exercise.duration,
-              workout_id: exercise.workout_id
+              workout_id: exercise.workout_id,
+              icon: exerciseInfo.icon,
+              tutorialUrl: exerciseInfo.url
             };
           } else {
+            const exerciseInfo = getExerciseInfo(exercise.name, exercise.workout_id);
             return {
               key: `${itemIndex}-${exerciseIndex}`,
               name: exercise.name,
               sets: exercise.sets,
               reps: exercise.reps,
               weight: 0, // 重量は0で初期化
-              workout_id: exercise.workout_id
+              workout_id: exercise.workout_id,
+              icon: exerciseInfo.icon,
+              tutorialUrl: exerciseInfo.url
             };
           }
         })
       });
     });
+  };
+
+  // 種目ごとにやり方が載っているサイトのURLを設定
+  const getExerciseInfo = (exerciseName, workoutId) => {
+    const exerciseConfig = {
+      "ヒップスラスト": {
+        url: "https://qool.jp/200401"
+      },
+      "ブルガリアンスクワット": {
+        url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
+      },
+      "スクワット": {
+        url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
+      },
+      "ダンベルスクワット": {
+        url: ""
+      },
+      "キックバック": {
+        url: ""
+      },
+      "ダンベルローイング": {
+        url: ""
+      },
+      "バーベルスクワット": {
+        url: ""
+      },
+      "ダンベルショルダープレス": {
+        url: ""
+      },
+      "サイドレイズ": {
+        url: ""
+      },
+      "クランチ": {
+        url: "https://fitrize.jp/crunch/"
+      },
+      "ロシアンツイスト": {
+        url: "https://kekefit.com/russian-twist/"
+      },
+      "懸垂": {
+        url: ""
+      },
+      "レッグレイズ": {
+        url: ""
+      },
+      "腕立て伏せ": {
+        url: "https://nakayamakinnikun.com/blogs/blog/weighttraining-push-up?srsltid=AfmBOoqRZn__h_WqYU81J5wCgYWElmeg4cUDB6l43sqheeWuR4dUDI80"
+      },
+      "ディップス（椅子）": {
+        url: "https://tarzanweb.jp/post-202323"
+      },
+      "ウォーキング": {
+        url: "https://halmek.co.jp/beauty/c/healthr/2987"
+      }
+    };
+
+    const config = exerciseConfig[exerciseName] || {
+      url: `https://example.com/exercise-tutorial/${workoutId}`
+    };
+
+    return {
+      icon: "FaQuestionCircle",
+      url: config.url
+    };
   };
 
   // **条件ごとに適切なメニューを決定**

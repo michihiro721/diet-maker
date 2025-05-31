@@ -115,6 +115,41 @@
   text-align: left;
 }
 
+
+.training-menu-list li ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+
+.training-menu-exercise-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 5px 0;
+}
+
+
+.training-menu-exercise-icon {
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 10px;
+  color: #007bff;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.training-menu-exercise-icon:hover {
+  color: #0056b3;
+  transform: scale(1.1);
+}
+
+.training-menu-exercise-details {
+  flex: 1;
+  font-size: 16px;
+}
+
 /* メニュー曜日 */
 .training-menu-day {
   font-weight: bold;
@@ -184,6 +219,11 @@
 
 .training-menu-save-button:hover {
   background-color: #0056b3;
+}
+
+.training-menu-save-button-disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .training-menu-calendar-modal-overlay,
@@ -305,6 +345,16 @@
   .training-menu-list li ul li {
     font-size: 14px;
   }
+
+
+  .training-menu-exercise-icon {
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
+  .training-menu-exercise-details {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -336,5 +386,16 @@
   .training-menu-list li ul li {
     font-size: 11px;
     line-height: 1.4;
+  }
+
+
+  .training-menu-exercise-icon {
+    font-size: 14px;
+    margin-right: 6px;
+  }
+
+
+  .training-menu-exercise-details {
+    font-size: 11px;
   }
 }
