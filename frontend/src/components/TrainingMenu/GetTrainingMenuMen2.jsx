@@ -56,55 +56,55 @@ export const getTrainingMenu2 = (gender, gymType, frequency, volume) => {
   const getExerciseInfo = (exerciseName, workoutId) => {
     const exerciseConfig = {
       "ベンチプレス": {
-        url: ""
+        url: "https://realworkout.jp/column/training/correctform-benchpress/"
       },
       "インクラインダンベルプレス": {
-        url: ""
+        url: "https://belegend.jp/training/free_weight/dumbbell/10430/"
       },
       "ダンベルフライ": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-fly?srsltid=AfmBOoraUuRdf7uUTDCk0m5UPCWDNgR0-Yhvg3j7LwiyiZ1KlpXEyzu5"
       },
       "デットリフト": {
-        url: ""
+        url: "https://vrtxsports.co.jp/blogs/training/how-to-perform-right-form-of-dead-lift-with-vrtx?srsltid=AfmBOoqCv7S9kl4ST7M8_vIXirgcTvF-5b6c8_LTWHsgXhD8jNqN4--Q"
       },
       "ダンベルローイング": {
-        url: ""
+        url: "https://column.valx.jp/4147/"
       },
       "懸垂": {
-        url: ""
+        url: "https://melos.media/training/42236/"
       },
       "バーベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/barbell-squat?srsltid=AfmBOopNbef7SRgy48K1GHvZ88XfjtFmiX51CYspQHAkOLiYT3MaaNXt"
       },
       "ブルガリアンスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
       },
       "スクワット": {
-        url: ""
+        url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "ミリタリープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/13620/"
       },
       "ダンベルショルダープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9594/"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "バーベルカール": {
-        url: ""
+        url: "https://charisfit.net/wp/barbell-curl"
       },
       "インクラインダンベルカール": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/incline_dumbbell_curl?srsltid=AfmBOopf2UmjdmXjMaMw_PdWe847b3Gg6PTqFqz9Hwz38b9eS-pRLOSc"
       },
       "ディップス": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dips?srsltid=AfmBOop8ZQWS0uT7Ie39wvMbz8PaJQ1qQsT5TLlnyDWW9Ys8eVClrapK"
       },
       "クランチ": {
-        url: ""
+        url: "https://fitrize.jp/crunch/"
       },
       "レッグレイズ": {
-        url: ""
+        url: "https://melos.media/training/117150/"
       }
     };
 

@@ -56,58 +56,58 @@ export const getTrainingMenu3 = (gender, gymType, frequency, volume) => {
   const getExerciseInfo = (exerciseName, workoutId) => {
     const exerciseConfig = {
       "インクラインダンベルプレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9751/"
       },
       "ダンベルフライ": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-fly?srsltid=AfmBOoraUuRdf7uUTDCk0m5UPCWDNgR0-Yhvg3j7LwiyiZ1KlpXEyzu5"
       },
       "腕立て伏せ": {
-        url: ""
+        url: "https://nakayamakinnikun.com/blogs/blog/weighttraining-push-up?srsltid=AfmBOoqRZn__h_WqYU81J5wCgYWElmeg4cUDB6l43sqheeWuR4dUDI80"
       },
       "ダンベルデットリフト": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-deadlift?srsltid=AfmBOop5_vnQh5V3W7QdXHVoJbe5bwDnuVs4lOeuH_38M24w7QNVBzPd"
       },
       "ダンベルローイング": {
-        url: ""
+        url: "https://column.valx.jp/4147/"
       },
       "ダンベルリアデルトフライ": {
-        url: ""
+        url: "https://evigym.com/howto-training/dumbbell-rear-delt-fly"
       },
       "ダンベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-squat?srsltid=AfmBOoqKkRBj5fQE9g8HomY5HKmOHHEfmxDvAZ5AiavtK8P3b_FV38G5"
       },
       "ブルガリアンスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
       },
       "スクワット": {
-        url: ""
+        url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "ダンベルショルダープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9594/"
       },
       "アーノルドプレス": {
-        url: ""
+        url: "https://smartlog.jp/172896"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "ハンマーカール": {
-        url: ""
+        url: "https://drtraining.jp/media/32494/"
       },
       "インクラインダンベルカール": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/incline_dumbbell_curl?srsltid=AfmBOopf2UmjdmXjMaMw_PdWe847b3Gg6PTqFqz9Hwz38b9eS-pRLOSc"
       },
       "ディップス": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dips?srsltid=AfmBOop8ZQWS0uT7Ie39wvMbz8PaJQ1qQsT5TLlnyDWW9Ys8eVClrapK"
       },
       "ダンベルカール": {
-        url: ""
+        url: "https://wellulu.com/moderate-exercise/16521/"
       },
       "クランチ": {
-        url: ""
+        url: "https://fitrize.jp/crunch/"
       },
       "レッグレイズ": {
-        url: ""
+        url: "https://melos.media/training/117150/"
       }
     };
 

@@ -62,25 +62,25 @@ export const getTrainingMenu2Woman = (gender, gymType, frequency, volume) => {
         url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
       },
       "ダンベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-squat?srsltid=AfmBOoobvD3sKhLaObYYhx0zJnm5WS2pe3IQ3Il-HAH6e3BC4X9WrSSX"
       },
       "キックバック": {
-        url: ""
+        url: "https://evigym.com/howto-training/triceps-kick-back"
       },
       "ダンベルローイング": {
-        url: ""
+        url: "https://column.valx.jp/4147/"
       },
       "バーベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/barbell-squat?srsltid=AfmBOopNbef7SRgy48K1GHvZ88XfjtFmiX51CYspQHAkOLiYT3MaaNXt"
       },
       "スクワット": {
         url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "ダンベルショルダープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9594/"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "クランチ": {
         url: "https://fitrize.jp/crunch/"
@@ -89,10 +89,7 @@ export const getTrainingMenu2Woman = (gender, gymType, frequency, volume) => {
         url: "https://kekefit.com/russian-twist/"
       },
       "レッグレイズ": {
-        url: ""
-      },
-      "ショルダープレス": {
-        url: ""
+        url: "https://sc1.axtos.com/column/1162/"
       },
       "ウォーキング": {
         url: "https://halmek.co.jp/beauty/c/healthr/2987"
@@ -147,7 +144,7 @@ export const getTrainingMenu2Woman = (gender, gymType, frequency, volume) => {
             { day: "月曜日", exercises: [{ name: "ヒップスラスト", reps: 10, sets: 5, workout_id: 58 }, { name: "ブルガリアンスクワット", reps: 12, sets: 5, workout_id: 56 }, { name: "ダンベルスクワット", reps: 12, sets: 5, workout_id: 51 }] },
             { day: "火曜日", exercises: [{ name: "キックバック", reps: 15, sets: 5, workout_id: 44 }, { name: "ダンベルローイング", reps: 12, sets: 5, workout_id: 21 }] },
             { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 5, workout_id: 50 }, { name: "ブルガリアンスクワット", reps: 12, sets: 5, workout_id: 56 }, { name: "スクワット", reps: 15, sets: 5, workout_id: 51 }] },
-            { day: "木曜日", exercises: [{ name: "ショルダープレス", reps: 12, sets: 5, workout_id: 30 }, { name: "サイドレイズ", reps: 12, sets: 5, workout_id: 31 }] },
+            { day: "木曜日", exercises: [{ name: "ダンベルショルダープレス", reps: 12, sets: 5, workout_id: 30 }, { name: "サイドレイズ", reps: 12, sets: 5, workout_id: 31 }] },
             { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5, workout_id: 60 }, { name: "ロシアンツイスト", reps: 20, sets: 5, workout_id: 63 }, { name: "ウォーキング", duration: "20分", workout_id: 69 }] },
             ]);
             } else if (volume === "普通がいいかな〜") {
@@ -155,7 +152,7 @@ export const getTrainingMenu2Woman = (gender, gymType, frequency, volume) => {
             { day: "月曜日", exercises: [{ name: "ヒップスラスト", reps: 10, sets: 3, workout_id: 58 }, { name: "ブルガリアンスクワット", reps: 12, sets: 3, workout_id: 56 }, { name: "ダンベルスクワット", reps: 12, sets: 3, workout_id: 51 }] },
             { day: "火曜日", exercises: [{ name: "キックバック", reps: 15, sets: 3, workout_id: 44 }, { name: "ダンベルローイング", reps: 12, sets: 3, workout_id: 21 }] },
             { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 3, workout_id: 50 }, { name: "ブルガリアンスクワット", reps: 12, sets: 3, workout_id: 56 }, { name: "スクワット", reps: 15, sets: 3, workout_id: 51 }] },
-            { day: "木曜日", exercises: [{ name: "ショルダープレス", reps: 12, sets: 3, workout_id: 30 }, { name: "サイドレイズ", reps: 12, sets: 3, workout_id: 31 }] },
+            { day: "木曜日", exercises: [{ name: "ダンベルショルダープレス", reps: 12, sets: 3, workout_id: 30 }, { name: "サイドレイズ", reps: 12, sets: 3, workout_id: 31 }] },
             { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3, workout_id: 60 }, { name: "ロシアンツイスト", reps: 20, sets: 3, workout_id: 63 }, { name: "ウォーキング", duration: "20分", workout_id: 69 }] },
             ]);
             } else {
@@ -163,7 +160,7 @@ export const getTrainingMenu2Woman = (gender, gymType, frequency, volume) => {
             { day: "月曜日", exercises: [{ name: "ヒップスラスト", reps: 10, sets: 2, workout_id: 58 }, { name: "ブルガリアンスクワット", reps: 12, sets: 2, workout_id: 56 }, { name: "ダンベルスクワット", reps: 12, sets: 2, workout_id: 51 }] },
             { day: "火曜日", exercises: [{ name: "キックバック", reps: 15, sets: 2, workout_id: 44 }, { name: "ダンベルローイング", reps: 12, sets: 2, workout_id: 21 }] },
             { day: "水曜日", exercises: [{ name: "バーベルスクワット", reps: 10, sets: 2, workout_id: 50 }, { name: "ブルガリアンスクワット", reps: 12, sets: 2, workout_id: 56 }, { name: "スクワット", reps: 15, sets: 2, workout_id: 51 }] },
-            { day: "木曜日", exercises: [{ name: "ショルダープレス", reps: 12, sets: 2, workout_id: 30 }, { name: "サイドレイズ", reps: 12, sets: 2, workout_id: 31 }] },
+            { day: "木曜日", exercises: [{ name: "ダンベルショルダープレス", reps: 12, sets: 2, workout_id: 30 }, { name: "サイドレイズ", reps: 12, sets: 2, workout_id: 31 }] },
             { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2, workout_id: 60 }, { name: "ロシアンツイスト", reps: 20, sets: 2, workout_id: 63 }, { name: "ウォーキング", duration: "20分", workout_id: 69 }] },
             ]);
         }

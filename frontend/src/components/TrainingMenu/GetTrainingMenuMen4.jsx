@@ -56,25 +56,25 @@ export const getTrainingMenu4 = (gender, gymType, frequency, volume) => {
   const getExerciseInfo = (exerciseName, workoutId) => {
     const exerciseConfig = {
       "ディップス": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dips?srsltid=AfmBOop8ZQWS0uT7Ie39wvMbz8PaJQ1qQsT5TLlnyDWW9Ys8eVClrapK"
       },
       "腕立て伏せ": {
-        url: ""
+        url: "https://nakayamakinnikun.com/blogs/blog/weighttraining-push-up?srsltid=AfmBOoqRZn__h_WqYU81J5wCgYWElmeg4cUDB6l43sqheeWuR4dUDI80"
       },
       "懸垂": {
-        url: ""
+        url: "https://melos.media/training/42236/"
       },
       "ブルガリアンスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
       },
       "スクワット": {
-        url: ""
+        url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "クランチ": {
-        url: ""
+        url: "https://fitrize.jp/crunch/"
       },
       "レッグレイズ": {
-        url: ""
+        url: "https://melos.media/training/117150/"
       }
     };
 

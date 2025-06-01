@@ -65,22 +65,22 @@ export const getTrainingMenu5Woman = (gender, gymType, frequency, volume) => {
         url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "ダンベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-squat?srsltid=AfmBOoobvD3sKhLaObYYhx0zJnm5WS2pe3IQ3Il-HAH6e3BC4X9WrSSX"
       },
       "キックバック": {
-        url: ""
+        url: "https://evigym.com/howto-training/triceps-kick-back"
       },
       "ダンベルローイング": {
-        url: ""
+        url: "https://column.valx.jp/4147/"
       },
       "バーベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/barbell-squat?srsltid=AfmBOopNbef7SRgy48K1GHvZ88XfjtFmiX51CYspQHAkOLiYT3MaaNXt"
       },
       "ダンベルショルダープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9594/"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "クランチ": {
         url: "https://fitrize.jp/crunch/"
@@ -89,10 +89,10 @@ export const getTrainingMenu5Woman = (gender, gymType, frequency, volume) => {
         url: "https://kekefit.com/russian-twist/"
       },
       "懸垂": {
-        url: ""
+        url: "https://melos.media/training/42236/"
       },
       "レッグレイズ": {
-        url: ""
+        url: "https://melos.media/training/117150/"
       },
       "腕立て伏せ": {
         url: "https://nakayamakinnikun.com/blogs/blog/weighttraining-push-up?srsltid=AfmBOoqRZn__h_WqYU81J5wCgYWElmeg4cUDB6l43sqheeWuR4dUDI80"

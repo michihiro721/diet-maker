@@ -59,31 +59,31 @@ export const getTrainingMenu1Woman = (gender, gymType, frequency, volume) => {
         url: "https://qool.jp/200401"
       },
       "レッグプレス": {
-        url: ""
+        url: "https://sc1.axtos.com/column/1162/"
       },
       "アブダクション": {
-        url: ""
+        url: "https://charisfit.net/wp/hip-abduction"
       },
       "ラットプルダウン": {
-        url: ""
+        url: "https://drtraining.jp/media/32502/"
       },
       "シーテッドロー": {
-        url: ""
+        url: "https://wellulu.com/moderate-exercise/16741/"
       },
       "バーベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/barbell-squat?srsltid=AfmBOopNbef7SRgy48K1GHvZ88XfjtFmiX51CYspQHAkOLiYT3MaaNXt"
       },
       "ブルガリアンスクワット": {
         url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
       },
       "レッグカール": {
-        url: ""
+        url: "https://b-fit.jp/gym-life/legcarl/"
       },
       "キックバック": {
-        url: ""
+        url: "https://evigym.com/howto-training/triceps-kick-back"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "クランチ": {
         url: "https://fitrize.jp/crunch/"
@@ -92,7 +92,7 @@ export const getTrainingMenu1Woman = (gender, gymType, frequency, volume) => {
         url: "https://kekefit.com/russian-twist/"
       },
       "トレッドミル": {
-        url: ""
+        url: "https://tarzanweb.jp/post-176118"
       }
     };
 
