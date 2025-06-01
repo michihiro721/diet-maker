@@ -56,55 +56,55 @@ export const getTrainingMenu1 = (gender, gymType, frequency, volume) => {
   const getExerciseInfo = (exerciseName, workoutId) => {
     const exerciseConfig = {
       "ベンチプレス": {
-        url: ""
+        url: "https://realworkout.jp/column/training/correctform-benchpress/"
       },
       "インクラインダンベルフライ": {
-        url: ""
+        url: "https://belegend.jp/training/free_weight/dumbbell/10430/"
       },
       "ペックフライ": {
-        url: ""
+        url: "https://qitano.com/peck-fly"
       },
       "デットリフト": {
-        url: ""
+        url: "https://vrtxsports.co.jp/blogs/training/how-to-perform-right-form-of-dead-lift-with-vrtx?srsltid=AfmBOoqCv7S9kl4ST7M8_vIXirgcTvF-5b6c8_LTWHsgXhD8jNqN4--Q"
       },
       "ダンベルローイング": {
-        url: ""
+        url: "https://column.valx.jp/4147/"
       },
       "ラットプルダウン": {
-        url: ""
+        url: "https://drtraining.jp/media/32502/"
       },
       "バーベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/barbell-squat?srsltid=AfmBOopNbef7SRgy48K1GHvZ88XfjtFmiX51CYspQHAkOLiYT3MaaNXt"
       },
       "レッグプレス": {
-        url: ""
+        url: "https://sc1.axtos.com/column/1162/"
       },
       "レッグカール": {
-        url: ""
+        url: "https://b-fit.jp/gym-life/legcarl/"
       },
       "ミリタリープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/13620/"
       },
       "ダンベルショルダープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9594/"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "バーベルカール": {
-        url: ""
+        url: "https://charisfit.net/wp/barbell-curl"
       },
       "インクラインダンベルカール": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/incline_dumbbell_curl?srsltid=AfmBOopf2UmjdmXjMaMw_PdWe847b3Gg6PTqFqz9Hwz38b9eS-pRLOSc"
       },
       "ケーブルプルオーバー": {
-        url: ""
+        url: "https://www.spg-eclipse.com/blog-63/"
       },
       "クランチ": {
-        url: ""
+        url: "https://fitrize.jp/crunch/"
       },
       "レッグレイズ": {
-        url: ""
+        url: "https://melos.media/training/117150/"
       }
     };
 

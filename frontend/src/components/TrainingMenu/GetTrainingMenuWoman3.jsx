@@ -62,22 +62,22 @@ export const getTrainingMenu3Woman = (gender, gymType, frequency, volume) => {
         url: "https://ufit.co.jp/blogs/training/bulgariansquats?srsltid=AfmBOoq6pdkF0l0kgLnCXVVCGXuE6rLe23E0hJZsaNlae0TRRE8IyXUA"
       },
       "ダンベルスクワット": {
-        url: ""
+        url: "https://ufit.co.jp/blogs/training/dumbbell-squat?srsltid=AfmBOoobvD3sKhLaObYYhx0zJnm5WS2pe3IQ3Il-HAH6e3BC4X9WrSSX"
       },
       "キックバック": {
-        url: ""
+        url: "https://evigym.com/howto-training/triceps-kick-back"
       },
       "ダンベルローイング": {
-        url: ""
+        url: "https://column.valx.jp/4147/"
       },
       "スクワット": {
         url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "ダンベルショルダープレス": {
-        url: ""
+        url: "https://belegend.jp/article/communication/9594/"
       },
       "サイドレイズ": {
-        url: ""
+        url: "https://drtraining.jp/media/32488/"
       },
       "クランチ": {
         url: "https://fitrize.jp/crunch/"
@@ -89,10 +89,10 @@ export const getTrainingMenu3Woman = (gender, gymType, frequency, volume) => {
         url: "https://nakayamakinnikun.com/blogs/blog/weighttraining-push-up?srsltid=AfmBOoqRZn__h_WqYU81J5wCgYWElmeg4cUDB6l43sqheeWuR4dUDI80"
       },
       "デットリフト": {
-        url: ""
+        url: "https://vrtxsports.co.jp/blogs/training/how-to-perform-right-form-of-dead-lift-with-vrtx?srsltid=AfmBOoqCv7S9kl4ST7M8_vIXirgcTvF-5b6c8_LTWHsgXhD8jNqN4--Q"
       },
-      "バーベルロー": {
-        url: ""
+      "ベントオーバーロウ": {
+        url: "https://wellulu.com/moderate-exercise/16584/"
       },
       "ウォーキング": {
         url: "https://halmek.co.jp/beauty/c/healthr/2987"
@@ -194,19 +194,19 @@ export const getTrainingMenu3Woman = (gender, gymType, frequency, volume) => {
         if (volume === "多いのがいい！") {
             createMenu("3回/週のハードメニュー", [
             { day: "月曜日", exercises: [{ name: "ヒップスラスト", reps: 10, sets: 5, workout_id: 58 }, { name: "ブルガリアンスクワット", reps: 12, sets: 5, workout_id: 56 }, { name: "ダンベルスクワット", reps: 12, sets: 5, workout_id: 51 }] },
-            { day: "水曜日", exercises: [{ name: "デットリフト", reps: 12, sets: 5, workout_id: 18 }, { name: "バーベルロー", reps: 12, sets: 5, workout_id: 20 }] },
+            { day: "水曜日", exercises: [{ name: "デットリフト", reps: 12, sets: 5, workout_id: 18 }, { name: "ベントオーバーロウ", reps: 12, sets: 5, workout_id: 20 }] },
             { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 5, workout_id: 60 }, { name: "ロシアンツイスト", reps: 20, sets: 5, workout_id: 63 }, { name: "ウォーキング", duration: "20分", workout_id: 69 }] },
             ]);
           } else if (volume === "普通がいいかな〜") {
             createMenu("3回/週の標準メニュー", [
             { day: "月曜日", exercises: [{ name: "ヒップスラスト", reps: 10, sets: 3, workout_id: 58 }, { name: "ブルガリアンスクワット", reps: 12, sets: 3, workout_id: 56 }, { name: "ダンベルスクワット", reps: 12, sets: 3, workout_id: 51 }] },
-            { day: "水曜日", exercises: [{ name: "デットリフト", reps: 12, sets: 3, workout_id: 18 }, { name: "バーベルロー", reps: 12, sets: 3, workout_id: 20 }] },
+            { day: "水曜日", exercises: [{ name: "デットリフト", reps: 12, sets: 3, workout_id: 18 }, { name: "ベントオーバーロウ", reps: 12, sets: 3, workout_id: 20 }] },
             { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 3, workout_id: 60 }, { name: "ロシアンツイスト", reps: 20, sets: 3, workout_id: 63 }, { name: "ウォーキング", duration: "20分", workout_id: 69 }] },
             ]);
           } else {
             createMenu("3回/週の軽めメニュー", [
             { day: "月曜日", exercises: [{ name: "ヒップスラスト", reps: 10, sets: 2, workout_id: 58 }, { name: "ブルガリアンスクワット", reps: 12, sets: 2, workout_id: 56 }, { name: "ダンベルスクワット", reps: 12, sets: 2, workout_id: 51 }] },
-            { day: "水曜日", exercises: [{ name: "デットリフト", reps: 12, sets: 2, workout_id: 18 }, { name: "バーベルロー", reps: 12, sets: 2, workout_id: 20 }] },
+            { day: "水曜日", exercises: [{ name: "デットリフト", reps: 12, sets: 2, workout_id: 18 }, { name: "ベントオーバーロウ", reps: 12, sets: 2, workout_id: 20 }] },
             { day: "金曜日", exercises: [{ name: "クランチ", reps: 20, sets: 2, workout_id: 60 }, { name: "ロシアンツイスト", reps: 20, sets: 2, workout_id: 63 }, { name: "ウォーキング", duration: "20分", workout_id: 69 }] },
             ]);
         }

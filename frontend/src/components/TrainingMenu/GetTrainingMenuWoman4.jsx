@@ -65,7 +65,7 @@ export const getTrainingMenu4Woman = (gender, gymType, frequency, volume) => {
         url: "https://www.shopjapan.co.jp/diet_labo/legs/article_018/"
       },
       "懸垂": {
-        url: ""
+        url: "https://melos.media/training/42236/"
       },
       "腕立て伏せ": {
         url: "https://nakayamakinnikun.com/blogs/blog/weighttraining-push-up?srsltid=AfmBOoqRZn__h_WqYU81J5wCgYWElmeg4cUDB6l43sqheeWuR4dUDI80"
