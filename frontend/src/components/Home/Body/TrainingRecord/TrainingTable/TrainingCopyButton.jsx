@@ -6,8 +6,10 @@ import "./styles/TrainingCopyButton.css";
 const TrainingCopyButton = ({ trainings, workouts, onTrainingCopied }) => {
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
   const userId = localStorage.getItem('userId');
+  const hasTrainingData = trainings && trainings.length > 0;
+  
   const formatTrainingData = () => {
-    if (!trainings || trainings.length === 0) {
+    if (!hasTrainingData) {
       return [];
     }
 
@@ -37,7 +39,7 @@ const TrainingCopyButton = ({ trainings, workouts, onTrainingCopied }) => {
       return;
     }
 
-    if (!trainings || trainings.length === 0) {
+    if (!hasTrainingData) {
       alert("コピーするトレーニングデータがありません。");
       return;
     }
@@ -52,13 +54,17 @@ const TrainingCopyButton = ({ trainings, workouts, onTrainingCopied }) => {
     }
   };
 
+  if (!hasTrainingData) {
+    return null;
+  }
+
   return (
     <>
       <div className="training-copy-container">
         <button
           className="training-copy-button"
           onClick={openCopyModal}
-          disabled={!userId || !trainings || trainings.length === 0}
+          disabled={!userId}
         >
           メニューをコピー
         </button>
@@ -75,7 +81,6 @@ const TrainingCopyButton = ({ trainings, workouts, onTrainingCopied }) => {
     </>
   );
 };
-
 
 TrainingCopyButton.propTypes = {
   trainings: PropTypes.arrayOf(
