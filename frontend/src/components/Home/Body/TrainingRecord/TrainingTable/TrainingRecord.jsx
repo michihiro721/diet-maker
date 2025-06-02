@@ -560,31 +560,32 @@ const TrainingRecord = () => {
       )}
 
       {hasAnyTrainingData ? (
-        trainings.map((training, trainingIndex) => (
-          <div key={trainingIndex} className="training-section">
-            <TrainingInfo
-              currentExercise={training.exercise}
-              currentPart={training.targetArea}
-              onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
-              maxWeight={getMaxWeightForExercise(training.exercise)}
-              sets={training.sets}
-              userWeight={userWeight}
-            />
-            <TrainingTable
-              sets={Array.isArray(training.sets) ? training.sets : []}
-              openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
-              handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
-              handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
-              handleAddSet={() => handleAddSet(trainingIndex)}
-              currentExercise={training.exercise}
-              isAerobic={aerobicExercises.includes(training.exercise)}
-            />
-            <button className="delete-training-button" onClick={() => confirmDeleteTraining(trainingIndex)}>種目を削除</button>
-          </div>
-        ))
-      ) : (
-        <p className="no-training-data">トレーニングデータがありません。</p>
-      )}
+  trainings.map((training, trainingIndex) => (
+    <div key={trainingIndex} className="training-section">
+      <TrainingInfo
+        currentExercise={training.exercise}
+        currentPart={training.targetArea}
+        onExerciseChange={(exercise, part) => handleExerciseChange(trainingIndex, exercise, part)}
+        maxWeight={getMaxWeightForExercise(training.exercise)}
+        sets={training.sets}
+        userWeight={userWeight}
+        onDelete={() => confirmDeleteTraining(trainingIndex)}
+        showDeleteButton={true}
+      />
+      <TrainingTable
+        sets={Array.isArray(training.sets) ? training.sets : []}
+        openModal={(setIndex, field, value) => openModal(trainingIndex, setIndex, field, value)}
+        handleUpdateSet={(setIndex, field, value) => handleUpdateSet(trainingIndex, setIndex, field, value)}
+        handleRemoveSet={(setIndex) => handleRemoveSet(trainingIndex, setIndex)}
+        handleAddSet={() => handleAddSet(trainingIndex)}
+        currentExercise={training.exercise}
+        isAerobic={aerobicExercises.includes(training.exercise)}
+      />
+    </div>
+  ))
+) : (
+  <p className="no-training-data">トレーニングデータがありません。</p>
+)}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}
 
