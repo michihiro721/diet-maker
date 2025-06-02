@@ -1,7 +1,7 @@
 /* カレンダー全体のスタイル */
 .react-calendar {
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
     background-color: rgba(173, 216, 230, 0.001);
     border: 1px solid #ddd;
     border-radius: 8px;
