@@ -601,14 +601,16 @@ const TrainingRecord = () => {
         </div>
       )}
 
-      <div className="training-end-button-container">
-        <button
-          className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`}
-          onClick={confirmEndTraining}
-        >
-          トレーニング終了
-        </button>
-      </div>
+      {hasAnyTrainingData && (
+        <div className="training-end-button-container">
+          <button
+            className={`save-training-button ${!isLoggedIn ? 'save-training-button-disabled' : ''}`}
+            onClick={confirmEndTraining}
+          >
+            トレーニング終了
+          </button>
+        </div>
+      )}
 
       {modalVisible && (
         <Modal
