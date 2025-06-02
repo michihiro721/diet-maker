@@ -584,7 +584,7 @@ const TrainingRecord = () => {
     </div>
   ))
 ) : (
-  <p className="no-training-data">トレーニングデータがありません。</p>
+  null
 )}
       <TrainingAdder addTraining={addTraining} />
       {message && <p className={messageClass}>{message}</p>}

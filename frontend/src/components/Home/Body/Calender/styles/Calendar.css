@@ -291,3 +291,10 @@
     background: linear-gradient(135deg, rgba(173, 216, 230, 0.7) 50%, rgba(208, 231, 255, 0.7) 50%);
     border: 2px solid #b0d4ff;
 }
+
+
+@media (max-width: 480px) {
+    .react-calendar {
+        margin-top: 60px;
+    }
+}
