@@ -9,6 +9,39 @@
   max-width: 600px;
   margin: 0 auto;
   margin-top: 40px;
+  position: relative;
+}
+
+
+.delete-training-x-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+  line-height: 1;
+  padding: 0;
+}
+
+.delete-training-x-button:hover {
+  background-color: #cc0000;
+  transform: scale(1.1);
+}
+
+.delete-training-x-button:active {
+  transform: scale(0.95);
 }
 
 /* 見出しのスタイル */
@@ -67,7 +100,6 @@
   cursor: pointer;
 }
 
-
 .calories-info {
   position: relative;
   margin-bottom: 10px;
@@ -82,7 +114,7 @@
   margin-left: 5px;
 }
 
-/* カロリーツールチップのスタイル */
+/* カロリーのスタイル */
 .calories-tooltip {
   display: block;
   font-size: 12px;
@@ -91,17 +123,15 @@
   font-weight: normal;
 }
 
-
-
 @media screen and (max-width: 600px) {
   .training-info .exercise-display {
     font-size: 16px;
   }
-  
+
   .training-info {
     padding: 15px;
   }
-  
+
   .training-info p {
     font-size: 18px;
   }

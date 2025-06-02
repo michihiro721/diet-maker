@@ -10,7 +10,9 @@ const TrainingInfo = ({
   onExerciseChange, 
   maxWeight,
   sets = [],
-  userWeight = 70
+  userWeight = 70,
+  onDelete,
+  showDeleteButton = false
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isAerobic, setIsAerobic] = useState(false);
@@ -52,17 +54,24 @@ const TrainingInfo = ({
     closeModal();
   };
 
-
   const formatCalories = (value) => {
     if (value <= 0) return 'データなし';
     return `${value} kcal`;
   };
 
-
   const displayExercise = currentExercise || "種目を選択してください";
 
   return (
     <div className="training-info">
+      {showDeleteButton && (
+        <button 
+          className="delete-training-x-button" 
+          onClick={onDelete}
+          aria-label="種目を削除"
+        >
+          ×
+        </button>
+      )}
       <p>
         種目：
         <span className="exercise-display clickable" onClick={openModal}>
@@ -91,7 +100,6 @@ const TrainingInfo = ({
   );
 };
 
-
 TrainingInfo.propTypes = {
   currentExercise: PropTypes.string,
   currentPart: PropTypes.string,
@@ -101,7 +109,9 @@ TrainingInfo.propTypes = {
     PropTypes.number
   ]),
   sets: PropTypes.array,
-  userWeight: PropTypes.number
+  userWeight: PropTypes.number,
+  onDelete: PropTypes.func,
+  showDeleteButton: PropTypes.bool
 };
 
 export { aerobicExercises };
